@@ -1,0 +1,18 @@
+{
+  "fp16_compat": {
+    "min_psnr_db": 50.0,
+    "min_ssim": 0.999,
+    "max_nan_count": 0,
+    "max_inf_count": 0,
+    "p999_abs_error_linear_rgb": 0.00390625
+  },
+  "stress": {
+    "minimum_dispatches": 10000,
+    "allow_device_removed": false,
+    "allow_unbounded_memory_growth": false
+  },
+  "selection": {
+    "quality_gate_before_timing": true,
+    "prefer_quality_when_speed_difference_percent_below": 1.0
+  }
+}

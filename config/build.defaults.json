@@ -1,0 +1,11 @@
+{
+  "generator": "Ninja",
+  "cxx_standard": 20,
+  "shader_model": "6_6",
+  "hlsl_version": "2021",
+  "dxc_release_flags": ["-O3", "-enable-16bit-types"],
+  "primary_target": "gfx1010",
+  "primary_gpu": "AMD Radeon RX 5700 XT",
+  "default_backend": "hybrid_auto",
+  "required_backends": ["reference_i8", "fp16_compat", "fp16_high_precision", "hybrid_auto"]
+}

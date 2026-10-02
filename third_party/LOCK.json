@@ -1,0 +1,83 @@
+﻿{
+    "generatedUtc":  "2026-10-02T11:18:12.7979571Z",
+    "fsr4Source":  {
+                       "requestedOfficialCommit":  "01446e6a74888bf349652fcf2cbf5f642d30c2bf",
+                       "usedFallback":  false,
+                       "repository":  "https://github.com/GPUOpen-LibrariesAndSDKs/FidelityFX-SDK.git",
+                       "actualCommit":  "01446e6a74888bf349652fcf2cbf5f642d30c2bf",
+                       "requiredPath":  "Kits/FidelityFX/upscalers/fsr4",
+                       "licenses":  [
+                                        {
+                                            "path":  "third_party\\fidelityfx-fsr4-source\\docs\\license.md",
+                                            "sha256":  "fefa80e2c034f9e15c64d85e0d14f4a7ba5ceead65278f3759e5a3be27a81bfb"
+                                        }
+                                    ],
+                       "modelAssets":  [
+                                           {
+                                               "path":  "third_party\\fidelityfx-fsr4-source\\Kits\\FidelityFX\\upscalers\\fsr4\\internal\\shaders\\fsr4_model_v07_fp8_no_scale_balanced\\initializers.bin",
+                                               "bytes":  130088,
+                                               "sha256":  "c8fc964368fbb87eed0281cf762af8f1d64819025d2ad1481db8169dcc295302"
+                                           },
+                                           {
+                                               "path":  "third_party\\fidelityfx-fsr4-source\\Kits\\FidelityFX\\upscalers\\fsr4\\internal\\shaders\\fsr4_model_v07_fp8_no_scale_drs\\initializers.bin",
+                                               "bytes":  130088,
+                                               "sha256":  "e6899631df42ad14e2d2eb9413a11fcdaef4c552bfd71d29bcbf26e1287219e1"
+                                           },
+                                           {
+                                               "path":  "third_party\\fidelityfx-fsr4-source\\Kits\\FidelityFX\\upscalers\\fsr4\\internal\\shaders\\fsr4_model_v07_fp8_no_scale_native\\initializers.bin",
+                                               "bytes":  130088,
+                                               "sha256":  "6f045961109dd8ecaa666858d1e2a712da2e747db91bf0b2ba94a08ad1e00c67"
+                                           },
+                                           {
+                                               "path":  "third_party\\fidelityfx-fsr4-source\\Kits\\FidelityFX\\upscalers\\fsr4\\internal\\shaders\\fsr4_model_v07_fp8_no_scale_performance\\initializers.bin",
+                                               "bytes":  130088,
+                                               "sha256":  "d90c776ab6363f48b22eb4dd9c55bf1cdf8bee68f3f4a10bdeacbb396ff10c84"
+                                           },
+                                           {
+                                               "path":  "third_party\\fidelityfx-fsr4-source\\Kits\\FidelityFX\\upscalers\\fsr4\\internal\\shaders\\fsr4_model_v07_fp8_no_scale_quality\\initializers.bin",
+                                               "bytes":  130088,
+                                               "sha256":  "64e51f995a527ee1e7039833a37f671eaafed2a9aaed38ddf5bf50e78f98f6ff"
+                                           },
+                                           {
+                                               "path":  "third_party\\fidelityfx-fsr4-source\\Kits\\FidelityFX\\upscalers\\fsr4\\internal\\shaders\\fsr4_model_v07_fp8_no_scale_ultraperf\\initializers.bin",
+                                               "bytes":  130088,
+                                               "sha256":  "151a3643e286f6de2a72b646381fe6a886a8918f095a5d29ef80105a954085a2"
+                                           },
+                                           {
+                                               "path":  "third_party\\fidelityfx-fsr4-source\\Kits\\FidelityFX\\upscalers\\fsr4\\internal\\shaders\\fsr4_model_v07_i8_balanced\\initializers.bin",
+                                               "bytes":  89216,
+                                               "sha256":  "a8e96ddb0c2a5f937011a78381a7975e99cd6e455ce72ef92f2f7dbff742e4c2"
+                                           },
+                                           {
+                                               "path":  "third_party\\fidelityfx-fsr4-source\\Kits\\FidelityFX\\upscalers\\fsr4\\internal\\shaders\\fsr4_model_v07_i8_drs\\initializers.bin",
+                                               "bytes":  89216,
+                                               "sha256":  "00ab0bc1fd12a823bb0fc8cd227b0e2d15718fe2a2082e972c6e0b6e46c77a8c"
+                                           },
+                                           {
+                                               "path":  "third_party\\fidelityfx-fsr4-source\\Kits\\FidelityFX\\upscalers\\fsr4\\internal\\shaders\\fsr4_model_v07_i8_native\\initializers.bin",
+                                               "bytes":  89216,
+                                               "sha256":  "629d42b1cc57432e9f003599ad0f305fb1d311669a819b4f22ebb8f504dece1e"
+                                           },
+                                           {
+                                               "path":  "third_party\\fidelityfx-fsr4-source\\Kits\\FidelityFX\\upscalers\\fsr4\\internal\\shaders\\fsr4_model_v07_i8_performance\\initializers.bin",
+                                               "bytes":  89216,
+                                               "sha256":  "fe2ad00e9e7fc563bd9ee01ab72c82bb557bf0d8365a085e833749547e089aab"
+                                           },
+                                           {
+                                               "path":  "third_party\\fidelityfx-fsr4-source\\Kits\\FidelityFX\\upscalers\\fsr4\\internal\\shaders\\fsr4_model_v07_i8_quality\\initializers.bin",
+                                               "bytes":  89216,
+                                               "sha256":  "6fce93853235bbf8742210fb2bfd8653b70c90c722af17f5a37d1a3390156356"
+                                           },
+                                           {
+                                               "path":  "third_party\\fidelityfx-fsr4-source\\Kits\\FidelityFX\\upscalers\\fsr4\\internal\\shaders\\fsr4_model_v07_i8_ultraperf\\initializers.bin",
+                                               "bytes":  89216,
+                                               "sha256":  "666839fa4dd1232847a81231151f33391c4b8110a5c9808fc8c1cb7b4c5bb61b"
+                                           }
+                                       ]
+                   },
+    "currentSdk":  {
+                       "repository":  "https://github.com/GPUOpen-LibrariesAndSDKs/FidelityFX-SDK.git",
+                       "requestedRef":  "v2.3.0",
+                       "actualCommit":  "60f4ea81909200d8542eca14dccb2628b763a9a3"
+                   }
+}

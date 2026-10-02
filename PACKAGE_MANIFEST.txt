@@ -1,0 +1,40 @@
+FSR4-Navi10 Codex Pack - file manifest
+Generated: 2026-10-02
+
+f26bf313354630a728dab47720369255d4331a09adc42d3ff0c294daa51467cd        1037  ./.agent/PLANS.md
+63d9bf9a29b605a884b92a0741d084fafec9c435dea02d484a53add2d8cdf1a9         167  ./.gitignore
+650fde58ca425f1ba2f9ee2f52e3ae678555deb811074e431384df1a12df7890        2393  ./AGENTS.md
+a78f9b782a35e08545b969badad8a684d8d2eb36beda4d41329ea27ff7183545        5093  ./CODEX_START_PROMPT.txt
+4d8544744ab955ea6da2dca72b1bd91acab42fd1a957e2dea51018cf8f8857f8        1330  ./HANDOFF.md
+cb5aab285dd481f77a6cedad917eba266cac2b6c36386603ceb8f7b73bfc9ca2         286  ./PROGRESS_TEMPLATE.md
+24571b9b9b014378e90d502f251377158eafac2f8efe2c839ce1b8ac6d2b63ef        2447  ./README_FIRST.md
+83c4fb5f939a7aad7bd8b29c3690354f4ddcf620c2e755acf0eee51b01ff7258         975  ./blueprints/include/fsr4n10/backend.h
+13ab329511359ce2ff2f81ddd7da609c520c42f349d621cc9bb5c988d232e453        1793  ./blueprints/include/fsr4n10/model_pack.h
+94330232a04f9dfbcc85870a964cc1b489e7af32d29db7a6aa7796d58cfee59f         611  ./blueprints/include/fsr4n10/telemetry.h
+193c920220fff85496af6aa73b80ba4dbdc921692b3f92d7a386047dbbf71994        1029  ./blueprints/shaders/navi10_fp16_common.hlsli
+1b55c7b57fc063e6c41f7ecb46d7a0f1e1b46cf29c80dd2dcd1f06ce91dbaa7e         358  ./config/build.defaults.json
+4f9226d93fa0794f77b135ddeb44b23e879652f74b7f40949abdc6764769cb6a         421  ./config/quality_gates.json
+bc134124d0768f2e51f61ee38943f0bb95c2b053b4e3ff76a0488972f0b2f29a         996  ./config/upstreams.json
+24fdfc5e9e7c7f890ae36bdb2b6c4d79acd39bb70d24dacb2db63bfc911f601a        4445  ./docs/ACCEPTANCE_CRITERIA.md
+7315eb0e8e7b05cde6a3b2782923c6621cb459c8c9b5652e8521842b8db52385        1549  ./docs/AUTOTUNER.md
+7a559895f5f4bf8334aa44784a791faff431a5612488fa479baec891bba581e3        2373  ./docs/BUILD_AND_BOOTSTRAP.md
+038370425a5c9b82ef931a29519d1997fd7951a9e5d2528be9c152f1d04f7e01        1110  ./docs/CODE_BLUEPRINTS.md
+5770af01dac2dfb5e561c6d3c1a6d7cabe8b80b090fcc36f373c8f18e466cf1a        7006  ./docs/CODE_REVIEW_CHECKLIST.md
+85a942be10b038fbb70f1e378d8d0410bee4b1cc1899576073808220c3855d08        5402  ./docs/DECISIONS.md
+365c1f22a2096abdebc7a721148f38a64562f3cfc0d6707a587d0d586569fcee        4575  ./docs/FAILURE_MODES.md
+51e073a416700543d834896366c32f2e3780e93e57148ae03ff03df8b6247400        2497  ./docs/FILE_BY_FILE_TASKS.md
+dd91cd198dedbee847ab7d36fd8e5f9b94b051b95a22d91ada2ca316546d6728        1779  ./docs/FSR_API_ADAPTER.md
+fc3909734a2e02c52a001bef403e8759b90566a6218af2f6ed7ebe8a8e41e642        9252  ./docs/IMPLEMENTATION_DETAILS.md
+e18a3b7d1737e720bcbe06f8b7c3447b41f97e73fa8f5367f7cbff5576857955       26561  ./docs/MASTER_SPEC.md
+da995c9fe6a5daaed59ef8b7c4ff90316ac47bfdcecea44e69d52dd561b765ad        7412  ./docs/MODEL_PIPELINE.md
+ae44e16bb6ac2e3991572c63211571d9629cc43c11a0f8e66656c9dea3ebc61a        7299  ./docs/NAVI10_BACKEND.md
+85731ec9e1426b6858e5a6a4ce834f1444ffd355c81f3d18fe9f011f95d8fdae        4495  ./docs/NUMERICS_AND_QUALITY.md
+fe1c287cb3e2b6bbb6b00ae88c1a5c87256f0cbdbdf3812dddf28074e309de2b        2020  ./docs/RESEARCH_NOTES.md
+faa0e8235ae9edd7d9c649d04ae1ebf58c1386d6e1b1bd9f39c3456edcf3bcee        1365  ./docs/SOURCES.md
+df08e59440174e0dd220dc9912121da06274f66b6e9c48bf36b485534a34985a        3980  ./docs/UPSTREAMS_AND_LICENSE.md
+a3576a17a32cd6ec04a71a8d93f832e5daa0c7290d1f84c008435bb53643b077        6144  ./scripts/bootstrap.ps1
+6532e3600be1b1a61423d842b4e550f6ee75a7464f54ed92c8b71ee0583ec948         459  ./scripts/build.ps1
+106f440099ef6fe6cd42d069619464eeedfbd849e20ae970e92788f85ea8a59b         451  ./scripts/configure.ps1
+b099e86327324bdb9247cf1dd2163c8461f66ce2df1a577bb5f4153d5dae3312        4783  ./scripts/fetch-upstreams.ps1
+4c39f4c830ec9ff4fbcee765c6fed2ace6f00c923a479d3b2d080ec740d6bad5         616  ./scripts/run-all.ps1
+d2c77d566f2b6311f31a1d667503433ee25d3ebb2b21b1a42bad6fd66427981f        2472  ./scripts/verify-environment.ps1

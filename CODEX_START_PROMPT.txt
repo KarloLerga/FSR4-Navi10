@@ -1,0 +1,48 @@
+You are the implementation agent for the repository currently open in this VS Code workspace.
+
+This is a long-horizon graphics engineering task. The user wants the COMPLETE project implemented in this run, not a prototype, not an MVP, not a scaffold, and not a design-only answer.
+
+Before changing code:
+1. Read the root AGENTS.md.
+2. Read .agent/PLANS.md.
+3. Read docs/MASTER_SPEC.md in full.
+4. Read every document listed in the "Required documents" section of MASTER_SPEC.md.
+5. Inspect the scripts and config files already provided in this repository.
+
+Then execute the project end-to-end.
+
+Hard behavioral requirements:
+- Do not stop after planning, scaffolding, or writing TODOs.
+- Do not ask the user to manually install/download/configure something if PowerShell, winget, Git, CMake, Python, DXC, a GitHub release, or another command-line mechanism can do it.
+- You may invoke scripts/bootstrap.ps1 and create/update scripts as needed. If Windows elevation is unavoidable, trigger the elevated process and let the user approve the UAC prompt; do not replace the setup with manual instructions.
+- Do not silently reduce scope because an implementation is difficult.
+- Do not replace requested production code with mocks/stubs/placeholders except temporarily during implementation; no placeholder may remain in the final release path.
+- Do not claim performance or quality results you did not measure on the local hardware.
+- Keep the original/reference implementation intact and build optimized implementations beside it so regressions are diagnosable.
+- The target GPU is AMD Radeon RX 5700 XT / Navi10 / gfx1010. Optimize specifically for it.
+- Full FP16 FSR4 is the primary implementation direction. However, the final production backend may use an original INT8 implementation for an individual pass only when automated local measurement proves it is faster on this exact gfx1010 system and quality/numerics are equivalent. Never assume either outcome from architecture folklore.
+- Preserve FSR4 reconstruction quality. Do not gain speed by deleting model layers, reducing channels, dropping temporal inputs, lowering output resolution, or otherwise turning the algorithm into a lower-quality upscaler unless such a mode is an OPTIONAL separately named experimental mode that is not selected by default.
+- Use the exact upstream FSR4 4.0.2 network/model and provider behavior as the reference contract. FSR4 4.1.x may be used only as documentation/reference where legally/publicly available; do not depend on redistributing proprietary signed binaries.
+- Never execute unreviewed scripts from third-party research repositories. Third-party research repos are read-only references. Product code must be our own modifications/implementation based on the licensed upstream source and documented behavior.
+- Build and test continuously. Fix build errors, shader compile errors, device-removal errors, validation mismatches, NaNs, temporal instability, and resource-state issues before declaring completion.
+- Use Git commits at meaningful milestones. Never discard user changes.
+- Maintain PROGRESS.md, DECISIONS_LOG.md and RESULTS.md as living state so compaction does not lose the project state.
+- If context is compacted, re-read AGENTS.md, MASTER_SPEC.md, PROGRESS.md, DECISIONS_LOG.md, and the current ExecPlan before continuing.
+
+Execution order:
+A. Run/repair bootstrap and environment verification.
+B. Fetch and pin upstreams according to docs/UPSTREAMS_AND_LICENSE.md.
+C. Generate an ExecPlan in .agent/EXEC_PLAN.md derived from MASTER_SPEC.md, but immediately continue implementation after writing it.
+D. Build a faithful reference harness/provider and obtain deterministic golden outputs from the original FSR4 4.0.2 path.
+E. Implement the full FP16 weight conversion/prepacking pipeline and the complete FP16 model path.
+F. Implement Navi10-specialized generated shaders and runtime/resource scheduling.
+G. Implement high-precision and hybrid/autotuned backends.
+H. Implement FSR API compatibility adapter and release packaging.
+I. Run correctness, temporal, image-quality, stability, shader-ISA, resource-usage and performance validation on the local RX 5700 XT.
+J. Tune the complete pipeline, not only isolated kernels. Keep changes only when end-to-end results improve or quality is measurably safer.
+K. Run the complete docs/CODE_REVIEW_CHECKLIST.md and fix every release-blocking finding. Use docs/FAILURE_MODES.md to recover from expected blockers instead of stopping.
+L. Produce release/ with binaries, model pack, config, install/integration notes, symbols for debug build, a reproducible build script, and RESULTS.md containing measured results.
+
+Definition of done is exactly docs/ACCEPTANCE_CRITERIA.md. Keep working until every criterion that can be satisfied on this machine is satisfied. If a criterion is truly impossible because of an external proprietary/signing restriction, document the precise blocker and finish the best fully usable unsigned compatibility path rather than stopping the rest of the project.
+
+Start now. Do not return a prose-only plan.
