@@ -15,19 +15,20 @@ from torch import nn
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from training.naviqsr.blocks import fold_model
+from training.naviqsr.analytic_reconstruction import analytic_reconstruct
 from training.naviqsr.model import NaviQSRnetwork
 from training.naviqsr.polyphase import pack_features
-from training.naviqsr.train import _features, _load_sequences
+from training.naviqsr.train import _features, _frame_tensor, _load_sequences
 
 
-MAGIC = b"NQSRSTD1"
-HEADER = struct.Struct("<8s12I")
+MAGIC = b"NQSRFRM2"
+HEADER = struct.Struct("<8s16I5f")
 LAYER = struct.Struct("<14I")
 
 
 def export_case(checkpoint_path: Path, dataset_root: Path, output_path: Path,
                 sequence_index: int, frame_index: int,
-                fold_tolerance: float = 2.0e-5) -> dict[str, object]:
+                taps: int = 5, fold_tolerance: float = 2.0e-5) -> dict[str, object]:
     checkpoint = torch.load(checkpoint_path, map_location="cpu", weights_only=True)
     config = checkpoint["model_config"]
     if config.get("polyphase_mode") != "raw":
@@ -48,7 +49,8 @@ def export_case(checkpoint_path: Path, dataset_root: Path, output_path: Path,
     features = _features(sequence, frame_index, torch.device("cpu"))
     if features.shape[-1] % 2 or features.shape[-2] % 2:
         raise ValueError("network input dimensions must be even")
-    packed = pack_features(features, "raw")
+    if taps not in (4, 5, 8):
+        raise ValueError("analytic reconstruction supports 4, 5, or 8 taps")
 
     with torch.no_grad():
         reference = model(features)
@@ -62,7 +64,41 @@ def export_case(checkpoint_path: Path, dataset_root: Path, output_path: Path,
     with torch.no_grad():
         for parameter in folded.parameters():
             parameter.copy_(parameter.half().float())
-        quantized_reference = folded(features)
+
+    # Build temporal history and output with the same quantized folded network as the GPU graph.
+    previous_output = None
+    previous_jitter = None
+    selected = None
+    with torch.no_grad():
+        for current_frame in range(frame_index + 1):
+            frame_features = _features(sequence, current_frame, torch.device("cpu"))
+            prediction = folded(frame_features)
+            target = _frame_tensor(sequence["hr_rgb"][current_frame], torch.device("cpu"))
+            motion = _frame_tensor(sequence["motion"][current_frame], torch.device("cpu"))
+            reactive = _frame_tensor(sequence["reactive"][current_frame], torch.device("cpu"))
+            transparency = _frame_tensor(sequence["transparency"][current_frame], torch.device("cpu"))
+            jitter = torch.as_tensor(sequence["jitter"][current_frame], dtype=torch.float32)[None]
+            reset = bool(sequence["reset"][current_frame])
+            history = torch.zeros_like(target) if reset or previous_output is None else previous_output
+            prior_jitter = jitter if reset or previous_jitter is None else previous_jitter
+            valid = torch.full_like(reactive, 0.0 if reset or previous_output is None else 1.0)
+            result = analytic_reconstruct(
+                frame_features[:, :3], prediction["controls"], prediction["residual"],
+                int(sequence["scale"]), history_hr=history, motion_lr=motion,
+                current_jitter=jitter, previous_jitter=prior_jitter,
+                history_valid=valid, reactive_lr=reactive,
+                transparency_lr=transparency, taps=taps)
+            selected = {"features": frame_features,
+                        "packed": pack_features(frame_features, "raw"),
+                        "prediction": prediction, "history": history,
+                        "output": result["output"], "jitter": jitter,
+                        "previous_jitter": prior_jitter, "valid": valid,
+                        "reset": reset}
+            previous_output = result["output"]
+            previous_jitter = jitter
+    assert selected is not None
+    features = selected["features"]
+    packed = selected["packed"]
 
     layer_records: list[tuple[int, ...]] = []
     weight_parts: list[np.ndarray] = []
@@ -122,21 +158,31 @@ def export_case(checkpoint_path: Path, dataset_root: Path, output_path: Path,
                if weight_parts else np.empty((0,), dtype="<f2"))
     if weights.size & 1:
         weights = np.pad(weights, (0, 1), constant_values=0).astype("<f2", copy=False)
-    controls = np.ascontiguousarray(quantized_reference["controls"][0].cpu().numpy(),
+    controls = np.ascontiguousarray(selected["prediction"]["controls"][0].cpu().numpy(),
                                     dtype="<f4")
-    residual = np.ascontiguousarray(quantized_reference["residual"][0].cpu().numpy(),
+    residual = np.ascontiguousarray(selected["prediction"]["residual"][0].cpu().numpy(),
                                     dtype="<f4")
+    history = np.ascontiguousarray(selected["history"][0].cpu().numpy(), dtype="<f4")
+    reference_image = np.ascontiguousarray(selected["output"][0].cpu().numpy(), dtype="<f4")
     input_channels, height, width = features.shape[1:]
     packed_array = np.ascontiguousarray(packed[0].cpu().numpy(), dtype="<f4")
     feature_array = np.ascontiguousarray(features[0].cpu().numpy(), dtype="<f4")
-    arrays = (packed_array, feature_array, weights, controls, residual)
+    arrays = (packed_array, feature_array, weights, controls, residual,
+              history, reference_image)
+    current_jitter = selected["jitter"].cpu().numpy()[0]
+    previous_jitter = selected["previous_jitter"].cpu().numpy()[0]
+    scale = int(sequence["scale"])
+    history_valid = float(selected["valid"].max().item() > 0.5)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with output_path.open("wb") as stream:
         stream.write(HEADER.pack(
-            MAGIC, 1, width, height, input_channels, int(config["width"]),
+            MAGIC, 2, width, height, input_channels, int(config["width"]),
             int(config["hf_width"]), len(layer_records), packed_array.size,
-            feature_array.size, weights.size, controls.size, residual.size))
+            feature_array.size, weights.size, controls.size, residual.size,
+            history.size, reference_image.size, scale, taps,
+            float(current_jitter[0]), float(current_jitter[1]),
+            float(previous_jitter[0]), float(previous_jitter[1]), history_valid))
         for record in layer_records:
             stream.write(LAYER.pack(*record))
         for array in arrays:
@@ -144,7 +190,7 @@ def export_case(checkpoint_path: Path, dataset_root: Path, output_path: Path,
 
     digest = hashlib.sha256(output_path.read_bytes()).hexdigest()
     metadata = {
-        "format": "naviqsr-network-gpu-case-v1",
+        "format": "naviqsr-network-gpu-case-v2",
         "case": output_path.name,
         "sha256": digest,
         "size_bytes": output_path.stat().st_size,
@@ -155,6 +201,9 @@ def export_case(checkpoint_path: Path, dataset_root: Path, output_path: Path,
         "input_size": [width, height],
         "polyphase_size": [width // 2, height // 2],
         "polyphase_mode": "raw",
+        "scale": scale,
+        "taps": taps,
+        "history_valid": history_valid,
         "layers": len(layer_records),
         "fp16_weight_elements": int(weights.size),
         "fp32_fold_max_abs_error": fold_error,
@@ -173,10 +222,12 @@ def main() -> None:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--sequence", type=int, default=0)
     parser.add_argument("--frame", type=int, default=1)
+    parser.add_argument("--taps", type=int, choices=(4, 5, 8), default=5)
     parser.add_argument("--fold-tolerance", type=float, default=2.0e-5)
     args = parser.parse_args()
     print(json.dumps(export_case(args.checkpoint, args.dataset, args.output,
-                                 args.sequence, args.frame, args.fold_tolerance), indent=2))
+                                 args.sequence, args.frame, args.taps,
+                                 args.fold_tolerance), indent=2))
 
 
 if __name__ == "__main__":

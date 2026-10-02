@@ -28,7 +28,7 @@ build/release/fsr4n10_harness.exe --run-upstream-i8-image-smoke build/release/fr
 
 ## NaviQSR addendum prototype
 
-The separate NaviQSR network now has a deterministic procedural dataset, PyTorch train/validate/export flow, a D3D12 network convolution smoke, and 4/5/8-tap analytic reconstruction shaders. network weights are FP16-stored, with FP32 activations and accumulation; phase packing remains CPU-side. On the RX 5700 XT, the network graph median was 70.22 us for LR 32x18 and the separate AKR smoke passed its bounded numeric check. A 4,096-update CPU network scored 21.0219 dB PSNR versus 20.9377 dB for bilinear on a 32-frame seeded procedural holdout; the 0.0842 dB gain is not a useful-quality result. network-to-AKR frame graph integration, teacher capture, sparse reuse, and quality-qualified performance validation remain open. See [`training/naviqsr/README.md`](training/naviqsr/README.md) and [`RESULTS.md`](RESULTS.md).
+The separate NaviQSR network now has a deterministic procedural dataset, PyTorch train/validate/export flow, and an experimental D3D12 frame graph joining network convolutions with temporal AKR/RGB reconstruction. network weights are FP16-stored, with FP32 activations and accumulation; preprocessing and phase packing remain CPU-side. RX 5700 XT smokes covered 2x/3x/4x scaling and 4/5/8-tap reconstruction. A 4,096-update CPU network scored 21.0219 dB PSNR versus 20.9377 dB for bilinear on a 32-frame seeded procedural holdout; the 0.0842 dB gain is not a useful-quality result. Teacher capture, production input/pack loading, sparse reuse, and quality-qualified performance validation remain open. See [`training/naviqsr/README.md`](training/naviqsr/README.md) and [`RESULTS.md`](RESULTS.md).
 
 
 ## Project documents

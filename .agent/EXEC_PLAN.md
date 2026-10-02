@@ -90,7 +90,7 @@ Build the Windows x64 / DirectX 12 project described in `docs/MASTER_SPEC.md` fo
 
 ## Measurements
 
-No FSR4 model, image-quality, stability, or full-effect performance measurements have been made. Preliminary I8 model-only timings and NaviQSR network-only/AKR-only microbenchmarks are recorded in `RESULTS.md`; none is an end-to-end quality-qualified result.
+No FSR4 model, image-quality, stability, or full-effect performance measurements have been made. Preliminary I8 model-only timings and NaviQSR network-only, AKR-only, and joined-frame-graph microbenchmarks are recorded in `RESULTS.md`; none is an end-to-end quality-qualified result.
 
 ## User-supplied NaviQSR addendum (2026-10-02)
 
@@ -115,6 +115,6 @@ The attached addendum expands the original FSR4-only scope without replacing exi
 - Q1 procedural generation and Q2 CPU training/export prototype are implemented. Separate seed-17 training and seed-9001 holdout sets were generated; 4,096 CPU updates scored 21.0219 dB versus bilinear 20.9377 dB across 32 holdout frames, still too small a gain for useful quality. Structural fold max error was 1.52588e-5 (2e-5 tolerance), and the 14-tensor FP16 pack validated with SHA-256 in `RESULTS.md`.
 - Six NaviQSR Python reference tests pass. QRISP import remains explicit-manifest only and requires a caller license-confirmation flag; no data was downloaded.
 - Added 4/5/8-tap analytic reconstruction DXIL variants and a D3D12 RX 5700 XT dispatch/reference smoke. All three pass the bounded numeric gate on one 64x36 output. Timestamp measurements are limited to this single AKR dispatch.
-- Added an experimental network D3D12 convolution graph: all 9 conv/pool-concat layers run on the RX 5700 XT using FP16-stored weights and FP32 activations/accumulation. It matches the PyTorch folded reference to max error 1.13e-5 at LR 32x18 and 64x36. One Release run measured graph medians of 70.22 us and 86.82 us respectively; no preprocessing, AKR, RGB output, upload, or readback is included.
-- Q3 teacher capture, full Q4 frame runtime (pack loader, preprocessing, true-FP16 arithmetic/ISA audit, AKR integration), Q5 full reset/stress coverage, Q6 sparse MCLD, and Q8 quality-qualified performance/Pareto selection remain open. Do not infer completion of these gates from the convolution or AKR smokes.
+- Joined all 9 network conv/pool-concat layers and temporal AKR/RGB reconstruction in one D3D12 command list. Release smokes on the RX 5700 XT cover 2x/3x/4x scale, 4/5/8 taps, and reset/valid history, with max control error 1.13e-5 and max RGB error 1.14e-6 against the Python reference. network+AKR median timestamps were 57.18-60.38 us on tiny synthetic inputs; p95 reached 347.84 us due to outliers. CPU preprocessing/phase packing/history creation and uploads, PSO setup, host wait, and readback are outside the timing.
+- Q3 teacher capture, full Q4 runtime (production-pack loading, game-frame preprocessing, true-FP16 arithmetic/ISA audit), Q5 full reset/stress coverage, Q6 sparse MCLD, and Q8 quality-qualified performance/Pareto selection remain open. Do not infer completion of these gates from the joined smoke.
 - Original FSR4 milestones remain active and unchanged; work on NaviQSR does not mark any full-FSR4 acceptance gate complete.

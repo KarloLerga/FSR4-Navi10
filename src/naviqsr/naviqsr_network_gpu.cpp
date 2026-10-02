@@ -48,6 +48,15 @@ struct networkCaseHeader {
     std::uint32_t weights_count;
     std::uint32_t controls_count;
     std::uint32_t residual_count;
+    std::uint32_t history_count;
+    std::uint32_t output_count;
+    std::uint32_t scale;
+    std::uint32_t taps;
+    float current_jitter_x;
+    float current_jitter_y;
+    float previous_jitter_x;
+    float previous_jitter_y;
+    float history_valid;
 };
 
 struct networkLayer {
@@ -67,7 +76,7 @@ struct networkLayer {
     std::uint32_t residual;
 };
 #pragma pack(pop)
-static_assert(sizeof(networkCaseHeader) == 56);
+static_assert(sizeof(networkCaseHeader) == 92);
 static_assert(sizeof(networkLayer) == 56);
 
 struct networkCase {
@@ -78,6 +87,8 @@ struct networkCase {
     std::vector<std::uint16_t> weights;
     std::vector<float> reference_controls;
     std::vector<float> reference_residual;
+    std::vector<float> history;
+    std::vector<float> reference_output;
 };
 
 void check_hr(HRESULT result, const char* operation) {
@@ -143,11 +154,17 @@ networkCase read_case(const std::filesystem::path& path) {
         throw std::runtime_error("NaviQSR network case header is truncated");
     }
     const auto& header = result.header;
-    if (std::memcmp(header.magic, "NQSRSTD1", 8) != 0 || header.version != 1 ||
+    if (std::memcmp(header.magic, "NQSRFRM2", 8) != 0 || header.version != 2 ||
         header.width < 4 || header.height < 4 || (header.width & 1U) != 0 ||
         (header.height & 1U) != 0 || header.input_channels < 3 ||
         header.input_channels > 64 || header.width_channels < 4 ||
         header.width_channels > 256 || header.hf_width < 2 || header.hf_width > 128 ||
+        header.scale < 2 || header.scale > 4 ||
+        (header.taps != 4 && header.taps != 5 && header.taps != 8) ||
+        !std::isfinite(header.current_jitter_x) || !std::isfinite(header.current_jitter_y) ||
+        !std::isfinite(header.previous_jitter_x) || !std::isfinite(header.previous_jitter_y) ||
+        !std::isfinite(header.history_valid) || header.history_valid < 0.0f ||
+        header.history_valid > 1.0f ||
         header.layer_count < 6 || header.layer_count > kMaxLayers ||
         static_cast<std::uint64_t>(header.width) * header.height > 16U * 1024U * 1024U) {
         throw std::runtime_error("NaviQSR network case header values are invalid");
@@ -158,9 +175,12 @@ networkCase read_case(const std::filesystem::path& path) {
     const std::size_t input_pixels = static_cast<std::size_t>(header.width) * header.height;
     const std::size_t expected_packed = static_cast<std::size_t>(header.input_channels) * 4U * low_pixels;
     const std::size_t expected_features = static_cast<std::size_t>(header.input_channels) * input_pixels;
+    const std::size_t output_pixels = input_pixels * header.scale * header.scale;
     if (header.packed_count != expected_packed || header.features_count != expected_features ||
         header.weights_count == 0 || header.weights_count > 16U * 1024U * 1024U ||
-        header.controls_count != 8U * low_pixels || header.residual_count != 3U * low_pixels) {
+        header.controls_count != 8U * low_pixels || header.residual_count != 3U * low_pixels ||
+        header.history_count != 3U * output_pixels || header.output_count != 3U * output_pixels ||
+        header.input_channels < 8) {
         throw std::runtime_error("NaviQSR network case tensor sizes do not match its dimensions");
     }
     const std::uint64_t expected_file_size = sizeof(networkCaseHeader)
@@ -169,7 +189,9 @@ networkCase read_case(const std::filesystem::path& path) {
         + static_cast<std::uint64_t>(header.features_count) * sizeof(float)
         + static_cast<std::uint64_t>(header.weights_count) * sizeof(std::uint16_t)
         + static_cast<std::uint64_t>(header.controls_count) * sizeof(float)
-        + static_cast<std::uint64_t>(header.residual_count) * sizeof(float);
+        + static_cast<std::uint64_t>(header.residual_count) * sizeof(float)
+        + static_cast<std::uint64_t>(header.history_count) * sizeof(float)
+        + static_cast<std::uint64_t>(header.output_count) * sizeof(float);
     if (expected_file_size != file_size) {
         throw std::runtime_error("NaviQSR network case byte size does not match its header");
     }
@@ -180,12 +202,15 @@ networkCase read_case(const std::filesystem::path& path) {
     result.weights = read_array<std::uint16_t>(stream, header.weights_count, "FP16 weights");
     result.reference_controls = read_array<float>(stream, header.controls_count, "control reference");
     result.reference_residual = read_array<float>(stream, header.residual_count, "residual reference");
+    result.history = read_array<float>(stream, header.history_count, "history input");
+    result.reference_output = read_array<float>(stream, header.output_count, "RGB reference output");
     if (stream.peek() != std::char_traits<char>::eof()) {
         throw std::runtime_error("NaviQSR network case has unexpected trailing bytes");
     }
 
     for (const auto* values : {&result.packed, &result.features,
-                               &result.reference_controls, &result.reference_residual}) {
+                               &result.reference_controls, &result.reference_residual,
+                               &result.history, &result.reference_output}) {
         if (!std::all_of(values->begin(), values->end(),
                          [](float value) { return std::isfinite(value); })) {
             throw std::runtime_error("NaviQSR network case contains NaN or infinity");
@@ -400,6 +425,8 @@ int run_naviqsr_network_gpu_smoke(const std::filesystem::path& case_path) {
                                   network_case.features.size() * sizeof(float));
     auto weights = upload_buffer(device.Get(), command_list.Get(), network_case.weights.data(),
                                  network_case.weights.size() * sizeof(std::uint16_t));
+    auto history = upload_buffer(device.Get(), command_list.Get(), network_case.history.data(),
+                                 network_case.history.size() * sizeof(float));
 
     std::vector<ComPtr<ID3D12Resource>> outputs;
     std::vector<std::size_t> output_bytes;
@@ -411,6 +438,10 @@ int run_naviqsr_network_gpu_smoke(const std::filesystem::path& case_path) {
         output_bytes.push_back(bytes);
         outputs.push_back(create_output_buffer(device.Get(), bytes));
     }
+    const std::size_t controls_index = network_case.layers.size() - 2U;
+    const std::size_t residual_index = network_case.layers.size() - 1U;
+    const std::size_t frame_output_bytes = network_case.reference_output.size() * sizeof(float);
+    auto frame_output = create_output_buffer(device.Get(), frame_output_bytes);
 
     D3D12_DESCRIPTOR_HEAP_DESC descriptor_description{};
     descriptor_description.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
@@ -504,9 +535,83 @@ int run_naviqsr_network_gpu_smoke(const std::filesystem::path& case_path) {
     check_hr(device->CreateComputePipelineState(&pipeline_description, IID_PPV_ARGS(&pipeline)),
              "Create NaviQSR network convolution pipeline failed");
 
+    D3D12_DESCRIPTOR_HEAP_DESC analytic_heap_description{};
+    analytic_heap_description.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+    analytic_heap_description.NumDescriptors = 5;
+    analytic_heap_description.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
+    ComPtr<ID3D12DescriptorHeap> analytic_heap;
+    check_hr(device->CreateDescriptorHeap(&analytic_heap_description,
+                                         IID_PPV_ARGS(&analytic_heap)),
+             "Create NaviQSR integrated analytic descriptor heap failed");
+    auto analytic_cpu = analytic_heap->GetCPUDescriptorHandleForHeapStart();
+    create_structured_srv(device.Get(), features.resource.Get(), features.bytes,
+                          sizeof(float), analytic_cpu);
+    analytic_cpu.ptr += descriptor_increment;
+    create_structured_srv(device.Get(), outputs[controls_index].Get(),
+                          output_bytes[controls_index], sizeof(float), analytic_cpu);
+    analytic_cpu.ptr += descriptor_increment;
+    create_structured_srv(device.Get(), outputs[residual_index].Get(),
+                          output_bytes[residual_index], sizeof(float), analytic_cpu);
+    analytic_cpu.ptr += descriptor_increment;
+    create_structured_srv(device.Get(), history.resource.Get(), history.bytes,
+                          sizeof(float), analytic_cpu);
+    analytic_cpu.ptr += descriptor_increment;
+    create_structured_uav(device.Get(), frame_output.Get(), frame_output_bytes,
+                          sizeof(float), analytic_cpu);
+
+    D3D12_DESCRIPTOR_RANGE analytic_srv_range{};
+    analytic_srv_range.RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+    analytic_srv_range.NumDescriptors = 4;
+    analytic_srv_range.BaseShaderRegister = 0;
+    analytic_srv_range.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+    D3D12_DESCRIPTOR_RANGE analytic_uav_range{};
+    analytic_uav_range.RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_UAV;
+    analytic_uav_range.NumDescriptors = 1;
+    analytic_uav_range.BaseShaderRegister = 0;
+    analytic_uav_range.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+    std::array<D3D12_ROOT_PARAMETER, 3> analytic_root_parameters{};
+    analytic_root_parameters[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+    analytic_root_parameters[0].DescriptorTable.NumDescriptorRanges = 1;
+    analytic_root_parameters[0].DescriptorTable.pDescriptorRanges = &analytic_srv_range;
+    analytic_root_parameters[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+    analytic_root_parameters[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+    analytic_root_parameters[1].DescriptorTable.NumDescriptorRanges = 1;
+    analytic_root_parameters[1].DescriptorTable.pDescriptorRanges = &analytic_uav_range;
+    analytic_root_parameters[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+    analytic_root_parameters[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_32BIT_CONSTANTS;
+    analytic_root_parameters[2].Constants.Num32BitValues = 12;
+    analytic_root_parameters[2].Constants.ShaderRegister = 0;
+    analytic_root_parameters[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+    D3D12_ROOT_SIGNATURE_DESC analytic_root_description{};
+    analytic_root_description.NumParameters = static_cast<UINT>(analytic_root_parameters.size());
+    analytic_root_description.pParameters = analytic_root_parameters.data();
+    ComPtr<ID3DBlob> analytic_serialized_root;
+    ComPtr<ID3DBlob> analytic_root_errors;
+    check_hr(D3D12SerializeRootSignature(&analytic_root_description,
+                                          D3D_ROOT_SIGNATURE_VERSION_1,
+                                          &analytic_serialized_root, &analytic_root_errors),
+             "Serialize NaviQSR integrated analytic root signature failed");
+    ComPtr<ID3D12RootSignature> analytic_root_signature;
+    check_hr(device->CreateRootSignature(0, analytic_serialized_root->GetBufferPointer(),
+                                         analytic_serialized_root->GetBufferSize(),
+                                         IID_PPV_ARGS(&analytic_root_signature)),
+             "Create NaviQSR integrated analytic root signature failed");
+    const std::wstring analytic_shader_name = L"naviqsr_network_analytic_"
+        + std::to_wstring(header.taps) + L"tap.dxil";
+    const auto analytic_shader_path = std::filesystem::path(executable_path.data()).parent_path()
+                                    / analytic_shader_name;
+    const auto analytic_shader = read_shader(analytic_shader_path);
+    D3D12_COMPUTE_PIPELINE_STATE_DESC analytic_pipeline_description{};
+    analytic_pipeline_description.pRootSignature = analytic_root_signature.Get();
+    analytic_pipeline_description.CS = {analytic_shader.data(), analytic_shader.size()};
+    ComPtr<ID3D12PipelineState> analytic_pipeline;
+    check_hr(device->CreateComputePipelineState(&analytic_pipeline_description,
+                                                IID_PPV_ARGS(&analytic_pipeline)),
+             "Create NaviQSR integrated analytic pipeline failed");
+
     D3D12_QUERY_HEAP_DESC query_description{};
     query_description.Type = D3D12_QUERY_HEAP_TYPE_TIMESTAMP;
-    query_description.Count = kGraphRuns * 2U;
+    query_description.Count = kGraphRuns * 3U;
     ComPtr<ID3D12QueryHeap> timestamp_queries;
     check_hr(device->CreateQueryHeap(&query_description, IID_PPV_ARGS(&timestamp_queries)),
              "Create NaviQSR network timestamp query heap failed");
@@ -526,11 +631,10 @@ int run_naviqsr_network_gpu_smoke(const std::filesystem::path& case_path) {
         throw std::runtime_error("NaviQSR network queue returned zero timestamp frequency");
     }
 
-    ID3D12DescriptorHeap* heaps[] = {descriptor_heap.Get()};
-    command_list->SetDescriptorHeaps(1, heaps);
-    command_list->SetComputeRootSignature(root_signature.Get());
-    command_list->SetPipelineState(pipeline.Get());
+    ID3D12DescriptorHeap* network_heaps[] = {descriptor_heap.Get()};
+    ID3D12DescriptorHeap* analytic_heaps[] = {analytic_heap.Get()};
     const auto gpu_start = descriptor_heap->GetGPUDescriptorHandleForHeapStart();
+    const auto analytic_gpu_start = analytic_heap->GetGPUDescriptorHandleForHeapStart();
     for (UINT run = 0; run < kGraphRuns; ++run) {
         if (run != 0) {
             for (const auto& output : outputs) {
@@ -542,8 +646,18 @@ int run_naviqsr_network_gpu_smoke(const std::filesystem::path& case_path) {
                 reset_barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_UNORDERED_ACCESS;
                 command_list->ResourceBarrier(1, &reset_barrier);
             }
+            D3D12_RESOURCE_BARRIER frame_reset{};
+            frame_reset.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+            frame_reset.Transition.pResource = frame_output.Get();
+            frame_reset.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+            frame_reset.Transition.StateBefore = D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE;
+            frame_reset.Transition.StateAfter = D3D12_RESOURCE_STATE_UNORDERED_ACCESS;
+            command_list->ResourceBarrier(1, &frame_reset);
         }
-        command_list->EndQuery(timestamp_queries.Get(), D3D12_QUERY_TYPE_TIMESTAMP, run * 2U);
+        command_list->SetDescriptorHeaps(1, network_heaps);
+        command_list->SetComputeRootSignature(root_signature.Get());
+        command_list->SetPipelineState(pipeline.Get());
+        command_list->EndQuery(timestamp_queries.Get(), D3D12_QUERY_TYPE_TIMESTAMP, run * 3U);
         for (std::size_t index = 0; index < network_case.layers.size(); ++index) {
             const auto& layer = network_case.layers[index];
             D3D12_GPU_DESCRIPTOR_HANDLE srv_handle = gpu_start;
@@ -572,11 +686,39 @@ int run_naviqsr_network_gpu_smoke(const std::filesystem::path& case_path) {
             command_list->ResourceBarrier(1, &barrier);
         }
         command_list->EndQuery(timestamp_queries.Get(), D3D12_QUERY_TYPE_TIMESTAMP,
-                               run * 2U + 1U);
+                               run * 3U + 1U);
+
+        command_list->SetDescriptorHeaps(1, analytic_heaps);
+        command_list->SetComputeRootSignature(analytic_root_signature.Get());
+        command_list->SetPipelineState(analytic_pipeline.Get());
+        D3D12_GPU_DESCRIPTOR_HANDLE analytic_uav = analytic_gpu_start;
+        analytic_uav.ptr += static_cast<UINT64>(4U) * descriptor_increment;
+        command_list->SetComputeRootDescriptorTable(0, analytic_gpu_start);
+        command_list->SetComputeRootDescriptorTable(1, analytic_uav);
+        const std::array<std::uint32_t, 12> analytic_constants{
+            header.width, header.height, header.scale,
+            header.width * header.scale, header.height * header.scale,
+            header.taps, std::bit_cast<std::uint32_t>(header.history_valid), 0U,
+            std::bit_cast<std::uint32_t>(header.current_jitter_x),
+            std::bit_cast<std::uint32_t>(header.current_jitter_y),
+            std::bit_cast<std::uint32_t>(header.previous_jitter_x),
+            std::bit_cast<std::uint32_t>(header.previous_jitter_y)};
+        command_list->SetComputeRoot32BitConstants(2,
+            static_cast<UINT>(analytic_constants.size()), analytic_constants.data(), 0);
+        const std::uint64_t output_pixels = static_cast<std::uint64_t>(header.width)
+            * header.height * header.scale * header.scale;
+        command_list->Dispatch(static_cast<UINT>((output_pixels + 63U) / 64U), 1, 1);
+        D3D12_RESOURCE_BARRIER analytic_output_barrier{};
+        analytic_output_barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+        analytic_output_barrier.Transition.pResource = frame_output.Get();
+        analytic_output_barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+        analytic_output_barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_UNORDERED_ACCESS;
+        analytic_output_barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE;
+        command_list->ResourceBarrier(1, &analytic_output_barrier);
+        command_list->EndQuery(timestamp_queries.Get(), D3D12_QUERY_TYPE_TIMESTAMP,
+                               run * 3U + 2U);
     }
 
-    const std::size_t controls_index = network_case.layers.size() - 2U;
-    const std::size_t residual_index = network_case.layers.size() - 1U;
     auto transition_to_copy = [&](ID3D12Resource* resource) {
         D3D12_RESOURCE_BARRIER barrier{};
         barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
@@ -588,9 +730,11 @@ int run_naviqsr_network_gpu_smoke(const std::filesystem::path& case_path) {
     };
     transition_to_copy(outputs[controls_index].Get());
     transition_to_copy(outputs[residual_index].Get());
+    transition_to_copy(frame_output.Get());
     const std::uint64_t control_bytes = network_case.reference_controls.size() * sizeof(float);
     const std::uint64_t residual_bytes = network_case.reference_residual.size() * sizeof(float);
-    const std::uint64_t readback_bytes = control_bytes + residual_bytes;
+    const std::uint64_t frame_bytes = network_case.reference_output.size() * sizeof(float);
+    const std::uint64_t readback_bytes = control_bytes + residual_bytes + frame_bytes;
     const auto readback_heap = heap_properties(D3D12_HEAP_TYPE_READBACK);
     const auto readback_description = buffer_description(readback_bytes);
     ComPtr<ID3D12Resource> readback;
@@ -603,6 +747,8 @@ int run_naviqsr_network_gpu_smoke(const std::filesystem::path& case_path) {
                                    control_bytes);
     command_list->CopyBufferRegion(readback.Get(), control_bytes,
                                    outputs[residual_index].Get(), 0, residual_bytes);
+    command_list->CopyBufferRegion(readback.Get(), control_bytes + residual_bytes,
+                                   frame_output.Get(), 0, frame_bytes);
     command_list->ResolveQueryData(timestamp_queries.Get(), D3D12_QUERY_TYPE_TIMESTAMP,
                                    0, query_description.Count, timestamp_readback.Get(), 0);
     check_hr(command_list->Close(), "Close NaviQSR network command list failed");
@@ -625,26 +771,36 @@ int run_naviqsr_network_gpu_smoke(const std::filesystem::path& case_path) {
         throw std::runtime_error("Timed out waiting for NaviQSR network GPU inference");
     }
 
-    std::array<std::uint64_t, kGraphRuns * 2U> timestamps{};
+    std::array<std::uint64_t, kGraphRuns * 3U> timestamps{};
     void* timestamp_mapped = nullptr;
     const D3D12_RANGE timestamp_range{0, sizeof(timestamps)};
     check_hr(timestamp_readback->Map(0, &timestamp_range, &timestamp_mapped),
              "Map NaviQSR network timestamps failed");
     std::memcpy(timestamps.data(), timestamp_mapped, sizeof(timestamps));
     timestamp_readback->Unmap(0, nullptr);
-    std::vector<double> graph_times_us;
-    graph_times_us.reserve(kGraphSamples);
+    std::vector<double> network_times_us;
+    std::vector<double> frame_times_us;
+    network_times_us.reserve(kGraphSamples);
+    frame_times_us.reserve(kGraphSamples);
     for (UINT run = kGraphWarmups; run < kGraphRuns; ++run) {
-        const auto begin = timestamps[run * 2U];
-        const auto end = timestamps[run * 2U + 1U];
-        if (end < begin) throw std::runtime_error("NaviQSR network timestamps are not monotonic");
-        graph_times_us.push_back(1.0e6 * static_cast<double>(end - begin)
+        const auto begin = timestamps[run * 3U];
+        const auto network_end = timestamps[run * 3U + 1U];
+        const auto frame_end = timestamps[run * 3U + 2U];
+        if (network_end < begin || frame_end < network_end) {
+            throw std::runtime_error("NaviQSR GPU frame timestamps are not monotonic");
+        }
+        network_times_us.push_back(1.0e6 * static_cast<double>(network_end - begin)
+                                   / static_cast<double>(timestamp_frequency));
+        frame_times_us.push_back(1.0e6 * static_cast<double>(frame_end - begin)
                                  / static_cast<double>(timestamp_frequency));
     }
-    std::sort(graph_times_us.begin(), graph_times_us.end());
-    const auto median_us = (graph_times_us[9] + graph_times_us[10]) * 0.5;
-    const auto p90_us = graph_times_us[17];
-    const auto p95_us = graph_times_us[18];
+    auto summarize = [](std::vector<double>& values) {
+        std::sort(values.begin(), values.end());
+        return std::array<double, 4>{values.front(), (values[9] + values[10]) * 0.5,
+                                     values[17], values[18]};
+    };
+    const auto network_timing = summarize(network_times_us);
+    const auto frame_timing = summarize(frame_times_us);
 
     void* mapped = nullptr;
     const D3D12_RANGE read_range{0, static_cast<SIZE_T>(readback_bytes)};
@@ -654,48 +810,67 @@ int run_naviqsr_network_gpu_smoke(const std::filesystem::path& case_path) {
     std::vector<float> actual_residual(actual + network_case.reference_controls.size(),
                                        actual + network_case.reference_controls.size()
                                            + network_case.reference_residual.size());
+    const auto image_begin = actual + network_case.reference_controls.size()
+                           + network_case.reference_residual.size();
+    std::vector<float> actual_image(image_begin,
+                                    image_begin + network_case.reference_output.size());
     readback->Unmap(0, nullptr);
 
-    float maximum_error = 0.0f;
-    double error_sum = 0.0;
-    std::size_t value_count = 0;
     auto measure_error = [&](const std::vector<float>& actual_values,
-                             const std::vector<float>& expected_values) {
+                             const std::vector<float>& expected_values,
+                             const char* name) {
+        float maximum_error = 0.0f;
+        double error_sum = 0.0;
         for (std::size_t index = 0; index < actual_values.size(); ++index) {
             if (!std::isfinite(actual_values[index])) {
-                throw std::runtime_error("NaviQSR network GPU output contains NaN or infinity");
+                throw std::runtime_error(std::string("NaviQSR GPU output contains NaN or infinity: ")
+                                         + name);
             }
             const float error = std::abs(actual_values[index] - expected_values[index]);
             maximum_error = (std::max)(maximum_error, error);
             error_sum += error;
-            ++value_count;
         }
+        return std::array<double, 2>{maximum_error,
+            error_sum / static_cast<double>(actual_values.size())};
     };
-    measure_error(actual_controls, network_case.reference_controls);
-    measure_error(actual_residual, network_case.reference_residual);
-    const double mean_error = error_sum / static_cast<double>(value_count);
-    if (maximum_error > 5.0e-3f || mean_error > 1.0e-3) {
+    const auto control_error = measure_error(actual_controls,
+                                             network_case.reference_controls, "controls");
+    const auto residual_error = measure_error(actual_residual,
+                                              network_case.reference_residual, "residual");
+    const auto image_error = measure_error(actual_image,
+                                           network_case.reference_output, "RGB output");
+    if (control_error[0] > 5.0e-3 || control_error[1] > 1.0e-3 ||
+        residual_error[0] > 5.0e-3 || residual_error[1] > 1.0e-3 ||
+        image_error[0] > 5.5e-3 || image_error[1] > 2.5e-3) {
         const auto debug_path = std::filesystem::path(case_path.string() + ".gpu.f32");
         std::ofstream debug(debug_path, std::ios::binary);
         debug.write(reinterpret_cast<const char*>(actual_controls.data()),
                     static_cast<std::streamsize>(actual_controls.size() * sizeof(float)));
         debug.write(reinterpret_cast<const char*>(actual_residual.data()),
                     static_cast<std::streamsize>(actual_residual.size() * sizeof(float)));
-        throw std::runtime_error("NaviQSR network GPU/reference gate failed; max abs error=" +
-                                 std::to_string(maximum_error) + ", mean abs error=" +
-                                 std::to_string(mean_error));
+        debug.write(reinterpret_cast<const char*>(actual_image.data()),
+                    static_cast<std::streamsize>(actual_image.size() * sizeof(float)));
+        throw std::runtime_error("NaviQSR network/AKR GPU reference gate failed; image max/mean abs error=" +
+                                 std::to_string(image_error[0]) + "/" +
+                                 std::to_string(image_error[1]));
     }
 
-    std::cout << "NaviQSR network convolutions passed on RX 5700 XT (PCI 1002:731F): "
-              << header.width << 'x' << header.height << " input, "
-              << network_case.layers.size() << " GPU layers, " << header.weights_count
-              << " FP16 weight/bias values, control+residual max/mean abs error "
-              << maximum_error << '/' << mean_error << ".\n"
-              << "  graph timing: " << kGraphWarmups << " warmup + " << kGraphSamples
-              << " measured; min/median/p90/p95 " << graph_times_us.front() << '/'
-              << median_us << '/' << p90_us << '/' << p95_us << " us\n"
-              << "  Activations and accumulation are FP32; preprocessing/phase packing and "
-                 "analytic reconstruction are outside this network-only smoke.\n";
+    std::cout << "NaviQSR network+AKR GPU frame passed on RX 5700 XT (PCI 1002:731F): "
+              << header.width << 'x' << header.height << " LR input -> "
+              << header.width * header.scale << 'x' << header.height * header.scale
+              << ", taps " << header.taps << ", " << network_case.layers.size()
+              << " network GPU layers.\n"
+              << "  controls max/mean abs error " << control_error[0] << '/' << control_error[1]
+              << ", residual " << residual_error[0] << '/' << residual_error[1]
+              << ", RGB " << image_error[0] << '/' << image_error[1] << ".\n"
+              << "  network weights/biases: " << header.weights_count
+              << " FP16 values; activations and accumulation are FP32.\n"
+              << "  network-only timing min/median/p90/p95: " << network_timing[0] << '/'
+              << network_timing[1] << '/' << network_timing[2] << '/' << network_timing[3]
+              << " us\n"
+              << "  network+AKR timing min/median/p90/p95: " << frame_timing[0] << '/'
+              << frame_timing[1] << '/' << frame_timing[2] << '/' << frame_timing[3]
+              << " us; uploads, CPU preprocessing, PSO creation, wait, and readback excluded.\n";
     return 0;
 }
 

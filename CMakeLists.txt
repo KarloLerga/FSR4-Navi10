@@ -111,6 +111,48 @@ add_custom_target(compile_naviqsr_network ALL
 )
 add_dependencies(fsr4n10_harness compile_naviqsr_network)
 
+fsr4n10_compile_hlsl(
+    compile_naviqsr_network_analytic_4tap
+    "${CMAKE_CURRENT_SOURCE_DIR}/shaders/naviqsr/network_analytic.hlsl"
+    main
+    "${CMAKE_CURRENT_BINARY_DIR}/generated-shaders/naviqsr_network_analytic_4tap.dxil"
+    cs_6_6
+    -D TAP_COUNT=4
+)
+set(NAVIQSR_network_ANALYTIC_4TAP_SHADER "${compile_naviqsr_network_analytic_4tap_OUTPUT}")
+fsr4n10_compile_hlsl(
+    compile_naviqsr_network_analytic_5tap
+    "${CMAKE_CURRENT_SOURCE_DIR}/shaders/naviqsr/network_analytic.hlsl"
+    main
+    "${CMAKE_CURRENT_BINARY_DIR}/generated-shaders/naviqsr_network_analytic_5tap.dxil"
+    cs_6_6
+    -D TAP_COUNT=5
+)
+set(NAVIQSR_network_ANALYTIC_5TAP_SHADER "${compile_naviqsr_network_analytic_5tap_OUTPUT}")
+fsr4n10_compile_hlsl(
+    compile_naviqsr_network_analytic_8tap
+    "${CMAKE_CURRENT_SOURCE_DIR}/shaders/naviqsr/network_analytic.hlsl"
+    main
+    "${CMAKE_CURRENT_BINARY_DIR}/generated-shaders/naviqsr_network_analytic_8tap.dxil"
+    cs_6_6
+    -D TAP_COUNT=8
+)
+set(NAVIQSR_network_ANALYTIC_8TAP_SHADER "${compile_naviqsr_network_analytic_8tap_OUTPUT}")
+add_custom_target(compile_naviqsr_network_analytic ALL
+    COMMAND "${CMAKE_COMMAND}" -E copy_if_different
+            "${NAVIQSR_network_ANALYTIC_4TAP_SHADER}" "$<TARGET_FILE_DIR:fsr4n10_harness>/naviqsr_network_analytic_4tap.dxil"
+    COMMAND "${CMAKE_COMMAND}" -E copy_if_different
+            "${NAVIQSR_network_ANALYTIC_5TAP_SHADER}" "$<TARGET_FILE_DIR:fsr4n10_harness>/naviqsr_network_analytic_5tap.dxil"
+    COMMAND "${CMAKE_COMMAND}" -E copy_if_different
+            "${NAVIQSR_network_ANALYTIC_8TAP_SHADER}" "$<TARGET_FILE_DIR:fsr4n10_harness>/naviqsr_network_analytic_8tap.dxil"
+    DEPENDS "${NAVIQSR_network_ANALYTIC_4TAP_SHADER}"
+            "${NAVIQSR_network_ANALYTIC_5TAP_SHADER}"
+            "${NAVIQSR_network_ANALYTIC_8TAP_SHADER}"
+    COMMENT "Copying NaviQSR network analytic DXIL tap variants to the harness"
+    VERBATIM
+)
+add_dependencies(fsr4n10_harness compile_naviqsr_network_analytic)
+
 add_custom_target(generate_model_manifest
     COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/model/extract_manifest.py"
             --source "${CMAKE_CURRENT_SOURCE_DIR}/third_party/fidelityfx-fsr4-source"
