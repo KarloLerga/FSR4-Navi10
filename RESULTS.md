@@ -43,6 +43,30 @@ The deterministic source inventory covers 12 model variants (6 presets ? INT8/FP
 
 The zero-feature model smoke is a tensor-level execution check only; it does not validate frame semantics, image quality, stability, or performance.
 
+
+## Preliminary I8 model GPU timing
+
+Measured with the native/1080p source shader graph on the RX 5700 XT. Each configuration ran 5 warmup iterations followed by 20 measured iterations; D3D12 timestamp queries bracket each of the 14 compute dispatches. Times are preliminary kernel timings for a synthetic zero model-input tensor, before the quality gate. They exclude barriers, CPU scheduling, real-frame preprocessing, temporal history preparation, and RGB image postprocessing. Do not interpret them as full FSR4 effect time or as a backend-selection result.
+
+| Source entry | Release avg (?s) | Release median (?s) | RelWithDebInfo avg (?s) | RelWithDebInfo median (?s) |
+|---:|---:|---:|---:|---:|
+| 00 | 130.882 | 116.820 | 116.794 | 116.660 |
+| 01 | 610.872 | 591.120 | 656.050 | 580.120 |
+| 02 | 668.936 | 626.280 | 626.060 | 621.680 |
+| 03 | 119.044 | 113.120 | 113.996 | 112.340 |
+| 04 | 574.458 | 498.900 | 511.176 | 499.380 |
+| 05 | 548.132 | 503.900 | 590.124 | 503.620 |
+| 06 | 197.822 | 172.400 | 178.178 | 170.680 |
+| 07 | 537.638 | 475.960 | 480.818 | 467.920 |
+| 08 | 496.448 | 449.580 | 496.490 | 451.700 |
+| 09 | 796.234 | 774.660 | 784.112 | 771.860 |
+| 10 | 586.670 | 456.180 | 547.116 | 455.460 |
+| 11 | 1242.038 | 1211.480 | 1249.476 | 1189.440 |
+| 12 | 608.756 | 581.780 | 600.546 | 581.600 |
+| 13 | 761.688 | 682.940 | 730.674 | 679.980 |
+
+The sum of per-pass average kernel times was 7,879.618 ?s in Release and 7,681.610 ?s in RelWithDebInfo. It omits inter-dispatch barriers and all frame/image stages.
+
 ## Limitations
 
 AMD's published FSR 4.0.2 support is RX 9000 Series and above, with signed DLL integration. This project targets RX 5700 XT with a custom unsigned implementation; hardware execution and later game-loader integration remain unvalidated.

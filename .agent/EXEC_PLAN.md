@@ -47,6 +47,7 @@ Build the Windows x64 / DirectX 12 project described in `docs/MASTER_SPEC.md` fo
 - Added a GPU smoke harness that executes upstream native/1080p I8 source pass 0, all 12 neural passes and pass 13 on synthetic zero model-input features; the final FP16 feature tensor is finite.
 - Added a source-derived I8 pass catalog for 18 preset/tier variants: 486 entrypoints/operator calls and 2,178 tensor descriptors, preserving exact HLSL argument expressions and source hashes.
 - Two clean conversion/container/catalog runs reproduced all 56 files across the 18 combinations.
+- Added a timestamped model-only baseline: 5 warmup and 20 measured zero-feature runs in Release and RelWithDebInfo, with per-pass results written to `RESULTS.md`.
 
 ## Blockers and resolution
 
@@ -80,6 +81,7 @@ Build the Windows x64 / DirectX 12 project described in `docs/MASTER_SPEC.md` fo
 - [ ] Complete canonical runtime tensor manifest with activation tensors, pass bindings and operator metadata; integrate model containers into GPU uploads and dispatch.
 - [x] Dispatch the GPU arithmetic probe; 64 FP16 results matched on the RX 5700 XT and DXIL disassembly showed a half-precision multiply.
 - [x] Dispatch all pinned native/1080p source pass entries on synthetic zero features; finite FP16 feature output observed. Real frame and temporal behavior remain open.
+- [x] Add repeated per-pass D3D12 timestamp measurements for the synthetic native/1080p source graph; record scope and results without claiming full-effect timing.
 - [ ] Build and validate the FSR4 reference harness.
 - [ ] Implement and validate complete FP16 compatibility/high-precision paths.
 - [ ] Implement tuning, adapter, packaging and finish review.

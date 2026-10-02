@@ -7,6 +7,7 @@
 #include <cstring>
 #include <filesystem>
 #include <fstream>
+#include <iomanip>
 #include <iostream>
 #include <memory>
 #include <stdexcept>
@@ -40,6 +41,8 @@ constexpr std::uint64_t kNetworkOutputBytes =
     static_cast<std::uint64_t>(kInputWidth) * kInputHeight * kNetworkOutputChannels * sizeof(std::uint16_t);
 constexpr std::uint64_t kScratchBytes = 20736000;
 constexpr std::uint32_t kOutputSentinel = 0x7f;
+constexpr std::uint32_t kBenchmarkIterations = 25;
+constexpr std::uint32_t kBenchmarkWarmupIterations = 5;
 
 std::array<UINT, 3> native_1080_dispatch_groups(std::uint32_t pass_index) {
     const auto ceil_div = [](std::uint32_t value, std::uint32_t divisor) {
@@ -211,7 +214,10 @@ void upload_fill(ID3D12Resource* resource, std::uint64_t bytes, std::byte value)
 
 } // namespace
 
-int run_upstream_smoke(bool full_model) {
+int run_upstream_smoke(bool full_model, bool benchmark) {
+    if (benchmark && !full_model) {
+        throw std::runtime_error("the upstream I8 benchmark requires the full model chain");
+    }
     if (kOutputBytes > kScratchBytes || kNetworkOutputBytes % sizeof(std::uint32_t) != 0 ||
         kInputBytes % sizeof(std::uint32_t) != 0 || kScratchBytes % sizeof(std::uint32_t) != 0) {
         throw std::runtime_error("upstream smoke buffer geometry is invalid");
@@ -316,6 +322,27 @@ int run_upstream_smoke(bool full_model) {
     auto output_readback = create_buffer(
         device.Get(), readback_bytes, D3D12_HEAP_TYPE_READBACK, D3D12_RESOURCE_STATE_COPY_DEST);
 
+    const std::uint32_t dispatch_iterations = benchmark ? kBenchmarkIterations : 1;
+    const std::uint32_t query_count = dispatch_iterations * pass_count * 2;
+    ComPtr<ID3D12QueryHeap> timestamp_heap;
+    ComPtr<ID3D12Resource> timestamp_readback;
+    UINT64 timestamp_frequency = 0;
+    if (benchmark) {
+        D3D12_QUERY_HEAP_DESC query_description{};
+        query_description.Type = D3D12_QUERY_HEAP_TYPE_TIMESTAMP;
+        query_description.Count = query_count;
+        check_hr(device->CreateQueryHeap(&query_description, IID_PPV_ARGS(&timestamp_heap)), "Create timestamp query heap failed");
+        timestamp_readback = create_buffer(
+            device.Get(),
+            static_cast<std::uint64_t>(query_count) * sizeof(UINT64),
+            D3D12_HEAP_TYPE_READBACK,
+            D3D12_RESOURCE_STATE_COPY_DEST);
+        check_hr(queue->GetTimestampFrequency(&timestamp_frequency), "Get compute queue timestamp frequency failed");
+        if (timestamp_frequency == 0) {
+            throw std::runtime_error("compute queue reported a zero timestamp frequency");
+        }
+    }
+
     ComPtr<ID3D12Resource> initializer_default;
     ComPtr<ID3D12Resource> initializer_upload;
     if (full_model) {
@@ -370,16 +397,35 @@ int run_upstream_smoke(bool full_model) {
     command_list->SetComputeRootDescriptorTable(
         1,
         D3D12_GPU_DESCRIPTOR_HANDLE{gpu_start.ptr + static_cast<UINT64>(descriptor_increment) * 2});
-    for (std::uint32_t pass_index = 0; pass_index < pass_count; ++pass_index) {
-        const auto groups = native_1080_dispatch_groups(pass_index);
-        command_list->SetPipelineState(pipelines[pass_index].Get());
-        command_list->Dispatch(groups[0], groups[1], groups[2]);
-        if (pass_index + 1 < pass_count) {
-            D3D12_RESOURCE_BARRIER barrier{};
-            barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_UAV;
-            barrier.UAV.pResource = scratch_u1.Get();
-            command_list->ResourceBarrier(1, &barrier);
+    UINT query_index = 0;
+    for (std::uint32_t iteration = 0; iteration < dispatch_iterations; ++iteration) {
+        for (std::uint32_t pass_index = 0; pass_index < pass_count; ++pass_index) {
+            const auto groups = native_1080_dispatch_groups(pass_index);
+            command_list->SetPipelineState(pipelines[pass_index].Get());
+            if (benchmark) {
+                command_list->EndQuery(timestamp_heap.Get(), D3D12_QUERY_TYPE_TIMESTAMP, query_index++);
+            }
+            command_list->Dispatch(groups[0], groups[1], groups[2]);
+            if (benchmark) {
+                command_list->EndQuery(timestamp_heap.Get(), D3D12_QUERY_TYPE_TIMESTAMP, query_index++);
+            }
+            if (pass_index + 1 < pass_count || iteration + 1 < dispatch_iterations) {
+                D3D12_RESOURCE_BARRIER barrier{};
+                barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_UAV;
+                barrier.UAV.pResource = scratch_u1.Get();
+                command_list->ResourceBarrier(1, &barrier);
+            }
         }
+    }
+
+    if (benchmark) {
+        command_list->ResolveQueryData(
+            timestamp_heap.Get(),
+            D3D12_QUERY_TYPE_TIMESTAMP,
+            0,
+            query_count,
+            timestamp_readback.Get(),
+            0);
     }
 
     ID3D12Resource* final_resource = full_model ? output_u0.Get() : scratch_u1.Get();
@@ -456,6 +502,44 @@ int run_upstream_smoke(bool full_model) {
     if (!changed_from_sentinel || nonzero_values == 0) {
         throw std::runtime_error("upstream zero-model smoke did not produce an FP16 feature output");
     }
+    if (benchmark) {
+        std::vector<UINT64> timestamps(query_count);
+        void* timestamp_data = nullptr;
+        const D3D12_RANGE timestamp_range{0, static_cast<SIZE_T>(query_count) * sizeof(UINT64)};
+        check_hr(timestamp_readback->Map(0, &timestamp_range, &timestamp_data), "Map timestamp query readback failed");
+        std::memcpy(timestamps.data(), timestamp_data, timestamps.size() * sizeof(UINT64));
+        const D3D12_RANGE no_timestamp_write{0, 0};
+        timestamp_readback->Unmap(0, &no_timestamp_write);
+
+        const double microseconds_per_tick = 1.0e6 / static_cast<double>(timestamp_frequency);
+        std::cout << "Preliminary upstream I8 synthetic-feature GPU timing on RX 5700 XT; "
+                  << kBenchmarkWarmupIterations << " warmup iterations, "
+                  << (kBenchmarkIterations - kBenchmarkWarmupIterations) << " measured iterations.\n";
+        std::cout << "Pass  Avg (us)  Median (us)\n";
+        double graph_average = 0.0;
+        for (std::uint32_t pass_index = 0; pass_index < pass_count; ++pass_index) {
+            std::vector<double> samples;
+            samples.reserve(kBenchmarkIterations - kBenchmarkWarmupIterations);
+            for (std::uint32_t iteration = kBenchmarkWarmupIterations; iteration < kBenchmarkIterations; ++iteration) {
+                const std::size_t base = (static_cast<std::size_t>(iteration) * pass_count + pass_index) * 2;
+                samples.push_back(static_cast<double>(timestamps[base + 1] - timestamps[base]) * microseconds_per_tick);
+            }
+            const double sample_sum = [&samples] {
+                double value = 0.0;
+                for (const double sample : samples) value += sample;
+                return value;
+            }();
+            const double average = sample_sum / static_cast<double>(samples.size());
+            std::sort(samples.begin(), samples.end());
+            const double median = (samples[samples.size() / 2 - 1] + samples[samples.size() / 2]) * 0.5;
+            graph_average += average;
+            std::cout << std::setw(4) << std::setfill('0') << pass_index << std::setfill(' ') << "  "
+                      << std::fixed << std::setprecision(3) << std::setw(8) << average << "  "
+                      << std::setw(11) << median << '\n';
+        }
+        std::cout << "Sum of pass averages: " << std::fixed << std::setprecision(3) << graph_average
+                  << " us of kernel time; excludes barriers, frame preprocessing, and image postprocessing.\n";
+    }
     std::cout << "Upstream I8 model smoke passed on RX 5700 XT: pass 0, all 12 neural passes, and pass 13 ran "
               << "on synthetic zero features. The final 1920x1080x8 FP16 feature tensor contains "
               << nonzero_values << " nonzero finite values. This is not an image-quality result.\n";
@@ -463,11 +547,15 @@ int run_upstream_smoke(bool full_model) {
 }
 
 int run_upstream_pass0_smoke() {
-    return run_upstream_smoke(false);
+    return run_upstream_smoke(false, false);
 }
 
 int run_upstream_i8_zero_model_smoke() {
-    return run_upstream_smoke(true);
+    return run_upstream_smoke(true, false);
+}
+
+int run_upstream_i8_zero_model_benchmark() {
+    return run_upstream_smoke(true, true);
 }
 
 } // namespace fsr4n10
