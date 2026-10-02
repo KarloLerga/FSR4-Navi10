@@ -127,7 +127,7 @@ function Install-GitHubReleaseAsset {
         Remove-Item -Force $zip
         return $true
     } catch {
-        Write-Warning "Optional tool download failed for $Repo: $($_.Exception.Message)"
+        Write-Warning "Optional tool download failed for ${Repo}: $($_.Exception.Message)"
         return $false
     }
 }

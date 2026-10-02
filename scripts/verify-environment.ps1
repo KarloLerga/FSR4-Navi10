@@ -7,6 +7,8 @@ $ErrorActionPreference = 'Stop'
 $RepoRoot = Split-Path -Parent $PSScriptRoot
 $StateDir = Join-Path $RepoRoot '.state'
 New-Item -ItemType Directory -Force -Path $StateDir | Out-Null
+. (Join-Path $PSScriptRoot 'BuildEnvironment.ps1')
+Import-Fsr4Navi10ToolPath
 
 function Find-VsDevCmd {
     $vswhere = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio\Installer\vswhere.exe'
@@ -18,10 +20,18 @@ function Find-VsDevCmd {
     return $null
 }
 
-function Version-Output([string]$Exe, [string[]]$Args) {
+function Version-Output([string]$Exe, [string[]]$CommandArgs) {
     $cmd = Get-Command $Exe -ErrorAction SilentlyContinue
     if (-not $cmd) { return $null }
-    try { return ((& $Exe @Args 2>&1 | Select-Object -First 4) -join "`n").Trim() } catch { return $_.Exception.Message }
+    try {
+        $output = @(& $Exe @CommandArgs 2>&1 | Select-Object -First 4)
+        if ($LASTEXITCODE -ne 0) {
+            throw "$Exe exited with code $LASTEXITCODE"
+        }
+        return ($output -join "`n").Trim()
+    } catch {
+        return $_.Exception.Message
+    }
 }
 
 $checks = [ordered]@{
