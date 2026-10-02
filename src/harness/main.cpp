@@ -1,7 +1,10 @@
 #include "fsr4n10/device_caps.h"
 #include "fsr4n10/fp16_probe.h"
+#include "fsr4n10/model_pack.h"
+#include "fsr4n10/upstream_smoke.h"
 #include "fsr4n10/version.h"
 
+#include <filesystem>
 #include <iomanip>
 #include <iostream>
 #include <stdexcept>
@@ -14,7 +17,10 @@ void print_usage() {
               << "Usage:\n"
               << "  fsr4n10_harness.exe --version\n"
               << "  fsr4n10_harness.exe --list-adapters\n"
-              << "  fsr4n10_harness.exe --run-fp16-probe\n";
+              << "  fsr4n10_harness.exe --run-fp16-probe\n"
+              << "  fsr4n10_harness.exe --run-upstream-pass0-smoke\n"
+              << "  fsr4n10_harness.exe --run-upstream-i8-zero-model-smoke\n"
+              << "  fsr4n10_harness.exe --validate-model-pack <path>\n";
 }
 
 int list_adapters() {
@@ -40,6 +46,17 @@ int list_adapters() {
     return 0;
 }
 
+int validate_model_pack(const std::filesystem::path& path) {
+    const auto pack = fsr4n10::ModelPack::Load(path);
+    std::uint64_t total_parameter_bytes = 0;
+    for (std::size_t index = 0; index < pack.tensors().size(); ++index) {
+        total_parameter_bytes += pack.tensor_bytes(index).size();
+    }
+    std::cout << "Model pack valid: " << pack.tensors().size() << " FP16 tensors, " << total_parameter_bytes
+              << " parameter bytes. First tensor: " << pack.tensor_name(0) << ".\n";
+    return 0;
+}
+
 } // namespace
 
 int main(int argc, char** argv) {
@@ -53,6 +70,15 @@ int main(int argc, char** argv) {
         }
         if (argc == 2 && std::string_view(argv[1]) == "--run-fp16-probe") {
             return fsr4n10::run_fp16_probe();
+        }
+        if (argc == 2 && std::string_view(argv[1]) == "--run-upstream-pass0-smoke") {
+            return fsr4n10::run_upstream_pass0_smoke();
+        }
+        if (argc == 2 && std::string_view(argv[1]) == "--run-upstream-i8-zero-model-smoke") {
+            return fsr4n10::run_upstream_i8_zero_model_smoke();
+        }
+        if (argc == 3 && std::string_view(argv[1]) == "--validate-model-pack") {
+            return validate_model_pack(std::filesystem::path(argv[2]));
         }
         print_usage();
         return argc == 1 ? 0 : 2;

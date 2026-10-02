@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -87,6 +88,10 @@ def main() -> int:
                     }
                 )
 
+            initializer_source = source.parent / "initializers.bin"
+            initializer_output = output_dir / "initializers.bin"
+            shutil.copyfile(initializer_source, initializer_output)
+
             manifest = {
                 "format": "fsr4n10-reference-shader-manifest-v1",
                 "backend": "upstream_i8",
@@ -94,6 +99,11 @@ def main() -> int:
                 "resolutionTier": tier,
                 "source": str(source.relative_to(fsr4_root)).replace("\\", "/"),
                 "sourceSha256": sha256(source),
+                "initializer": {
+                    "file": initializer_output.name,
+                    "sizeBytes": initializer_output.stat().st_size,
+                    "sha256": sha256(initializer_output),
+                },
                 "target": "cs_6_6",
                 "compiler": compiler_version,
                 "flags": ["-no-warnings", "-O3", "-enable-16bit-types", "-HV 2021"],

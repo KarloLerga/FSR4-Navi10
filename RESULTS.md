@@ -18,26 +18,30 @@
 
 ## Source inventory
 
-The deterministic source inventory covers 12 model variants (6 presets × INT8/FP8 representations), 3 resolution tiers, 12 neural passes, pre/post model stages, 13 padding-reset entry points and locked initializer hashes. Two generated inventory files were byte-identical. Its parser/classification checks are part of the seven passing Python unit tests.
+The deterministic source inventory covers 12 model variants (6 presets ? INT8/FP8 representations), 3 resolution tiers, 12 neural passes, pre/post model stages, 13 padding-reset entry points and locked initializer hashes. Two generated inventory files were byte-identical. Its parser/classification checks are part of the passing Python unit tests.
 
 ## Build and hardware capability probe
 
 | Check | Result |
 |---|---|
-| CMake Release and RelWithDebInfo configure/build | Passed |
+| CMake Release and RelWithDebInfo configure/build | Passed for current source in both configurations |
 | `compile_fp16_probe` DXC `cs_6_6 -enable-16bit-types` | Passed |
-| CTest `model_tools_unit_tests` | Passed (7 Python unit tests) |
+| CTest `model_tools_unit_tests` | Passed (12 Python unit tests) |
 | Harness `--list-adapters` | RX 5700 XT found as `1002:731f`; D3D12 yes, SM 6.8, wave ops yes (32–64 lanes), native 16-bit shader ops yes, binding tier 3 |
-| Upstream I8 shader source compile | Passed for all 6 presets × 3 resolution tiers × entries 0–13: 252 DXIL outputs across 18 manifests using DXC `cs_6_6`; aggregate index under `build/release/reference/i8/index.json` |
-| Targeted compile reproducibility | Recompiled native/1080p; both endpoint DXIL hashes, its pass manifest hash, and the aggregate-index hash remained unchanged |
-| Native/1080p quantized weight conversion | Passed bounds checks for 38 tensors / 122,880 I8 values; produced 245,760 FP16 bytes; repeated pack and manifest hashes matched |
-| FP16 weight pack scope | Includes only source `QuantizedTensor4i8_*` weights. Native-FP16 weights, biases, runtime tensors and GPU model dispatch are outside this pack. |
+| Upstream I8 shader source compile | All 6 presets ? 3 resolution tiers ? entries 0?13: 252 DXIL outputs across 18 manifests using DXC `cs_6_6`; source initializers are copied beside each compiled variant and match manifest SHA-256 values. |
+| Targeted compile reproducibility | Native/1080p manifests, all 14 pass hashes, and initializer hashes matched between Release and RelWithDebInfo outputs. |
+| FP16 parameter conversion | Converted all 6 presets x 3 tiers: 18 combinations, 78 parameter tensors and 124,872 values per combination; 4,495,392 FP16 bytes total. Each combination has 38 quantized I8 weights, one native FP16 weight, and 39 FP16 biases. |
+| FP16 model pack scope | Versioned `F4N10PK` containers wrap the parameter blobs with source/manifest SHA-256 values, tensor records, bounds checks, and 16-byte-aligned payloads. GPU loading/dispatch, runtime activations and pass bindings are not implemented. I8 expansion uses `f16(i8 * f16(scale))`; operator-specific scale boundaries and model output equivalence are unvalidated. |
+| Model-pack reproducibility | `scripts/repro-check.ps1` generated two clean outputs for all 18 combinations; hashes of all 56 pass catalogs, manifests, raw blobs, containers and indices matched. |
+| Upstream I8 pass contract catalog | Generated 18 contracts with 486 entrypoints, 486 source operator calls, and 2,178 tensor descriptors; HLSL hashes and argument expressions are preserved. Input/output direction and host dispatch dimensions remain unresolved. |
+| C++ model-pack reader | Release and RelWithDebInfo builds passed; validated all 18 containers (78 records each) and rejected a 64-byte truncated file. |
+| Upstream I8 full-chain GPU smoke | Release and RelWithDebInfo both dispatched source pass 0, all 12 neural passes, and pass 13 on synthetic zero 1920?1080?8 FP16 model-input features. Each produced 16,588,800 finite nonzero FP16 feature values. Not a real-frame or image-quality test. |
 | FP16 GPU arithmetic probe | Passed in Release and RelWithDebInfo: all 64 output half values matched expected products on the RX 5700 XT |
 | FP16 DXIL inspection | `dxc -dumpbin` shows `fmul fast half` in the compiled probe |
-| GPU execution of FSR4 neural passes | Not implemented/observed |
-| FSR4 frame, image-quality comparison, stability run, GPU timestamps | Not run |
+| Full FSR4 frame preprocessing/history/output image | Not implemented; the model smoke above consumes a synthetic preprocessed feature tensor. |
+| FSR4 image-quality comparison, stability run, GPU timestamps | Not run |
 
-No neural execution, performance or quality claim is made. The harness enumerates adapters and runs a standalone FP16 arithmetic self-check.
+The zero-feature model smoke is a tensor-level execution check only; it does not validate frame semantics, image quality, stability, or performance.
 
 ## Limitations
 

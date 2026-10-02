@@ -19,6 +19,7 @@ include(cmake/ShaderBuild.cmake)
 
 add_library(fsr4n10_core STATIC
     src/core/device_caps.cpp
+    src/core/model_pack.cpp
 )
 target_include_directories(fsr4n10_core
     PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include"
@@ -29,6 +30,7 @@ fsr4n10_enable_warnings(fsr4n10_core)
 add_executable(fsr4n10_harness
     src/harness/main.cpp
     src/harness/fp16_probe.cpp
+    src/harness/upstream_pass0_smoke.cpp
 )
 target_link_libraries(fsr4n10_harness PRIVATE fsr4n10_core)
 fsr4n10_enable_warnings(fsr4n10_harness)
@@ -62,6 +64,20 @@ add_custom_target(generate_model_manifest
     VERBATIM
 )
 
+add_custom_target(generate_i8_pass_contracts
+    COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/model/extract_pass_contracts.py"
+            --source-root "${CMAKE_CURRENT_SOURCE_DIR}/third_party/fidelityfx-fsr4-source"
+            --fsr4-root "${CMAKE_CURRENT_SOURCE_DIR}/third_party/fidelityfx-fsr4-source/Kits/FidelityFX/upscalers/fsr4"
+            --lock "${CMAKE_CURRENT_SOURCE_DIR}/third_party/LOCK.json"
+            --output "${CMAKE_CURRENT_SOURCE_DIR}/generated/manifests/i8_pass_contracts.json"
+    DEPENDS
+        "${CMAKE_CURRENT_SOURCE_DIR}/tools/model/extract_pass_contracts.py"
+        "${CMAKE_CURRENT_SOURCE_DIR}/third_party/LOCK.json"
+    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+    COMMENT "Extracting upstream I8 pass/operator/tensor contracts from generated HLSL"
+    VERBATIM
+)
+
 add_custom_target(compile_reference_i8_native_1080
     COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/shaders/compile_reference_passes.py"
             --fsr4-root "${CMAKE_CURRENT_SOURCE_DIR}/third_party/fidelityfx-fsr4-source/Kits/FidelityFX/upscalers/fsr4"
@@ -86,17 +102,69 @@ add_custom_target(compile_reference_i8_all
     VERBATIM
 )
 
-add_custom_target(generate_native_1080_fp16_weight_pack
+add_custom_target(generate_native_1080_fp16_parameter_pack
     COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/model/extract_fp16_weights.py"
             --fsr4-root "${CMAKE_CURRENT_SOURCE_DIR}/third_party/fidelityfx-fsr4-source/Kits/FidelityFX/upscalers/fsr4"
             --lock "${CMAKE_CURRENT_SOURCE_DIR}/third_party/LOCK.json"
-            --output "${CMAKE_CURRENT_BINARY_DIR}/model/fp16/native/1080"
+            --output "${CMAKE_CURRENT_BINARY_DIR}/model/fp16"
             --preset native
             --tier 1080
     DEPENDS
         "${CMAKE_CURRENT_SOURCE_DIR}/tools/model/extract_fp16_weights.py"
         "${CMAKE_CURRENT_SOURCE_DIR}/third_party/LOCK.json"
-    COMMENT "Extracting and converting native/1080p quantized FSR4 weights to FP16"
+    COMMENT "Extracting native/1080p FSR4 weights and biases to FP16"
+    VERBATIM
+)
+
+add_custom_target(generate_fp16_parameter_packs_all
+    COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/model/extract_fp16_weights.py"
+            --fsr4-root "${CMAKE_CURRENT_SOURCE_DIR}/third_party/fidelityfx-fsr4-source/Kits/FidelityFX/upscalers/fsr4"
+            --lock "${CMAKE_CURRENT_SOURCE_DIR}/third_party/LOCK.json"
+            --output "${CMAKE_CURRENT_BINARY_DIR}/model/fp16"
+            --preset all
+            --tier all
+    DEPENDS
+        "${CMAKE_CURRENT_SOURCE_DIR}/tools/model/extract_fp16_weights.py"
+        "${CMAKE_CURRENT_SOURCE_DIR}/third_party/LOCK.json"
+    COMMENT "Extracting FP16 FSR4 parameter packs for all I8 presets and resolution tiers"
+    VERBATIM
+)
+
+add_custom_target(generate_native_1080_model_pack
+    COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/model/extract_fp16_weights.py"
+            --fsr4-root "${CMAKE_CURRENT_SOURCE_DIR}/third_party/fidelityfx-fsr4-source/Kits/FidelityFX/upscalers/fsr4"
+            --lock "${CMAKE_CURRENT_SOURCE_DIR}/third_party/LOCK.json"
+            --output "${CMAKE_CURRENT_BINARY_DIR}/model/fp16"
+            --preset native
+            --tier 1080
+    COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/model/build_model_packs.py"
+            --index "${CMAKE_CURRENT_BINARY_DIR}/model/fp16/index.json"
+    DEPENDS
+        "${CMAKE_CURRENT_SOURCE_DIR}/tools/model/extract_fp16_weights.py"
+        "${CMAKE_CURRENT_SOURCE_DIR}/tools/model/model_pack_format.py"
+        "${CMAKE_CURRENT_SOURCE_DIR}/tools/model/build_model_packs.py"
+        "${CMAKE_CURRENT_SOURCE_DIR}/third_party/LOCK.json"
+    COMMENT "Generating the native/1080p versioned FSR4 parameter model pack"
+    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+    VERBATIM
+)
+
+add_custom_target(generate_fp16_model_packs_all
+    COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/model/extract_fp16_weights.py"
+            --fsr4-root "${CMAKE_CURRENT_SOURCE_DIR}/third_party/fidelityfx-fsr4-source/Kits/FidelityFX/upscalers/fsr4"
+            --lock "${CMAKE_CURRENT_SOURCE_DIR}/third_party/LOCK.json"
+            --output "${CMAKE_CURRENT_BINARY_DIR}/model/fp16"
+            --preset all
+            --tier all
+    COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/model/build_model_packs.py"
+            --index "${CMAKE_CURRENT_BINARY_DIR}/model/fp16/index.json"
+    DEPENDS
+        "${CMAKE_CURRENT_SOURCE_DIR}/tools/model/extract_fp16_weights.py"
+        "${CMAKE_CURRENT_SOURCE_DIR}/tools/model/model_pack_format.py"
+        "${CMAKE_CURRENT_SOURCE_DIR}/tools/model/build_model_packs.py"
+        "${CMAKE_CURRENT_SOURCE_DIR}/third_party/LOCK.json"
+    COMMENT "Generating versioned FSR4 FP16 parameter packs for all preset/tier combinations"
+    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
     VERBATIM
 )
 
