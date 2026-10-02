@@ -24,7 +24,8 @@ void print_usage() {
               << "  fsr4n10_harness.exe --benchmark-upstream-i8-zero-model\n"
               << "  fsr4n10_harness.exe --run-upstream-i8-image-smoke <input.ppm> <output.bmp>\n"
               << "  fsr4n10_harness.exe --validate-model-pack <path>\n"
-              << "  fsr4n10_harness.exe --run-naviqsr-analytic-gpu <case.nqsrtest>\n";
+              << "  fsr4n10_harness.exe --run-naviqsr-analytic-gpu <case.nqsrtest>\n"
+              << "  fsr4n10_harness.exe --run-naviqsr-network-gpu <case.nqsrframe>\n";
 }
 
 int list_adapters() {
@@ -92,6 +93,9 @@ int main(int argc, char** argv) {
         }
         if (argc == 3 && std::string_view(argv[1]) == "--run-naviqsr-analytic-gpu") {
             return fsr4n10::run_naviqsr_analytic_gpu_smoke(std::filesystem::path(argv[2]));
+        }
+        if (argc == 3 && std::string_view(argv[1]) == "--run-naviqsr-network-gpu") {
+            return fsr4n10::run_naviqsr_network_gpu_smoke(std::filesystem::path(argv[2]));
         }
         print_usage();
         return argc == 1 ? 0 : 2;

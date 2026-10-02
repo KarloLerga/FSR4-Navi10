@@ -38,6 +38,9 @@ The deterministic source inventory covers 12 model variants (6 presets x INT8/FP
 | Upstream I8 full-chain GPU smoke | Release and RelWithDebInfo both dispatched source pass 0, all 12 neural passes, and pass 13 on synthetic zero 1920x1080x8 FP16 model-input features. Each produced 16,588,800 finite nonzero FP16 feature values. Not a real-frame or image-quality test. |
 | FP16 GPU arithmetic probe | Passed in Release and RelWithDebInfo: all 64 output half values matched expected products on the RX 5700 XT |
 | FP16 DXIL inspection | `dxc -dumpbin` shows `fmul fast half` in the compiled probe |
+| NaviQSR Release / RelWithDebInfo builds | Both configurations compile the 4/5/8-tap AKR shaders and the network convolution shader; D3D12 network smoke passed in both configurations. |
+| NaviQSR network D3D12 smoke | Nine-layer graph passed at LR 32x18 and 64x36; max control/residual error was 1.13e-5. FP16 storage, FP32 arithmetic. |
+| NaviQSR AKR D3D12 smoke | 4/5/8-tap variants passed the bounded GPU/reference check on one 64x36 output in Release. |
 | Full GPU-native FSR4 frame path | Not implemented. The experimental image smoke below uses CPU preprocessing/postprocessing around the GPU I8 model graph. |
 | FSR4 quality comparison, 10,000-run stability stress, end-to-end effect timing | Not run |
 | NaviQSR PyTorch reference tests | 6 passed: reversible raw/Haar transforms, reparameterization fold, analytic reconstruction/reset, deterministic sequence generation, QRISP importer gates, and model-pack validation. |
@@ -75,7 +78,7 @@ The sum of per-pass average kernel times was 7,879.618 us in Release and 7,681.6
 
 ## NaviQSR research prototype
 
-The addendum implementation is a separate network prototype; it does not replace or complete FSR4. DirectML was unavailable, so training used CPU. The initial 256-update run evaluated on the same 64-frame data used for training and is in-sample only: 21.0118 dB mean PSNR / 0.71248 global SSIM versus bilinear 20.9925 dB / 0.71233. A follow-up avoided that leakage: train manifest SHA-256 `54f99be7474ff7783da0fc1ada80d0e5001ca59b74b33118579c19ffc7ee4e3b` (8 sequences x 8 frames, seed 17), separate holdout manifest SHA-256 `e359ce11df9a349d6bbcdc0e8e50a6a2be54c611b789b60ee023301c3a9acca6` (4 sequences x 8 frames, seed 9001), and 4,096 CPU updates. On the 32-frame holdout, mean PSNR was 21.0219 dB and global SSIM 0.70981 versus bilinear 20.9377 dB / 0.70928; mean temporal warp error was 0.05430. The 0.0842 dB PSNR gain is not a meaningful quality result. This remains synthetic content and a tiny model. Global SSIM is an image-level summary, not windowed SSIM. The trained network convolutions still execute in PyTorch on CPU.
+The addendum implementation is a separate network prototype; it does not replace or complete FSR4. DirectML was unavailable, so training used CPU. The initial 256-update run evaluated on the same 64-frame data used for training and is in-sample only: 21.0118 dB mean PSNR / 0.71248 global SSIM versus bilinear 20.9925 dB / 0.71233. A follow-up avoided that leakage: train manifest SHA-256 `54f99be7474ff7783da0fc1ada80d0e5001ca59b74b33118579c19ffc7ee4e3b` (8 sequences x 8 frames, seed 17), separate holdout manifest SHA-256 `e359ce11df9a349d6bbcdc0e8e50a6a2be54c611b789b60ee023301c3a9acca6` (4 sequences x 8 frames, seed 9001), and 4,096 CPU updates. On the 32-frame holdout, mean PSNR was 21.0219 dB and global SSIM 0.70981 versus bilinear 20.9377 dB / 0.70928; mean temporal warp error was 0.05430. The 0.0842 dB PSNR gain is not a meaningful quality result. This remains synthetic content and a tiny model. Global SSIM is an image-level summary, not windowed SSIM. The network convolution layers now run on D3D12 in a separate smoke, but the test still supplies preprocessed and phase-packed features from CPU.
 
 Structural export validation on the 4,096-update checkpoint folded the 1x1 -> 3x3 -> 1x1 block with maximum control-map difference 1.52588e-5 (configured tolerance 2e-5); the residual output difference was 0. The FP16 model pack validated 14 tensors, 9,056 payload bytes, and SHA-256 `310f3eaa82301dc6490d4ad3e740fe86b0feba1be9434792f7d52c43b7033303`. This checks packing and structural equivalence; it is not evidence of GPU network inference or FP16 image-quality parity.
 
@@ -91,7 +94,20 @@ The isolated dispatch timings below used 5 warmups and 20 timestamped measuremen
 | 5 | 0.00455061 | 0.00172507 | 0.28 | 0.74 | 1.00 | 1.80 | `eee7f3508ba593f17a447b8c8ab887dedf7a38efc2767b67c9242bf3c6580bf5` |
 | 8 | 0.00452298 | 0.00161305 | 0.28 | 0.74 | 1.96 | 2.12 | `4bfa7f2036a3a6140d215816bfbf78fe324f41a0556426b329e481b6d8e634f1` |
 
-The network D3D12 runtime, FSR4 teacher capture, sparse MCLD path, reset/stability stress at 10,000+ dispatches, and useful quality/performance selection remain incomplete. No NaviQSR production claim is made.
+The full network D3D12 frame runtime, FSR4 teacher capture, sparse MCLD path, reset/stability stress at 10,000+ dispatches, and useful quality/performance selection remain incomplete. No NaviQSR production claim is made.
+
+### network convolution GPU smoke
+
+The exported 4,096-update checkpoint ran all 9 network convolution/pool-concat layers on the RX 5700 XT. Its 5,096 model weight/bias elements are stored as FP16 and read from a packed D3D12 raw buffer; activations and multiply-accumulate operations are FP32. GPU controls/residuals matched a PyTorch reference using the same FP16-quantized folded parameters. Maximum/mean absolute error was 4.57e-6 / 3.73e-7 at LR 32x18 frame 1, 9.54e-6 / 5.24e-7 at LR 32x18 frame 7, and 1.12e-5 / 5.31e-7 at LR 64x36 frame 2. This validates the smoke graph's convolution results, not true FP16 arithmetic or a production pack loader.
+
+The next table times the 9-layer network convolution/pool-concat graph with 5 warmups and 20 timestamped measurements. The timestamps exclude PSO creation, input/model upload, CPU waiting, and readback. They include the inter-layer resource transitions. Results vary between runs and cover only these tiny LR inputs; they do not imply full-resolution frame time or quality-qualified performance. GPU was RX 5700 XT (PCI `1002:731F`), driver `32.0.21045.1000`; network convolution DXIL SHA-256 `579b9546895b56da6755d0a5b31552fb828596ec84e9dacbfa73fca57b342bae`.
+
+| LR input | Control/residual grid | Min (us) | Median (us) | P90 (us) | P95 (us) |
+|---:|---:|---:|---:|---:|---:|
+| 32x18 | 16x9 | 43.20 | 70.22 | 90.96 | 95.60 |
+| 64x36 | 32x18 | 44.44 | 86.82 | 109.28 | 143.44 |
+
+The smoke uploads precomputed features and phase-packed input from CPU, dispatches the network layers, and reads control/residual buffers for comparison. It does not connect the trained network to AKR in one GPU frame graph, load the `.nqsrpack` directly, or perform preprocessing, temporal reconstruction, RGB output, shader ISA audit, or 10,000-run stability stress.
 
 ## Limitations
 
@@ -99,4 +115,4 @@ AMD's published FSR 4.0.2 support is RX 9000 Series and above, with signed DLL i
 
 ## QSSR/NaviQSR addendum status
 
-The QSSR addendum is integrated as a separate proposed architecture family under `docs/naviqsr/`. Sony's official announcement says QSSR has a streamlined neural network and a hand-tuned PS5 implementation; it does not disclose the architecture. FP16/packed-math and performance details cited in the research addendum come from secondary reporting and are not treated as verified Sony implementation details. NaviQSR has a CPU-trained reference and an AKR-only GPU microbenchmark; it does not yet have network GPU inference, teacher comparison, sparse break-even, or production-quality/performance results.
+The QSSR addendum is integrated as a separate proposed architecture family under `docs/naviqsr/`. Sony's official announcement says QSSR has a streamlined neural network and a hand-tuned PS5 implementation; it does not disclose the architecture. FP16/packed-math and performance details cited in the research addendum come from secondary reporting and are not treated as verified Sony implementation details. NaviQSR has a CPU-trained reference, a network convolution GPU smoke, and a separate AKR GPU microbenchmark. Teacher comparison, a joined network-to-AKR frame graph, sparse break-even, and production-quality/performance results remain open.

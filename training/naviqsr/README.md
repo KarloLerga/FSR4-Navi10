@@ -50,6 +50,17 @@ build/release/fsr4n10_harness.exe --run-naviqsr-analytic-gpu build/naviqsr/parit
 
 Repeat with `--taps 4` or `--taps 8` to select the other compiled variants. The harness checks one small output against the PyTorch analytic reference and reports 5 warmups plus 20 timestamped dispatch measurements, GPU/driver ID, and DXIL hash. The measurement excludes the PyTorch network convolutions and all frame-graph work. The remaining GPU/reference error is small but nonzero; it is not bit-exact parity.
 
+## network convolution D3D12 smoke
+
+Export the trained raw-polyphase network layers and compare GPU controls/residuals against the FP16-quantized folded PyTorch reference:
+
+```powershell
+.\.venv\Scripts\python.exe tools/naviqsr/export_network_gpu_case.py --checkpoint build/naviqsr/holdout-train/naviqsr_checkpoint.pt --dataset build/naviqsr/holdout-train-data --output build/naviqsr/network.nqsrframe --sequence 0 --frame 1
+build/release/fsr4n10_harness.exe --run-naviqsr-network-gpu build/naviqsr/network.nqsrframe
+```
+
+All 9 convolution/pool-concat layers run on the RX 5700 XT with the checkpoint weights stored as FP16. Activations and accumulation use FP32; the harness reports GPU timestamps for the network graph after 5 warmups and 20 measured runs. Preprocessing and phase packing are done by the CPU case exporter. The GPU smoke currently reads the custom `.nqsrframe` case; it does not load the production `.nqsrpack` directly or join network inference with AKR and RGB output.
+
 ## QRISP and teacher captures
 
-The local QRISP importer reads PNG/EXR modalities from a user-prepared manifest. It never downloads the data or accepts terms; see [QRISP_IMPORT.md](../../docs/naviqsr/QRISP_IMPORT.md). Teacher NPZ capture bundles can be schema/hash-checked with `training.naviqsr.datasets.captured_teacher`; the current FSR4 harness still lacks teacher output/intermediate capture hooks. The D3D12 NaviQSR work is currently limited to analytic reconstruction; the trained network itself has no GPU inference path yet.
+The local QRISP importer reads PNG/EXR modalities from a user-prepared manifest. It never downloads the data or accepts terms; see [QRISP_IMPORT.md](../../docs/naviqsr/QRISP_IMPORT.md). Teacher NPZ capture bundles can be schema/hash-checked with `training.naviqsr.datasets.captured_teacher`; the current FSR4 harness still lacks teacher output/intermediate capture hooks. The network convolution and analytic reconstruction GPU smokes are separate; their control tensors are currently exchanged through a CPU-generated test case, not a joined frame graph.

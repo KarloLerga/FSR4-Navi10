@@ -33,6 +33,7 @@ add_executable(fsr4n10_harness
     src/harness/upstream_pass0_smoke.cpp
     src/harness/frame_pipeline.cpp
     src/naviqsr/naviqsr_gpu.cpp
+    src/naviqsr/naviqsr_network_gpu.cpp
 )
 target_link_libraries(fsr4n10_harness PRIVATE fsr4n10_core bcrypt)
 fsr4n10_enable_warnings(fsr4n10_harness)
@@ -92,6 +93,23 @@ add_custom_target(compile_naviqsr_akr ALL
     VERBATIM
 )
 add_dependencies(fsr4n10_harness compile_naviqsr_akr)
+
+fsr4n10_compile_hlsl(
+    compile_naviqsr_network_conv
+    "${CMAKE_CURRENT_SOURCE_DIR}/shaders/naviqsr/network_conv.hlsl"
+    main
+    "${CMAKE_CURRENT_BINARY_DIR}/generated-shaders/naviqsr_network_conv.dxil"
+    cs_6_6
+)
+set(NAVIQSR_network_CONV_SHADER "${compile_naviqsr_network_conv_OUTPUT}")
+add_custom_target(compile_naviqsr_network ALL
+    COMMAND "${CMAKE_COMMAND}" -E copy_if_different
+            "${NAVIQSR_network_CONV_SHADER}" "$<TARGET_FILE_DIR:fsr4n10_harness>/naviqsr_network_conv.dxil"
+    DEPENDS "${NAVIQSR_network_CONV_SHADER}"
+    COMMENT "Copying NaviQSR network convolution DXIL to the harness"
+    VERBATIM
+)
+add_dependencies(fsr4n10_harness compile_naviqsr_network)
 
 add_custom_target(generate_model_manifest
     COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/model/extract_manifest.py"
