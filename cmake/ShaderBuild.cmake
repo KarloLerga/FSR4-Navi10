@@ -6,6 +6,7 @@ function(fsr4n10_compile_hlsl target source entry_point output profile)
         -enable-16bit-types
         -E "${entry_point}"
         -Fo "${output}"
+        ${ARGN}
     )
 
     add_custom_command(
@@ -17,4 +18,5 @@ function(fsr4n10_compile_hlsl target source entry_point output profile)
         VERBATIM
     )
     set(FSR4N10_COMPILED_SHADER "${output}" PARENT_SCOPE)
+    set(${target}_OUTPUT "${output}" PARENT_SCOPE)
 endfunction()

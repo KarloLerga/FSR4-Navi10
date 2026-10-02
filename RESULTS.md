@@ -40,6 +40,7 @@ The deterministic source inventory covers 12 model variants (6 presets x INT8/FP
 | FP16 DXIL inspection | `dxc -dumpbin` shows `fmul fast half` in the compiled probe |
 | Full GPU-native FSR4 frame path | Not implemented. The experimental image smoke below uses CPU preprocessing/postprocessing around the GPU I8 model graph. |
 | FSR4 quality comparison, 10,000-run stability stress, end-to-end effect timing | Not run |
+| NaviQSR PyTorch reference tests | 6 passed: reversible raw/Haar transforms, reparameterization fold, analytic reconstruction/reset, deterministic sequence generation, QRISP importer gates, and model-pack validation. |
 
 The zero-feature model smoke checks only neural tensor execution. Neither smoke has been compared with the AMD reference image, and neither validates production GPU-native frame semantics, long-run stability, or full-effect performance.
 
@@ -72,6 +73,30 @@ Measured with the native/1080p source shader graph on the RX 5700 XT. Each confi
 
 The sum of per-pass average kernel times was 7,879.618 us in Release and 7,681.610 us in RelWithDebInfo. It omits inter-dispatch barriers and all frame/image stages.
 
+## NaviQSR research prototype
+
+The addendum implementation is a separate network prototype; it does not replace or complete FSR4. DirectML was unavailable, so training used CPU. The initial 256-update run evaluated on the same 64-frame data used for training and is in-sample only: 21.0118 dB mean PSNR / 0.71248 global SSIM versus bilinear 20.9925 dB / 0.71233. A follow-up avoided that leakage: train manifest SHA-256 `54f99be7474ff7783da0fc1ada80d0e5001ca59b74b33118579c19ffc7ee4e3b` (8 sequences x 8 frames, seed 17), separate holdout manifest SHA-256 `e359ce11df9a349d6bbcdc0e8e50a6a2be54c611b789b60ee023301c3a9acca6` (4 sequences x 8 frames, seed 9001), and 4,096 CPU updates. On the 32-frame holdout, mean PSNR was 21.0219 dB and global SSIM 0.70981 versus bilinear 20.9377 dB / 0.70928; mean temporal warp error was 0.05430. The 0.0842 dB PSNR gain is not a meaningful quality result. This remains synthetic content and a tiny model. Global SSIM is an image-level summary, not windowed SSIM. The trained network convolutions still execute in PyTorch on CPU.
+
+Structural export validation on the 4,096-update checkpoint folded the 1x1 -> 3x3 -> 1x1 block with maximum control-map difference 1.52588e-5 (configured tolerance 2e-5); the residual output difference was 0. The FP16 model pack validated 14 tensors, 9,056 payload bytes, and SHA-256 `310f3eaa82301dc6490d4ad3e740fe86b0feba1be9434792f7d52c43b7033303`. This checks packing and structural equivalence; it is not evidence of GPU network inference or FP16 image-quality parity.
+
+### Analytic reconstruction GPU smoke
+
+The 4-, 5-, and 8-tap analytic reconstruction variants compile with DXC and dispatch on the RX 5700 XT. Each compared a 64x36 output against the PyTorch reference from one LR 32x18 procedural frame. The remaining nonzero difference is consistent with GPU/CPU sampler and arithmetic precision; it is not bit-exact parity, and the test does not isolate the source of the error.
+
+The isolated dispatch timings below used 5 warmups and 20 timestamped measurements after PSO creation. They cover only one tiny 64x36 AKR dispatch; they exclude uploads, PSO creation, readback, CPU waiting, network convolutions and the full frame graph. These figures are a microbenchmark, not an output-resolution performance result or a sparse/dense break-even claim. Driver was `32.0.21045.1000`; GPU PCI ID was `1002:731F`.
+
+| Taps | Max abs error | Mean abs error | Min (us) | Median (us) | P90 (us) | P95 (us) | DXIL SHA-256 |
+|---:|---:|---:|---:|---:|---:|---:|---|
+| 4 | 0.00452450 | 0.00160213 | 0.28 | 0.74 | 1.80 | 1.80 | `c843e2f22af9c40cc22b31b43f03461b0f0f255f8fe3e8e1e92c43f2aea7be77` |
+| 5 | 0.00455061 | 0.00172507 | 0.28 | 0.74 | 1.00 | 1.80 | `eee7f3508ba593f17a447b8c8ab887dedf7a38efc2767b67c9242bf3c6580bf5` |
+| 8 | 0.00452298 | 0.00161305 | 0.28 | 0.74 | 1.96 | 2.12 | `4bfa7f2036a3a6140d215816bfbf78fe324f41a0556426b329e481b6d8e634f1` |
+
+The network D3D12 runtime, FSR4 teacher capture, sparse MCLD path, reset/stability stress at 10,000+ dispatches, and useful quality/performance selection remain incomplete. No NaviQSR production claim is made.
+
 ## Limitations
 
 AMD's published FSR 4.0.2 support is RX 9000 Series and above, with signed DLL integration. This project targets RX 5700 XT with a custom unsigned implementation; hardware execution and later game-loader integration remain unvalidated.
+
+## QSSR/NaviQSR addendum status
+
+The QSSR addendum is integrated as a separate proposed architecture family under `docs/naviqsr/`. Sony's official announcement says QSSR has a streamlined neural network and a hand-tuned PS5 implementation; it does not disclose the architecture. FP16/packed-math and performance details cited in the research addendum come from secondary reporting and are not treated as verified Sony implementation details. NaviQSR has a CPU-trained reference and an AKR-only GPU microbenchmark; it does not yet have network GPU inference, teacher comparison, sparse break-even, or production-quality/performance results.

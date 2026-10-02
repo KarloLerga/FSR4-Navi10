@@ -1,0 +1,2 @@
+# Optional decoder for QRISP's 16-bit EXR motion vectors.
+OpenEXR==3.5.1

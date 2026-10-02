@@ -2,9 +2,9 @@
 
 ## 0. Purpose
 
-Build a complete DirectX 12 implementation of AMD FSR 4.0.2 targeted specifically at Radeon RX 5700 XT / Navi10 / gfx1010. The project must preserve the visual/temporal behavior of the actual FSR4 model while replacing inefficient execution paths with a purpose-built Navi10 backend, centered on true FP16 arithmetic and offline specialization.
+Build a complete DirectX 12 implementation of AMD FSR 4.0.2 targeted specifically at Radeon RX 5700 XT / Navi10 / gfx1010. Preserve the full FSR4 implementation as the correctness reference, quality teacher, and dense safety fallback. In parallel, add the separately named NaviQSR network family described in `docs/naviqsr/`; it may become a production candidate only after temporal quality, stability, and measured Navi10 break-even gates pass.
 
-This is not a project to create a generic AI upscaler, not a project to improve FSR3, and not a project to inject game-specific shaders. Those may come later. This run is solely about obtaining the best practical FSR4 image quality/performance ratio on RX 5700 XT.
+This is not a project to create a generic AI upscaler, not a project to improve FSR3, and not a project to inject game-specific shaders. The NaviQSR path is a project-specific research network trained against FSR4 and temporal ground truth; it must never be mislabeled as AMD FSR4. The goal remains the best measured image-quality/performance result on RX 5700 XT.
 
 ## 1. Required documents
 Before implementing a subsystem, read the relevant documents:
@@ -44,8 +44,9 @@ Do NOT spend time on:
 - macOS
 - GUI configuration application
 - generic support for every Radeon architecture
-- training a new neural network
-- reducing network topology for performance
+- unrelated generic upscalers or game-specific injection
+
+The 2026-10-02 user-supplied QSSR addendum supersedes only the two earlier non-goals about training and topology reduction. It does not remove the full-FSR4 path or relax the quality, licensing, and measurement rules below. See `docs/naviqsr/README_QSSR_ADDENDUM.md` and `DECISIONS_LOG.md`.
 
 ## 4. Architecture overview
 

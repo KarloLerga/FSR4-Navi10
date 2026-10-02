@@ -32,8 +32,9 @@ add_executable(fsr4n10_harness
     src/harness/fp16_probe.cpp
     src/harness/upstream_pass0_smoke.cpp
     src/harness/frame_pipeline.cpp
+    src/naviqsr/naviqsr_gpu.cpp
 )
-target_link_libraries(fsr4n10_harness PRIVATE fsr4n10_core)
+target_link_libraries(fsr4n10_harness PRIVATE fsr4n10_core bcrypt)
 fsr4n10_enable_warnings(fsr4n10_harness)
 
 fsr4n10_compile_hlsl(
@@ -51,6 +52,46 @@ add_custom_command(TARGET fsr4n10_harness POST_BUILD
             "$<TARGET_FILE_DIR:fsr4n10_harness>/fp16_probe.dxil"
     VERBATIM
 )
+
+fsr4n10_compile_hlsl(
+    compile_naviqsr_akr_4tap
+    "${CMAKE_CURRENT_SOURCE_DIR}/shaders/naviqsr/analytic_reconstruct.hlsl"
+    main
+    "${CMAKE_CURRENT_BINARY_DIR}/generated-shaders/naviqsr_akr_4tap.dxil"
+    cs_6_6
+    -D TAP_COUNT=4
+)
+set(NAVIQSR_AKR_4TAP_SHADER "${compile_naviqsr_akr_4tap_OUTPUT}")
+fsr4n10_compile_hlsl(
+    compile_naviqsr_akr_5tap
+    "${CMAKE_CURRENT_SOURCE_DIR}/shaders/naviqsr/analytic_reconstruct.hlsl"
+    main
+    "${CMAKE_CURRENT_BINARY_DIR}/generated-shaders/naviqsr_akr_5tap.dxil"
+    cs_6_6
+    -D TAP_COUNT=5
+)
+set(NAVIQSR_AKR_5TAP_SHADER "${compile_naviqsr_akr_5tap_OUTPUT}")
+fsr4n10_compile_hlsl(
+    compile_naviqsr_akr_8tap
+    "${CMAKE_CURRENT_SOURCE_DIR}/shaders/naviqsr/analytic_reconstruct.hlsl"
+    main
+    "${CMAKE_CURRENT_BINARY_DIR}/generated-shaders/naviqsr_akr_8tap.dxil"
+    cs_6_6
+    -D TAP_COUNT=8
+)
+set(NAVIQSR_AKR_8TAP_SHADER "${compile_naviqsr_akr_8tap_OUTPUT}")
+add_custom_target(compile_naviqsr_akr ALL
+    COMMAND "${CMAKE_COMMAND}" -E copy_if_different
+            "${NAVIQSR_AKR_4TAP_SHADER}" "$<TARGET_FILE_DIR:fsr4n10_harness>/naviqsr_akr_4tap.dxil"
+    COMMAND "${CMAKE_COMMAND}" -E copy_if_different
+            "${NAVIQSR_AKR_5TAP_SHADER}" "$<TARGET_FILE_DIR:fsr4n10_harness>/naviqsr_akr_5tap.dxil"
+    COMMAND "${CMAKE_COMMAND}" -E copy_if_different
+            "${NAVIQSR_AKR_8TAP_SHADER}" "$<TARGET_FILE_DIR:fsr4n10_harness>/naviqsr_akr_8tap.dxil"
+    DEPENDS "${NAVIQSR_AKR_4TAP_SHADER}" "${NAVIQSR_AKR_5TAP_SHADER}" "${NAVIQSR_AKR_8TAP_SHADER}"
+    COMMENT "Copying NaviQSR AKR DXIL tap variants to the harness"
+    VERBATIM
+)
+add_dependencies(fsr4n10_harness compile_naviqsr_akr)
 
 add_custom_target(generate_model_manifest
     COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/model/extract_manifest.py"

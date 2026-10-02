@@ -90,4 +90,30 @@ Build the Windows x64 / DirectX 12 project described in `docs/MASTER_SPEC.md` fo
 
 ## Measurements
 
-No FSR4 model, image-quality, stability, or performance measurements have been made. Record measured data in `RESULTS.md` and `artifacts/results/` as milestones complete.
+No FSR4 model, image-quality, stability, or full-effect performance measurements have been made. Preliminary I8 model-only timings and the NaviQSR AKR-only microbenchmark are recorded in `RESULTS.md`; neither is an end-to-end quality-qualified result.
+
+## User-supplied NaviQSR addendum (2026-10-02)
+
+The attached addendum expands the original FSR4-only scope without replacing existing work. D1-D20 still govern platform, provenance, numerical discipline, and the full-FSR4 implementation except for the former prohibition on a separately named trained network or reduced network topology. D21-D22 in `docs/DECISIONS.md` capture this precedence and evidence policy. The copied source documents under `docs/naviqsr/` are technical requirements; their embedded prompts do not override repository or conversation instructions.
+
+### NaviQSR milestones
+
+| # | Area | Required evidence |
+|---|---|---|
+| Q1 | Deterministic procedural temporal dataset: `training/naviqsr/datasets/` | Repeated generation matches; LR/HR, motion, depth, jitter, reactive/transparency masks, exposure, cuts, and motion convention are serialized and documented. |
+| Q2 | network reference/training/export: `training/naviqsr/`, `tools/naviqsr/` | CPU/DirectML/CUDA backend selection is logged; small deterministic training completes; structural fold is numerically checked; export includes stable metadata and hashes. |
+| Q3 | Teacher instrumentation: existing full-FSR4 reference and capture tools | Optional final-output and selected-feature captures match uninstrumented outputs and identify model/pass/frame. |
+| Q4 | Dense D3D12 runtime: `src/naviqsr/`, `shaders/naviqsr/` | Exported trained weights execute on RX 5700 XT with true FP16 ISA audit and deterministic output. |
+| Q5 | AKR temporal reconstruction and reset behavior | 4/5/8-tap quality/performance comparison; SPD positivity/finite-value checks; cut, exposure, resolution, invalid-motion and OOB history reset tests. |
+| Q6 | MCLD sparse path | Receptive-field mask propagation, seam checks, 10k+ dispatch stability, measured sparse/dense break-even with dense fallback. |
+| Q7 | Phase/reparameterization/kernel candidates | Fold equivalence and exact phase mapping; direct-vs-Winograd/low-rank candidates retained only when quality and measured latency improve. |
+| Q8 | Hardware-in-loop selection and reports | Temporal metrics and actual RX 5700 XT median/p95, per-pass times, memory and Pareto frontier; no quality/performance claims without results. |
+
+### Current addendum state
+
+- Read all supplied research, architecture, implementation, and source documents; copied the five technical documents into `docs/naviqsr/`.
+- Q1 procedural generation and Q2 CPU training/export prototype are implemented. Separate seed-17 training and seed-9001 holdout sets were generated; 4,096 CPU updates scored 21.0219 dB versus bilinear 20.9377 dB across 32 holdout frames, still too small a gain for useful quality. Structural fold max error was 1.52588e-5 (2e-5 tolerance), and the 14-tensor FP16 pack validated with SHA-256 in `RESULTS.md`.
+- Six NaviQSR Python reference tests pass. QRISP import remains explicit-manifest only and requires a caller license-confirmation flag; no data was downloaded.
+- Added 4/5/8-tap analytic reconstruction DXIL variants and a D3D12 RX 5700 XT dispatch/reference smoke. All three pass the bounded numeric gate on one 64x36 output. Timestamp measurements are limited to this single AKR dispatch; the network convolutions remain PyTorch-side. Driver `32.0.21045.1000` and DXIL hashes are recorded in `RESULTS.md`.
+- Q3 teacher capture, Q4 trained network D3D12 inference, Q5 full reset/stress coverage, Q6 sparse MCLD, and Q8 quality-qualified performance/Pareto selection remain open. Do not infer completion of these gates from the AKR smoke.
+- Original FSR4 milestones remain active and unchanged; work on NaviQSR does not mark any full-FSR4 acceptance gate complete.

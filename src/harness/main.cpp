@@ -1,6 +1,7 @@
 #include "fsr4n10/device_caps.h"
 #include "fsr4n10/fp16_probe.h"
 #include "fsr4n10/model_pack.h"
+#include "fsr4n10/naviqsr_gpu.h"
 #include "fsr4n10/upstream_smoke.h"
 #include "fsr4n10/version.h"
 
@@ -22,7 +23,8 @@ void print_usage() {
               << "  fsr4n10_harness.exe --run-upstream-i8-zero-model-smoke\n"
               << "  fsr4n10_harness.exe --benchmark-upstream-i8-zero-model\n"
               << "  fsr4n10_harness.exe --run-upstream-i8-image-smoke <input.ppm> <output.bmp>\n"
-              << "  fsr4n10_harness.exe --validate-model-pack <path>\n";
+              << "  fsr4n10_harness.exe --validate-model-pack <path>\n"
+              << "  fsr4n10_harness.exe --run-naviqsr-analytic-gpu <case.nqsrtest>\n";
 }
 
 int list_adapters() {
@@ -87,6 +89,9 @@ int main(int argc, char** argv) {
         }
         if (argc == 3 && std::string_view(argv[1]) == "--validate-model-pack") {
             return validate_model_pack(std::filesystem::path(argv[2]));
+        }
+        if (argc == 3 && std::string_view(argv[1]) == "--run-naviqsr-analytic-gpu") {
+            return fsr4n10::run_naviqsr_analytic_gpu_smoke(std::filesystem::path(argv[2]));
         }
         print_usage();
         return argc == 1 ? 0 : 2;

@@ -26,10 +26,16 @@ python tools/quality/generate_test_frame.py --output build/release/frame-input.p
 build/release/fsr4n10_harness.exe --run-upstream-i8-image-smoke build/release/frame-input.ppm build/release/frame-output.bmp
 ```
 
+## NaviQSR addendum prototype
+
+The separate NaviQSR network now has a deterministic procedural dataset, PyTorch train/validate/export flow, and 4/5/8-tap analytic reconstruction shaders. On the RX 5700 XT, the AKR-only D3D12 smoke passed its bounded numeric check and records isolated dispatch timestamps. A 4,096-update CPU network scored 21.0219 dB PSNR versus 20.9377 dB for bilinear on a 32-frame seeded procedural holdout; the 0.0842 dB gain is not a useful-quality result. Trained network convolutions still run in PyTorch, and teacher capture, sparse reuse, and end-to-end quality/performance validation remain open. See [`training/naviqsr/README.md`](training/naviqsr/README.md) and [`RESULTS.md`](RESULTS.md).
+
 
 ## Project documents
 
 - `docs/MASTER_SPEC.md` - scope and engineering requirements
+- `docs/naviqsr/README_QSSR_ADDENDUM.md` - separately scoped NaviQSR research and implementation addendum
+- `docs/naviqsr/NAVI_QSR_IMPLEMENTATION_PLAN.md` - NaviQSR subsystem requirements and acceptance gates
 - `docs/ACCEPTANCE_CRITERIA.md` - definition of done
 - `PROGRESS.md`, `RESULTS.md` - current implementation and measurements
 - `THIRD_PARTY_NOTICES.md` - upstream license and provenance
