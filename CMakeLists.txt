@@ -31,6 +31,7 @@ add_executable(fsr4n10_harness
     src/harness/main.cpp
     src/harness/fp16_probe.cpp
     src/harness/upstream_pass0_smoke.cpp
+    src/harness/frame_pipeline.cpp
 )
 target_link_libraries(fsr4n10_harness PRIVATE fsr4n10_core)
 fsr4n10_enable_warnings(fsr4n10_harness)

@@ -39,7 +39,7 @@ Build the Windows x64 / DirectX 12 project described in `docs/MASTER_SPEC.md` fo
 - Added `tools/model/extract_manifest.py`; it records all 12 model variants, 6 presets, 3 resolution tiers, pass entry points, initializer hashes and provider-derived pass ranges. Two independent outputs are byte-identical; 4 parser/classification unit tests pass.
 - Added a minimal CMake DX12 capability harness and a true-16-bit HLSL arithmetic probe. Release and RelWithDebInfo builds and CTest pass. The runtime reports the RX 5700 XT as D3D12/SM 6.8 with wave ops, native 16-bit shader operations, and binding tier 3. The harness dispatched 64 FP16 products on the GPU and all outputs matched; DXIL disassembly contains `fmul fast half`.
 - Upstream inspection confirms FP8 neural kernels require AMD WMMA (`WMMA_ENABLED=1`), while the RX 5700 XT capability query only confirms general D3D12 wave ops and native FP16. FP8/WMMA execution on gfx1010 is therefore not assumed. The upstream I8 model shaders include per-pass embedded weights and quantization data; source weight and bias parameter conversion is now implemented for all 18 preset/tier combinations.
-- No real FSR4 frame, temporal quality run, or performance measurement has been completed. A later synthetic-input smoke dispatches all native/1080p I8 model entries and checks its final feature tensor.
+- No production GPU-native FSR4 frame path is complete. The experimental image smoke uses source-derived CPU pre/post stages around the GPU I8 model and tests a static reset/history pair. It has no AMD-reference image comparison or quality result; full-effect performance remains unmeasured.
 - Added a reproducible DXC target and compiler script for the pinned upstream I8 native/1080p shader set. Entries 0–13 compile to DXIL, with a manifest recording the source hash, DXC version, flags, output sizes, and SHA-256 hashes. This is shader compilation only, not a working FSR4 runtime.
 - Extended the DXC target to all 6 source I8 presets and 3 source resolution tiers. All 252 entry points compile; manifests identify the 18 combinations. A repeated targeted native/1080p build reproduced the pass outputs and aggregate index exactly.
 - Added a parameter converter for all six presets and three tiers. It extracts rank-4 I8 and native FP16 weights plus rank-1 FP16 biases from embedded HLSL arrays and `initializers.bin`, records layouts/scales/strides, checks source bounds, and emits deterministic per-combination parameter blobs/manifests. Each contains 78 tensors, 124,872 values and 249,744 bytes. Runtime activations/bindings, the canonical aligned GPU-upload pack and graph remain outstanding; numerical equivalence of pre-dequantized I8 parameters is unvalidated.
@@ -48,6 +48,7 @@ Build the Windows x64 / DirectX 12 project described in `docs/MASTER_SPEC.md` fo
 - Added a source-derived I8 pass catalog for 18 preset/tier variants: 486 entrypoints/operator calls and 2,178 tensor descriptors, preserving exact HLSL argument expressions and source hashes.
 - Two clean conversion/container/catalog runs reproduced all 56 files across the 18 combinations.
 - Added a timestamped model-only baseline: 5 warmup and 20 measured zero-feature runs in Release and RelWithDebInfo, with per-pass results written to `RESULTS.md`.
+- Added an experimental image-output smoke. A deterministic 960x540 PPM passes through CPU source-derived pre/post equations and the GPU I8 model graph for a reset frame and one static history frame; Release and RelWithDebInfo outputs hash identically.
 
 ## Blockers and resolution
 
@@ -80,8 +81,9 @@ Build the Windows x64 / DirectX 12 project described in `docs/MASTER_SPEC.md` fo
 - [x] Generate versioned, aligned parameter containers with source/manifest hashes; validate all 18 with the C++ reader and reject a truncated pack.
 - [ ] Complete canonical runtime tensor manifest with activation tensors, pass bindings and operator metadata; integrate model containers into GPU uploads and dispatch.
 - [x] Dispatch the GPU arithmetic probe; 64 FP16 results matched on the RX 5700 XT and DXIL disassembly showed a half-precision multiply.
-- [x] Dispatch all pinned native/1080p source pass entries on synthetic zero features; finite FP16 feature output observed. Real frame and temporal behavior remain open.
+- [x] Dispatch all pinned native/1080p source pass entries on synthetic zero features; finite FP16 feature output observed. Production GPU frame stages and motion-varying temporal behavior remain open.
 - [x] Add repeated per-pass D3D12 timestamp measurements for the synthetic native/1080p source graph; record scope and results without claiming full-effect timing.
+- [x] Add an experimental two-frame image smoke around the I8 graph; disclose that preprocessing/postprocessing remain CPU-side and image quality is unvalidated.
 - [ ] Build and validate the FSR4 reference harness.
 - [ ] Implement and validate complete FP16 compatibility/high-precision paths.
 - [ ] Implement tuning, adapter, packaging and finish review.

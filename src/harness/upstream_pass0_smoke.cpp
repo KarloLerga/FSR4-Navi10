@@ -214,9 +214,15 @@ void upload_fill(ID3D12Resource* resource, std::uint64_t bytes, std::byte value)
 
 } // namespace
 
-int run_upstream_smoke(bool full_model, bool benchmark) {
+std::vector<std::byte> run_upstream_smoke(
+    bool full_model,
+    bool benchmark,
+    std::span<const std::byte> model_input = {}) {
     if (benchmark && !full_model) {
         throw std::runtime_error("the upstream I8 benchmark requires the full model chain");
+    }
+    if (!full_model && !model_input.empty()) {
+        throw std::runtime_error("preprocessed model features can only be supplied to the full chain");
     }
     if (kOutputBytes > kScratchBytes || kNetworkOutputBytes % sizeof(std::uint32_t) != 0 ||
         kInputBytes % sizeof(std::uint32_t) != 0 || kScratchBytes % sizeof(std::uint32_t) != 0) {
@@ -352,7 +358,18 @@ int run_upstream_smoke(bool full_model, bool benchmark) {
             device.Get(), initializer_data.size(), D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_STATE_GENERIC_READ);
     }
 
-    upload_fill(input_upload.Get(), kInputBytes, std::byte{0});
+    if (model_input.empty()) {
+        upload_fill(input_upload.Get(), kInputBytes, std::byte{0});
+    } else {
+        if (model_input.size() != kInputBytes) {
+            throw std::runtime_error("preprocessed model-input tensor has an unexpected byte size");
+        }
+        void* mapped = nullptr;
+        const D3D12_RANGE no_read{0, 0};
+        check_hr(input_upload->Map(0, &no_read, &mapped), "Map model-input upload buffer failed");
+        std::memcpy(mapped, model_input.data(), model_input.size());
+        input_upload->Unmap(0, nullptr);
+    }
     upload_fill(output_upload.Get(), kNetworkOutputBytes, static_cast<std::byte>(kOutputSentinel));
     upload_fill(scratch_upload.Get(), kScratchBytes, full_model ? std::byte{0} : static_cast<std::byte>(kOutputSentinel));
     command_list->CopyBufferRegion(input_default.Get(), 0, input_upload.Get(), 0, kInputBytes);
@@ -485,7 +502,7 @@ int run_upstream_smoke(bool full_model, bool benchmark) {
         std::cout << "Upstream I8 pass 0 smoke dispatch passed on RX 5700 XT: 1920x1080 zero FP16 input, "
                   << kOutputWidth << 'x' << kOutputHeight << "x" << kOutputChannels
                   << " output; spatially constant bias response with " << unique_count << " distinct channel values.\n";
-        return 0;
+        return {};
     }
 
     bool changed_from_sentinel = false;
@@ -540,22 +557,33 @@ int run_upstream_smoke(bool full_model, bool benchmark) {
         std::cout << "Sum of pass averages: " << std::fixed << std::setprecision(3) << graph_average
                   << " us of kernel time; excludes barriers, frame preprocessing, and image postprocessing.\n";
     }
-    std::cout << "Upstream I8 model smoke passed on RX 5700 XT: pass 0, all 12 neural passes, and pass 13 ran "
-              << "on synthetic zero features. The final 1920x1080x8 FP16 feature tensor contains "
+    std::cout << "Upstream I8 model graph passed on RX 5700 XT: pass 0, all 12 neural passes, and pass 13 ran "
+              << (model_input.empty() ? "on synthetic zero features. " : "on supplied preprocessed FP16 features. ")
+              << "The final 1920x1080x8 FP16 feature tensor contains "
               << nonzero_values << " nonzero finite values. This is not an image-quality result.\n";
-    return 0;
+    return results;
 }
 
 int run_upstream_pass0_smoke() {
-    return run_upstream_smoke(false, false);
+    (void)run_upstream_smoke(false, false);
+    return 0;
 }
 
 int run_upstream_i8_zero_model_smoke() {
-    return run_upstream_smoke(true, false);
+    (void)run_upstream_smoke(true, false);
+    return 0;
 }
 
 int run_upstream_i8_zero_model_benchmark() {
-    return run_upstream_smoke(true, true);
+    (void)run_upstream_smoke(true, true);
+    return 0;
+}
+
+std::vector<std::byte> run_upstream_i8_model(std::span<const std::byte> model_input) {
+    if (model_input.empty()) {
+        throw std::runtime_error("preprocessed FP16 model-input tensor is empty");
+    }
+    return run_upstream_smoke(true, false, model_input);
 }
 
 } // namespace fsr4n10

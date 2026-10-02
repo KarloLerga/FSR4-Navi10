@@ -21,6 +21,7 @@ void print_usage() {
               << "  fsr4n10_harness.exe --run-upstream-pass0-smoke\n"
               << "  fsr4n10_harness.exe --run-upstream-i8-zero-model-smoke\n"
               << "  fsr4n10_harness.exe --benchmark-upstream-i8-zero-model\n"
+              << "  fsr4n10_harness.exe --run-upstream-i8-image-smoke <input.ppm> <output.bmp>\n"
               << "  fsr4n10_harness.exe --validate-model-pack <path>\n";
 }
 
@@ -80,6 +81,9 @@ int main(int argc, char** argv) {
         }
         if (argc == 2 && std::string_view(argv[1]) == "--benchmark-upstream-i8-zero-model") {
             return fsr4n10::run_upstream_i8_zero_model_benchmark();
+        }
+        if (argc == 4 && std::string_view(argv[1]) == "--run-upstream-i8-image-smoke") {
+            return fsr4n10::run_upstream_i8_image_smoke(argv[2], argv[3]);
         }
         if (argc == 3 && std::string_view(argv[1]) == "--validate-model-pack") {
             return validate_model_pack(std::filesystem::path(argv[2]));
