@@ -15,12 +15,12 @@ from PIL import Image
 try:
     from .analytic_reconstruction import analytic_reconstruct, warp_history
     from .train import _features, _frame_tensor, _load_sequences
-    from .model import NaviQSRnetwork
+    from .model import NaviQSRNetwork
 except ImportError:
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
     from training.naviqsr.analytic_reconstruction import analytic_reconstruct, warp_history
     from training.naviqsr.train import _features, _frame_tensor, _load_sequences
-    from training.naviqsr.model import NaviQSRnetwork
+    from training.naviqsr.model import NaviQSRNetwork
 
 
 def _psnr(output: torch.Tensor, target: torch.Tensor) -> float:
@@ -52,7 +52,7 @@ def validate(checkpoint_path: Path, dataset_root: Path,
              output_root: Path, taps: int = 5) -> dict[str, object]:
     checkpoint = torch.load(checkpoint_path, map_location="cpu", weights_only=True)
     cfg = checkpoint["model_config"]
-    model = NaviQSRnetwork(input_channels=int(cfg["input_channels"]),
+    model = NaviQSRNetwork(input_channels=int(cfg["input_channels"]),
                            width=int(cfg["width"]), blocks=int(cfg["blocks"]),
                            hf_width=int(cfg["hf_width"]),
                            polyphase_mode=str(cfg["polyphase_mode"]))

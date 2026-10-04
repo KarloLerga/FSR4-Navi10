@@ -28,14 +28,25 @@ build/release/fsr4n10_harness.exe --run-upstream-i8-image-smoke build/release/fr
 
 ## NaviQSR addendum prototype
 
-The separate NaviQSR network now has a deterministic procedural dataset, PyTorch train/validate/export flow, and an experimental D3D12 frame graph joining network convolutions with temporal AKR/RGB reconstruction. network weights are FP16-stored, with FP32 activations and accumulation; preprocessing and phase packing remain CPU-side. RX 5700 XT smokes covered 2x/3x/4x scaling and 4/5/8-tap reconstruction. A 4,096-update CPU network scored 21.0219 dB PSNR versus 20.9377 dB for bilinear on a 32-frame seeded procedural holdout; the 0.0842 dB gain is not a useful-quality result. Teacher capture, production input/pack loading, sparse reuse, and quality-qualified performance validation remain open. See [`training/naviqsr/README.md`](training/naviqsr/README.md) and [`RESULTS.md`](RESULTS.md).
+The separate NaviQSR network now has a deterministic procedural dataset, PyTorch train/validate/export flow, and an experimental D3D12 frame graph joining network convolutions with temporal AKR/RGB reconstruction. Network weights are FP16-stored, with FP32 activations and accumulation; preprocessing and phase packing remain CPU-side. RX 5700 XT smokes covered 2x/3x/4x scaling and 4/5/8-tap reconstruction. A 4,096-update CPU network scored 21.0219 dB PSNR versus 20.9377 dB for bilinear on a 32-frame seeded procedural holdout; the 0.0842 dB gain is not a useful-quality result. Teacher capture, production input/pack loading, sparse reuse, and quality-qualified performance validation remain open. See [`training/naviqsr/README.md`](training/naviqsr/README.md) and [`RESULTS.md`](RESULTS.md).
 
+
+## NaviPRISM addendum
+
+NaviPRISM now has an RX 5700 XT `msad4` benchmark and ISA audit, a 4x4 SARM residual-motion shader, a factorized THFA ridge fitter and FP16 atlas packer, 4/5/8/9-tap DX12 filter variants, a descriptor prepass, conservative route classification/compaction, and a CPU reference for optional four-phase history. Full instructions are in [`docs/BUILD_AND_BOOTSTRAP.md`](docs/BUILD_AND_BOOTSTRAP.md).
+
+Run `--benchmark-naviprism-msad4`, `--validate-naviprism-sarm`, `--validate-naviprism-thfa`, and `--validate-naviprism-router` on the RX 5700 XT to reproduce the current synthetic correctness checks and dispatch measurements. `tools/naviprism/dump_msad4_isa.ps1` uses RGA to inspect the generated gfx1010 ISA.
+
+The hardware checks currently pass against deterministic synthetic inputs. They do not include an FSR4 teacher capture, image-quality/temporal evaluation, or a game-frame pipeline with SADNet/NaviQSR fallback dispatch. `msad4` lowers to a native masked-SAD instruction, but this benchmark shows near-parity with scalar integer SAD. NaviPRISM remains an experimental candidate alongside full FSR4 and NaviQSR. Results and open gates are in [`NAVIPRISM_RESULTS.md`](NAVIPRISM_RESULTS.md).
 
 ## Project documents
 
 - `docs/MASTER_SPEC.md` - scope and engineering requirements
 - `docs/naviqsr/README_QSSR_ADDENDUM.md` - separately scoped NaviQSR research and implementation addendum
 - `docs/naviqsr/NAVI_QSR_IMPLEMENTATION_PLAN.md` - NaviQSR subsystem requirements and acceptance gates
+- `docs/naviprism/README_NAVIPRISM_ADDENDUM.md` - NaviPRISM architecture and design requirements
+- `docs/naviprism/NAVIPRISM_ACCEPTANCE.md` - NaviPRISM runtime and evidence gates
+- `NAVIPRISM_RESULTS.md` - NaviPRISM measurements, limitations, and unresolved gates
 - `docs/ACCEPTANCE_CRITERIA.md` - definition of done
 - `PROGRESS.md`, `RESULTS.md` - current implementation and measurements
 - `THIRD_PARTY_NOTICES.md` - upstream license and provenance

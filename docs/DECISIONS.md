@@ -68,8 +68,14 @@ Produce four separable components:
 
 Do not overwrite AMD-signed binaries. An optional packaging helper may copy/rename the project's own DLL for a user-selected integration directory later, but core build output keeps distinct project names.
 
-## D21 — NaviQSR is a second, separately named architecture family
+## D21 — NaviQSR is a separately named architecture family
 The full dense FSR4 FP16 implementation remains mandatory as reference/correctness path, teacher, dense fallback, and benchmark baseline. Add `naviqsr_dense`, `naviqsr_analytic`, `naviqsr_mcld`, and `auto` as separate modes. Do not claim teacher parity, production readiness, or speedup until temporal quality and RX 5700 XT measurements pass. This decision supersedes only the older non-goal against training a new network or reducing topology.
 
 ## D22 — Treat QSSR reporting and this project's synthesis at their actual evidence level
 Sony's public announcement supports only that QSSR uses a streamlined neural architecture and a PS5-tuned implementation. FP16/packed-math details are attributed to public reporting/interview excerpts, not Sony's announcement. NaviQSR/MCLD-AKR is a proposed project synthesis; do not describe it as Sony's implementation, as a wavelet/QSSR fact, or as a globally novel invention.
+
+## D23 - Keep NaviPRISM as an independent primitive reconstruction path
+Preserve full FSR4 and NaviQSR. Build `naviprism_filter`, sparse `naviprism_sadnet`, optional `naviprism_phase`, and quality-gated `auto` modes as described in `docs/naviprism/`. Treat SARM, THFA, and `msad4` speed as proposals until source-derived correctness, RX 5700 XT ISA, quality, and timestamp evidence are recorded.
+
+## D24 - Use architecture names consistently
+Call the compact neural path the NaviQSR network and the primitive/filter path NaviPRISM. Remove obsolete aliases from source, documentation, comments, and project history when the user requests the terminology change.

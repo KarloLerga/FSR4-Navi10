@@ -15,7 +15,7 @@ from training.naviqsr.blocks import ReparamBlock, fold_reparam_block
 from training.naviqsr.datasets.procedural import render_sequence
 from training.naviqsr.datasets.qrisp import import_manifest
 from training.naviqsr.export import export_checkpoint
-from training.naviqsr.model import NaviQSRnetwork
+from training.naviqsr.model import NaviQSRNetwork
 from training.naviqsr.polyphase import (depth_to_space, haar_polyphase,
                                         inverse_haar_polyphase, space_to_depth)
 from tools.naviqsr.validate_model_pack import validate as validate_pack
@@ -62,7 +62,7 @@ class NaviQSRReferenceTests(unittest.TestCase):
         self.assertTrue(np.isfinite(first["motion"]).all())
 
     def test_folded_fp16_model_pack_round_trip_metadata(self) -> None:
-        model = NaviQSRnetwork(input_channels=11, width=4, blocks=1,
+        model = NaviQSRNetwork(input_channels=11, width=4, blocks=1,
                                hf_width=2, polyphase_mode="raw")
         checkpoint = {"format": "naviqsr-checkpoint-v1",
                       "model_config": model.config(),

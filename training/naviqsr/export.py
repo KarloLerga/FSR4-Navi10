@@ -15,11 +15,11 @@ import torch
 
 try:
     from .blocks import fold_model
-    from .model import NaviQSRnetwork
+    from .model import NaviQSRNetwork
 except ImportError:
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
     from training.naviqsr.blocks import fold_model
-    from training.naviqsr.model import NaviQSRnetwork
+    from training.naviqsr.model import NaviQSRNetwork
 
 
 MAGIC = b"NQSRPK1\0"
@@ -37,7 +37,7 @@ def export_checkpoint(checkpoint_path: Path, output_path: Path,
     if checkpoint.get("format") != "naviqsr-checkpoint-v1":
         raise ValueError("unsupported NaviQSR checkpoint format")
     config = checkpoint["model_config"]
-    model = NaviQSRnetwork(
+    model = NaviQSRNetwork(
         input_channels=int(config["input_channels"]), width=int(config["width"]),
         blocks=int(config["blocks"]), hf_width=int(config["hf_width"]),
         polyphase_mode=str(config["polyphase_mode"]))

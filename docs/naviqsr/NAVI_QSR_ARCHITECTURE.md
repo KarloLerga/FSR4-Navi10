@@ -313,7 +313,7 @@ Production `NaviQSR` should not invoke the full teacher every frame.
 
 ---
 
-# 9. network feature distillation
+# 9. Network feature distillation
 
 Instrument teacher tensors at useful scales:
 - half spatial

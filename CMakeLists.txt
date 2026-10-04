@@ -34,6 +34,7 @@ add_executable(fsr4n10_harness
     src/harness/frame_pipeline.cpp
     src/naviqsr/naviqsr_gpu.cpp
     src/naviqsr/naviqsr_network_gpu.cpp
+    src/naviprism/msad4_validation.cpp
 )
 target_link_libraries(fsr4n10_harness PRIVATE fsr4n10_core bcrypt)
 fsr4n10_enable_warnings(fsr4n10_harness)
@@ -101,11 +102,11 @@ fsr4n10_compile_hlsl(
     "${CMAKE_CURRENT_BINARY_DIR}/generated-shaders/naviqsr_network_conv.dxil"
     cs_6_6
 )
-set(NAVIQSR_network_CONV_SHADER "${compile_naviqsr_network_conv_OUTPUT}")
+set(NAVIQSR_NETWORK_CONV_SHADER "${compile_naviqsr_network_conv_OUTPUT}")
 add_custom_target(compile_naviqsr_network ALL
     COMMAND "${CMAKE_COMMAND}" -E copy_if_different
-            "${NAVIQSR_network_CONV_SHADER}" "$<TARGET_FILE_DIR:fsr4n10_harness>/naviqsr_network_conv.dxil"
-    DEPENDS "${NAVIQSR_network_CONV_SHADER}"
+            "${NAVIQSR_NETWORK_CONV_SHADER}" "$<TARGET_FILE_DIR:fsr4n10_harness>/naviqsr_network_conv.dxil"
+    DEPENDS "${NAVIQSR_NETWORK_CONV_SHADER}"
     COMMENT "Copying NaviQSR network convolution DXIL to the harness"
     VERBATIM
 )
@@ -119,7 +120,7 @@ fsr4n10_compile_hlsl(
     cs_6_6
     -D TAP_COUNT=4
 )
-set(NAVIQSR_network_ANALYTIC_4TAP_SHADER "${compile_naviqsr_network_analytic_4tap_OUTPUT}")
+set(NAVIQSR_NETWORK_ANALYTIC_4TAP_SHADER "${compile_naviqsr_network_analytic_4tap_OUTPUT}")
 fsr4n10_compile_hlsl(
     compile_naviqsr_network_analytic_5tap
     "${CMAKE_CURRENT_SOURCE_DIR}/shaders/naviqsr/network_analytic.hlsl"
@@ -128,7 +129,7 @@ fsr4n10_compile_hlsl(
     cs_6_6
     -D TAP_COUNT=5
 )
-set(NAVIQSR_network_ANALYTIC_5TAP_SHADER "${compile_naviqsr_network_analytic_5tap_OUTPUT}")
+set(NAVIQSR_NETWORK_ANALYTIC_5TAP_SHADER "${compile_naviqsr_network_analytic_5tap_OUTPUT}")
 fsr4n10_compile_hlsl(
     compile_naviqsr_network_analytic_8tap
     "${CMAKE_CURRENT_SOURCE_DIR}/shaders/naviqsr/network_analytic.hlsl"
@@ -137,21 +138,136 @@ fsr4n10_compile_hlsl(
     cs_6_6
     -D TAP_COUNT=8
 )
-set(NAVIQSR_network_ANALYTIC_8TAP_SHADER "${compile_naviqsr_network_analytic_8tap_OUTPUT}")
+set(NAVIQSR_NETWORK_ANALYTIC_8TAP_SHADER "${compile_naviqsr_network_analytic_8tap_OUTPUT}")
 add_custom_target(compile_naviqsr_network_analytic ALL
     COMMAND "${CMAKE_COMMAND}" -E copy_if_different
-            "${NAVIQSR_network_ANALYTIC_4TAP_SHADER}" "$<TARGET_FILE_DIR:fsr4n10_harness>/naviqsr_network_analytic_4tap.dxil"
+            "${NAVIQSR_NETWORK_ANALYTIC_4TAP_SHADER}" "$<TARGET_FILE_DIR:fsr4n10_harness>/naviqsr_network_analytic_4tap.dxil"
     COMMAND "${CMAKE_COMMAND}" -E copy_if_different
-            "${NAVIQSR_network_ANALYTIC_5TAP_SHADER}" "$<TARGET_FILE_DIR:fsr4n10_harness>/naviqsr_network_analytic_5tap.dxil"
+            "${NAVIQSR_NETWORK_ANALYTIC_5TAP_SHADER}" "$<TARGET_FILE_DIR:fsr4n10_harness>/naviqsr_network_analytic_5tap.dxil"
     COMMAND "${CMAKE_COMMAND}" -E copy_if_different
-            "${NAVIQSR_network_ANALYTIC_8TAP_SHADER}" "$<TARGET_FILE_DIR:fsr4n10_harness>/naviqsr_network_analytic_8tap.dxil"
-    DEPENDS "${NAVIQSR_network_ANALYTIC_4TAP_SHADER}"
-            "${NAVIQSR_network_ANALYTIC_5TAP_SHADER}"
-            "${NAVIQSR_network_ANALYTIC_8TAP_SHADER}"
+            "${NAVIQSR_NETWORK_ANALYTIC_8TAP_SHADER}" "$<TARGET_FILE_DIR:fsr4n10_harness>/naviqsr_network_analytic_8tap.dxil"
+    DEPENDS "${NAVIQSR_NETWORK_ANALYTIC_4TAP_SHADER}"
+            "${NAVIQSR_NETWORK_ANALYTIC_5TAP_SHADER}"
+            "${NAVIQSR_NETWORK_ANALYTIC_8TAP_SHADER}"
     COMMENT "Copying NaviQSR network analytic DXIL tap variants to the harness"
     VERBATIM
 )
 add_dependencies(fsr4n10_harness compile_naviqsr_network_analytic)
+
+fsr4n10_compile_hlsl(
+    compile_naviprism_msad4
+    "${CMAKE_CURRENT_SOURCE_DIR}/shaders/naviprism/msad4_microbench.hlsl"
+    main
+    "${CMAKE_CURRENT_BINARY_DIR}/generated-shaders/naviprism_msad4.dxil"
+    cs_6_6
+    -D MSAD_MODE=0
+)
+set(NAVIPRISM_MSAD4_SHADER "${compile_naviprism_msad4_OUTPUT}")
+fsr4n10_compile_hlsl(
+    compile_naviprism_msad4_scalar
+    "${CMAKE_CURRENT_SOURCE_DIR}/shaders/naviprism/msad4_microbench.hlsl"
+    main
+    "${CMAKE_CURRENT_BINARY_DIR}/generated-shaders/naviprism_msad4_scalar.dxil"
+    cs_6_6
+    -D MSAD_MODE=1
+)
+set(NAVIPRISM_MSAD4_SCALAR_SHADER "${compile_naviprism_msad4_scalar_OUTPUT}")
+fsr4n10_compile_hlsl(
+    compile_naviprism_msad4_fp16
+    "${CMAKE_CURRENT_SOURCE_DIR}/shaders/naviprism/msad4_microbench.hlsl"
+    main
+    "${CMAKE_CURRENT_BINARY_DIR}/generated-shaders/naviprism_msad4_fp16.dxil"
+    cs_6_6
+    -D MSAD_MODE=2
+)
+set(NAVIPRISM_MSAD4_FP16_SHADER "${compile_naviprism_msad4_fp16_OUTPUT}")
+add_custom_target(compile_naviprism_msad4_variants ALL
+    COMMAND "${CMAKE_COMMAND}" -E copy_if_different
+            "${NAVIPRISM_MSAD4_SHADER}" "$<TARGET_FILE_DIR:fsr4n10_harness>/naviprism_msad4.dxil"
+    COMMAND "${CMAKE_COMMAND}" -E copy_if_different
+            "${NAVIPRISM_MSAD4_SCALAR_SHADER}" "$<TARGET_FILE_DIR:fsr4n10_harness>/naviprism_msad4_scalar.dxil"
+    COMMAND "${CMAKE_COMMAND}" -E copy_if_different
+            "${NAVIPRISM_MSAD4_FP16_SHADER}" "$<TARGET_FILE_DIR:fsr4n10_harness>/naviprism_msad4_fp16.dxil"
+    DEPENDS "${NAVIPRISM_MSAD4_SHADER}"
+            "${NAVIPRISM_MSAD4_SCALAR_SHADER}"
+            "${NAVIPRISM_MSAD4_FP16_SHADER}"
+    COMMENT "Copying NaviPRISM msad4 benchmark DXIL variants"
+    VERBATIM
+)
+add_dependencies(fsr4n10_harness compile_naviprism_msad4_variants)
+
+fsr4n10_compile_hlsl(
+    compile_naviprism_sarm_residual
+    "${CMAKE_CURRENT_SOURCE_DIR}/shaders/naviprism/sarm_residual.hlsl"
+    main
+    "${CMAKE_CURRENT_BINARY_DIR}/generated-shaders/naviprism_sarm_residual.dxil"
+    cs_6_6
+)
+set(NAVIPRISM_SARM_RESIDUAL_SHADER "${compile_naviprism_sarm_residual_OUTPUT}")
+add_custom_target(compile_naviprism_sarm ALL
+    COMMAND "${CMAKE_COMMAND}" -E copy_if_different
+            "${NAVIPRISM_SARM_RESIDUAL_SHADER}" "$<TARGET_FILE_DIR:fsr4n10_harness>/naviprism_sarm_residual.dxil"
+    DEPENDS "${NAVIPRISM_SARM_RESIDUAL_SHADER}"
+    COMMENT "Copying NaviPRISM SARM residual-motion DXIL to the harness"
+    VERBATIM
+)
+add_dependencies(fsr4n10_harness compile_naviprism_sarm)
+
+foreach(THFA_TAP_COUNT IN ITEMS 4 5 8 9)
+    fsr4n10_compile_hlsl(
+        compile_naviprism_thfa_${THFA_TAP_COUNT}tap
+        "${CMAKE_CURRENT_SOURCE_DIR}/shaders/naviprism/thfa_filter.hlsl"
+        main
+        "${CMAKE_CURRENT_BINARY_DIR}/generated-shaders/naviprism_thfa_${THFA_TAP_COUNT}tap.dxil"
+        cs_6_6
+        -D FILTER_TAPS=${THFA_TAP_COUNT}
+    )
+    set(NAVIPRISM_THFA_${THFA_TAP_COUNT}TAP_SHADER
+        "${compile_naviprism_thfa_${THFA_TAP_COUNT}tap_OUTPUT}")
+    add_custom_target(compile_naviprism_thfa_${THFA_TAP_COUNT}tap ALL
+        COMMAND "${CMAKE_COMMAND}" -E copy_if_different
+                "${NAVIPRISM_THFA_${THFA_TAP_COUNT}TAP_SHADER}"
+                "$<TARGET_FILE_DIR:fsr4n10_harness>/naviprism_thfa_${THFA_TAP_COUNT}tap.dxil"
+        DEPENDS "${NAVIPRISM_THFA_${THFA_TAP_COUNT}TAP_SHADER}"
+        COMMENT "Copying NaviPRISM THFA ${THFA_TAP_COUNT}-tap DXIL to the harness"
+        VERBATIM
+    )
+    add_dependencies(fsr4n10_harness compile_naviprism_thfa_${THFA_TAP_COUNT}tap)
+endforeach()
+
+fsr4n10_compile_hlsl(
+    compile_naviprism_thfa_descriptors
+    "${CMAKE_CURRENT_SOURCE_DIR}/shaders/naviprism/thfa_descriptors.hlsl"
+    main
+    "${CMAKE_CURRENT_BINARY_DIR}/generated-shaders/naviprism_thfa_descriptors.dxil"
+    cs_6_6
+)
+add_custom_target(compile_naviprism_thfa_descriptors ALL
+    COMMAND "${CMAKE_COMMAND}" -E copy_if_different
+            "${compile_naviprism_thfa_descriptors_OUTPUT}"
+            "$<TARGET_FILE_DIR:fsr4n10_harness>/naviprism_thfa_descriptors.dxil"
+    DEPENDS "${compile_naviprism_thfa_descriptors_OUTPUT}"
+    COMMENT "Copying NaviPRISM THFA descriptor DXIL to the harness"
+    VERBATIM
+)
+add_dependencies(fsr4n10_harness compile_naviprism_thfa_descriptors)
+
+fsr4n10_compile_hlsl(
+    compile_naviprism_quality_router
+    "${CMAKE_CURRENT_SOURCE_DIR}/shaders/naviprism/quality_router.hlsl"
+    main
+    "${CMAKE_CURRENT_BINARY_DIR}/generated-shaders/naviprism_quality_router.dxil"
+    cs_6_6
+)
+add_custom_target(compile_naviprism_quality_router ALL
+    COMMAND "${CMAKE_COMMAND}" -E copy_if_different
+            "${compile_naviprism_quality_router_OUTPUT}"
+            "$<TARGET_FILE_DIR:fsr4n10_harness>/naviprism_quality_router.dxil"
+    DEPENDS "${compile_naviprism_quality_router_OUTPUT}"
+    COMMENT "Copying NaviPRISM tile-router DXIL to the harness"
+    VERBATIM
+)
+add_dependencies(fsr4n10_harness compile_naviprism_quality_router)
 
 add_custom_target(generate_model_manifest
     COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/model/extract_manifest.py"

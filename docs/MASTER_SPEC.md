@@ -2,9 +2,9 @@
 
 ## 0. Purpose
 
-Build a complete DirectX 12 implementation of AMD FSR 4.0.2 targeted specifically at Radeon RX 5700 XT / Navi10 / gfx1010. Preserve the full FSR4 implementation as the correctness reference, quality teacher, and dense safety fallback. In parallel, add the separately named NaviQSR network family described in `docs/naviqsr/`; it may become a production candidate only after temporal quality, stability, and measured Navi10 break-even gates pass.
+Build a complete DirectX 12 implementation of AMD FSR 4.0.2 targeted specifically at Radeon RX 5700 XT / Navi10 / gfx1010. Preserve the full FSR4 implementation as the correctness reference, quality teacher, and dense safety fallback. Keep the existing NaviQSR network family described in `docs/naviqsr/` and add NaviPRISM, the primitive/filter architecture described in `docs/naviprism/`, as independent candidate paths. None becomes a production candidate until its temporal quality, stability, and measured Navi10 break-even gates pass.
 
-This is not a project to create a generic AI upscaler, not a project to improve FSR3, and not a project to inject game-specific shaders. The NaviQSR path is a project-specific research network trained against FSR4 and temporal ground truth; it must never be mislabeled as AMD FSR4. The goal remains the best measured image-quality/performance result on RX 5700 XT.
+This is not a project to create a generic AI upscaler, not a project to improve FSR3, and not a project to inject game-specific shaders. NaviQSR and NaviPRISM are project-specific paths evaluated against the full FSR4 reference and temporal ground truth; neither may be mislabeled as AMD FSR4. The goal remains the best measured image-quality/performance result on RX 5700 XT.
 
 ## 1. Required documents
 Before implementing a subsystem, read the relevant documents:
@@ -17,6 +17,7 @@ Before implementing a subsystem, read the relevant documents:
 - `docs/ACCEPTANCE_CRITERIA.md` — exact completion gates.
 - `docs/CODE_REVIEW_CHECKLIST.md` — mandatory final correctness/performance review.
 - `docs/FAILURE_MODES.md` — recovery behavior; do not stop prematurely.
+- `docs/naviprism/NAVIPRISM_ACCEPTANCE.md` — NaviPRISM runtime and evidence gates.
 
 ## 2. User-facing goal
 The user should end with a release folder that can run the optimized FSR4 path on the local RX 5700 XT in a standalone DX12 harness and expose an FSR API-compatible adapter for later game integration work.
@@ -92,6 +93,16 @@ Creates a DX12 device and runs deterministic multi-frame sequences through all b
 
 ### 4.6 FSR API compatibility adapter
 Exports the FSR API-compatible surface needed for later integration, translating FSR API context/query/dispatch descriptors into the core runtime. It must remain separate from AMD signed DLLs and clearly identify itself as an experimental unsigned project build.
+
+### 4.7 NaviPRISM reconstruction families
+
+NaviPRISM is a separate candidate runtime and preserves the existing FSR4 and NaviQSR paths:
+- `naviprism_filter`: normal low-cost path using descriptors, a factorized Temporal Hash Filter Atlas, and analytic/local filters.
+- `naviprism_sadnet`: sparse additive correction on compacted difficult tiles, only when measurements support it.
+- `naviprism_phase`: optional phase-separated history reservoir, disabled unless A/B evidence supports it.
+- `auto`: tile-coherent routing selected by measured quality and RX 5700 XT timing among NaviPRISM, NaviQSR, and full FSR4 reference modes.
+
+SARM residual motion, THFA lookup, and `msad4` speed remain hypotheses until scalar correctness, DXIL, actual Navi10 ISA, and GPU timing evidence agree.
 
 ## 5. Repository layout to converge toward
 

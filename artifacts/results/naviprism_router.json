@@ -1,0 +1,9 @@
+{
+  "gpu": "AMD Radeon RX 5700 XT",
+  "pci_id": "1002:731F",
+  "shader_sha256": "282a69bede92baa8698fc6f1b0e4d9596fb2cbb8981860321f9c4edfb3be5061",
+  "tiles": 8,
+  "route_counts": [1, 2, 2, 2, 1],
+  "hard_tiles": [2, 6],
+  "very_hard_tiles": [3, 5]
+}

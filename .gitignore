@@ -1,6 +1,8 @@
 /build/
 /generated/
-/artifacts/
+/artifacts/*
+!/artifacts/results/
+!/artifacts/results/**
 /release/
 /third_party/*
 !/third_party/

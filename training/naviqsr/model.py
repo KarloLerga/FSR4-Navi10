@@ -9,7 +9,7 @@ from .blocks import ReparamBlock
 from .polyphase import pack_features
 
 
-class NaviQSRnetwork(nn.Module):
+class NaviQSRNetwork(nn.Module):
     """LF trunk, shallow HF branch, and compact AKR control/residual heads."""
 
     def __init__(self, input_channels: int = 11, width: int = 24,

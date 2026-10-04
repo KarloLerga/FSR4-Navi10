@@ -1,0 +1,23 @@
+{
+  "gpu": "AMD Radeon RX 5700 XT",
+  "pci_id": "1002:731F",
+  "driver": "32.0.21045.1000",
+  "shader_sha256": "1e1dc0135aadb3abb355a6b09215f56e67cd47e52511fe6a81ae770591cfdebf",
+  "resolution": [64, 48],
+  "tiles": [8, 6],
+  "patch": [4, 4],
+  "search": {"dx": [-3, 3], "dy": [-2, 2]},
+  "expected_translation": [1, -1],
+  "valid_tiles": 48,
+  "max_motion_error_px": 0.000000,
+  "max_confidence_error": 0.000000,
+  "warmup_samples": 5,
+  "measured_samples": 20,
+  "dispatches_per_sample": 32,
+  "timestamp_frequency_hz": 100000000,
+  "min_us": 45.766250,
+  "median_us": 48.684375,
+  "p90_us": 57.805000,
+  "p95_us": 67.293750,
+  "samples_us": [47.278750, 48.638750, 57.805000, 45.806250, 48.741250, 45.783750, 48.760000, 45.816250, 48.761250, 51.243750, 47.288750, 45.802500, 48.730000, 55.148750, 47.330000, 45.766250, 83.228750, 67.293750, 51.530000, 45.795000]
+}

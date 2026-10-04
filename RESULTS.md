@@ -96,7 +96,7 @@ The isolated dispatch timings below used 5 warmups and 20 timestamped measuremen
 
 The full network runtime still lacks direct `.nqsrpack` loading and GPU-side game-frame preprocessing. FSR4 teacher capture, sparse MCLD, reset/stability stress at 10,000+ dispatches, and useful quality/performance selection remain incomplete. No NaviQSR production claim is made.
 
-### network convolution GPU smoke
+### Network convolution GPU smoke
 
 The exported 4,096-update checkpoint ran all 9 network convolution/pool-concat layers on the RX 5700 XT. Its 5,096 model weight/bias elements are stored as FP16 and read from a packed D3D12 raw buffer; activations and multiply-accumulate operations are FP32. GPU controls/residuals matched a PyTorch reference using the same FP16-quantized folded parameters. Maximum/mean absolute error was 4.57e-6 / 3.73e-7 at LR 32x18 frame 1, 9.54e-6 / 5.24e-7 at LR 32x18 frame 7, and 1.12e-5 / 5.31e-7 at LR 64x36 frame 2. This validates the smoke graph's convolution results, not true FP16 arithmetic or a production pack loader.
 
@@ -116,3 +116,11 @@ AMD's published FSR 4.0.2 support is RX 9000 Series and above, with signed DLL i
 ## QSSR/NaviQSR addendum status
 
 The QSSR addendum is integrated as a separate proposed architecture family under `docs/naviqsr/`. Sony's official announcement says QSSR has a streamlined neural network and a hand-tuned PS5 implementation; it does not disclose the architecture. FP16/packed-math and performance details cited in the research addendum come from secondary reporting and are not treated as verified Sony implementation details. NaviQSR has a CPU-trained reference and a joined network+AKR D3D12 smoke. Teacher comparison, direct production-pack/frame input, sparse break-even, and production-quality/performance results remain open.
+
+## NaviPRISM addendum status
+
+NaviPRISM is an independent experimental primitive/filter path. Synthetic D3D12 validators pass on the RX 5700 XT for masked SAD, residual motion, THFA filtering, and tile classification. AMD RGA 2.14.2.7's gfx1010 disassembly contains `v_mqsad_u32_u8` in the `msad4` and SARM shaders. For the 4,096-case masked-SAD benchmark, median/p95 were 287.665/305.865 us for `msad4`, 288.654/325.290 us for scalar-u8, and 337.109/354.919 us for FP16 difference with FP32 accumulation. This shows near parity with scalar-u8 in this microbenchmark; it establishes no end-to-end speedup.
+
+The SARM synthetic known-translation run matched the scalar reference on 48/48 tiles; median/p95 were 48.684/67.294 us. THFA's 4/5/8/9-tap variants matched the scalar reference on a 16x12-to-32x24 synthetic workload, with medians 0.928/0.953/2.199/0.975 us. The classifier returned the expected route counters and compacted indices for eight synthetic tiles. Exact inputs, hashes, and raw samples are in `NAVIPRISM_RESULTS.md` and `artifacts/results/naviprism_*.json`.
+
+These are isolated synthetic implementation checks. THFA's GPU validator uses a synthetic atlas; it is not fitted from FSR4 captures. There is no captured teacher/native-HR sequence, full frame graph, downstream sparse fallback dispatch, GPU phase reservoir, temporal quality result, or game integration. NaviPRISM remains experimental; matching FSR4 image quality and end-to-end speed have not been established.

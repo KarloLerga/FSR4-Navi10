@@ -2,6 +2,7 @@
 #include "fsr4n10/fp16_probe.h"
 #include "fsr4n10/model_pack.h"
 #include "fsr4n10/naviqsr_gpu.h"
+#include "fsr4n10/naviprism.h"
 #include "fsr4n10/upstream_smoke.h"
 #include "fsr4n10/version.h"
 
@@ -25,7 +26,11 @@ void print_usage() {
               << "  fsr4n10_harness.exe --run-upstream-i8-image-smoke <input.ppm> <output.bmp>\n"
               << "  fsr4n10_harness.exe --validate-model-pack <path>\n"
               << "  fsr4n10_harness.exe --run-naviqsr-analytic-gpu <case.nqsrtest>\n"
-              << "  fsr4n10_harness.exe --run-naviqsr-network-gpu <case.nqsrframe>\n";
+              << "  fsr4n10_harness.exe --run-naviqsr-network-gpu <case.nqsrframe>\n"
+              << "  fsr4n10_harness.exe --benchmark-naviprism-msad4 <report.json>\n"
+              << "  fsr4n10_harness.exe --validate-naviprism-sarm <report.json>\n"
+              << "  fsr4n10_harness.exe --validate-naviprism-thfa <report.json>\n"
+              << "  fsr4n10_harness.exe --validate-naviprism-router <report.json>\n";
 }
 
 int list_adapters() {
@@ -96,6 +101,18 @@ int main(int argc, char** argv) {
         }
         if (argc == 3 && std::string_view(argv[1]) == "--run-naviqsr-network-gpu") {
             return fsr4n10::run_naviqsr_network_gpu_smoke(std::filesystem::path(argv[2]));
+        }
+        if (argc == 3 && std::string_view(argv[1]) == "--benchmark-naviprism-msad4") {
+            return fsr4n10::benchmark_naviprism_msad4(std::filesystem::path(argv[2]));
+        }
+        if (argc == 3 && std::string_view(argv[1]) == "--validate-naviprism-sarm") {
+            return fsr4n10::validate_naviprism_sarm(std::filesystem::path(argv[2]));
+        }
+        if (argc == 3 && std::string_view(argv[1]) == "--validate-naviprism-thfa") {
+            return fsr4n10::validate_naviprism_thfa(std::filesystem::path(argv[2]));
+        }
+        if (argc == 3 && std::string_view(argv[1]) == "--validate-naviprism-router") {
+            return fsr4n10::validate_naviprism_router(std::filesystem::path(argv[2]));
         }
         print_usage();
         return argc == 1 ? 0 : 2;

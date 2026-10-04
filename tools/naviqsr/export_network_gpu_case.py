@@ -16,7 +16,7 @@ from torch import nn
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from training.naviqsr.blocks import fold_model
 from training.naviqsr.analytic_reconstruction import analytic_reconstruct
-from training.naviqsr.model import NaviQSRnetwork
+from training.naviqsr.model import NaviQSRNetwork
 from training.naviqsr.polyphase import pack_features
 from training.naviqsr.train import _features, _frame_tensor, _load_sequences
 
@@ -33,7 +33,7 @@ def export_case(checkpoint_path: Path, dataset_root: Path, output_path: Path,
     config = checkpoint["model_config"]
     if config.get("polyphase_mode") != "raw":
         raise ValueError("the first D3D12 network path currently supports raw 2x polyphase only")
-    model = NaviQSRnetwork(input_channels=int(config["input_channels"]),
+    model = NaviQSRNetwork(input_channels=int(config["input_channels"]),
                            width=int(config["width"]), blocks=int(config["blocks"]),
                            hf_width=int(config["hf_width"]), polyphase_mode="raw")
     model.load_state_dict(checkpoint["model_state"], strict=True)
@@ -190,7 +190,7 @@ def export_case(checkpoint_path: Path, dataset_root: Path, output_path: Path,
 
     digest = hashlib.sha256(output_path.read_bytes()).hexdigest()
     metadata = {
-        "format": "naviqsr-network-gpu-case-v2",
+        "format": "naviqsr-frame-gpu-case-v2",
         "case": output_path.name,
         "sha256": digest,
         "size_bytes": output_path.stat().st_size,

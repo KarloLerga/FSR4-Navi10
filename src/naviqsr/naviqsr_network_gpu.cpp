@@ -34,7 +34,7 @@ constexpr UINT kGraphSamples = 20;
 constexpr UINT kGraphRuns = kGraphWarmups + kGraphSamples;
 
 #pragma pack(push, 1)
-struct networkCaseHeader {
+struct NetworkCaseHeader {
     char magic[8];
     std::uint32_t version;
     std::uint32_t width;
@@ -59,7 +59,7 @@ struct networkCaseHeader {
     float history_valid;
 };
 
-struct networkLayer {
+struct NetworkLayer {
     std::uint32_t operation;
     std::uint32_t source_a;
     std::uint32_t source_b;
@@ -76,12 +76,12 @@ struct networkLayer {
     std::uint32_t residual;
 };
 #pragma pack(pop)
-static_assert(sizeof(networkCaseHeader) == 92);
-static_assert(sizeof(networkLayer) == 56);
+static_assert(sizeof(NetworkCaseHeader) == 92);
+static_assert(sizeof(NetworkLayer) == 56);
 
-struct networkCase {
-    networkCaseHeader header{};
-    std::vector<networkLayer> layers;
+struct NetworkCase {
+    NetworkCaseHeader header{};
+    std::vector<NetworkLayer> layers;
     std::vector<float> packed;
     std::vector<float> features;
     std::vector<std::uint16_t> weights;
@@ -139,7 +139,7 @@ struct Shape {
     std::uint32_t channels;
 };
 
-networkCase read_case(const std::filesystem::path& path) {
+NetworkCase read_case(const std::filesystem::path& path) {
     std::error_code file_error;
     const auto file_size = std::filesystem::file_size(path, file_error);
     if (file_error || file_size > 128U * 1024U * 1024U) {
@@ -148,7 +148,7 @@ networkCase read_case(const std::filesystem::path& path) {
     std::ifstream stream(path, std::ios::binary);
     if (!stream) throw std::runtime_error("cannot open NaviQSR network case: " + path.string());
 
-    networkCase result{};
+    NetworkCase result{};
     stream.read(reinterpret_cast<char*>(&result.header), sizeof(result.header));
     if (stream.gcount() != static_cast<std::streamsize>(sizeof(result.header))) {
         throw std::runtime_error("NaviQSR network case header is truncated");
@@ -183,8 +183,8 @@ networkCase read_case(const std::filesystem::path& path) {
         header.input_channels < 8) {
         throw std::runtime_error("NaviQSR network case tensor sizes do not match its dimensions");
     }
-    const std::uint64_t expected_file_size = sizeof(networkCaseHeader)
-        + static_cast<std::uint64_t>(header.layer_count) * sizeof(networkLayer)
+    const std::uint64_t expected_file_size = sizeof(NetworkCaseHeader)
+        + static_cast<std::uint64_t>(header.layer_count) * sizeof(NetworkLayer)
         + static_cast<std::uint64_t>(header.packed_count) * sizeof(float)
         + static_cast<std::uint64_t>(header.features_count) * sizeof(float)
         + static_cast<std::uint64_t>(header.weights_count) * sizeof(std::uint16_t)
@@ -196,7 +196,7 @@ networkCase read_case(const std::filesystem::path& path) {
         throw std::runtime_error("NaviQSR network case byte size does not match its header");
     }
 
-    result.layers = read_array<networkLayer>(stream, header.layer_count, "layer records");
+    result.layers = read_array<NetworkLayer>(stream, header.layer_count, "layer records");
     result.packed = read_array<float>(stream, header.packed_count, "packed input");
     result.features = read_array<float>(stream, header.features_count, "features");
     result.weights = read_array<std::uint16_t>(stream, header.weights_count, "FP16 weights");

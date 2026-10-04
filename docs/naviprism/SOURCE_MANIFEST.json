@@ -1,0 +1,13 @@
+{
+  "name": "FSR4-Navi10-NaviPRISM-Addendum",
+  "files": [
+    "CODEX_INTEGRATE_NAVIPRISM.txt",
+    "README_NAVIPRISM_ADDENDUM.md",
+    "docs/NAVIPRISM_ACCEPTANCE.md",
+    "docs/NAVIPRISM_RESEARCH.md",
+    "docs/SADNET_ROUTER_PHR.md",
+    "docs/SARM_MSAD_SPEC.md",
+    "docs/SOURCES_NAVIPRISM.md",
+    "docs/THFA_FILTER_ATLAS.md"
+  ]
+}

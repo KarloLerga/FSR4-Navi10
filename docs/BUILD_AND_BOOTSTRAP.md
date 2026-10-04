@@ -68,3 +68,21 @@ The final repo must support roughly:
 ```
 
 Codex may refine exact CLI, but keep it one-command per operation and document it.
+
+## NaviPRISM research validators
+
+Release builds compile the NaviPRISM `msad4`, SARM, THFA descriptor/filter, and tile-router shaders. On a local RX 5700 XT, run the synthetic implementation checks and ISA audit with:
+
+```powershell
+./scripts/build.ps1 -Configuration Release
+ctest --test-dir build/release --output-on-failure
+build/release/fsr4n10_harness.exe --benchmark-naviprism-msad4 artifacts/results/naviprism_msad4.json
+build/release/fsr4n10_harness.exe --validate-naviprism-sarm artifacts/results/naviprism_sarm.json
+build/release/fsr4n10_harness.exe --validate-naviprism-thfa artifacts/results/naviprism_thfa.json
+build/release/fsr4n10_harness.exe --validate-naviprism-router artifacts/results/naviprism_router.json
+./tools/naviprism/dump_msad4_isa.ps1
+```
+
+The ISA script targets `gfx1010` with AMD Radeon GPU Analyzer from `.tools/rga/rga.exe` by default. Override `-RgaPath` for a separately installed RGA. Reports and JSON measurements are reproducible outputs under ignored `artifacts/` folders; the source commands and summary results stay in the repository.
+
+`tools/naviprism/fit_thfa_atlas.py` fits an atlas from an NPZ capture. Raw RGB captures use `current_neighborhood[N,3,3,3]`, `bilinear_baseline[N,3]`, `teacher_target[N,3]`, and per-pixel `spatial_bucket[N]`, `temporal_bucket[N]`, and `phase_bucket[N]`. Grayscale captures use `[N,3,3]` neighborhoods and `[N]` baseline/target arrays. All direct-fit rows are also accepted as `features[N,10]`, `residual[N]`, and the three bucket arrays. Pass a teacher identity and source/sequence provenance; the output includes a deterministic FP16 atlas and a hash manifest. No capture-generation command is available until the full FSR4 teacher path is implemented.

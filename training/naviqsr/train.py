@@ -16,13 +16,13 @@ try:
     from .analytic_reconstruction import analytic_reconstruct
     from .datasets.procedural import generate_dataset
     from .losses import total_loss
-    from .model import NaviQSRnetwork
+    from .model import NaviQSRNetwork
 except ImportError:  # Support direct execution from the repository root.
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
     from training.naviqsr.analytic_reconstruction import analytic_reconstruct
     from training.naviqsr.datasets.procedural import generate_dataset
     from training.naviqsr.losses import total_loss
-    from training.naviqsr.model import NaviQSRnetwork
+    from training.naviqsr.model import NaviQSRNetwork
 
 
 def select_device(requested: str) -> tuple[torch.device, str]:
@@ -98,7 +98,7 @@ def train(args: argparse.Namespace) -> dict[str, object]:
     if not sequences:
         raise RuntimeError("dataset contains no sequences")
 
-    model = NaviQSRnetwork(input_channels=11, width=args.width_channels,
+    model = NaviQSRNetwork(input_channels=11, width=args.width_channels,
                            blocks=args.blocks, hf_width=args.hf_width,
                            polyphase_mode=args.polyphase).to(device)
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.learning_rate,

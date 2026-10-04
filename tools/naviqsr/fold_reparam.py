@@ -11,7 +11,7 @@ import torch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from training.naviqsr.blocks import fold_model
-from training.naviqsr.model import NaviQSRnetwork
+from training.naviqsr.model import NaviQSRNetwork
 
 
 def main() -> None:
@@ -21,7 +21,7 @@ def main() -> None:
     args = parser.parse_args()
     checkpoint = torch.load(args.checkpoint, map_location="cpu", weights_only=True)
     config = checkpoint["model_config"]
-    model = NaviQSRnetwork(input_channels=int(config["input_channels"]),
+    model = NaviQSRNetwork(input_channels=int(config["input_channels"]),
                            width=int(config["width"]), blocks=int(config["blocks"]),
                            hf_width=int(config["hf_width"]),
                            polyphase_mode=str(config["polyphase_mode"]))

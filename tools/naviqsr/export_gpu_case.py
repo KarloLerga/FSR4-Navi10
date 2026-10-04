@@ -14,7 +14,7 @@ import torch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from training.naviqsr.analytic_reconstruction import analytic_reconstruct
-from training.naviqsr.model import NaviQSRnetwork
+from training.naviqsr.model import NaviQSRNetwork
 from training.naviqsr.train import _features, _frame_tensor, _load_sequences
 
 
@@ -36,7 +36,7 @@ def export_case(checkpoint_path: Path, dataset_root: Path, output_path: Path,
                 sequence_index: int, frame_index: int, taps: int) -> dict[str, object]:
     checkpoint = torch.load(checkpoint_path, map_location="cpu", weights_only=True)
     config = checkpoint["model_config"]
-    model = NaviQSRnetwork(input_channels=int(config["input_channels"]),
+    model = NaviQSRNetwork(input_channels=int(config["input_channels"]),
                            width=int(config["width"]), blocks=int(config["blocks"]),
                            hf_width=int(config["hf_width"]),
                            polyphase_mode=str(config["polyphase_mode"]))

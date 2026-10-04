@@ -15,6 +15,7 @@ For architecture and implementation requirements use:
 - `docs/ACCEPTANCE_CRITERIA.md`
 - `docs/CODE_REVIEW_CHECKLIST.md`
 - `docs/FAILURE_MODES.md`
+- `docs/naviprism/NAVIPRISM_ACCEPTANCE.md` and related NaviPRISM requirements for the primitive reconstruction path.
 
 For long work use the ExecPlan contract in `.agent/PLANS.md`.
 
@@ -27,6 +28,7 @@ For long work use the ExecPlan contract in `.agent/PLANS.md`.
 - Do not optimize by lowering requested image quality in the default backend.
 - Prefer offline specialization/code generation over runtime genericity when it improves Navi10 performance.
 - Keep weight/model conversion deterministic and reproducible.
+- Keep NaviPRISM, NaviQSR, and full FSR4 as separately named architecture paths.
 - All generated artifacts must be rebuildable from documented commands.
 - Third-party research repositories are references only; do not copy large chunks blindly and do not execute their setup scripts without review.
 - Do not commit downloaded tool installers, large upstream repos, captures, or AMD redistributables into this repo unless their license explicitly allows it and MASTER_SPEC requires vendoring. Prefer pinned fetch scripts.

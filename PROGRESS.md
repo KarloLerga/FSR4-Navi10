@@ -34,3 +34,16 @@ The standalone harness lists adapters, runs a generic FP16 arithmetic probe, val
 - Joined the nine FP16-stored network layers with temporal AKR/RGB reconstruction in one D3D12 command list. Release smokes covered 2x/3x/4x output scaling, 4/5/8 taps, and reset/valid history; maximum control error was 1.13e-5 and maximum RGB error 1.14e-6 against the Python reference. Activations and accumulation remain FP32, while case preprocessing, phase packing, and history upload remain CPU-side.
 - The joined graph's tiny synthetic-case median was 57.18-60.38 us; p95 reached 347.84 us due to noisy outliers. This excludes uploads, CPU preprocessing, PSO creation, host waiting, and readback, and is not a full-resolution performance result.
 - Teacher output/feature hooks, direct production-pack and game-frame input, true FP16 arithmetic/ISA audit, sparse MCLD, long temporal stress, useful-quality selection, and measured dense/sparse break-even remain open. Full-FSR4 milestones remain active and are not replaced by this network experiment.
+
+### NaviPRISM addendum (2026-10-04)
+
+- Validated the addendum ZIP CRC and manifest contents. Copied its seven technical documents into `docs/naviprism/`; left the embedded Codex integration prompt outside the repository and treated it as non-authoritative.
+- Recorded the starting checkpoint `c1e54eb`. On the unchanged tree, the Release build passed, CTest passed (1/1), and NaviQSR reference tests passed (6/6).
+- The addendum defines an independent primitive/filter architecture with SARM motion refinement, THFA filter lookup, sparse difficult-tile correction, optional phase history, and quality-gated routing. FSR4 and NaviQSR remain preserved.
+- NaviQSR source paths, comments, and docs now use network terminology; a case-insensitive working-tree scan found no legacy label text or filenames. Historical commit rewriting remains pending.
+- Added a `msad4` scalar reference and D3D12 comparison against scalar-u8 and FP16-difference paths. Exact output was confirmed on 4,096 x 96 synthetic cases. AMD RGA gfx1010 ISA includes `v_mqsad_u32_u8` for `msad4`/SARM; benchmark medians were 287.665 us (`msad4`), 288.654 us (scalar-u8), and 337.109 us (FP16-difference/FP32-sum), so no material intrinsic speedup is claimed.
+- Added SARM residual-motion matching and a D3D12/scalar-reference validation. All 48 tiles matched a known `[1,-1]` residual; median 48.684 us and p95 67.294 us on a tiny synthetic image.
+- Added THFA descriptor extraction, deterministic factorized-atlas fitting/packing, and GPU 4/5/8/9-tap filter variants. Synthetic GPU/reference error stayed within 1e-6; medians were 0.928/0.953/2.199/0.975 us for 32x24 output. The GPU check uses a synthetic atlas, not teacher-fitted weights.
+- Added a quality tile classifier with compaction. It matched expected route counts and HARD/VERY_HARD lists on eight synthetic tiles. It does not dispatch any downstream reconstruction branch.
+- Added a CPU phase-history reservoir reference with reset/reprojection/depth tests; it is not GPU-integrated or enabled.
+- Added four machine-readable RX 5700 XT reports under `artifacts/results/` and updated `NAVIPRISM_RESULTS.md`. No teacher/native-HR captures, FSR4 quality result, full frame graph, sparse fallback runtime, or end-to-end game timing exists; NaviPRISM remains experimental.
