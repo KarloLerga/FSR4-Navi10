@@ -12,3 +12,4 @@
 | 2026-10-02 | Keep Sony QSSR facts, secondary reporting, and NaviQSR proposals distinct. | Sony's official post states a streamlined neural architecture and hand-tuned PS5 implementation; implementation details in the addendum are not asserted by Sony and remain project hypotheses. |
 | 2026-10-04 | Add NaviPRISM as an independent filter/SAD reconstruction family and preserve FSR4 plus NaviQSR. | The supplied addendum defines separate `naviprism_filter`, `naviprism_sadnet`, `naviprism_phase`, and measured `auto` paths. |
 | 2026-10-04 | Use NaviQSR network and NaviPRISM naming throughout project artifacts and history. | The user explicitly requested the terminology change in source, comments, and commit history. |
+| 2026-10-04 | Keep PHR disabled despite adding a standalone GPU path. | Synthetic reprojection/reset parity is validated, but no temporal quality A/B or persistent frame-graph result exists. |

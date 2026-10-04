@@ -139,29 +139,30 @@ Add NaviPRISM as a third independent runtime family. Preserve the full FSR4 refe
 | P2 | SARM residual motion | **Complete for the synthetic translation case.** GPU/reference output, confidence, and timing are recorded; real engine-motion input remains unconnected. |
 | P3 | THFA filter path | **Partially complete.** Descriptor, fitter/packing, shader variants, and synthetic GPU parity exist; captured fitted-atlas loading and teacher-based validation remain open. |
 | P4 | Reference fitting | Capture/validate compatible LR, history and FSR4/native-HR target sequences; report quality and temporal metrics without fabricating unavailable captures. |
-| P5 | Sparse fallback and optional history | Compact difficult-tile path, seam/reset tests, measure SADNet or document a measured alternative; A/B optional PHR before enabling it. |
+| P5 | Sparse fallback and optional history | **Partially complete.** Standalone PHR HLSL and reset/reprojection parity run on the GPU; sparse SADNet/NaviQSR dispatch, persistent history, seam tests, and quality A/B remain open. |
 | P6 | Quality-safe routing | **Classifier smoke complete only.** GPU classification/compaction matches eight synthetic cases; downstream branches, measured route fractions, and image metrics remain open. |
-| P7 | Reports and naming cleanup | Reports and current-tree cleanup are complete; rewrite and verify all reachable Git history, then update private `main`. |
+| P7 | Reports and naming cleanup | **Complete.** Reports and current-tree cleanup are committed; the reachable history was rewritten and private `main` was updated. Later commits continue to use the clean naming. |
 
 ### Work sequence and validation
 
-1. Copy and CRC-check the technical addendum under `docs/naviprism/`; preserve the existing FSR4/NaviQSR material.
-2. Build scalar `msad4` reference/tests and HLSL variants, then run target GPU timing and inspect DXIL. Resolve RGA/ISA tooling availability before making any hardware-instruction claim.
-3. Implement SARM against deterministic synthetic motion/search cases; validate both math and temporal reset/bounds behavior.
-4. Add the THFA reference fitter, packed atlas, runtime lookup/filter shader and D3D12 dispatch; compare to deterministic teacher targets only when valid captures exist.
-5. Add hard-tile routing, selected fallback, optional PHR experiments, then quality/performance reporting. Do not enable a path whose measurement loses.
-6. Rebuild all old and new paths, run relevant C++/Python/GPU checks, and update reports.
-7. Rewrite commit messages and historical text/path snapshots to remove obsolete names; force-update the private `main` branch only after the rewritten local history verifies cleanly.
+1. Copy and CRC-check the technical addendum under `docs/naviprism/`; preserve the existing FSR4/NaviQSR material. **Complete.**
+2. Build scalar `msad4` reference/tests and HLSL variants, then run target GPU timing and inspect DXIL. Resolve RGA/ISA tooling availability before making any hardware-instruction claim. **Complete for the measured primitive.**
+3. Implement SARM against deterministic synthetic motion/search cases; validate both math and temporal reset/bounds behavior. **Complete for the synthetic translation case.**
+4. Add the THFA reference fitter, packed atlas, runtime lookup/filter shader and D3D12 dispatch; compare to deterministic teacher targets only when valid captures exist. **Primitive path complete; teacher comparison remains open.**
+5. Add hard-tile routing, selected fallback, optional PHR experiments, then quality/performance reporting. Do not enable a path whose measurement loses. **Classifier and standalone PHR checks complete; fallback and A/B gates remain open.**
+6. Rebuild all old and new paths, run relevant C++/Python/GPU checks, and update reports. **Current checks and reports complete for implemented paths.**
+7. Rewrite commit messages and historical text/path snapshots to remove obsolete names; force-update the private `main` branch only after the rewritten local history verifies cleanly. **Complete; subsequent commits preserve the clean naming.**
 
 ### NaviPRISM evidence and open gates
 
-- `msad4`, SARM residual matching, THFA filter variants, and quality classification have RX 5700 XT synthetic GPU checks. The four raw reports are committed under `artifacts/results/`; details and timing scope are in `NAVIPRISM_RESULTS.md`.
+- `msad4`, SARM residual matching, THFA filter variants, tile classification, and phase-history reprojection/reset have RX 5700 XT synthetic GPU checks. The five raw reports are committed under `artifacts/results/`; details and timing scope are in `NAVIPRISM_RESULTS.md`.
 - AMD RGA 2.14.2.7 generated gfx1010 ISA. The `msad4` and SARM variants contain `v_mqsad_u32_u8`; the scalar-u8 and FP16-difference comparison variants do not. The measured `msad4` median is 287.665 us versus 288.654 us for scalar-u8 and 337.109 us for FP16 difference/FP32 accumulation on this benchmark. This is near parity with scalar, not a material speedup claim.
 - No FSR4 teacher/native-HR capture sequence is present. THFA fitting utilities have deterministic synthetic unit coverage, but no teacher-quality claim is possible.
-- No SADNet or NaviQSR difficult-tile fallback is connected to the router; the GPU router currently classifies and compacts tile indices only. The phase-history reservoir is a CPU reference and remains disabled.
+- No SADNet or NaviQSR difficult-tile fallback is connected to the router; the GPU router currently classifies and compacts tile indices only. PHR remains optional and disabled pending temporal A/B evidence.
+- The four-phase reservoir now has a standalone HLSL/D3D12 validator. On a 13x9 synthetic input it matched the CPU reference for reprojection/update and scene reset; the report records a 13,104-byte reservoir allocation and isolated timing. Persistent frame history and A/B quality/performance remain untested, so PHR stays disabled.
 - NaviPRISM does not replace the full FSR4 reference/FP16 work or the NaviQSR network. Full game-frame preprocessing, end-to-end routing, image-quality metrics, reset/stability stress, and production-quality/performance selection remain open.
 
 ### Naming and history rewrite
 
 - The working tree, tracked paths, code comments, and project documents use NaviQSR network/NaviPRISM terminology; a case-insensitive scan found no legacy label text or filenames.
-- Two historical commit subjects still contain the removed label. Rewrite all eight reachable commits, including historical blobs, paths, and subjects; verify every ref, reflog, tree, and commit message; then update the user-authorized private `main` branch with a lease-protected force push.
+- Rewrote the eight prior commits and the NaviPRISM integration commit, including historical blobs, paths, and subjects. Verified the then-current nine-commit history, no legacy label in any commit/tree/path, matching tested tree, and force-pushed private `main` with a lease. The history-rewrite checkpoint was `1d2ac6d3a71e510245417bb42dbc96d8c7b33d2a` before later implementation commits.

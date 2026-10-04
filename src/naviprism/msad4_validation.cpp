@@ -1897,4 +1897,497 @@ int validate_naviprism_router(const std::filesystem::path& report_path) {
     return 0;
 }
 
+namespace {
+
+constexpr std::uint32_t kPhrWidth = 13;
+constexpr std::uint32_t kPhrHeight = 9;
+constexpr std::uint32_t kPhrPhaseCount = 4;
+constexpr std::uint32_t kPhrCurrentPhase = 2;
+constexpr std::uint32_t kPhrResetPhase = 1;
+constexpr std::uint32_t kPhrMaximumAge = 6;
+constexpr float kPhrDepthThreshold = 0.02F;
+constexpr float kPhrConfidenceDecay = 0.98F;
+constexpr UINT kPhrWarmupCount = 5;
+constexpr UINT kPhrMeasuredCount = 20;
+constexpr UINT kPhrRunCount = kPhrWarmupCount + kPhrMeasuredCount;
+constexpr UINT kPhrDispatchesPerSample = 32;
+constexpr UINT kPhrModeCount = 2;
+constexpr UINT kPhrQueryCount = kPhrModeCount * kPhrRunCount * 2;
+
+struct PhrEntry {
+    float color[3];
+    float confidence;
+    std::uint32_t age;
+    float depth;
+    std::uint32_t valid;
+};
+static_assert(sizeof(PhrEntry) == 28);
+
+struct PhrFloat2 { float x; float y; };
+static_assert(sizeof(PhrFloat2) == 8);
+
+struct PhrFloat4 { float x; float y; float z; float w; };
+static_assert(sizeof(PhrFloat4) == 16);
+
+struct PhrConstants {
+    std::uint32_t width;
+    std::uint32_t height;
+    std::uint32_t current_phase;
+    std::uint32_t reset_history;
+    float depth_threshold;
+    float confidence_decay;
+    std::uint32_t maximum_age;
+    std::uint32_t padding;
+};
+static_assert(sizeof(PhrConstants) == 32);
+
+std::vector<PhrEntry> phr_scalar_reference(
+    const std::vector<PhrEntry>& previous,
+    const std::vector<PhrFloat2>& motion,
+    const std::vector<float>& depth,
+    const std::vector<std::uint32_t>& validity,
+    const std::vector<PhrFloat4>& current_color_confidence,
+    std::uint32_t current_phase,
+    bool reset_history) {
+    const std::size_t pixel_count = static_cast<std::size_t>(kPhrWidth) * kPhrHeight;
+    std::vector<PhrEntry> output(pixel_count * kPhrPhaseCount);
+    for (std::size_t pixel = 0; pixel < pixel_count; ++pixel) {
+        const auto& mv = motion[pixel];
+        const float current_depth = depth[pixel];
+        const bool map_valid = validity[pixel] != 0 && std::isfinite(current_depth)
+            && std::isfinite(mv.x) && std::isfinite(mv.y);
+        int previous_x = -1;
+        int previous_y = -1;
+        if (map_valid) {
+            const float rounded_x = std::floor(mv.x + 0.5F);
+            const float rounded_y = std::floor(mv.y + 0.5F);
+            if (rounded_x >= 0.0F && rounded_y >= 0.0F &&
+                rounded_x < static_cast<float>(kPhrWidth) &&
+                rounded_y < static_cast<float>(kPhrHeight)) {
+                previous_x = static_cast<int>(rounded_x);
+                previous_y = static_cast<int>(rounded_y);
+            }
+        }
+        const bool previous_valid = previous_x >= 0 && previous_y >= 0;
+        for (std::uint32_t phase = 0; phase < kPhrPhaseCount; ++phase) {
+            PhrEntry result{};
+            if (!reset_history && map_valid && previous_valid) {
+                const auto source_pixel = static_cast<std::size_t>(previous_y) * kPhrWidth
+                    + static_cast<std::size_t>(previous_x);
+                const auto& old = previous[static_cast<std::size_t>(phase) * pixel_count
+                                           + source_pixel];
+                if (old.valid != 0 && std::isfinite(old.depth) &&
+                    std::abs(old.depth - current_depth) <= kPhrDepthThreshold) {
+                    result = old;
+                    result.confidence = old.confidence * kPhrConfidenceDecay;
+                    result.age = old.age >= kPhrMaximumAge
+                        ? kPhrMaximumAge : old.age + 1;
+                    result.depth = current_depth;
+                    result.valid = result.confidence > 0.0F ? 1U : 0U;
+                }
+            }
+
+            if (phase == current_phase) {
+                result = {};
+                const auto& current = current_color_confidence[pixel];
+                const bool color_valid = std::isfinite(current.x) &&
+                    std::isfinite(current.y) && std::isfinite(current.z) &&
+                    std::isfinite(current.w) && current.w >= 0.0F && current.w <= 1.0F;
+                if (map_valid && color_valid) {
+                    result.color[0] = current.x;
+                    result.color[1] = current.y;
+                    result.color[2] = current.z;
+                    result.confidence = current.w;
+                    result.age = 0;
+                    result.depth = current_depth;
+                    result.valid = 1;
+                }
+            }
+            output[static_cast<std::size_t>(phase) * pixel_count + pixel] = result;
+        }
+    }
+    return output;
+}
+
+} // namespace
+
+int validate_naviprism_phase_reservoir(const std::filesystem::path& report_path) {
+    const std::size_t pixel_count = static_cast<std::size_t>(kPhrWidth) * kPhrHeight;
+    const std::size_t entry_count = pixel_count * kPhrPhaseCount;
+    std::vector<PhrEntry> previous(entry_count);
+    std::vector<PhrFloat2> motion(pixel_count);
+    std::vector<float> depth(pixel_count);
+    std::vector<std::uint32_t> validity(pixel_count);
+    std::vector<PhrFloat4> current_color_confidence(pixel_count);
+    const float nan = std::numeric_limits<float>::quiet_NaN();
+    for (std::size_t pixel = 0; pixel < pixel_count; ++pixel) {
+        const auto x = static_cast<std::uint32_t>(pixel % kPhrWidth);
+        const auto y = static_cast<std::uint32_t>(pixel / kPhrWidth);
+        depth[pixel] = 1.0F + 0.01F * static_cast<float>(pixel % 5);
+        validity[pixel] = pixel % 9 == 0 ? 0U : 1U;
+        const int dx = static_cast<int>((pixel * 3) % 7) - 3;
+        const int dy = static_cast<int>((pixel * 5) % 5) - 2;
+        const float fraction_x = pixel % 2 == 0 ? 0.49F : 0.51F;
+        const float fraction_y = pixel % 3 == 0 ? 0.49F : 0.51F;
+        motion[pixel] = {static_cast<float>(static_cast<int>(x) + dx) + fraction_x,
+                         static_cast<float>(static_cast<int>(y) + dy) + fraction_y};
+        if (pixel % 29 == 0) motion[pixel].x = -32.0F;
+        if (pixel % 37 == 0) motion[pixel].y = nan;
+        if (pixel % 43 == 0) depth[pixel] = nan;
+
+        const float base = static_cast<float>(pixel % 17) * 0.025F;
+        current_color_confidence[pixel] = {
+            0.10F + base, 0.20F + base * 0.5F, 0.30F + base * 0.25F,
+            static_cast<float>(pixel % 5) * 0.25F};
+        if (pixel % 31 == 0) current_color_confidence[pixel].y = nan;
+
+        for (std::uint32_t phase = 0; phase < kPhrPhaseCount; ++phase) {
+            auto& entry = previous[static_cast<std::size_t>(phase) * pixel_count + pixel];
+            entry.color[0] = 0.01F * static_cast<float>(pixel + phase);
+            entry.color[1] = 0.02F * static_cast<float>((pixel + 2 * phase) % 19);
+            entry.color[2] = 0.03F * static_cast<float>((pixel + phase) % 13);
+            entry.confidence = (pixel + phase) % 8 == 0
+                ? 0.0F : 0.125F * static_cast<float>(1 + ((pixel + phase) % 7));
+            entry.age = static_cast<std::uint32_t>((pixel + phase) % 11);
+            entry.depth = depth[pixel];
+            if ((pixel + 2 * phase) % 6 == 0) entry.depth += 0.12F;
+            entry.valid = (pixel + phase) % 7 == 0 ? 0U : 1U;
+        }
+    }
+
+    const std::array<std::vector<PhrEntry>, kPhrModeCount> expected{
+        phr_scalar_reference(previous, motion, depth, validity,
+                             current_color_confidence, kPhrCurrentPhase, false),
+        phr_scalar_reference(previous, motion, depth, validity,
+                             current_color_confidence, kPhrResetPhase, true),
+    };
+    const std::array<PhrConstants, kPhrModeCount> constants{{
+        {kPhrWidth, kPhrHeight, kPhrCurrentPhase, 0,
+         kPhrDepthThreshold, kPhrConfidenceDecay, kPhrMaximumAge, 0},
+        {kPhrWidth, kPhrHeight, kPhrResetPhase, 1,
+         kPhrDepthThreshold, kPhrConfidenceDecay, kPhrMaximumAge, 0},
+    }};
+
+    ComPtr<ID3D12Device> device = create_target_device();
+    ComPtr<ID3D12CommandQueue> queue;
+    D3D12_COMMAND_QUEUE_DESC queue_description{};
+    queue_description.Type = D3D12_COMMAND_LIST_TYPE_COMPUTE;
+    check_hr(device->CreateCommandQueue(&queue_description, IID_PPV_ARGS(&queue)),
+             "Create NaviPRISM phase-reservoir compute queue failed");
+    UINT64 timestamp_frequency = 0;
+    check_hr(queue->GetTimestampFrequency(&timestamp_frequency),
+             "Read NaviPRISM phase-reservoir timestamp frequency failed");
+
+    auto upload = [&](const void* source, std::uint64_t size,
+                      ComPtr<ID3D12Resource>& resource, const char* operation) {
+        create_buffer(device.Get(), D3D12_HEAP_TYPE_UPLOAD, size,
+                      D3D12_RESOURCE_STATE_GENERIC_READ, resource);
+        void* mapping = nullptr;
+        const D3D12_RANGE no_read{0, 0};
+        check_hr(resource->Map(0, &no_read, &mapping), operation);
+        std::memcpy(mapping, source, static_cast<std::size_t>(size));
+        resource->Unmap(0, nullptr);
+    };
+
+    std::array<ComPtr<ID3D12Resource>, 5> input_resources{};
+    upload(previous.data(), previous.size() * sizeof(PhrEntry), input_resources[0],
+           "Map NaviPRISM phase-reservoir history failed");
+    upload(motion.data(), motion.size() * sizeof(PhrFloat2), input_resources[1],
+           "Map NaviPRISM phase-reservoir motion failed");
+    upload(depth.data(), depth.size() * sizeof(float), input_resources[2],
+           "Map NaviPRISM phase-reservoir depth failed");
+    upload(validity.data(), validity.size() * sizeof(std::uint32_t), input_resources[3],
+           "Map NaviPRISM phase-reservoir validity failed");
+    upload(current_color_confidence.data(),
+           current_color_confidence.size() * sizeof(PhrFloat4), input_resources[4],
+           "Map NaviPRISM phase-reservoir current colors failed");
+
+    std::array<ComPtr<ID3D12Resource>, kPhrModeCount> constants_resources{};
+    for (std::size_t mode = 0; mode < constants_resources.size(); ++mode) {
+        std::array<std::byte, 256> padded{};
+        std::memcpy(padded.data(), &constants[mode], sizeof(PhrConstants));
+        upload(padded.data(), padded.size(), constants_resources[mode],
+               "Map NaviPRISM phase-reservoir constants failed");
+    }
+
+    const auto output_bytes = static_cast<std::uint64_t>(entry_count * sizeof(PhrEntry));
+    std::array<ComPtr<ID3D12Resource>, kPhrModeCount> outputs{};
+    std::array<ComPtr<ID3D12Resource>, kPhrModeCount> readbacks{};
+    for (std::size_t mode = 0; mode < outputs.size(); ++mode) {
+        create_buffer(device.Get(), D3D12_HEAP_TYPE_DEFAULT, output_bytes,
+                      D3D12_RESOURCE_STATE_UNORDERED_ACCESS, outputs[mode],
+                      D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS);
+        create_buffer(device.Get(), D3D12_HEAP_TYPE_READBACK, output_bytes,
+                      D3D12_RESOURCE_STATE_COPY_DEST, readbacks[mode]);
+    }
+
+    D3D12_DESCRIPTOR_HEAP_DESC heap_description{};
+    heap_description.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+    heap_description.NumDescriptors = static_cast<UINT>(input_resources.size());
+    heap_description.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
+    ComPtr<ID3D12DescriptorHeap> descriptor_heap;
+    check_hr(device->CreateDescriptorHeap(&heap_description, IID_PPV_ARGS(&descriptor_heap)),
+             "Create NaviPRISM phase-reservoir descriptor heap failed");
+    const std::array<UINT, 5> element_counts{
+        static_cast<UINT>(previous.size()), static_cast<UINT>(motion.size()),
+        static_cast<UINT>(depth.size()), static_cast<UINT>(validity.size()),
+        static_cast<UINT>(current_color_confidence.size())};
+    const std::array<UINT, 5> strides{
+        sizeof(PhrEntry), sizeof(PhrFloat2), sizeof(float), sizeof(std::uint32_t),
+        sizeof(PhrFloat4)};
+    auto cpu_descriptor = descriptor_heap->GetCPUDescriptorHandleForHeapStart();
+    const UINT descriptor_increment = device->GetDescriptorHandleIncrementSize(
+        D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+    for (UINT index = 0; index < input_resources.size(); ++index) {
+        D3D12_SHADER_RESOURCE_VIEW_DESC srv{};
+        srv.Format = DXGI_FORMAT_UNKNOWN;
+        srv.ViewDimension = D3D12_SRV_DIMENSION_BUFFER;
+        srv.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+        srv.Buffer.NumElements = element_counts[index];
+        srv.Buffer.StructureByteStride = strides[index];
+        device->CreateShaderResourceView(input_resources[index].Get(), &srv, cpu_descriptor);
+        cpu_descriptor.ptr += descriptor_increment;
+    }
+
+    D3D12_DESCRIPTOR_RANGE srv_range{};
+    srv_range.RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+    srv_range.NumDescriptors = static_cast<UINT>(input_resources.size());
+    srv_range.BaseShaderRegister = 0;
+    srv_range.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+    std::array<D3D12_ROOT_PARAMETER, 3> root_parameters{};
+    root_parameters[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+    root_parameters[0].DescriptorTable.NumDescriptorRanges = 1;
+    root_parameters[0].DescriptorTable.pDescriptorRanges = &srv_range;
+    root_parameters[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+    root_parameters[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+    root_parameters[1].Descriptor.ShaderRegister = 0;
+    root_parameters[1].Descriptor.RegisterSpace = 0;
+    root_parameters[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+    root_parameters[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_UAV;
+    root_parameters[2].Descriptor.ShaderRegister = 0;
+    root_parameters[2].Descriptor.RegisterSpace = 0;
+    root_parameters[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+    D3D12_ROOT_SIGNATURE_DESC root_description{};
+    root_description.NumParameters = static_cast<UINT>(root_parameters.size());
+    root_description.pParameters = root_parameters.data();
+    ComPtr<ID3DBlob> serialized_root;
+    ComPtr<ID3DBlob> root_errors;
+    check_hr(D3D12SerializeRootSignature(&root_description, D3D_ROOT_SIGNATURE_VERSION_1,
+                                          &serialized_root, &root_errors),
+             "Serialize NaviPRISM phase-reservoir root signature failed");
+    ComPtr<ID3D12RootSignature> root_signature;
+    check_hr(device->CreateRootSignature(0, serialized_root->GetBufferPointer(),
+                                          serialized_root->GetBufferSize(),
+                                          IID_PPV_ARGS(&root_signature)),
+             "Create NaviPRISM phase-reservoir root signature failed");
+
+    const auto shader_path = executable_directory() / L"naviprism_phase_reservoir.dxil";
+    auto shader = read_shader(shader_path);
+    const auto shader_hash = sha256_hex(shader);
+    D3D12_COMPUTE_PIPELINE_STATE_DESC pipeline_description{};
+    pipeline_description.pRootSignature = root_signature.Get();
+    pipeline_description.CS.pShaderBytecode = shader.data();
+    pipeline_description.CS.BytecodeLength = shader.size();
+    ComPtr<ID3D12PipelineState> pipeline;
+    check_hr(device->CreateComputePipelineState(&pipeline_description, IID_PPV_ARGS(&pipeline)),
+             "Create NaviPRISM phase-reservoir pipeline failed");
+
+    ComPtr<ID3D12CommandAllocator> allocator;
+    check_hr(device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_COMPUTE,
+                                             IID_PPV_ARGS(&allocator)),
+             "Create NaviPRISM phase-reservoir allocator failed");
+    ComPtr<ID3D12GraphicsCommandList> command_list;
+    check_hr(device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_COMPUTE,
+                                       allocator.Get(), nullptr,
+                                       IID_PPV_ARGS(&command_list)),
+             "Create NaviPRISM phase-reservoir command list failed");
+
+    D3D12_QUERY_HEAP_DESC query_description{};
+    query_description.Type = D3D12_QUERY_HEAP_TYPE_TIMESTAMP;
+    query_description.Count = kPhrQueryCount;
+    ComPtr<ID3D12QueryHeap> queries;
+    check_hr(device->CreateQueryHeap(&query_description, IID_PPV_ARGS(&queries)),
+             "Create NaviPRISM phase-reservoir query heap failed");
+    ComPtr<ID3D12Resource> timestamp_readback;
+    create_buffer(device.Get(), D3D12_HEAP_TYPE_READBACK,
+                  kPhrQueryCount * sizeof(std::uint64_t),
+                  D3D12_RESOURCE_STATE_COPY_DEST, timestamp_readback);
+
+    command_list->SetPipelineState(pipeline.Get());
+    command_list->SetComputeRootSignature(root_signature.Get());
+    ID3D12DescriptorHeap* heaps[]{descriptor_heap.Get()};
+    command_list->SetDescriptorHeaps(1, heaps);
+    command_list->SetComputeRootDescriptorTable(
+        0, descriptor_heap->GetGPUDescriptorHandleForHeapStart());
+    const UINT groups_x = static_cast<UINT>((pixel_count + 63) / 64);
+    for (UINT mode = 0; mode < kPhrModeCount; ++mode) {
+        command_list->SetComputeRootConstantBufferView(
+            1, constants_resources[mode]->GetGPUVirtualAddress());
+        command_list->SetComputeRootUnorderedAccessView(
+            2, outputs[mode]->GetGPUVirtualAddress());
+        for (UINT run = 0; run < kPhrRunCount; ++run) {
+            if (run != 0) {
+                D3D12_RESOURCE_BARRIER barrier{};
+                barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_UAV;
+                barrier.UAV.pResource = outputs[mode].Get();
+                command_list->ResourceBarrier(1, &barrier);
+            }
+            const UINT query = (mode * kPhrRunCount + run) * 2;
+            command_list->EndQuery(queries.Get(), D3D12_QUERY_TYPE_TIMESTAMP, query);
+            for (UINT repeat = 0; repeat < kPhrDispatchesPerSample; ++repeat) {
+                command_list->Dispatch(groups_x, 1, 1);
+                if (repeat + 1 < kPhrDispatchesPerSample) {
+                    D3D12_RESOURCE_BARRIER barrier{};
+                    barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_UAV;
+                    barrier.UAV.pResource = outputs[mode].Get();
+                    command_list->ResourceBarrier(1, &barrier);
+                }
+            }
+            command_list->EndQuery(queries.Get(), D3D12_QUERY_TYPE_TIMESTAMP, query + 1);
+        }
+        D3D12_RESOURCE_BARRIER transition{};
+        transition.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+        transition.Transition.pResource = outputs[mode].Get();
+        transition.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+        transition.Transition.StateBefore = D3D12_RESOURCE_STATE_UNORDERED_ACCESS;
+        transition.Transition.StateAfter = D3D12_RESOURCE_STATE_COPY_SOURCE;
+        command_list->ResourceBarrier(1, &transition);
+        command_list->CopyBufferRegion(readbacks[mode].Get(), 0, outputs[mode].Get(),
+                                       0, output_bytes);
+    }
+    command_list->ResolveQueryData(queries.Get(), D3D12_QUERY_TYPE_TIMESTAMP,
+                                   0, kPhrQueryCount, timestamp_readback.Get(), 0);
+    check_hr(command_list->Close(), "Close NaviPRISM phase-reservoir command list failed");
+    ID3D12CommandList* lists[]{command_list.Get()};
+    queue->ExecuteCommandLists(1, lists);
+
+    ComPtr<ID3D12Fence> fence;
+    check_hr(device->CreateFence(0, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence)),
+             "Create NaviPRISM phase-reservoir fence failed");
+    check_hr(queue->Signal(fence.Get(), 1), "Signal NaviPRISM phase-reservoir fence failed");
+    if (fence->GetCompletedValue() < 1) {
+        HANDLE event_handle = CreateEventW(nullptr, FALSE, FALSE, nullptr);
+        if (!event_handle) throw std::runtime_error("CreateEventW failed for NaviPRISM phase reservoir");
+        const HRESULT event_result = fence->SetEventOnCompletion(1, event_handle);
+        if (FAILED(event_result)) {
+            CloseHandle(event_handle);
+            check_hr(event_result, "Set NaviPRISM phase-reservoir fence event failed");
+        }
+        const DWORD wait_result = WaitForSingleObject(event_handle, 30000);
+        CloseHandle(event_handle);
+        if (wait_result != WAIT_OBJECT_0)
+            throw std::runtime_error("Timed out waiting for NaviPRISM phase-reservoir dispatch");
+    }
+
+    std::array<std::vector<double>, kPhrModeCount> timings{};
+    std::vector<std::uint64_t> timestamp_values(kPhrQueryCount);
+    void* timestamp_mapping = nullptr;
+    const D3D12_RANGE timestamp_range{0, timestamp_values.size() * sizeof(std::uint64_t)};
+    check_hr(timestamp_readback->Map(0, &timestamp_range, &timestamp_mapping),
+             "Map NaviPRISM phase-reservoir timestamps failed");
+    std::memcpy(timestamp_values.data(), timestamp_mapping,
+                timestamp_values.size() * sizeof(std::uint64_t));
+    timestamp_readback->Unmap(0, nullptr);
+    std::array<TimingSummary, kPhrModeCount> timing_summaries{};
+    for (UINT mode = 0; mode < kPhrModeCount; ++mode) {
+        for (UINT run = kPhrWarmupCount; run < kPhrRunCount; ++run) {
+            const UINT query = (mode * kPhrRunCount + run) * 2;
+            const auto begin = timestamp_values[query];
+            const auto end = timestamp_values[query + 1];
+            if (end < begin)
+                throw std::runtime_error("NaviPRISM phase-reservoir timestamps are not monotonic");
+            timings[mode].push_back(1.0e6 * static_cast<double>(end - begin)
+                / (static_cast<double>(timestamp_frequency) * kPhrDispatchesPerSample));
+        }
+        timing_summaries[mode] = summarize(timings[mode]);
+    }
+
+    std::array<float, kPhrModeCount> max_color_error{};
+    std::array<float, kPhrModeCount> max_confidence_error{};
+    std::array<float, kPhrModeCount> max_depth_error{};
+    std::array<std::uint32_t, kPhrModeCount> valid_entries{};
+    for (UINT mode = 0; mode < kPhrModeCount; ++mode) {
+        void* mapping = nullptr;
+        const D3D12_RANGE output_range{0, static_cast<SIZE_T>(output_bytes)};
+        check_hr(readbacks[mode]->Map(0, &output_range, &mapping),
+                 "Map NaviPRISM phase-reservoir output failed");
+        const auto* actual = static_cast<const PhrEntry*>(mapping);
+        for (std::size_t index = 0; index < entry_count; ++index) {
+            const auto& got = actual[index];
+            const auto& want = expected[mode][index];
+            if (got.valid != want.valid || got.age != want.age) {
+                readbacks[mode]->Unmap(0, nullptr);
+                throw std::runtime_error("NaviPRISM phase-reservoir validity/age differs from reference");
+            }
+            for (std::size_t channel = 0; channel < 3; ++channel) {
+                max_color_error[mode] = (std::max)(max_color_error[mode],
+                    std::abs(got.color[channel] - want.color[channel]));
+            }
+            max_confidence_error[mode] = (std::max)(max_confidence_error[mode],
+                std::abs(got.confidence - want.confidence));
+            max_depth_error[mode] = (std::max)(max_depth_error[mode],
+                std::abs(got.depth - want.depth));
+            if (got.valid != 0) ++valid_entries[mode];
+        }
+        readbacks[mode]->Unmap(0, nullptr);
+        if (max_color_error[mode] > 1.0e-6F ||
+            max_confidence_error[mode] > 1.0e-6F ||
+            max_depth_error[mode] > 1.0e-6F) {
+            throw std::runtime_error("NaviPRISM phase-reservoir GPU values differ from reference");
+        }
+    }
+
+    if (!report_path.parent_path().empty())
+        std::filesystem::create_directories(report_path.parent_path());
+    std::ofstream report(report_path, std::ios::binary | std::ios::trunc);
+    if (!report) throw std::runtime_error("Cannot write NaviPRISM phase-reservoir report: "
+                                          + report_path.string());
+    report << std::fixed << std::setprecision(6)
+           << "{\n  \"gpu\": \"AMD Radeon RX 5700 XT\",\n"
+           << "  \"pci_id\": \"1002:731F\",\n"
+           << "  \"driver\": \"" << target_driver_version() << "\",\n"
+           << "  \"shader_sha256\": \"" << shader_hash << "\",\n"
+           << "  \"resolution\": [" << kPhrWidth << ", " << kPhrHeight << "],\n"
+           << "  \"phase_count\": " << kPhrPhaseCount << ",\n"
+           << "  \"color_samples_match_2x_hr_history\": true,\n"
+           << "  \"reservoir_bytes\": " << output_bytes << ",\n"
+           << "  \"warmup_samples\": " << kPhrWarmupCount << ",\n"
+           << "  \"measured_samples\": " << kPhrMeasuredCount << ",\n"
+           << "  \"dispatches_per_sample\": " << kPhrDispatchesPerSample << ",\n"
+           << "  \"timestamp_frequency_hz\": " << timestamp_frequency << ",\n"
+           << "  \"scenarios\": [\n";
+    for (UINT mode = 0; mode < kPhrModeCount; ++mode) {
+        report << "    {\"name\": \"" << (mode == 0 ? "reproject_update" : "scene_reset")
+               << "\", \"reset\": " << (mode == 0 ? "false" : "true")
+               << ", \"current_phase\": "
+               << (mode == 0 ? kPhrCurrentPhase : kPhrResetPhase)
+               << ", \"valid_entries\": " << valid_entries[mode]
+               << ", \"max_color_error\": " << max_color_error[mode]
+               << ", \"max_confidence_error\": " << max_confidence_error[mode]
+               << ", \"max_depth_error\": " << max_depth_error[mode]
+               << ", \"min_us\": " << timing_summaries[mode].minimum
+               << ", \"median_us\": " << timing_summaries[mode].median
+               << ", \"p90_us\": " << timing_summaries[mode].p90
+               << ", \"p95_us\": " << timing_summaries[mode].p95
+               << ", \"samples_us\": [";
+        for (std::size_t sample = 0; sample < timings[mode].size(); ++sample) {
+            if (sample != 0) report << ", ";
+            report << timings[mode][sample];
+        }
+        report << "]}" << (mode + 1 == kPhrModeCount ? "\n" : ",\n");
+    }
+    report << "  ]\n}\n";
+    if (!report) throw std::runtime_error("Failed while writing NaviPRISM phase-reservoir report");
+    std::cout << "NaviPRISM phase-reservoir GPU/reference validation passed on RX 5700 XT.\n"
+              << "  Reprojection/update valid entries: " << valid_entries[0]
+              << "; reset/update valid entries: " << valid_entries[1] << ".\n"
+              << "  Max RGB/confidence/depth errors: " << max_color_error[0] << "/"
+              << max_confidence_error[0] << "/" << max_depth_error[0] << ".\n"
+              << "  Reproject median " << timing_summaries[0].median << " us; reset median "
+              << timing_summaries[1].median << " us for 13x9 input and 32 averaged dispatches.\n"
+              << "  JSON report: " << report_path.string() << "; shader SHA-256 "
+              << shader_hash << ".\n";
+    return 0;
+}
+
 } // namespace fsr4n10

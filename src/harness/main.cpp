@@ -30,7 +30,8 @@ void print_usage() {
               << "  fsr4n10_harness.exe --benchmark-naviprism-msad4 <report.json>\n"
               << "  fsr4n10_harness.exe --validate-naviprism-sarm <report.json>\n"
               << "  fsr4n10_harness.exe --validate-naviprism-thfa <report.json>\n"
-              << "  fsr4n10_harness.exe --validate-naviprism-router <report.json>\n";
+              << "  fsr4n10_harness.exe --validate-naviprism-router <report.json>\n"
+              << "  fsr4n10_harness.exe --validate-naviprism-phase-reservoir <report.json>\n";
 }
 
 int list_adapters() {
@@ -113,6 +114,9 @@ int main(int argc, char** argv) {
         }
         if (argc == 3 && std::string_view(argv[1]) == "--validate-naviprism-router") {
             return fsr4n10::validate_naviprism_router(std::filesystem::path(argv[2]));
+        }
+        if (argc == 3 && std::string_view(argv[1]) == "--validate-naviprism-phase-reservoir") {
+            return fsr4n10::validate_naviprism_phase_reservoir(std::filesystem::path(argv[2]));
         }
         print_usage();
         return argc == 1 ? 0 : 2;

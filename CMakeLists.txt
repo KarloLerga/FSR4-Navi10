@@ -269,6 +269,23 @@ add_custom_target(compile_naviprism_quality_router ALL
 )
 add_dependencies(fsr4n10_harness compile_naviprism_quality_router)
 
+fsr4n10_compile_hlsl(
+    compile_naviprism_phase_reservoir
+    "${CMAKE_CURRENT_SOURCE_DIR}/shaders/naviprism/phase_reservoir.hlsl"
+    main
+    "${CMAKE_CURRENT_BINARY_DIR}/generated-shaders/naviprism_phase_reservoir.dxil"
+    cs_6_6
+)
+add_custom_target(compile_naviprism_phase_reservoir ALL
+    COMMAND "${CMAKE_COMMAND}" -E copy_if_different
+            "${compile_naviprism_phase_reservoir_OUTPUT}"
+            "$<TARGET_FILE_DIR:fsr4n10_harness>/naviprism_phase_reservoir.dxil"
+    DEPENDS "${compile_naviprism_phase_reservoir_OUTPUT}"
+    COMMENT "Copying NaviPRISM phase-reservoir DXIL to the harness"
+    VERBATIM
+)
+add_dependencies(fsr4n10_harness compile_naviprism_phase_reservoir)
+
 add_custom_target(generate_model_manifest
     COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/model/extract_manifest.py"
             --source "${CMAKE_CURRENT_SOURCE_DIR}/third_party/fidelityfx-fsr4-source"

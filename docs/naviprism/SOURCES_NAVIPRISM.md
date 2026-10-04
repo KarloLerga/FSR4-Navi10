@@ -13,6 +13,8 @@ https://developer.amd.com/wp-content/resources/RDNA_Shader_ISA.pdf
 
 RGA 2.14.2.7 disassembles the Navi10-targeted `msad4` and SARM shaders to `v_mqsad_u32_u8` (quad-byte masked SAD with packed 32-bit accumulation). The same RGA run found no `v_mqsad_*_u8` instruction in the manually scalar or FP16-difference benchmark variants. These are offline compiler results for `gfx1010`; GPU timing is recorded separately in `NAVIPRISM_RESULTS.md`.
 
+The phase-reservoir compute shader also compiled for `gfx1010`; its RGA report lists 24 VGPR, 32 SGPR, a 64-thread workgroup, no LDS use, and no masked-SAD instruction. This is only generated-ISA/resource evidence, not a full-frame performance result.
+
 RAISR:
 https://arxiv.org/abs/1606.01299
 https://research.google/people/peymanmilanfar/

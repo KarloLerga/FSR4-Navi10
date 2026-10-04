@@ -55,6 +55,20 @@ class PhaseReservoirTests(unittest.TestCase):
         self.assertFalse(reservoir.valid.any())
         self.assertTrue(np.all(reservoir.confidence == 0))
 
+    def test_nonfinite_motion_clears_stale_phase_data(self) -> None:
+        reservoir = PhaseHistoryReservoir(height=3, width=4)
+        color, depth, valid = self.make_inputs()
+        reservoir.update(1, color, depth, valid)
+        yy, xx = np.mgrid[0:3, 0:4].astype(np.float32)
+        xx[1, 2] = np.nan
+
+        reservoir.reproject(xx, yy, depth, valid)
+        result = reservoir.evidence(1)
+        self.assertFalse(result.valid[1, 2])
+        self.assertEqual(result.confidence[1, 2], 0.0)
+        self.assertEqual(result.age[1, 2], 0)
+        self.assertTrue(np.array_equal(result.color[1, 2], np.zeros(3, np.float32)))
+
     def test_phase_and_shape_validation(self) -> None:
         reservoir = PhaseHistoryReservoir(height=3, width=4)
         color, depth, valid = self.make_inputs()

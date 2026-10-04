@@ -68,6 +68,7 @@ Record if msad4 does not lower efficiently, SARM does not help, atlas flickers, 
 ## Current implementation checkpoint
 
 - Implemented and GPU/reference checked: `msad4` microbench, SARM 4x4 residual search, 4/5/8/9-tap THFA filter, and conservative tile classification/compaction. These validators currently use deterministic synthetic buffers.
-- Implemented as offline/reference tooling: THFA factorized ridge fitting and FP16 atlas packing, tile descriptor math, and PHR reprojection/reset model.
-- Not connected to a real game-frame graph: scene preprocessing/exposure, motion and validity resource ingestion, FSR4 teacher capture, SADNet or NaviQSR sparse fallback dispatch, temporal blending, and PHR GPU persistence.
+- Implemented as offline/reference tooling: THFA factorized ridge fitting and FP16 atlas packing, tile descriptor math, and the PHR CPU reference.
+- Standalone PHR HLSL/D3D12 reprojection, update, and reset validation matches its scalar reference on synthetic inputs. It does not yet persist across a production frame graph or have an A/B quality result.
+- Not connected to a real game-frame graph: scene preprocessing/exposure, motion and validity resource ingestion, FSR4 teacher capture, SADNet or NaviQSR sparse fallback dispatch, temporal blending, and persistent PHR resource integration.
 - No NaviPRISM image-quality or full-resolution/end-to-end performance result exists. The microbench dispatch timings in `NAVIPRISM_RESULTS.md` cannot establish quality or a production speedup.

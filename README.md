@@ -33,9 +33,9 @@ The separate NaviQSR network now has a deterministic procedural dataset, PyTorch
 
 ## NaviPRISM addendum
 
-NaviPRISM now has an RX 5700 XT `msad4` benchmark and ISA audit, a 4x4 SARM residual-motion shader, a factorized THFA ridge fitter and FP16 atlas packer, 4/5/8/9-tap DX12 filter variants, a descriptor prepass, conservative route classification/compaction, and a CPU reference for optional four-phase history. Full instructions are in [`docs/BUILD_AND_BOOTSTRAP.md`](docs/BUILD_AND_BOOTSTRAP.md).
+NaviPRISM now has an RX 5700 XT `msad4` benchmark and ISA audit, a 4x4 SARM residual-motion shader, a factorized THFA ridge fitter and FP16 atlas packer, 4/5/8/9-tap DX12 filter variants, descriptor extraction, conservative route classification/compaction, and CPU/GPU references for optional four-phase history. Full instructions are in [`docs/BUILD_AND_BOOTSTRAP.md`](docs/BUILD_AND_BOOTSTRAP.md).
 
-Run `--benchmark-naviprism-msad4`, `--validate-naviprism-sarm`, `--validate-naviprism-thfa`, and `--validate-naviprism-router` on the RX 5700 XT to reproduce the current synthetic correctness checks and dispatch measurements. `tools/naviprism/dump_msad4_isa.ps1` uses RGA to inspect the generated gfx1010 ISA.
+Run `--benchmark-naviprism-msad4`, `--validate-naviprism-sarm`, `--validate-naviprism-thfa`, `--validate-naviprism-router`, and `--validate-naviprism-phase-reservoir` on the RX 5700 XT to reproduce the current synthetic correctness checks and dispatch measurements. `tools/naviprism/dump_msad4_isa.ps1` uses RGA to inspect the generated gfx1010 ISA.
 
 The hardware checks currently pass against deterministic synthetic inputs. They do not include an FSR4 teacher capture, image-quality/temporal evaluation, or a game-frame pipeline with SADNet/NaviQSR fallback dispatch. `msad4` lowers to a native masked-SAD instruction, but this benchmark shows near-parity with scalar integer SAD. NaviPRISM remains an experimental candidate alongside full FSR4 and NaviQSR. Results and open gates are in [`NAVIPRISM_RESULTS.md`](NAVIPRISM_RESULTS.md).
 

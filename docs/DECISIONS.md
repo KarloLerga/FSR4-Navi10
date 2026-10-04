@@ -79,3 +79,6 @@ Preserve full FSR4 and NaviQSR. Build `naviprism_filter`, sparse `naviprism_sadn
 
 ## D24 - Use architecture names consistently
 Call the compact neural path the NaviQSR network and the primitive/filter path NaviPRISM. Remove obsolete aliases from source, documentation, comments, and project history when the user requests the terminology change.
+
+## D25 - Keep the phase-history reservoir disabled until A/B evidence exists
+The optional four-phase reservoir may be validated as a standalone GPU primitive, including reprojection, confidence/age decay, depth rejection, and reset behavior. Do not enable it in a frame path until persistent-history tests show a quality/performance or memory benefit against the normal HR history. The current RX 5700 XT smoke proves synthetic scalar parity only.

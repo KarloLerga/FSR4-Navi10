@@ -72,14 +72,21 @@ class PhaseHistoryReservoir:
 
         previous = PhaseEvidence(self.color.copy(), self.confidence.copy(),
                                  self.age.copy(), self.depth.copy(), self.valid.copy())
+        self.color.fill(0.0)
         self.valid.fill(False)
         self.confidence.fill(0.0)
+        self.age.fill(0)
+        self.depth.fill(0.0)
         for y in range(self.height):
             for x in range(self.width):
                 if not valid_mask[y, x]:
                     continue
-                px = int(np.floor(float(source_x[y, x]) + 0.5))
-                py = int(np.floor(float(source_y[y, x]) + 0.5))
+                motion_x = float(source_x[y, x])
+                motion_y = float(source_y[y, x])
+                if not np.isfinite(motion_x) or not np.isfinite(motion_y):
+                    continue
+                px = int(np.floor(motion_x + 0.5))
+                py = int(np.floor(motion_y + 0.5))
                 if px < 0 or py < 0 or px >= self.width or py >= self.height:
                     continue
                 if not np.isfinite(current_depth[y, x]):

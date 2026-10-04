@@ -30,6 +30,7 @@ $variants = @(
     @{ Name = "thfa_9tap"; Shader = "naviprism_thfa_9tap.dxil" },
     @{ Name = "thfa_descriptors"; Shader = "naviprism_thfa_descriptors.dxil" },
     @{ Name = "quality_router"; Shader = "naviprism_quality_router.dxil" }
+    @{ Name = "phase_reservoir"; Shader = "naviprism_phase_reservoir.dxil" }
 )
 
 foreach ($variant in $variants) {
