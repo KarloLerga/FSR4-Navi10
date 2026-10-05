@@ -218,7 +218,7 @@ Integrate the technical Param4/Delta4 proposal while preserving full FSR4, NaviQ
 - [x] Emit, package and validate a deterministic 10-array synthetic `.f4cap`; compare instrumented output against ordinary provider output and repeat all taps.
 - [ ] Add a versioned real-frame input path and emit a representative real-scene teacher sequence on the RX 5700 XT. No such frame sequence was supplied; the synthetic provider smoke is not a teacher-quality capture.
 - [x] Run Release build, provider GPU smoke, `.f4cap` validator, CTest (1/1), and Python unit suite (44/44); update implementation docs.
-- [ ] Commit and push implementation and measured report to the private remote.
+- [x] Commit implementation and measured report, then push both to the private remote.
 
 ### Measured results
 
