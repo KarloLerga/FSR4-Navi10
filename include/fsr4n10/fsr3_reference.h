@@ -4,8 +4,7 @@
 
 namespace fsr4n10 {
 
-int run_fsr4_provider_smoke(const std::filesystem::path& report_path);
-int run_fsr4_provider_sequence(const std::filesystem::path& sequence_path,
+int run_fsr3_reference_sequence(const std::filesystem::path& sequence_path,
                                const std::filesystem::path& report_path,
                                const std::filesystem::path& capture_root = {});
 

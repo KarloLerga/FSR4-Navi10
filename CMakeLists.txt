@@ -39,6 +39,12 @@ add_executable(fsr4n10_harness
 target_link_libraries(fsr4n10_harness PRIVATE fsr4n10_core bcrypt)
 fsr4n10_enable_warnings(fsr4n10_harness)
 
+add_library(fsr4n10_sequence STATIC src/sequence/f4seq_reader.cpp)
+target_include_directories(fsr4n10_sequence PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
+target_compile_definitions(fsr4n10_sequence PRIVATE NOMINMAX)
+target_link_libraries(fsr4n10_sequence PUBLIC bcrypt)
+fsr4n10_enable_warnings(fsr4n10_sequence)
+
 fsr4n10_compile_hlsl(
     fsr4n10_compile_fp16_probe
     "${CMAKE_CURRENT_SOURCE_DIR}/shaders/runtime/fp16_probe.hlsl"
@@ -346,6 +352,7 @@ set_source_files_properties("${FSR4N10_PROVIDER_INITIALIZER_CPP}" PROPERTIES GEN
 set(FSR4N10_FIDELITYFX_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/third_party/fidelityfx-fsr4-source/Kits/FidelityFX")
 file(READ "${CMAKE_CURRENT_SOURCE_DIR}/third_party/LOCK.json" FSR4N10_THIRD_PARTY_LOCK)
 string(JSON FSR4N10_FSR4_SOURCE_COMMIT GET "${FSR4N10_THIRD_PARTY_LOCK}" fsr4Source actualCommit)
+string(JSON FSR4N10_FSR3_SDK_COMMIT GET "${FSR4N10_THIRD_PARTY_LOCK}" currentSdk actualCommit)
 execute_process(
     COMMAND git rev-parse HEAD
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
@@ -394,7 +401,7 @@ configure_file(
     "${FSR4N10_FIDELITYFX_PROVIDER_OVERLAY}/Kits/FidelityFX/api/internal/ffx_watermark.h"
     COPYONLY)
 file(WRITE "${FSR4N10_FIDELITYFX_COMPAT_DIR}/pix3.h"
-    "/* Build-only include shim. The pinned backend declares its two PIX function pointer types locally and loads them dynamically; no PIX header declarations are used. */\n")
+    "/* Build-only compatibility shim: tracing entry points are loaded dynamically by the backend. */\n#define PIX_COLOR(r, g, b) ((((r) & 0xff) << 16) | (((g) & 0xff) << 8) | ((b) & 0xff))\n")
 file(WRITE "${FSR4N10_FIDELITYFX_PROVIDER_OVERLAY}/Kits/FidelityFX/api/internal/git_hash_branch.h"
     "#pragma once\n#define GIT_HASH \"${FSR4N10_FSR4_SOURCE_COMMIT}\"\n#define GIT_COMMIT_SUBJECT \"FSR4 Navi10 pinned provider source\"\n")
 add_library(fsr4n10_fsr4_teacher_provider STATIC
@@ -436,6 +443,233 @@ target_compile_definitions(fsr4n10_fsr4_teacher_provider PRIVATE
 )
 target_link_libraries(fsr4n10_fsr4_teacher_provider PUBLIC d3d12 dxgi dxguid bcrypt user32)
 
+set(FSR4N10_FSR3_SDK_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/third_party/fidelityfx-current/Kits/FidelityFX")
+set(FSR4N10_FSR3_REFERENCE_ROOT "${CMAKE_CURRENT_BINARY_DIR}/fsr3_reference")
+set(FSR4N10_FSR3_SHADER_OUTPUT "${FSR4N10_FSR3_REFERENCE_ROOT}/shaders")
+set(FSR4N10_FSR3_SHADER_MANIFEST "${FSR4N10_FSR3_REFERENCE_ROOT}/manifest.json")
+set(FSR4N10_FIDELITYFX_SC "${FSR4N10_FIDELITYFX_ROOT}/tools/ffx_sc/bin/FidelityFX_SC.exe")
+file(GLOB FSR4N10_FSR3_SHADER_SOURCES CONFIGURE_DEPENDS
+    "${FSR4N10_FSR3_SDK_ROOT}/upscalers/fsr3/internal/shaders/ffx_fsr3upscaler_*_pass.hlsl")
+add_custom_command(
+    OUTPUT "${FSR4N10_FSR3_SHADER_MANIFEST}"
+    COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/shaders/compile_fsr3_reference.py"
+            --sdk-root "${FSR4N10_FSR3_SDK_ROOT}"
+            --compiler "${FSR4N10_FIDELITYFX_SC}"
+            --source-commit "${FSR4N10_FSR3_SDK_COMMIT}"
+            --output "${FSR4N10_FSR3_REFERENCE_ROOT}"
+    DEPENDS
+        "${CMAKE_CURRENT_SOURCE_DIR}/tools/shaders/compile_fsr3_reference.py"
+        "${FSR4N10_FSR3_SDK_ROOT}/upscalers/fsr3/internal/ffx_fsr3upscaler_shaderblobs.cpp"
+        "${FSR4N10_FIDELITYFX_SC}"
+        ${FSR4N10_FSR3_SHADER_SOURCES}
+    COMMENT "Compiling pinned FidelityFX FSR3.1.5 shader permutations"
+    VERBATIM
+)
+add_custom_target(compile_fsr3_reference_shaders DEPENDS "${FSR4N10_FSR3_SHADER_MANIFEST}")
+
+set(FSR4N10_FSR3_PROVIDER_SOURCE
+    "${FSR4N10_FSR3_SDK_ROOT}/upscalers/fsr3/internal/ffx_provider_fsr3upscale.cpp")
+set(FSR4N10_FSR3_PROVIDER_OVERLAY_DIR "${FSR4N10_FSR3_REFERENCE_ROOT}/fidelityfx_provider")
+set(FSR4N10_FSR3_PROVIDER_OVERLAY_SOURCE
+    "${FSR4N10_FSR3_PROVIDER_OVERLAY_DIR}/ffx_provider_fsr3upscale.cpp")
+file(MAKE_DIRECTORY "${FSR4N10_FSR3_PROVIDER_OVERLAY_DIR}")
+file(READ "${FSR4N10_FSR3_PROVIDER_SOURCE}" FSR4N10_FSR3_PROVIDER_TEXT)
+string(REPLACE
+    "#include \"../../../api/internal/ffx_backends.h\""
+    "#include <ffx_backends.h>"
+    FSR4N10_FSR3_PROVIDER_TEXT "${FSR4N10_FSR3_PROVIDER_TEXT}")
+string(REPLACE
+    "#include \"../include/ffx_provider_fsr3upscale.h\""
+    "#include <ffx_provider_fsr3upscale.h>"
+    FSR4N10_FSR3_PROVIDER_TEXT "${FSR4N10_FSR3_PROVIDER_TEXT}")
+string(REPLACE
+    "#include \"../include/ffx_fsr3upscaler.h\""
+    "#include <ffx_fsr3upscaler.h>"
+    FSR4N10_FSR3_PROVIDER_TEXT "${FSR4N10_FSR3_PROVIDER_TEXT}")
+string(REPLACE
+    "#include \"../include/gpu/fsr3/ffx_fsr3_resources.h\""
+    "#include <gpu/fsr3/ffx_fsr3_resources.h>"
+    FSR4N10_FSR3_PROVIDER_TEXT "${FSR4N10_FSR3_PROVIDER_TEXT}")
+file(WRITE "${FSR4N10_FSR3_PROVIDER_OVERLAY_SOURCE}" "${FSR4N10_FSR3_PROVIDER_TEXT}")
+
+set(FSR4N10_FSR3_INTERNAL_OVERLAY "${FSR4N10_FSR3_REFERENCE_ROOT}/fidelityfx_internal")
+file(MAKE_DIRECTORY "${FSR4N10_FSR3_INTERNAL_OVERLAY}")
+set(FSR4N10_FSR3_UPSCALER_SOURCE "${FSR4N10_FSR3_SDK_ROOT}/upscalers/fsr3/internal/ffx_fsr3upscaler.cpp")
+set(FSR4N10_FSR3_UPSCALER_OVERLAY_SOURCE "${FSR4N10_FSR3_INTERNAL_OVERLAY}/ffx_fsr3upscaler.cpp")
+file(READ "${FSR4N10_FSR3_UPSCALER_SOURCE}" FSR4N10_FSR3_UPSCALER_TEXT)
+foreach(FSR4N10_FSR3_INCLUDE_REPLACEMENT IN ITEMS
+    "#include \"../include/ffx_fsr3upscaler.h\"|#include <ffx_fsr3upscaler.h>"
+    "#include \"../../../api/internal/ffx_backends.h\"|#include <ffx_backends.h>"
+    "#include \"../../../api/internal/gpu/ffx_core.h\"|#include <ffx_core.h>"
+    "#include \"../../../api/internal/ffx_object_management.h\"|#include <ffx_object_management.h>"
+    "#include \"../../../amdinternal/api/internal/git_hash_branch.h\"|#include <ffx_fsr3_git_hash_branch.h>"
+    "#include \"../include/gpu/fsr1/ffx_fsr1.h\"|#include <gpu/fsr1/ffx_fsr1.h>"
+    "#include \"../include/gpu/spd/ffx_spd.h\"|#include <gpu/spd/ffx_spd.h>"
+    "#include \"../include/gpu/fsr3upscaler/ffx_fsr3upscaler_callbacks_hlsl.h\"|#include <gpu/fsr3upscaler/ffx_fsr3upscaler_callbacks_hlsl.h>"
+    "#include \"../include/gpu/fsr3upscaler/ffx_fsr3upscaler_resources.h\"|#include <gpu/fsr3upscaler/ffx_fsr3upscaler_resources.h>"
+    "#include \"../include/gpu/fsr3upscaler/ffx_fsr3upscaler_common.h\"|#include <gpu/fsr3upscaler/ffx_fsr3upscaler_common.h>")
+    string(REPLACE "|" ";" FSR4N10_FSR3_INCLUDE_FIELDS "${FSR4N10_FSR3_INCLUDE_REPLACEMENT}")
+    list(GET FSR4N10_FSR3_INCLUDE_FIELDS 0 FSR4N10_FSR3_INCLUDE_OLD)
+    list(GET FSR4N10_FSR3_INCLUDE_FIELDS 1 FSR4N10_FSR3_INCLUDE_NEW)
+    string(FIND "${FSR4N10_FSR3_UPSCALER_TEXT}" "${FSR4N10_FSR3_INCLUDE_OLD}" FSR4N10_FSR3_INCLUDE_OFFSET)
+    if(FSR4N10_FSR3_INCLUDE_OFFSET EQUAL -1)
+        message(FATAL_ERROR "Pinned FSR3 source include changed; review the local build overlay: ${FSR4N10_FSR3_INCLUDE_OLD}")
+    endif()
+    string(REPLACE "${FSR4N10_FSR3_INCLUDE_OLD}" "${FSR4N10_FSR3_INCLUDE_NEW}"
+        FSR4N10_FSR3_UPSCALER_TEXT "${FSR4N10_FSR3_UPSCALER_TEXT}")
+endforeach()
+file(WRITE "${FSR4N10_FSR3_UPSCALER_OVERLAY_SOURCE}" "${FSR4N10_FSR3_UPSCALER_TEXT}")
+
+set(FSR4N10_FSR3_SHADERBLOBS_SOURCE
+    "${FSR4N10_FSR3_SDK_ROOT}/upscalers/fsr3/internal/ffx_fsr3upscaler_shaderblobs.cpp")
+set(FSR4N10_FSR3_SHADERBLOBS_OVERLAY_SOURCE
+    "${FSR4N10_FSR3_INTERNAL_OVERLAY}/ffx_fsr3upscaler_shaderblobs.cpp")
+file(READ "${FSR4N10_FSR3_SHADERBLOBS_SOURCE}" FSR4N10_FSR3_SHADERBLOBS_TEXT)
+string(REPLACE "#include \"../../../api/internal/ffx_util.h\"" "#include <ffx_util.h>"
+    FSR4N10_FSR3_SHADERBLOBS_TEXT "${FSR4N10_FSR3_SHADERBLOBS_TEXT}")
+set(FSR4N10_FSR3_LEGACY_BLOB_ADAPTER [=[#include "ffx_fsr3upscaler_private.h"
+
+// The available pinned FidelityFX_SC emits reflection records without entryName.
+// FSR3's selectors compile these shaders with -E CS, so adapt that record to the
+// pinned SDK's FfxShaderBlob ABI with the actual compiled entry point.
+#undef POPULATE_SHADER_BLOB_FFX
+#define POPULATE_SHADER_BLOB_FFX(info, index) \
+    { \
+        info[index].blobData, \
+        info[index].blobSize, \
+        "CS", \
+        info[index].numConstantBuffers, \
+        info[index].numSRVTextures, \
+        info[index].numUAVTextures, \
+        info[index].numSRVBuffers, \
+        info[index].numUAVBuffers, \
+        info[index].numSamplers, \
+        info[index].numRTAccelerationStructures, \
+        info[index].constantBufferNames, \
+        info[index].constantBufferBindings, \
+        info[index].constantBufferCounts, \
+        info[index].constantBufferSpaces, \
+        info[index].srvTextureNames, \
+        info[index].srvTextureBindings, \
+        info[index].srvTextureCounts, \
+        info[index].srvTextureSpaces, \
+        info[index].uavTextureNames, \
+        info[index].uavTextureBindings, \
+        info[index].uavTextureCounts, \
+        info[index].uavTextureSpaces, \
+        info[index].srvBufferNames, \
+        info[index].srvBufferBindings, \
+        info[index].srvBufferCounts, \
+        info[index].srvBufferSpaces, \
+        info[index].uavBufferNames, \
+        info[index].uavBufferBindings, \
+        info[index].uavBufferCounts, \
+        info[index].uavBufferSpaces, \
+        info[index].samplerNames, \
+        info[index].samplerBindings, \
+        info[index].samplerCounts, \
+        info[index].samplerSpaces, \
+        info[index].rtAccelerationStructureNames, \
+        info[index].rtAccelerationStructureBindings, \
+        info[index].rtAccelerationStructureCounts, \
+        info[index].rtAccelerationStructureSpaces \
+    }
+]=])
+string(REPLACE "#include \"ffx_fsr3upscaler_private.h\""
+    "${FSR4N10_FSR3_LEGACY_BLOB_ADAPTER}"
+    FSR4N10_FSR3_SHADERBLOBS_TEXT "${FSR4N10_FSR3_SHADERBLOBS_TEXT}")
+string(FIND "${FSR4N10_FSR3_SHADERBLOBS_TEXT}" "#include <ffx_util.h>" FSR4N10_FSR3_SHADERBLOBS_INCLUDE_OFFSET)
+if(FSR4N10_FSR3_SHADERBLOBS_INCLUDE_OFFSET EQUAL -1)
+    message(FATAL_ERROR "Pinned FSR3 shader selector include changed; review the local build overlay")
+endif()
+file(WRITE "${FSR4N10_FSR3_SHADERBLOBS_OVERLAY_SOURCE}" "${FSR4N10_FSR3_SHADERBLOBS_TEXT}")
+
+set(FSR4N10_FSR3_PRIVATE_HEADER_SOURCE
+    "${FSR4N10_FSR3_SDK_ROOT}/upscalers/fsr3/internal/ffx_fsr3upscaler_private.h")
+set(FSR4N10_FSR3_PRIVATE_HEADER_OVERLAY
+    "${FSR4N10_FSR3_INTERNAL_OVERLAY}/ffx_fsr3upscaler_private.h")
+file(READ "${FSR4N10_FSR3_PRIVATE_HEADER_SOURCE}" FSR4N10_FSR3_PRIVATE_HEADER_TEXT)
+string(REPLACE "#include \"../include/gpu/fsr3upscaler/ffx_fsr3upscaler_resources.h\""
+    "#include <gpu/fsr3upscaler/ffx_fsr3upscaler_resources.h>"
+    FSR4N10_FSR3_PRIVATE_HEADER_TEXT "${FSR4N10_FSR3_PRIVATE_HEADER_TEXT}")
+string(REPLACE "#include \"../../../amdinternal/api/internal/ffx_watermark.h\""
+    "#include <ffx_fsr3_watermark_compat.h>"
+    FSR4N10_FSR3_PRIVATE_HEADER_TEXT "${FSR4N10_FSR3_PRIVATE_HEADER_TEXT}")
+if(NOT FSR4N10_FSR3_PRIVATE_HEADER_TEXT MATCHES "ffx_fsr3_watermark_compat.h")
+    message(FATAL_ERROR "Pinned FSR3 watermark include changed; review the local build overlay")
+endif()
+file(WRITE "${FSR4N10_FSR3_PRIVATE_HEADER_OVERLAY}" "${FSR4N10_FSR3_PRIVATE_HEADER_TEXT}")
+file(WRITE "${FSR4N10_FSR3_INTERNAL_OVERLAY}/ffx_fsr3_watermark_compat.h" [=[
+#pragma once
+// The SDK tag omits its optional AMD-internal watermark module. This local
+// no-op type keeps the default reference path buildable without altering FSR3
+// reconstruction. The runtime rejects MLSR-WATERMARK because injection is unavailable.
+class FfxWatermark {
+public:
+    template<typename Interface>
+    FfxWatermark(Interface*, unsigned int) noexcept {}
+    template<typename Resource, typename Message>
+    void Dispatch(Resource&&, Message&&) noexcept {}
+};
+]=])
+file(WRITE "${FSR4N10_FSR3_INTERNAL_OVERLAY}/ffx_fsr3_git_hash_branch.h"
+    "#pragma once\n#define GIT_HASH \"${FSR4N10_FSR3_SDK_COMMIT}\"\n#define GIT_COMMIT_SUBJECT \"Pinned FSR3.1.5 reference\"\n")
+file(APPEND "${FSR4N10_FSR3_PROVIDER_OVERLAY_SOURCE}" [=[
+#include "ffx_fsr3upscaler_private.h"
+
+extern "C" FfxApiResource fsr4n10Fsr3GetInternalResource(ffxContext* context, uint32_t resourceId, bool unorderedAccess)
+{
+    if (context == nullptr || *context == nullptr || resourceId >= FFX_FSR3UPSCALER_RESOURCE_IDENTIFIER_COUNT)
+        return FfxApiResource{};
+    auto* internalContext = reinterpret_cast<InternalFsr3UpscalerUContext*>(*context);
+    auto* effectContext = reinterpret_cast<FfxFsr3UpscalerContext_Private*>(internalContext->context.data);
+    const FfxResourceInternal resource = unorderedAccess ? effectContext->uavResources[resourceId] : effectContext->srvResources[resourceId];
+    return internalContext->backendInterface.fpGetResource(&internalContext->backendInterface, resource);
+}
+]=])
+
+add_executable(fsr4n10_fsr3_reference
+    src/harness/fsr3_reference_main.cpp
+    src/teacher/fsr3_reference_runtime.cpp
+    "${FSR4N10_FSR3_SDK_ROOT}/api/internal/ffx_assert.cpp"
+    "${FSR4N10_FSR3_SDK_ROOT}/api/internal/ffx_message.cpp"
+    "${FSR4N10_FSR3_SDK_ROOT}/api/internal/ffx_object_management.cpp"
+    "${FSR4N10_FSR3_SDK_ROOT}/backend/dx12/ffx_backends_dx12.cpp"
+    "${FSR4N10_FSR3_SDK_ROOT}/backend/dx12/ffx_dx12.cpp"
+    "${FSR4N10_FSR3_PROVIDER_OVERLAY_SOURCE}"
+    "${FSR4N10_FSR3_UPSCALER_OVERLAY_SOURCE}"
+    "${FSR4N10_FSR3_SHADERBLOBS_OVERLAY_SOURCE}"
+)
+add_dependencies(fsr4n10_fsr3_reference compile_fsr3_reference_shaders)
+target_include_directories(fsr4n10_fsr3_reference PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}/include"
+    "${FSR4N10_FIDELITYFX_COMPAT_DIR}"
+    "${FSR4N10_FSR3_INTERNAL_OVERLAY}"
+    "${FSR4N10_FSR3_PROVIDER_OVERLAY_DIR}"
+    "${FSR4N10_FSR3_REFERENCE_ROOT}/ffx_sc_output"
+    "${FSR4N10_FSR3_SDK_ROOT}/api/include"
+    "${FSR4N10_FSR3_SDK_ROOT}/api/include/dx12"
+    "${FSR4N10_FSR3_SDK_ROOT}/api/internal"
+    "${FSR4N10_FSR3_SDK_ROOT}/api/internal/dx12"
+    "${FSR4N10_FSR3_SDK_ROOT}/api/internal/gpu"
+    "${FSR4N10_FSR3_SDK_ROOT}/backend/dx12"
+    "${FSR4N10_FSR3_SDK_ROOT}/upscalers/include"
+    "${FSR4N10_FSR3_SDK_ROOT}/upscalers/fsr3/include"
+    "${FSR4N10_FSR3_SDK_ROOT}/upscalers/fsr3/include/gpu"
+    "${FSR4N10_FSR3_SDK_ROOT}/upscalers/fsr3/internal"
+)
+target_compile_definitions(fsr4n10_fsr3_reference PRIVATE
+    "FFX_BACKEND_DX12=0"
+    FFX_UPSCALER
+    NOMINMAX
+    "FSR4N10_FSR3_SDK_COMMIT=\"${FSR4N10_FSR3_SDK_COMMIT}\""
+    "FSR4N10_BUILD_COMMIT=\"${FSR4N10_BUILD_COMMIT}\""
+    "FSR4N10_BUILD_CONFIGURATION=\"$<CONFIG>\""
+    "FSR4N10_FSR3_SHADER_MANIFEST=\"${FSR4N10_FSR3_SHADER_MANIFEST}\"")
+target_link_libraries(fsr4n10_fsr3_reference PRIVATE fsr4n10_sequence bcrypt d3d12 dxgi dxguid user32)
+fsr4n10_enable_warnings(fsr4n10_fsr3_reference)
+target_compile_options(fsr4n10_fsr3_reference PRIVATE /wd4505 /wd4201 /wd4324)
+
 add_library(fsr4n10_teacher_runtime STATIC src/teacher/gpu_teacher.cpp)
 target_include_directories(fsr4n10_teacher_runtime PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/include"
@@ -456,7 +690,7 @@ target_compile_definitions(fsr4n10_teacher_runtime PRIVATE
     "FSR4N10_BUILD_COMMIT=\"${FSR4N10_BUILD_COMMIT}\""
     "FSR4N10_BUILD_CONFIGURATION=\"$<CONFIG>\""
     "FSR4N10_PROVIDER_SHADER_MANIFEST=\"${FSR4N10_PROVIDER_SHADER_DIR}/manifest.json\"")
-target_link_libraries(fsr4n10_teacher_runtime PUBLIC fsr4n10_fsr4_teacher_provider PRIVATE bcrypt d3d12 dxgi)
+target_link_libraries(fsr4n10_teacher_runtime PUBLIC fsr4n10_fsr4_teacher_provider fsr4n10_sequence PRIVATE bcrypt d3d12 dxgi)
 fsr4n10_enable_warnings(fsr4n10_teacher_runtime)
 target_link_libraries(fsr4n10_harness PRIVATE fsr4n10_teacher_runtime)
 

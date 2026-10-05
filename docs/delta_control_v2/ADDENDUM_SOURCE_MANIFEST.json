@@ -1,0 +1,76 @@
+{
+  "schema": "f4n10.delta_control_v2.source_manifest.v1",
+  "archive_sha256": "a7cf988daec0a1abaad893ea0496e3c31b0ac6389e62ef22f20bbda899170957",
+  "reviewed_repo": "KarloLerga/FSR4-Navi10",
+  "reviewed_commit": "73193bd34dc0e7f8e060e2ebee902b70d6779570",
+  "provider_capture_commit": "2c7141a19b2c87edf84c2d81a9e546c64e12457c",
+  "included_files": {
+    "README_DELTA_CONTROL_V2.md": {
+      "bytes": 3456,
+      "sha256": "c4983668dd7f5b2bd405f1325060a683a146bedddfd33cd026c4538db10f846c"
+    },
+    "docs/ANALYTIC_CONTROL_BASELINE.md": {
+      "bytes": 1688,
+      "sha256": "095b213daf9ef127b90a05e21904d0aa5297a0d072e188f1b53bd755dba06a33"
+    },
+    "docs/CURRENT_REPO_REVIEW_73193BD.md": {
+      "bytes": 4457,
+      "sha256": "4bbfa7e971d9cec4dd64a23ee04be9749f2fc30f6989bd90a5aa82e432a215ea"
+    },
+    "docs/DATASET_STORAGE_V2.md": {
+      "bytes": 2240,
+      "sha256": "5ceef167b062fb0095cd3d908b7be3d47edf7214b60b611e8bf28af3539ef41a"
+    },
+    "docs/DELTA_CONTROL_ARCHITECTURE_V2.md": {
+      "bytes": 3700,
+      "sha256": "aafa5ad582ea37d9bbc595a9a53954d497354bec23d5cdba39c56ae44492d7c8"
+    },
+    "docs/FSR3_ALIGNED_CAPTURE_V2.md": {
+      "bytes": 2337,
+      "sha256": "c05c5963776a56b0af6784581ecc591044002e0abffbd41912ec77a73e5cf447"
+    },
+    "docs/IMPLEMENTATION_MAP_V2.md": {
+      "bytes": 2993,
+      "sha256": "0d6c11025f0da28c2393c0852a8aecabfaba1f850af78a85b8b6863819fa461d"
+    },
+    "docs/MULTI_EXIT_ROUTER_V2.md": {
+      "bytes": 1532,
+      "sha256": "5f988bdfa86633da0157fcbb5cecdb9e4c376a7f5ed065af0354f7b95eed6195"
+    },
+    "docs/NEW_RESEARCH_SYNTHESIS.md": {
+      "bytes": 3619,
+      "sha256": "3367107a908b91cf2591c695e02ccebf67e6e8a4e3a43b9b4872ae863fdac33d"
+    },
+    "docs/ORACLE_SUITE_V2.md": {
+      "bytes": 5553,
+      "sha256": "00c6b7b335772b565bc7440058c27792e4bc66aeaa3c0d10068b3e16f12b7a9e"
+    },
+    "docs/PERFORMANCE_QUALITY_GATES_V2.md": {
+      "bytes": 1538,
+      "sha256": "adae4a6cef734347ed1759d81107b311f6598c2166dc0551a0bffd61c9ca375b"
+    },
+    "docs/SELECTION_POLICY_V2.md": {
+      "bytes": 1740,
+      "sha256": "fbc7bf78661b8e2bcffdacffd92882f1191974479e16e025132cb85453e7c4bc"
+    },
+    "docs/SOURCES_DELTA_CONTROL_V2.md": {
+      "bytes": 2577,
+      "sha256": "c6d8d65b9bbe5c74650b8f6ac6f2f9ba55cd47075317d40a0df1611b90531d88"
+    },
+    "docs/TEACHER_SEQUENCE_PIPELINE_V2.md": {
+      "bytes": 3048,
+      "sha256": "3bc8bc2bfc403051279347a48011f5874aa91ef4892cdceb20567e02f8eee989"
+    },
+    "docs/TEMPORAL_CONTROL_REUSE_V2.md": {
+      "bytes": 1690,
+      "sha256": "805fbfeae38946eb06075bbb0ee97674bc79591021e19493f86fbd20edc61436"
+    },
+    "docs/TRAINING_PLAN_V2.md": {
+      "bytes": 2657,
+      "sha256": "9df51810da1c2f08bd1610a443d8bc8ada2630c433bf13df24816948d6708040"
+    }
+  },
+  "excluded_attachment_instruction_files": [
+    "CODEX_INTEGRATE_DELTA_CONTROL_V2.txt"
+  ]
+}

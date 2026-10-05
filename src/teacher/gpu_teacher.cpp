@@ -1,4 +1,5 @@
 #include "fsr4n10/gpu_teacher.h"
+#include "fsr4n10/sequence.h"
 
 #include "ffx_api_dx12.h"
 #include "ffx_dx12.h"
@@ -12,6 +13,7 @@
 #include <wrl/client.h>
 
 #include <array>
+#include <algorithm>
 #include <bit>
 #include <cmath>
 #include <cstddef>
@@ -21,7 +23,9 @@
 #include <iomanip>
 #include <iostream>
 #include <memory>
+#include <numeric>
 #include <sstream>
+#include <set>
 #include <stdexcept>
 #include <string>
 #include <system_error>
@@ -400,6 +404,55 @@ private:
     ComPtr<ID3D12Fence> fence_;
     HANDLE event_ = nullptr;
     UINT64 value_ = 0;
+};
+
+class GpuDispatchTimer {
+public:
+    GpuDispatchTimer(ID3D12Device* device, ID3D12CommandQueue* queue) {
+        check_hr(queue->GetTimestampFrequency(&frequency_), "ID3D12CommandQueue::GetTimestampFrequency failed");
+        if (frequency_ == 0) {
+            throw std::runtime_error("D3D12 timestamp frequency is zero");
+        }
+        D3D12_QUERY_HEAP_DESC query_description{};
+        query_description.Type = D3D12_QUERY_HEAP_TYPE_TIMESTAMP;
+        query_description.Count = 2;
+        check_hr(device->CreateQueryHeap(&query_description, IID_PPV_ARGS(&query_heap_)),
+                 "CreateQueryHeap(timestamp) failed");
+        readback_ = create_buffer(device, D3D12_HEAP_TYPE_READBACK, D3D12_RESOURCE_STATE_COPY_DEST,
+                                  sizeof(UINT64) * 2);
+    }
+
+    void begin(ID3D12GraphicsCommandList* command_list) const {
+        command_list->EndQuery(query_heap_.Get(), D3D12_QUERY_TYPE_TIMESTAMP, 0);
+    }
+
+    void end_and_resolve(ID3D12GraphicsCommandList* command_list) const {
+        command_list->EndQuery(query_heap_.Get(), D3D12_QUERY_TYPE_TIMESTAMP, 1);
+        command_list->ResolveQueryData(query_heap_.Get(), D3D12_QUERY_TYPE_TIMESTAMP, 0, 2,
+                                       readback_.Get(), 0);
+    }
+
+    [[nodiscard]] double elapsed_microseconds() const {
+        void* mapped = nullptr;
+        const D3D12_RANGE read_range{0, sizeof(UINT64) * 2};
+        check_hr(readback_->Map(0, &read_range, &mapped), "Map(timestamp readback) failed");
+        const auto* values = static_cast<const UINT64*>(mapped);
+        const UINT64 start = values[0];
+        const UINT64 end = values[1];
+        const D3D12_RANGE no_writes{0, 0};
+        readback_->Unmap(0, &no_writes);
+        if (end < start) {
+            throw std::runtime_error("D3D12 timestamp query returned a negative interval");
+        }
+        return static_cast<double>(end - start) * 1'000'000.0 / static_cast<double>(frequency_);
+    }
+
+    [[nodiscard]] UINT64 frequency() const noexcept { return frequency_; }
+
+private:
+    ComPtr<ID3D12QueryHeap> query_heap_;
+    ComPtr<ID3D12Resource> readback_;
+    UINT64 frequency_ = 0;
 };
 
 class ProviderContext {
@@ -1065,6 +1118,545 @@ int run_fsr4_provider_smoke(const std::filesystem::path& report_path) {
               << "; output equivalence: " << (instrumentation_matches ? "yes" : "no")
               << "; repeatable controls/recurrent taps: " << (deterministic_taps ? "yes" : "no") << ".\n"
               << "Synthetic capture arrays: " << capture_root.string() << " (not real-scene evidence).\n"
+              << "Report: " << report_path.string() << ".\n";
+    return 0;
+}
+
+int run_fsr4_provider_sequence(const std::filesystem::path& sequence_path,
+                               const std::filesystem::path& report_path,
+                               const std::filesystem::path& capture_root) {
+    std::size_t wmma_environment_size = 0;
+    getenv_s(&wmma_environment_size, nullptr, 0, "MLSR-WMMA");
+    if (wmma_environment_size != 0) {
+        throw std::runtime_error("unset MLSR-WMMA before this native/1080 I8-only provider sequence");
+    }
+    std::size_t watermark_environment_size = 0;
+    getenv_s(&watermark_environment_size, nullptr, 0, "MLSR-WATERMARK");
+    if (watermark_environment_size != 0) {
+        throw std::runtime_error("unset MLSR-WATERMARK so provider sequence output stays deterministic");
+    }
+
+    auto sequence = F4Sequence::open(sequence_path);
+    const auto& sequence_metadata = sequence.metadata();
+    if (sequence_metadata.preset != "native" || sequence_metadata.render_width != kWidth ||
+        sequence_metadata.render_height != kHeight || sequence_metadata.output_width != kWidth ||
+        sequence_metadata.output_height != kHeight || sequence_metadata.reversed_depth) {
+        throw std::runtime_error("the current provider sequence target is native 1920x1080 with forward [0,1] depth");
+    }
+
+    auto target = create_target_device();
+    ComPtr<ID3D12CommandQueue> queue;
+    D3D12_COMMAND_QUEUE_DESC queue_desc{};
+    queue_desc.Type = D3D12_COMMAND_LIST_TYPE_COMPUTE;
+    check_hr(target.device->CreateCommandQueue(&queue_desc, IID_PPV_ARGS(&queue)),
+             "CreateCommandQueue(sequence) failed");
+    ComPtr<ID3D12CommandAllocator> allocator;
+    check_hr(target.device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_COMPUTE, IID_PPV_ARGS(&allocator)),
+             "CreateCommandAllocator(sequence) failed");
+    ComPtr<ID3D12GraphicsCommandList> command_list;
+    check_hr(target.device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_COMPUTE, allocator.Get(), nullptr,
+                                              IID_PPV_ARGS(&command_list)),
+             "CreateCommandList(sequence) failed");
+    QueueWaiter waiter(target.device.Get());
+    GpuDispatchTimer gpu_timer(target.device.Get(), queue.Get());
+
+    auto color_texture = create_texture(target.device.Get(), kWidth, kHeight, DXGI_FORMAT_R16G16B16A16_FLOAT,
+                                        D3D12_RESOURCE_STATE_COPY_DEST);
+    auto depth_texture = create_texture(target.device.Get(), kWidth, kHeight, DXGI_FORMAT_R32_FLOAT,
+                                        D3D12_RESOURCE_STATE_COPY_DEST);
+    auto motion_texture = create_texture(target.device.Get(), kWidth, kHeight, DXGI_FORMAT_R16G16_FLOAT,
+                                         D3D12_RESOURCE_STATE_COPY_DEST);
+    auto exposure_texture = create_texture(target.device.Get(), 1, 1, DXGI_FORMAT_R32_FLOAT,
+                                           D3D12_RESOURCE_STATE_COPY_DEST);
+    auto reactive_texture = create_texture(target.device.Get(), kWidth, kHeight, DXGI_FORMAT_R8_UNORM,
+                                           D3D12_RESOURCE_STATE_COPY_DEST);
+    auto transparency_texture = create_texture(target.device.Get(), kWidth, kHeight, DXGI_FORMAT_R8_UNORM,
+                                               D3D12_RESOURCE_STATE_COPY_DEST);
+    auto instrumented_output_texture = create_texture(
+        target.device.Get(), kWidth, kHeight, DXGI_FORMAT_R16G16B16A16_FLOAT,
+        D3D12_RESOURCE_STATE_UNORDERED_ACCESS, D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS);
+    auto reference_output_texture = create_texture(
+        target.device.Get(), kWidth, kHeight, DXGI_FORMAT_R16G16B16A16_FLOAT,
+        D3D12_RESOURCE_STATE_UNORDERED_ACCESS, D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS);
+
+    ffxCreateBackendDX12Desc backend_desc{};
+    backend_desc.header.type = FFX_API_CREATE_CONTEXT_DESC_TYPE_BACKEND_DX12;
+    backend_desc.header.pNext = nullptr;
+    backend_desc.device = target.device.Get();
+    ffxCreateContextDescUpscale context_desc{};
+    context_desc.header.type = FFX_API_CREATE_CONTEXT_DESC_TYPE_UPSCALE;
+    context_desc.header.pNext = &backend_desc.header;
+    context_desc.maxRenderSize = {kWidth, kHeight};
+    context_desc.maxUpscaleSize = {kWidth, kHeight};
+    context_desc.flags = FFX_UPSCALE_ENABLE_DEBUG_VISUALIZATION;
+    ProviderContext instrumented_context;
+    check_ffx(ffxProvider_FSR4::Instance.CreateContext(
+                  instrumented_context.address(), &context_desc.header, instrumented_context.allocator()),
+              "FSR4 instrumented sequence CreateContext");
+    context_desc.flags = 0;
+    ProviderContext reference_context;
+    check_ffx(ffxProvider_FSR4::Instance.CreateContext(
+                  reference_context.address(), &context_desc.header, reference_context.allocator()),
+              "FSR4 reference sequence CreateContext");
+
+    const auto color_resource = ffxApiGetResourceDX12(color_texture.Get(), FFX_API_RESOURCE_STATE_COMPUTE_READ);
+    const auto depth_resource = ffxApiGetResourceDX12(depth_texture.Get(), FFX_API_RESOURCE_STATE_COMPUTE_READ);
+    const auto motion_resource = ffxApiGetResourceDX12(motion_texture.Get(), FFX_API_RESOURCE_STATE_COMPUTE_READ);
+    const auto exposure_resource = ffxApiGetResourceDX12(exposure_texture.Get(), FFX_API_RESOURCE_STATE_COMPUTE_READ);
+    ffxDispatchDescUpscale dispatch{};
+    dispatch.header.type = FFX_API_DISPATCH_DESC_TYPE_UPSCALE;
+    dispatch.color = color_resource;
+    dispatch.depth = depth_resource;
+    dispatch.motionVectors = motion_resource;
+    dispatch.motionVectorScale = {1.0f, 1.0f};
+    dispatch.renderSize = {kWidth, kHeight};
+    dispatch.upscaleSize = {kWidth, kHeight};
+    dispatch.enableSharpening = false;
+    dispatch.sharpness = 0.0f;
+    dispatch.cameraNear = 0.1f;
+    dispatch.cameraFar = 1000.0f;
+    dispatch.cameraFovAngleVertical = 1.0f;
+    dispatch.viewSpaceToMetersFactor = 1.0f;
+    dispatch.flags = 0;
+
+    const auto shader_manifest_data = read_binary_file(FSR4N10_PROVIDER_SHADER_MANIFEST);
+    const auto shader_manifest_hash = sha256_hex(shader_manifest_data);
+    const std::size_t pixel_count = static_cast<std::size_t>(kWidth) * kHeight;
+    std::array<ID3D12Resource*, 4> input_resources{
+        color_texture.Get(), depth_texture.Get(), motion_texture.Get(), exposure_texture.Get()};
+    bool inputs_uploaded = false;
+    bool reactive_in_read_state = false;
+    bool transparency_in_read_state = false;
+
+    const auto upload_frame = [&](const SequenceFrame& frame) {
+        if (inputs_uploaded) {
+            check_hr(allocator->Reset(), "ID3D12CommandAllocator::Reset(before sequence upload) failed");
+            check_hr(command_list->Reset(allocator.Get(), nullptr),
+                     "ID3D12GraphicsCommandList::Reset(before sequence upload) failed");
+            std::vector<D3D12_RESOURCE_BARRIER> to_copy;
+            to_copy.reserve(6);
+            const auto add_transition = [&](ID3D12Resource* resource, D3D12_RESOURCE_STATES before,
+                                           D3D12_RESOURCE_STATES after) {
+                D3D12_RESOURCE_BARRIER barrier{};
+                barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+                barrier.Transition.pResource = resource;
+                barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+                barrier.Transition.StateBefore = before;
+                barrier.Transition.StateAfter = after;
+                to_copy.push_back(barrier);
+            };
+            for (auto* resource : input_resources) {
+                add_transition(resource, D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE,
+                               D3D12_RESOURCE_STATE_COPY_DEST);
+            }
+            if (frame.metadata.reactive_mask_valid && reactive_in_read_state) {
+                add_transition(reactive_texture.Get(), D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE,
+                               D3D12_RESOURCE_STATE_COPY_DEST);
+            }
+            if (frame.metadata.transparency_composition_mask_valid && transparency_in_read_state) {
+                add_transition(transparency_texture.Get(), D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE,
+                               D3D12_RESOURCE_STATE_COPY_DEST);
+            }
+            command_list->ResourceBarrier(static_cast<UINT>(to_copy.size()), to_copy.data());
+        }
+        std::vector<ComPtr<ID3D12Resource>> uploads;
+        uploads.push_back(upload_texture(
+            target.device.Get(), command_list.Get(), color_texture.Get(), kWidth, kHeight,
+            4 * sizeof(std::uint16_t), reinterpret_cast<const std::byte*>(frame.color_rgba_half.data()),
+            frame.color_rgba_half.size() * sizeof(std::uint16_t)));
+        uploads.push_back(upload_texture(
+            target.device.Get(), command_list.Get(), depth_texture.Get(), kWidth, kHeight, sizeof(float),
+            reinterpret_cast<const std::byte*>(frame.depth.data()), frame.depth.size() * sizeof(float)));
+        uploads.push_back(upload_texture(
+            target.device.Get(), command_list.Get(), motion_texture.Get(), kWidth, kHeight,
+            2 * sizeof(std::uint16_t), reinterpret_cast<const std::byte*>(frame.motion_vectors_half.data()),
+            frame.motion_vectors_half.size() * sizeof(std::uint16_t)));
+        const float exposure = frame.metadata.exposure;
+        uploads.push_back(upload_texture(
+            target.device.Get(), command_list.Get(), exposure_texture.Get(), 1, 1, sizeof(float),
+            reinterpret_cast<const std::byte*>(&exposure), sizeof(exposure)));
+        if (frame.metadata.reactive_mask_valid) {
+            uploads.push_back(upload_texture(
+                target.device.Get(), command_list.Get(), reactive_texture.Get(), kWidth, kHeight, 1,
+                reinterpret_cast<const std::byte*>(frame.reactive_mask.data()), frame.reactive_mask.size()));
+        }
+        if (frame.metadata.transparency_composition_mask_valid) {
+            uploads.push_back(upload_texture(
+                target.device.Get(), command_list.Get(), transparency_texture.Get(), kWidth, kHeight, 1,
+                reinterpret_cast<const std::byte*>(frame.transparency_composition_mask.data()),
+                frame.transparency_composition_mask.size()));
+        }
+        std::vector<D3D12_RESOURCE_BARRIER> to_read;
+        to_read.reserve(6);
+        const auto add_read_transition = [&](ID3D12Resource* resource) {
+            D3D12_RESOURCE_BARRIER barrier{};
+            barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+            barrier.Transition.pResource = resource;
+            barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+            barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
+            barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE;
+            to_read.push_back(barrier);
+        };
+        for (auto* resource : input_resources) add_read_transition(resource);
+        if (frame.metadata.reactive_mask_valid) {
+            add_read_transition(reactive_texture.Get());
+            reactive_in_read_state = true;
+        }
+        if (frame.metadata.transparency_composition_mask_valid) {
+            add_read_transition(transparency_texture.Get());
+            transparency_in_read_state = true;
+        }
+        command_list->ResourceBarrier(static_cast<UINT>(to_read.size()), to_read.data());
+        check_hr(command_list->Close(), "ID3D12GraphicsCommandList::Close(sequence upload) failed");
+        ID3D12CommandList* lists[]{command_list.Get()};
+        queue->ExecuteCommandLists(1, lists);
+        waiter.wait(queue.Get());
+        inputs_uploaded = true;
+    };
+
+    const auto run_dispatch = [&](ProviderContext& context, const SequenceFrameMetadata& frame_metadata,
+                                  ID3D12Resource* destination_texture, bool instrumented, bool capture_taps,
+                                  bool measure_gpu_time, double* measured_gpu_time_us) {
+        check_hr(allocator->Reset(), "ID3D12CommandAllocator::Reset(before sequence dispatch) failed");
+        check_hr(command_list->Reset(allocator.Get(), nullptr), "ID3D12GraphicsCommandList::Reset(before sequence dispatch) failed");
+        dispatch.commandList = ffxGetCommandListDX12(command_list.Get());
+        dispatch.output = ffxApiGetResourceDX12(destination_texture, FFX_API_RESOURCE_STATE_UNORDERED_ACCESS);
+        dispatch.exposure = exposure_resource;
+        dispatch.reactive = frame_metadata.reactive_mask_valid
+            ? ffxApiGetResourceDX12(reactive_texture.Get(), FFX_API_RESOURCE_STATE_COMPUTE_READ)
+            : FfxApiResource{};
+        dispatch.transparencyAndComposition = frame_metadata.transparency_composition_mask_valid
+            ? ffxApiGetResourceDX12(transparency_texture.Get(), FFX_API_RESOURCE_STATE_COMPUTE_READ)
+            : FfxApiResource{};
+        dispatch.jitterOffset = {frame_metadata.jitter_x, frame_metadata.jitter_y};
+        dispatch.frameTimeDelta = frame_metadata.frame_time_delta_ms;
+        dispatch.preExposure = frame_metadata.pre_exposure;
+        dispatch.reset = frame_metadata.reset;
+        if (measure_gpu_time) {
+            gpu_timer.begin(command_list.Get());
+        }
+        check_ffx(ffxProvider_FSR4::Instance.Dispatch(context.address(), &dispatch.header),
+                  instrumented ? "FSR4 instrumented sequence Dispatch" : "FSR4 reference sequence Dispatch");
+        if (measure_gpu_time) {
+            gpu_timer.end_and_resolve(command_list.Get());
+        }
+        if (!instrumented || !capture_taps) {
+            const auto result = read_textures(
+                target.device.Get(), queue.Get(), allocator.Get(), command_list.Get(), waiter,
+                {{destination_texture, D3D12_RESOURCE_STATE_UNORDERED_ACCESS, kOutputBytesPerPixel}}, true);
+            if (measure_gpu_time && measured_gpu_time_us != nullptr) {
+                *measured_gpu_time_us = gpu_timer.elapsed_microseconds();
+            }
+            return result;
+        }
+        const auto debug_resource = get_provider_resource(
+            context.address(), kFsr4ResourceDebugInformation, true);
+        const auto recurrent_resource = get_provider_resource(
+            context.address(), kFsr4ResourceRecurrent, true);
+        const auto history_resource = get_provider_resource(
+            context.address(), kFsr4ResourceHistoryReprojected, true);
+        auto* debug_texture = static_cast<ID3D12Resource*>(debug_resource.resource);
+        auto* recurrent_texture = static_cast<ID3D12Resource*>(recurrent_resource.resource);
+        auto* history_texture = static_cast<ID3D12Resource*>(history_resource.resource);
+        const auto debug_desc = debug_texture->GetDesc();
+        const auto recurrent_desc = recurrent_texture->GetDesc();
+        const auto history_desc = history_texture->GetDesc();
+        if (debug_desc.Width != kWidth * 5 || debug_desc.Height != kHeight ||
+            debug_desc.Format != DXGI_FORMAT_R32G32B32A32_FLOAT ||
+            recurrent_desc.Width != kWidth || recurrent_desc.Height != kHeight ||
+            recurrent_desc.Format != DXGI_FORMAT_R8G8B8A8_UNORM ||
+            history_desc.Width != kWidth || history_desc.Height != kHeight ||
+            history_desc.Format != DXGI_FORMAT_R16G16B16A16_FLOAT) {
+            throw std::runtime_error("FSR4 provider sequence tap resource dimensions or formats changed");
+        }
+        return read_textures(
+            target.device.Get(), queue.Get(), allocator.Get(), command_list.Get(), waiter,
+            {{destination_texture, D3D12_RESOURCE_STATE_UNORDERED_ACCESS, kOutputBytesPerPixel},
+             {debug_texture, dx12_state_from_ffx(debug_resource.state), 4 * sizeof(float)},
+             {recurrent_texture, dx12_state_from_ffx(recurrent_resource.state), 4},
+             {history_texture, dx12_state_from_ffx(history_resource.state), kOutputBytesPerPixel}}, true);
+    };
+
+    const auto write_sequence_capture = [&](const SequenceFrame& frame,
+                                             const std::vector<std::vector<std::byte>>& capture) {
+        if (capture.size() != 4) {
+            throw std::runtime_error("sequence audit capture is missing provider taps");
+        }
+        const auto frame_root = capture_root / ("frame_" + std::to_string(frame.metadata.frame_index));
+        const auto arrays_dir = frame_root / "arrays";
+        const auto rgba_input = bytes_from_values(frame.color_rgba_half);
+        const auto input_color = extract_rgba16_rgb(rgba_input, pixel_count);
+        const auto input_depth = bytes_from_values(frame.depth);
+        const auto input_motion = bytes_from_values(frame.motion_vectors_half);
+        const auto current_source = extract_rgba32_region(capture[1], 0, kWidth * 5, kWidth, kHeight, 3);
+        const auto semantic_channels = extract_semantic_channels(capture[1], kWidth * 5, kWidth, kHeight);
+        const auto raw_parameters = extract_rgba32_region(capture[1], 3, kWidth * 5, kWidth, kHeight, 4);
+        const auto physical_controls = extract_rgba32_region(capture[1], 4, kWidth * 5, kWidth, kHeight, 4);
+        const auto reprojected_history = extract_rgba16_rgb(capture[3], pixel_count);
+        const auto final_rgb = extract_rgba16_rgb(capture[0], pixel_count);
+        write_binary_file(arrays_dir / "input_color.raw", input_color);
+        write_binary_file(arrays_dir / "depth.raw", input_depth);
+        write_binary_file(arrays_dir / "motion_vectors.raw", input_motion);
+        write_binary_file(arrays_dir / "current_reconstruction_source.raw", current_source);
+        write_binary_file(arrays_dir / "reprojected_history.raw", reprojected_history);
+        write_binary_file(arrays_dir / "model_input_semantic_channels.raw", semantic_channels);
+        write_binary_file(arrays_dir / "raw_model_parameters.raw", raw_parameters);
+        write_binary_file(arrays_dir / "physical_controls.raw", physical_controls);
+        write_binary_file(arrays_dir / "recurrent_state.raw", capture[2]);
+        write_binary_file(arrays_dir / "final_rgb.raw", final_rgb);
+        if (frame.metadata.reactive_mask_valid) {
+            write_binary_file(arrays_dir / "reactive_mask.raw", bytes_from_values(frame.reactive_mask));
+        }
+        if (frame.metadata.transparency_composition_mask_valid) {
+            write_binary_file(arrays_dir / "transparency_composition_mask.raw",
+                              bytes_from_values(frame.transparency_composition_mask));
+        }
+
+        const bool reactive_valid = frame.metadata.reactive_mask_valid;
+        const bool tcr_valid = frame.metadata.transparency_composition_mask_valid;
+        std::ofstream manifest(frame_root / "manifest.json", std::ios::binary | std::ios::trunc);
+        if (!manifest) {
+            throw std::runtime_error("cannot write stateful teacher capture manifest");
+        }
+        const auto write_descriptor = [&](const char* name, const char* dtype, std::uint32_t width,
+                                          std::uint32_t height, std::uint32_t channels, bool last) {
+            manifest << "    \"" << name << "\": {\"file\": \"arrays/" << name << ".raw\", \"dtype\": \""
+                     << dtype << "\", \"shape\": [" << height << ", " << width << ", " << channels << "]}"
+                     << (last ? "\n" : ",\n");
+        };
+        const std::size_t descriptor_count = 10 + static_cast<std::size_t>(reactive_valid) + static_cast<std::size_t>(tcr_valid);
+        std::size_t written = 0;
+        const auto desc = [&](const char* name, const char* dtype, std::uint32_t width,
+                              std::uint32_t height, std::uint32_t channels) {
+            ++written;
+            write_descriptor(name, dtype, width, height, channels, written == descriptor_count);
+        };
+        manifest << std::setprecision(9)
+                 << "{\n"
+                 << "  \"schema\": \"f4n10.teacher.capture.v1\",\n"
+                 << "  \"metadata\": {\n"
+                 << "    \"sequence_id\": \"" << json_escape(sequence_metadata.sequence_id) << "\",\n"
+                 << "    \"source_kind\": \"" << json_escape(sequence_metadata.source_kind) << "\",\n"
+                 << "    \"frame_index\": " << frame.metadata.frame_index << ",\n"
+                 << "    \"input_frame_sha256\": \"" << sequence_frame_input_sha256(frame) << "\",\n"
+                 << "    \"preset\": \"" << json_escape(sequence_metadata.preset) << "\",\n"
+                 << "    \"render_width\": " << kWidth << ",\n"
+                 << "    \"render_height\": " << kHeight << ",\n"
+                 << "    \"output_width\": " << kWidth << ",\n"
+                 << "    \"output_height\": " << kHeight << ",\n"
+                 << "    \"jitter_current\": [" << frame.metadata.jitter_x << ", " << frame.metadata.jitter_y << "],\n"
+                 << "    \"jitter_previous\": [" << frame.metadata.previous_jitter_x << ", "
+                 << frame.metadata.previous_jitter_y << "],\n"
+                 << "    \"frame_time_delta_ms\": " << frame.metadata.frame_time_delta_ms << ",\n"
+                 << "    \"exposure\": " << frame.metadata.exposure << ",\n"
+                 << "    \"pre_exposure\": " << frame.metadata.pre_exposure << ",\n"
+                 << "    \"reset\": " << (frame.metadata.reset ? "true" : "false") << ",\n"
+                 << "    \"camera_cut\": " << (frame.metadata.camera_cut ? "true" : "false") << ",\n"
+                 << "    \"motion_convention\": \"current pixel to previous render pixel, displacement in render pixels\",\n"
+                 << "    \"source_commit\": \"" << FSR4N10_FSR4_SOURCE_COMMIT << "\",\n"
+                 << "    \"source_hash\": \"" << sequence_metadata.source_hash << "\",\n"
+                 << "    \"sequence_hash\": \"" << sequence_metadata.sequence_hash << "\",\n"
+                 << "    \"shader_hashes\": {\"provider_shader_manifest\": \"" << shader_manifest_hash << "\"},\n"
+                 << "    \"build_commit\": \"" << FSR4N10_BUILD_COMMIT << "\",\n"
+                 << "    \"build_mode\": \"" << FSR4N10_BUILD_CONFIGURATION << "\",\n"
+                 << "    \"capture_origin\": \"" << json_escape(sequence_metadata.source_kind)
+                 << "_gpu_provider_capture\",\n"
+                 << "    \"physical_control_transform\": \"capture-only stable tanh/sigmoid equivalent; does not feed reconstruction\",\n"
+                 << "    \"gpu_name\": \"" << json_escape(target.adapter_name) << "\",\n"
+                 << "    \"driver_version\": \"" << json_escape(target.driver_version) << "\"\n"
+                 << "  },\n"
+                 << "  \"validity\": {\n"
+                 << "    \"input_color\": true,\n"
+                 << "    \"depth\": true,\n"
+                 << "    \"motion_vectors\": true,\n"
+                 << "    \"reactive_mask\": " << (reactive_valid ? "true" : "false") << ",\n"
+                 << "    \"transparency_composition_mask\": " << (tcr_valid ? "true" : "false") << "\n"
+                 << "  },\n"
+                 << "  \"arrays\": {\n";
+        desc("input_color", "<f2", kWidth, kHeight, 3);
+        desc("depth", "<f4", kWidth, kHeight, 1);
+        desc("motion_vectors", "<f2", kWidth, kHeight, 2);
+        desc("current_reconstruction_source", "<f4", kWidth, kHeight, 3);
+        desc("reprojected_history", "<f2", kWidth, kHeight, 3);
+        desc("model_input_semantic_channels", "<f4", kWidth, kHeight, 7);
+        desc("raw_model_parameters", "<f4", kWidth, kHeight, 4);
+        desc("physical_controls", "<f4", kWidth, kHeight, 4);
+        desc("recurrent_state", "|u1", kWidth, kHeight, 4);
+        desc("final_rgb", "<f2", kWidth, kHeight, 3);
+        if (reactive_valid) {
+            desc("reactive_mask", "|u1", kWidth, kHeight, 1);
+        }
+        if (tcr_valid) {
+            desc("transparency_composition_mask", "|u1", kWidth, kHeight, 1);
+        }
+        manifest << "  }\n}\n";
+        if (!manifest) {
+            throw std::runtime_error("failed writing stateful teacher capture manifest");
+        }
+        return frame_root / "manifest.json";
+    };
+
+    std::set<std::uint32_t> audit_frames;
+    if (!capture_root.empty()) {
+        audit_frames.insert(0);
+        audit_frames.insert(sequence_metadata.frame_count - 1);
+        for (std::uint32_t index = 0; index < sequence_metadata.frame_count; ++index) {
+            const auto& frame_metadata = sequence.frame_metadata(index);
+            if (frame_metadata.reset || frame_metadata.camera_cut) {
+                audit_frames.insert(index);
+            }
+        }
+    }
+    std::vector<std::string> frame_reports;
+    frame_reports.reserve(sequence_metadata.frame_count);
+    std::vector<double> reference_gpu_times;
+    std::vector<double> steady_state_gpu_times;
+    reference_gpu_times.reserve(sequence_metadata.frame_count);
+    steady_state_gpu_times.reserve(sequence_metadata.frame_count);
+    bool all_match = true;
+    for (std::uint32_t frame_index = 0; frame_index < sequence_metadata.frame_count; ++frame_index) {
+        auto frame = sequence.read_frame(frame_index);
+        upload_frame(frame);
+        const std::string input_hash = sequence_frame_input_sha256(frame);
+        const bool audit = audit_frames.contains(frame_index);
+        double reference_gpu_time_us = 0.0;
+        auto instrumented = run_dispatch(instrumented_context, frame.metadata, instrumented_output_texture.Get(), true,
+                                         audit, false, nullptr);
+        const std::string instrumented_hash = sha256_hex(instrumented[0]);
+        std::string capture_manifest_path;
+        std::string parameter_hash;
+        std::string recurrent_hash;
+        if (audit) {
+            parameter_hash = sha256_hex(extract_rgba32_region(instrumented[1], 3, kWidth * 5, kWidth, kHeight, 4));
+            recurrent_hash = sha256_hex(instrumented[2]);
+            capture_manifest_path = write_sequence_capture(frame, instrumented).string();
+        }
+
+        auto reference = run_dispatch(reference_context, frame.metadata, reference_output_texture.Get(), false,
+                                      false, true, &reference_gpu_time_us);
+        reference_gpu_times.push_back(reference_gpu_time_us);
+        if (frame_index != 0 && !frame.metadata.reset && !frame.metadata.camera_cut) {
+            steady_state_gpu_times.push_back(reference_gpu_time_us);
+        }
+        const std::string reference_hash = sha256_hex(reference[0]);
+        const bool matches = instrumented[0] == reference[0];
+        all_match = all_match && matches;
+        if (!matches || !all_half_values_are_finite(instrumented[0]) ||
+            !all_half_values_are_finite(reference[0])) {
+            std::ostringstream error;
+            error << "stateful FSR4 provider validation failed on frame " << frame_index
+                  << ": instrumented/reference match=" << matches
+                  << ", instrumented SHA-256=" << instrumented_hash
+                  << ", reference SHA-256=" << reference_hash;
+            throw std::runtime_error(error.str());
+        }
+
+        std::ostringstream frame_json;
+        frame_json << "    {\"frame_index\": " << frame_index
+                   << ", \"reset\": " << (frame.metadata.reset ? "true" : "false")
+                   << ", \"camera_cut\": " << (frame.metadata.camera_cut ? "true" : "false")
+                   << ", \"jitter_current\": [" << frame.metadata.jitter_x << ", " << frame.metadata.jitter_y << "]"
+                   << ", \"input_frame_sha256\": \"" << input_hash << '\"'
+                   << ", \"reference_gpu_dispatch_us\": " << std::setprecision(9) << reference_gpu_time_us
+                   << ", \"instrumented_output_sha256\": \"" << instrumented_hash << "\""
+                   << ", \"reference_output_sha256\": \"" << reference_hash << "\""
+                   << ", \"output_identical\": " << (matches ? "true" : "false");
+        if (audit) {
+            frame_json << ", \"raw_parameter_sha256\": \"" << parameter_hash << "\""
+                       << ", \"recurrent_state_sha256\": \"" << recurrent_hash << "\""
+                       << ", \"capture_manifest\": \"" << json_escape(capture_manifest_path) << "\"";
+        }
+        frame_json << '}';
+        frame_reports.push_back(frame_json.str());
+    }
+
+    if (!report_path.parent_path().empty()) {
+        std::filesystem::create_directories(report_path.parent_path());
+    }
+    std::ofstream report(report_path, std::ios::binary | std::ios::trunc);
+    if (!report) {
+        throw std::runtime_error("cannot write FSR4 provider sequence report: " + report_path.string());
+    }
+    const auto mean_gpu_time = [](const std::vector<double>& values) {
+        if (values.empty()) {
+            return 0.0;
+        }
+        return std::accumulate(values.begin(), values.end(), 0.0) / static_cast<double>(values.size());
+    };
+    const auto percentile_gpu_time = [](std::vector<double> values, double fraction) {
+        if (values.empty()) {
+            return 0.0;
+        }
+        std::sort(values.begin(), values.end());
+        const auto rank = static_cast<std::size_t>(std::ceil(fraction * static_cast<double>(values.size())));
+        return values[std::max<std::size_t>(1, rank) - 1];
+    };
+    report << "{\n"
+           << "  \"schema\": \"f4n10.fsr4-provider-sequence.v1\",\n"
+           << "  \"sequence_id\": \"" << json_escape(sequence_metadata.sequence_id) << "\",\n"
+           << "  \"source_kind\": \"" << json_escape(sequence_metadata.source_kind) << "\",\n"
+           << "  \"sequence_hash\": \"" << sequence_metadata.sequence_hash << "\",\n"
+           << "  \"preset\": \"" << json_escape(sequence_metadata.preset) << "\",\n"
+           << "  \"provider\": \"pinned_amd_fsr4_i8_native_1080\",\n"
+           << "  \"upstream_commit\": \"" << FSR4N10_FSR4_SOURCE_COMMIT << "\",\n"
+           << "  \"build_commit\": \"" << FSR4N10_BUILD_COMMIT << "\",\n"
+           << "  \"adapter\": \"" << json_escape(target.adapter_name) << "\",\n"
+           << "  \"driver_version\": \"" << json_escape(target.driver_version) << "\",\n"
+           << "  \"render_size\": [" << kWidth << ", " << kHeight << "],\n"
+           << "  \"output_size\": [" << kWidth << ", " << kHeight << "],\n"
+           << "  \"frame_count\": " << sequence_metadata.frame_count << ",\n"
+           << "  \"instrumentation_matches_reference\": " << (all_match ? "true" : "false") << ",\n"
+           << "  \"gpu_timing_recorded\": true,\n"
+           << "  \"gpu_timing\": {\"source\": \"D3D12 timestamp queries around non-instrumented FSR4 provider Dispatch\", "
+           << "\"scope\": \"provider GPU work only; excludes input upload, output readback, CPU and packaging\", "
+           << "\"timestamp_frequency_hz\": " << gpu_timer.frequency()
+           << ", \"all_frames_mean_us\": " << mean_gpu_time(reference_gpu_times)
+           << ", \"steady_state_excludes_first_reset_and_cuts\": true"
+           << ", \"steady_state_frame_count\": " << steady_state_gpu_times.size()
+           << ", \"steady_state_mean_us\": ";
+    if (steady_state_gpu_times.empty()) {
+        report << "null";
+    } else {
+        report << mean_gpu_time(steady_state_gpu_times);
+    }
+    report << ", \"steady_state_p50_us\": ";
+    if (steady_state_gpu_times.empty()) {
+        report << "null";
+    } else {
+        report << percentile_gpu_time(steady_state_gpu_times, 0.50);
+    }
+    report << ", \"steady_state_p95_us\": ";
+    if (steady_state_gpu_times.empty()) {
+        report << "null";
+    } else {
+        report << percentile_gpu_time(steady_state_gpu_times, 0.95);
+    }
+    report << "},\n"
+           << "  \"capture_frames\": [";
+    bool first_capture = true;
+    for (const auto index : audit_frames) {
+        if (!first_capture) {
+            report << ", ";
+        }
+        report << index;
+        first_capture = false;
+    }
+    report << "],\n"
+           << "  \"frames\": [\n";
+    for (std::size_t index = 0; index < frame_reports.size(); ++index) {
+        report << frame_reports[index] << (index + 1 == frame_reports.size() ? "\n" : ",\n");
+    }
+    report << "  ]\n}\n";
+    report.close();
+    if (!report) {
+        throw std::runtime_error("failed while writing FSR4 provider sequence report: " + report_path.string());
+    }
+
+    std::cout << "Pinned FSR4 I8 provider completed " << sequence_metadata.frame_count
+              << " stateful frame dispatches on " << target.adapter_name
+              << "; instrumented/ordinary output equality: " << (all_match ? "yes" : "no") << ".\n"
+              << "Input source kind: " << sequence_metadata.source_kind
+              << "; no quality or performance claim is made by this validation run.\n"
               << "Report: " << report_path.string() << ".\n";
     return 0;
 }

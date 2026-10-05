@@ -226,3 +226,45 @@ Integrate the technical Param4/Delta4 proposal while preserving full FSR4, NaviQ
 - The generated `.f4cap` passed validation with 10 arrays and 211,507,200 array bytes; sequence hash `85f8c4b9f91fd8aac7c7bbc83007738f8116b5ae178c731827e7dfab52dc826b`. Capture is synthetic and remains under ignored `build/release/`.
 - No real-scene Param4/Delta4 sequence, FSR3 pairing, image-quality metric or teacher timing has been generated.
 - The prior I8 graph timings in `RESULTS.md` remain synthetic model-only measurements and are not a full FSR4 effect baseline.
+
+## User-supplied DeltaControl V2 addendum (2026-10-05)
+
+### Objective
+
+Integrate the reviewed DeltaControl V2 research and enable reproducible stateful FSR4/FSR3 runs from one versioned `.f4seq`. Keep DeltaControl, Param4, Delta4, NaviQSR, NaviPRISM, and full FSR4 as separate paths. A procedural sequence is pipeline validation only; quality conclusions require representative rendered content.
+
+### Baseline and fixed inputs
+
+- Baseline: `73193bd34dc0e7f8e060e2ebee902b70d6779570`, clean `main` matching `origin/main`.
+- FSR4 source/provider commit: `01446e6a74888bf349652fcf2cbf5f642d30c2bf`.
+- Local FidelityFX SDK source commit: `60f4ea81909200d8542eca14dccb2628b763a9a3`; its FSR3 upscaler header identifies version 3.1.5.
+- Reviewed technical documents live in `docs/delta_control_v2/`; the archive's embedded Codex prompt is excluded and is not project authority.
+- No representative rendered `.f4seq` or paired quality dataset was supplied. The locally generated FSR3 captures are paired to synthetic frames and lack the exact accumulation-site C/H basis signals.
+
+### Milestones
+
+| # | Work | Files/modules | Validation / exit gate |
+|---|---|---|---|
+| V0 | Review, hash and retain technical addendum | `docs/delta_control_v2/`, `DECISIONS_LOG.md`, this plan | ZIP CRC, safe paths and every listed length/SHA-256 match; exclude embedded prompt. |
+| V1 | Versioned sequence container, deterministic procedural generator and validator | `tools/sequence/`, `docs/delta_control_v2/F4SEQ_FORMAT.md`, `tests/` | Round-trip, malformed bounds/hash/non-finite rejection, stable serialization and per-frame metadata/content hashes. |
+| V2 | Stateful GPU FSR4 provider sequence input | `include/fsr4n10/`, `src/sequence/`, `src/teacher/`, harness/CMake | Multiple frames in one provider context; honor jitter/delta/reset; instrumented and ordinary output byte equality per frame; reset/cut handling; deterministic rerun. |
+| V3 | FSR3.1.5 aligned provider/capture | `src/teacher/fsr3_reference_runtime.cpp`, CMake, `tools/sequence/` | Same `.f4seq`; source-confirmed taps, normal/instrumented RGB equality, provider GPU time, and exact accumulation-site C/H signals before Delta4 use. |
+| V4 | Exact POST replay and DeltaControl oracle ladder | `tools/oracles/`, reports, `artifacts/results/` | O0 requires final RGB within tolerance **and finite source-equation intermediates**; do not run teacher-derived analysis when O0 fails. |
+| V5 | Architecture selection and runtime candidates | `src/deltacontrol/`, `shaders/deltacontrol/`, training | Implement only candidates justified by oracle results; no default change without quality, stability and end-to-end timing gates. |
+| V6 | Synchronize release evidence and private remote | `RESULTS.md`, `PROGRESS.md`, `DECISIONS_LOG.md`, this plan | Relevant Release build/unit/GPU checks pass; limitations and open gates remain explicit; commit and push. |
+
+### Current blockers
+
+- The local provider is compiled for native/1080 only. Preset/tier permutation support must be audited before any 1440p or 4K runs.
+- The deterministic `.f4seq` reader/generator, stateful FSR4 sequence dispatch, pinned FSR3.1.5 sequence runner, and aligned 8-frame synthetic provider reports now exist. They validate the plumbing only.
+- FSR4 O0 RGB replay agrees within 1e-3 on audit frames 0, 4, and 7, but fails numerical validity: source-equation intermediates are non-finite at 2,073,600 / 2,073,600 pixels on frames 0 and 4 and 2,073,528 / 2,073,600 on frame 7. The captured FSR4 RGB is entirely black on frames 0 and 4 and 99.9965% zero on frame 7. Matching black output does not clear O0.
+- The current FSR3 taps do not include exact `C` and `H` at the accumulation site; the existing `internal_upscaled_color_after_accumulate` tap is after blending and cannot substitute. Do not run the Delta4 basis oracle until those capture-only taps exist.
+- No representative rendered scene input exists. Synthetic data cannot clear O0-O13 teacher-quality gates or justify DeltaControl training/runtime selection.
+
+### Decision log and progress
+
+- V0 complete: ZIP CRC and source manifest hashes/sizes verified; 16 reviewed README/technical documents retained with archive hash in `docs/delta_control_v2/ADDENDUM_SOURCE_MANIFEST.json`; embedded prompt deliberately excluded.
+- V1 complete for format, deterministic generator, validator, and Python coverage. V2 complete for the native/1080 synthetic multi-frame provider path, reset/cut handling, input hashes, exposure/mask bindings, timing, and instrumented/ordinary per-frame equality.
+- V3 partially complete: pinned FSR3.1.5 consumes the same eight frames and reports aligned input hashes, source-confirmed resource taps, timing, and instrumented/ordinary output equality. Exact accumulation-site C/H remain missing.
+- V4 replay tool is implemented. The synthetic captures reproduce their final RGB within 1e-3, but O0 fails its finite-intermediate requirement because the raw teacher controls overflow the source POST exponent formulas and produce nearly all-black output. Do not start O1-O13 or V5 until a representative, numerically valid capture set passes O0.
+- Current measurements and limitations are recorded in `RESULTS.md` and `artifacts/results/`. Do not claim real-scene quality or speed from generated fixtures.

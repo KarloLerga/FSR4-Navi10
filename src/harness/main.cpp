@@ -4,6 +4,7 @@
 #include "fsr4n10/model_pack.h"
 #include "fsr4n10/naviqsr_gpu.h"
 #include "fsr4n10/naviprism.h"
+#include "fsr4n10/sequence.h"
 #include "fsr4n10/upstream_smoke.h"
 #include "fsr4n10/version.h"
 
@@ -23,6 +24,8 @@ void print_usage() {
               << "  fsr4n10_harness.exe --run-fp16-probe\n"
               << "  fsr4n10_harness.exe --run-upstream-pass0-smoke\n"
               << "  fsr4n10_harness.exe --run-fsr4-provider-smoke <report.json>\n"
+              << "  fsr4n10_harness.exe --validate-f4seq <sequence.f4seq>\n"
+              << "  fsr4n10_harness.exe --run-fsr4-provider-sequence <sequence.f4seq> <report.json> [capture-root]\n"
               << "  fsr4n10_harness.exe --run-upstream-i8-zero-model-smoke\n"
               << "  fsr4n10_harness.exe --benchmark-upstream-i8-zero-model\n"
               << "  fsr4n10_harness.exe --run-upstream-i8-image-smoke <input.ppm> <output.bmp>\n"
@@ -70,6 +73,25 @@ int validate_model_pack(const std::filesystem::path& path) {
     return 0;
 }
 
+int validate_f4seq(const std::filesystem::path& path) {
+    auto sequence = fsr4n10::F4Sequence::open(path);
+    const auto& metadata = sequence.metadata();
+    std::uint64_t payload_bytes = 0;
+    for (std::uint32_t index = 0; index < metadata.frame_count; ++index) {
+        auto frame = sequence.read_frame(index);
+        payload_bytes += frame.color_rgba_half.size() * sizeof(std::uint16_t);
+        payload_bytes += frame.depth.size() * sizeof(float);
+        payload_bytes += frame.motion_vectors_half.size() * sizeof(std::uint16_t);
+        payload_bytes += frame.reactive_mask.size();
+        payload_bytes += frame.transparency_composition_mask.size();
+    }
+    std::cout << "Validated f4n10.sequence.v2 " << metadata.sequence_id << ": " << metadata.frame_count
+              << " frames, render " << metadata.render_width << 'x' << metadata.render_height
+              << ", output " << metadata.output_width << 'x' << metadata.output_height
+              << ", input " << payload_bytes << " bytes. Sequence SHA-256: " << metadata.sequence_hash << ".\n";
+    return 0;
+}
+
 } // namespace
 
 int main(int argc, char** argv) {
@@ -89,6 +111,14 @@ int main(int argc, char** argv) {
         }
         if (argc == 3 && std::string_view(argv[1]) == "--run-fsr4-provider-smoke") {
             return fsr4n10::run_fsr4_provider_smoke(std::filesystem::path(argv[2]));
+        }
+        if (argc == 3 && std::string_view(argv[1]) == "--validate-f4seq") {
+            return validate_f4seq(std::filesystem::path(argv[2]));
+        }
+        if ((argc == 4 || argc == 5) && std::string_view(argv[1]) == "--run-fsr4-provider-sequence") {
+            const std::filesystem::path capture_root = argc == 5 ? std::filesystem::path(argv[4]) : std::filesystem::path{};
+            return fsr4n10::run_fsr4_provider_sequence(
+                std::filesystem::path(argv[2]), std::filesystem::path(argv[3]), capture_root);
         }
         if (argc == 2 && std::string_view(argv[1]) == "--run-upstream-i8-zero-model-smoke") {
             return fsr4n10::run_upstream_i8_zero_model_smoke();
