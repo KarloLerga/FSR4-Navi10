@@ -72,6 +72,7 @@ FfxShaderBlob fsr4_shaders::GetPreShaderBlob(uint32_t permutationOption) {
     key.FFX_MLSR_COLORSPACE = colorspace(options);
     key.FFX_MLSR_JITTERED_MOTION_VECTORS = options.JITTERED_MOTION_VECTORS;
     key.FFX_MLSR_RESOLUTION = static_cast<uint32_t>(options.maxRes);
+    key.FFX_DEBUG_VISUALIZE = options.DEBUG_VISUALIZE;
     return FSR4N10_ASSIGN_BLOB(key.index, fsr4_model_v07_i8_native_0);
 }
 
@@ -84,7 +85,7 @@ FfxShaderBlob fsr4_shaders::GetPostShaderBlob(uint32_t permutationOption) {
     fsr4_model_v07_i8_native_13_PermutationKey key{};
     key.FFX_MLSR_COLORSPACE = colorspace(options);
     key.AUTOEXPOSURE_ENABLED = options.AUTOEXPOSURE_ENABLED;
-    key.DEBUG_VISUALIZE = options.DEBUG_VISUALIZE;
+    key.FFX_DEBUG_VISUALIZE = options.DEBUG_VISUALIZE;
     key.RESOLUTION = static_cast<uint32_t>(options.maxRes);
     return FSR4N10_ASSIGN_BLOB(key.index, fsr4_model_v07_i8_native_13);
 }

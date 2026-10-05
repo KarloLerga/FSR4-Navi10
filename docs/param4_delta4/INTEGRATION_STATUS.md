@@ -11,9 +11,10 @@ These are candidate architectures, not implementations of AMD's FSR4. Claims in 
 
 ## Current repository state
 
-- The native/1080 I8 provider shader set and static D3D12 provider now build from pinned FSR4 source. The harness executes the provider's PRE/model/POST graph on the RX 5700 XT; a synthetic gradient/checkerboard run twice with reset produces the same final-output SHA-256.
+- The native/1080 I8 provider shader set and static D3D12 provider build from pinned FSR4 source. The harness executes the provider's PRE/model/POST graph on the RX 5700 XT. A capture-only shader overlay exposes reconstruction-source and semantic taps in PRE, p0..p3 and stable-equivalent physical controls in POST, plus recurrent state, reprojected history and final RGB. Instrumented output is byte-identical to the ordinary provider output; repeated reset dispatches reproduce the output and taps.
 - The existing harness executes the I8 model graph on synthetic/model-input data. Its image smoke still performs preprocessing and postprocessing on the CPU.
-- The provider smoke does not expose raw model controls or recurrent values and uses synthetic input. A real-scene capture, aligned FSR3 captures, Param4/Delta4 training, and quality measurements are not present yet.
+- The smoke emits a schema-valid 10-array `.f4cap` package from a synthetic gradient/checkerboard. It validates capture extraction and packaging only. The physical-control tap uses stable mathematical equivalents of the source tanh/sigmoid equations because raw logits can exceed FP32 `exp` range; these derived taps do not affect provider output. The transform is stated in capture metadata.
+- A real-scene sequence input/capture path, aligned FSR3 captures, Param4/Delta4 training/runtime, and quality measurements are not present yet. Synthetic smoke results do not qualify as teacher or image-quality evidence.
 - Existing NaviQSR and NaviPRISM results remain independent and do not qualify as Param4/Delta4 evidence.
 
 The implementation order is therefore teacher path and capture first, then capture validation/oracle analysis, then Param4/Delta4 model work. Never infer teacher quality from control error or a synthetic smoke.

@@ -41,16 +41,22 @@ The hardware checks currently pass against deterministic synthetic inputs. They 
 
 ## Param4 / Delta4 addendum
 
-Param4 and Delta4 are separate experimental candidates. The harness now builds AMD's pinned D3D12 provider with the native/1080 I8 shaders and can dispatch its PRE/model/POST graph on the RX 5700 XT. Run a synthetic reset smoke with:
+Param4 and Delta4 are separate experimental candidates. The harness builds AMD's pinned D3D12 provider with native/1080 I8 shaders and dispatches its PRE/model/POST graph on the RX 5700 XT. The instrumented run captures the current reconstruction source, seven semantic inputs, p0..p3, physical controls, recurrent state, reprojected history, and final RGB. Run the synthetic reset smoke and package its output with:
 
 ```powershell
 cmake --build build/release --target fsr4n10_harness --config Release
 build/release/fsr4n10_harness.exe --run-fsr4-provider-smoke build/release/fsr4_provider_smoke.json
+py -3 tools/teacher/package_teacher_capture.py `
+  build/release/teacher_instrumented_smoke_capture/frame_0000/manifest.json `
+  build/release/teacher_instrumented_smoke_capture/frame_0000 `
+  build/release/teacher_instrumented_smoke_capture/frame_0000.f4cap
+py -3 tools/teacher/validate_teacher_capture.py `
+  build/release/teacher_instrumented_smoke_capture/frame_0000.f4cap
 ```
 
-It dispatches the provider twice with reset and checks that the output hashes match. The input is a generated gradient/checkerboard, so this verifies execution and repeatability only. It does not produce a valid real-scene teacher capture or image-quality result. Audit the pinned provider's stage IDs and dispatch expressions with `cmake --build build/release --target audit_teacher_provider_schedule`. Package and validate a capture only when its arrays come from the GPU provider and a real aligned frame sequence: `python tools/teacher/package_teacher_capture.py manifest.json arrays/ frame.f4cap`, then `python tools/teacher/validate_teacher_capture.py frame.f4cap`.
+The smoke compares instrumented output byte-for-byte with the non-instrumented provider output and repeats the instrumented reset dispatch to check tap determinism. It writes a valid synthetic `.f4cap` package (211,507,200 array bytes); the generated package is build output and is not committed. Input is a generated gradient/checkerboard, so this is capture-pipeline validation only, not a real-scene teacher sequence or image-quality result. Physical controls are captured with stable mathematical tanh/sigmoid equivalents of the pinned equations; the capture-only calculation does not feed reconstruction. The transform is recorded in manifest metadata because raw model logits can exceed FP32 `exp` range. Audit stage IDs and dispatch expressions with `cmake --build build/release --target audit_teacher_provider_schedule`.
 
-The capture validator proves package structure, hashes, dimensions and finite numeric data. Capture origin and GPU identity are recorded metadata, not cryptographic proof. Internal model-parameter/recurrent taps, real-scene capture input, paired FSR3 data, Param4/Delta4 runtime paths, and image-quality measurements remain open. Neither candidate is enabled by default or claimed to match FSR4.
+The capture validator proves package structure, hashes, dimensions and finite numeric data. Capture origin and GPU identity are recorded metadata, not cryptographic proof. Real-scene sequence input/capture, paired FSR3 data, Param4/Delta4 runtime paths, and image-quality measurements remain open. Neither candidate is enabled by default or claimed to match FSR4.
 
 ## Project documents
 

@@ -346,15 +346,49 @@ set_source_files_properties("${FSR4N10_PROVIDER_INITIALIZER_CPP}" PROPERTIES GEN
 set(FSR4N10_FIDELITYFX_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/third_party/fidelityfx-fsr4-source/Kits/FidelityFX")
 file(READ "${CMAKE_CURRENT_SOURCE_DIR}/third_party/LOCK.json" FSR4N10_THIRD_PARTY_LOCK)
 string(JSON FSR4N10_FSR4_SOURCE_COMMIT GET "${FSR4N10_THIRD_PARTY_LOCK}" fsr4Source actualCommit)
+execute_process(
+    COMMAND git rev-parse HEAD
+    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+    OUTPUT_VARIABLE FSR4N10_BUILD_COMMIT
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    RESULT_VARIABLE FSR4N10_GIT_REV_PARSE_RESULT)
+string(LENGTH "${FSR4N10_BUILD_COMMIT}" FSR4N10_BUILD_COMMIT_LENGTH)
+if(NOT FSR4N10_GIT_REV_PARSE_RESULT EQUAL 0 OR
+   NOT FSR4N10_BUILD_COMMIT MATCHES "^[0-9a-fA-F]+$" OR
+   NOT FSR4N10_BUILD_COMMIT_LENGTH EQUAL 40)
+    message(FATAL_ERROR "Could not read the repository commit for capture provenance")
+endif()
 set(FSR4N10_FIDELITYFX_COMPAT_DIR "${CMAKE_CURRENT_BINARY_DIR}/teacher/fidelityfx_build_compat")
 set(FSR4N10_FIDELITYFX_PROVIDER_OVERLAY "${CMAKE_CURRENT_BINARY_DIR}/teacher/fidelityfx_provider_overlay")
 file(MAKE_DIRECTORY
     "${FSR4N10_FIDELITYFX_PROVIDER_OVERLAY}/Kits/FidelityFX/upscalers/fsr4/dx12"
     "${FSR4N10_FIDELITYFX_PROVIDER_OVERLAY}/Kits/FidelityFX/api/internal")
-configure_file(
-    "${FSR4N10_FIDELITYFX_ROOT}/upscalers/fsr4/dx12/ffx_provider_fsr4_dx12.cpp"
-    "${FSR4N10_FIDELITYFX_PROVIDER_OVERLAY}/Kits/FidelityFX/upscalers/fsr4/dx12/ffx_provider_fsr4_dx12.cpp"
-    COPYONLY)
+set(FSR4N10_FIDELITYFX_PROVIDER_SOURCE
+    "${FSR4N10_FIDELITYFX_ROOT}/upscalers/fsr4/dx12/ffx_provider_fsr4_dx12.cpp")
+set(FSR4N10_FIDELITYFX_PROVIDER_OVERLAY_SOURCE
+    "${FSR4N10_FIDELITYFX_PROVIDER_OVERLAY}/Kits/FidelityFX/upscalers/fsr4/dx12/ffx_provider_fsr4_dx12.cpp")
+file(READ "${FSR4N10_FIDELITYFX_PROVIDER_SOURCE}" FSR4N10_FIDELITYFX_PROVIDER_OVERLAY_TEXT)
+string(FIND "${FSR4N10_FIDELITYFX_PROVIDER_OVERLAY_TEXT}"
+    "FFX_API_SURFACE_FORMAT_R16_UNORM, maxUpscaleSize->width, maxUpscaleSize->height"
+    FSR4N10_DEBUG_RESOURCE_FORMAT_OFFSET)
+if(FSR4N10_DEBUG_RESOURCE_FORMAT_OFFSET EQUAL -1)
+    message(FATAL_ERROR "Pinned FSR4 provider debug-resource description changed; review capture overlay")
+endif()
+string(REPLACE
+    "FFX_API_SURFACE_FORMAT_R16_UNORM, maxUpscaleSize->width, maxUpscaleSize->height"
+    "FFX_API_SURFACE_FORMAT_R32G32B32A32_FLOAT, maxUpscaleSize->width * 5, maxUpscaleSize->height"
+    FSR4N10_FIDELITYFX_PROVIDER_OVERLAY_TEXT
+    "${FSR4N10_FIDELITYFX_PROVIDER_OVERLAY_TEXT}")
+file(WRITE "${FSR4N10_FIDELITYFX_PROVIDER_OVERLAY_SOURCE}"
+    "${FSR4N10_FIDELITYFX_PROVIDER_OVERLAY_TEXT}")
+file(APPEND "${FSR4N10_FIDELITYFX_PROVIDER_OVERLAY_SOURCE}"
+    "\nextern \"C\" FfxApiResource fsr4n10GetInternalResource(ffxContext* context, uint32_t resourceId, bool unorderedAccess)\n{\n"
+    "    if (context == nullptr || *context == nullptr || resourceId >= FFX_FSR4UPSCALER_RESOURCE_IDENTIFIER_COUNT)\n"
+    "        return FfxApiResource{};\n"
+    "    auto* internalContext = reinterpret_cast<InternalFsr4Context*>(*context);\n"
+    "    const FfxResourceInternal resource = unorderedAccess ? internalContext->uavResources[resourceId] : internalContext->srvResources[resourceId];\n"
+    "    return internalContext->backendInterface.fpGetResource(&internalContext->backendInterface, resource);\n"
+    "}\n")
 configure_file(
     "${FSR4N10_FIDELITYFX_ROOT}/api/internal/ffx_watermark.h"
     "${FSR4N10_FIDELITYFX_PROVIDER_OVERLAY}/Kits/FidelityFX/api/internal/ffx_watermark.h"
@@ -418,7 +452,10 @@ target_compile_definitions(fsr4n10_teacher_runtime PRIVATE
     FFX_BACKEND_DX12
     FFX_UPSCALER
     NOMINMAX
-    "FSR4N10_FSR4_SOURCE_COMMIT=\"${FSR4N10_FSR4_SOURCE_COMMIT}\"")
+    "FSR4N10_FSR4_SOURCE_COMMIT=\"${FSR4N10_FSR4_SOURCE_COMMIT}\""
+    "FSR4N10_BUILD_COMMIT=\"${FSR4N10_BUILD_COMMIT}\""
+    "FSR4N10_BUILD_CONFIGURATION=\"$<CONFIG>\""
+    "FSR4N10_PROVIDER_SHADER_MANIFEST=\"${FSR4N10_PROVIDER_SHADER_DIR}/manifest.json\"")
 target_link_libraries(fsr4n10_teacher_runtime PUBLIC fsr4n10_fsr4_teacher_provider PRIVATE bcrypt d3d12 dxgi)
 fsr4n10_enable_warnings(fsr4n10_teacher_runtime)
 target_link_libraries(fsr4n10_harness PRIVATE fsr4n10_teacher_runtime)

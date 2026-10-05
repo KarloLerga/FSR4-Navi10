@@ -204,7 +204,8 @@ Integrate the technical Param4/Delta4 proposal while preserving full FSR4, NaviQ
 
 - Param4/Delta4 is an additional experimental architecture family, not a rename or replacement of existing paths.
 - Reviewed technical documents may be retained under `docs/param4_delta4/`; the embedded agent prompt is excluded. Technical assertions remain proposals until checked against pinned source or measurements.
-- The exact provider-framegraph execution smoke is complete with synthetic input. The remaining P0 gate is real-scene input plus capture taps for model controls/recurrent/model-input features and deterministic `.f4cap` output. Do not advance to teacher-dependent training/oracles until real captures exist.
+- The exact provider-framegraph execution and capture-tap plumbing now run with synthetic input. A valid synthetic `.f4cap` proves the extraction/packaging path, not a representative teacher sequence. The remaining P0 gate is a supported input path for real captured frames plus valid real-scene captures. Do not advance to teacher-dependent training/oracles until real captures exist.
+- Raw logits from the synthetic frame exceed the FP32 exponential range. The `.f4cap` physical-controls field therefore uses stable mathematical equivalents of the pinned tanh/sigmoid transforms, with the choice recorded in metadata; those taps are detached from reconstruction.
 
 ### Progress checklist
 
@@ -213,11 +214,15 @@ Integrate the technical Param4/Delta4 proposal while preserving full FSR4, NaviQ
 - [x] Integrate reviewed technical docs and record decisions.
 - [x] Implement strict deterministic capture contract and validator with unit coverage.
 - [x] Audit provider scheduling and create source-hashed stage manifest.
-- [ ] Add capture taps/input path and emit a real-scene teacher sequence on the RX 5700 XT; the current synthetic provider smoke is not a teacher capture.
-- [ ] Run full relevant checks, update results/progress, commit and push.
+- [x] Add capture-only taps for PRE source/semantic inputs and POST raw parameters; read recurrent state, history and RGB from provider resources.
+- [x] Emit, package and validate a deterministic 10-array synthetic `.f4cap`; compare instrumented output against ordinary provider output and repeat all taps.
+- [ ] Add a versioned real-frame input path and emit a representative real-scene teacher sequence on the RX 5700 XT. No such frame sequence was supplied; the synthetic provider smoke is not a teacher-quality capture.
+- [x] Run Release build, provider GPU smoke, `.f4cap` validator, CTest (1/1), and Python unit suite (44/44); update implementation docs.
+- [ ] Commit and push implementation and measured report to the private remote.
 
 ### Measured results
 
-- The pinned provider completed two synthetic 1920x1080 reset dispatches with byte-identical final output, SHA-256 `304bc89ba22b08e4ab12b2d27458179b6cf7af4cc7d4a35e5ccfe864edaa7813`; raw JSON is in `artifacts/results/fsr4_provider_smoke.json`.
-- No real-scene Param4/Delta4 capture, image-quality metric or teacher timing has been generated.
+- The pinned provider completed two instrumented and one ordinary synthetic 1920x1080 reset dispatch on the RX 5700 XT. All output hashes match at `304bc89ba22b08e4ab12b2d27458179b6cf7af4cc7d4a35e5ccfe864edaa7813`; raw parameter, control, semantic and recurrent taps are deterministic across instrumented resets.
+- The generated `.f4cap` passed validation with 10 arrays and 211,507,200 array bytes; sequence hash `85f8c4b9f91fd8aac7c7bbc83007738f8116b5ae178c731827e7dfab52dc826b`. Capture is synthetic and remains under ignored `build/release/`.
+- No real-scene Param4/Delta4 sequence, FSR3 pairing, image-quality metric or teacher timing has been generated.
 - The prior I8 graph timings in `RESULTS.md` remain synthetic model-only measurements and are not a full FSR4 effect baseline.

@@ -11,6 +11,8 @@ The manifest has four fields:
 - `validity`: explicit booleans for input color, depth, motion vectors, reactive mask and transparency/composition mask. The first three are required and valid. Optional masks are included only when their validity flag is true; missing masks are never silently replaced by zero.
 - `arrays`: logical array name to `{path, dtype, shape, sha256}`. The pack command accepts `file` as a source-relative name and writes the content hash and final `path` into the package manifest.
 
+Provider-generated manifests also include `metadata.physical_control_transform`. The synthetic capture tap records stable mathematical tanh/sigmoid equivalents for `(rho, sx, sy, blend)` from the raw p0..p3 values. It is capture-only and does not feed reconstruction. This distinction matters when logits exceed the FP32 exponential range: the stable controls remain finite, while a literal evaluation of the source's exponential tanh expression can overflow. Do not interpret the field as a bitwise readback of an internal provider control buffer.
+
 Float arrays use `<f2` or `<f4`; byte masks may use `|u1`. More scalar integer encodings can be added only with an explicit schema revision. Every array is contiguous and channel-last. All floating values must be finite.
 
 ## Required arrays
@@ -23,4 +25,4 @@ Float arrays use `<f2` or `<f4`; byte masks may use `|u1`. More scalar integer e
 
 `python tools/teacher/validate_teacher_capture.py capture.f4cap` checks archive paths/duplicates, schema and metadata, dtype/shape/byte-count consistency, SHA-256, CRC, required arrays, dimensions, and NaN/Inf values. It emits a JSON summary and exits nonzero on invalid input. `package_teacher_capture.py` builds the deterministic archive from a manifest and a directory of raw arrays, then runs the same validator.
 
-This package definition is a transport and audit contract. It does not substitute for the missing GPU teacher, instrumented-vs-normal RGB comparison, temporal reset tests, or aligned FSR3 data.
+The synthetic RX 5700 XT smoke currently exercises the GPU provider capture taps, instrumented-vs-normal RGB equality, repeated-reset tap determinism, package generation and validation. This package definition remains a transport and audit contract; synthetic input does not substitute for representative real-scene sequences, aligned FSR3 data, temporal stress runs, or quality measurements.

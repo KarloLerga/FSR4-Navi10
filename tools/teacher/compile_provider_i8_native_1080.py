@@ -34,6 +34,148 @@ def sha256(path: Path) -> str:
     return digest.hexdigest().upper()
 
 
+def replace_exactly_once(text: str, old: str, new: str, label: str) -> str:
+    count = text.count(old)
+    if count != 1:
+        raise RuntimeError(f"expected one {label} in pinned shader source, found {count}")
+    return text.replace(old, new, 1)
+
+
+def create_capture_shader_overlays(fsr4_root: Path, output_dir: Path) -> tuple[Path, dict[str, Path]]:
+    """Build derived capture-only include overrides without editing the pinned source tree."""
+    source_dir = fsr4_root / "include" / "gpu" / "fsr4"
+    overlay_dir = output_dir / "capture_shader_overrides"
+    overlay_dir.mkdir(parents=True, exist_ok=True)
+
+    resources_source = source_dir / "ffx_fsr4_upscale_resources.h"
+    resources_text = resources_source.read_text(encoding="utf-8-sig")
+    resources_text = replace_exactly_once(
+        resources_text,
+        "Texture2D<float>                      r_debug_visualization",
+        "Texture2D<float4>                     r_debug_visualization",
+        "debug visualization SRV declaration",
+    )
+    resources_text = replace_exactly_once(
+        resources_text,
+        "RWTexture2D<float>                    rw_debug_visualization",
+        "RWTexture2D<float4>                   rw_debug_visualization",
+        "debug visualization UAV declaration",
+    )
+
+    optimized_source = source_dir / "mlsr_optimized_includes.hlsli"
+    optimized_text = optimized_source.read_text(encoding="utf-8-sig")
+    old_debug_helpers = """void DebugWritePredictedBlendFactor(int2 iPxPos, float blendFactor)
+{
+#if FFX_DEBUG_VISUALIZE
+    rw_debug_visualization[iPxPos] = blendFactor;
+#endif
+}
+
+float DebugSamplePredictedBlendFactor(float2 fUv)
+{
+#if FFX_DEBUG_VISUALIZE
+    return r_debug_visualization.SampleLevel(g_history_sampler, fUv, 0);
+#else
+    return 0.0f;
+#endif
+}"""
+    new_debug_helpers = """void DebugWritePredictedBlendFactor(int2 iPxPos, float4 modelParameters)
+{
+#if FFX_DEBUG_VISUALIZE
+    rw_debug_visualization[iPxPos] = modelParameters;
+#endif
+}
+
+float DebugSamplePredictedBlendFactor(float2 fUv)
+{
+#if FFX_DEBUG_VISUALIZE
+    const float2 controlsUv = float2((fUv.x + 4.0f) / 5.0f, fUv.y);
+    return r_debug_visualization.SampleLevel(g_history_sampler, controlsUv, 0).w;
+#else
+    return 0.0f;
+#endif
+}"""
+    optimized_text = replace_exactly_once(
+        optimized_text, old_debug_helpers, new_debug_helpers, "debug capture helper block"
+    )
+
+    pre_source = source_dir / "pre_common.hlsli"
+    pre_text = pre_source.read_text(encoding="utf-8-sig")
+    pre_anchor = """        downscaleInputs[1].w = 0;
+    }
+
+    // Downscale"""
+    pre_capture = """        downscaleInputs[1].w = 0;
+    }
+
+#if FFX_DEBUG_VISUALIZE
+    // Capture-only taps. The debug UAV is five output-width regions wide:
+    // the current input sampled by POST, semantic channels 0..3,
+    // semantic channels 4..6, raw model parameters, then physical controls.
+    rw_debug_visualization[dtid.xy] = float4(LoadInputColor(int2(dtid.xy)), 1.0f);
+    rw_debug_visualization[uint2(dtid.x + width, dtid.y)] = float4(downscaleInputs[0]);
+    rw_debug_visualization[uint2(dtid.x + width * 2, dtid.y)] = float4(downscaleInputs[1]);
+#endif
+
+    // Downscale"""
+    pre_text = replace_exactly_once(pre_text, pre_anchor, pre_capture, "PRE semantic-channel tap location")
+
+    post_source = source_dir / "post_common.hlsli"
+    post_text = post_source.read_text(encoding="utf-8-sig")
+    post_anchor = """    const float blending_factor = (1.0 / (1.0 + exp(-filter[3])));
+
+    float3 res"""
+    post_capture = """    const float blending_factor = (1.0 / (1.0 + exp(-filter[3])));
+
+#if FFX_DEBUG_VISUALIZE
+    // Record mathematically equivalent transforms with stable exponent ranges.
+    // These capture-only values do not feed the provider's reconstruction.
+    const float exp_rho = exp(-2.0f * abs(filter[0]));
+    const float captured_rho = (filter[0] >= 0.0f ? 1.0f : -1.0f) *
+        ((1.0f - exp_rho) / (1.0f + exp_rho));
+    const float exp_sx = exp(-abs(filter[1]));
+    const float captured_sx = 2.0f * (filter[1] >= 0.0f ?
+        (1.0f / (1.0f + exp_sx)) : (exp_sx / (1.0f + exp_sx)));
+    const float exp_sy = exp(-abs(filter[2]));
+    const float captured_sy = 2.0f * (filter[2] >= 0.0f ?
+        (1.0f / (1.0f + exp_sy)) : (exp_sy / (1.0f + exp_sy)));
+    const float exp_blend = exp(-abs(filter[3]));
+    const float captured_blend = filter[3] >= 0.0f ?
+        (1.0f / (1.0f + exp_blend)) : (exp_blend / (1.0f + exp_blend));
+    rw_debug_visualization[uint2(x + width * 4, y)] =
+        float4(captured_rho, captured_sx, captured_sy, captured_blend);
+#endif
+
+    float3 res"""
+    post_text = replace_exactly_once(post_text, post_anchor, post_capture, "physical-control tap location")
+    old_parameter_capture = """        {
+            float blending_factor = (1.0f / (1.0f + exp(-model_parameters.w)));
+            blending_factor = 1.0f - blending_factor;
+            DebugWritePredictedBlendFactor(tid, blending_factor);
+        }"""
+    new_parameter_capture = """        {
+            DebugWritePredictedBlendFactor(int2(tid.x + width * 3, tid.y), model_parameters);
+        }"""
+    post_text = replace_exactly_once(
+        post_text, old_parameter_capture, new_parameter_capture, "raw model-parameter tap location"
+    )
+
+    overlays = {
+        "resources": overlay_dir / resources_source.name,
+        "optimized_includes": overlay_dir / optimized_source.name,
+        "pre_common": overlay_dir / pre_source.name,
+        "post_common": overlay_dir / post_source.name,
+    }
+    for name, content in (
+        ("resources", resources_text),
+        ("optimized_includes", optimized_text),
+        ("pre_common", pre_text),
+        ("post_common", post_text),
+    ):
+        overlays[name].write_text(content, encoding="utf-8")
+    return overlay_dir, overlays
+
+
 def run_shader_compiler(
     compiler: Path,
     output_dir: Path,
@@ -125,6 +267,7 @@ def compile_provider_set(repo_root: Path, output_dir: Path) -> dict[str, object]
             raise FileNotFoundError(f"pinned FSR4 provider source is missing: {path}")
 
     output_dir.mkdir(parents=True, exist_ok=True)
+    capture_overlay_dir, capture_overlays = create_capture_shader_overlays(fsr4_root, output_dir)
     include_dirs = (
         sdk_root / "api" / "internal" / "gpu",
         sdk_root / "api" / "internal" / "dx12",
@@ -160,8 +303,12 @@ def compile_provider_set(repo_root: Path, output_dir: Path) -> dict[str, object]
         "-DFFX_MLSR_COLORSPACE={0,1,2,3}",
         "-DFFX_MLSR_JITTERED_MOTION_VECTORS={0,1}",
         "-DFFX_MLSR_RESOLUTION={0,1,2}",
+        "-DFFX_DEBUG_VISUALIZE={0,1}",
     )
-    compile_one(f"{MODEL}_0", source_files["pre"], "main", pre_definitions, "n10pre")
+    capture_shader_includes = (capture_overlay_dir, *include_dirs)
+    compile_one(
+        f"{MODEL}_0", source_files["pre"], "main", pre_definitions, "n10pre", capture_shader_includes
+    )
 
     for pass_index in range(1, 13):
         compile_one(
@@ -191,9 +338,11 @@ def compile_provider_set(repo_root: Path, output_dir: Path) -> dict[str, object]
         "-DFFX_MLSR_COLORSPACE={0,1,2,3}",
         "-DAUTOEXPOSURE_ENABLED={0,1}",
         "-DRESOLUTION={0,1,2}",
-        "-DDEBUG_VISUALIZE={0,1}",
+        "-DFFX_DEBUG_VISUALIZE={0,1}",
     )
-    compile_one(f"{MODEL}_13", source_files["post"], "main", post_definitions, "n10post")
+    compile_one(
+        f"{MODEL}_13", source_files["post"], "main", post_definitions, "n10post", capture_shader_includes
+    )
 
     compile_one(
         "rcas",
@@ -217,7 +366,7 @@ def compile_provider_set(repo_root: Path, output_dir: Path) -> dict[str, object]
         "main",
         ("-DFFX_GPU=1", "-DFFX_HLSL=1", "-DFFX_DEBUG_VISUALIZE=1", "-DFFX_MLSR_JITTERED_MOTION_VECTORS={0,1}"),
         "n10debug",
-        (fsr4_root / "dx12", fsr4_root / "include" / "gpu" / "fsr4"),
+        (capture_overlay_dir, fsr4_root / "dx12", fsr4_root / "include" / "gpu" / "fsr4"),
     )
     compile_one(
         "ffx_watermark",
@@ -259,7 +408,7 @@ def compile_provider_set(repo_root: Path, output_dir: Path) -> dict[str, object]
         "compiler": "FidelityFX_SC.exe from pinned FidelityFX source tree",
         "flags": list(BASE_FLAGS),
         "shader_counts": {
-            "pre_permutations": 192,
+            "pre_permutations": 384,
             "model": 12,
             "padding": 13,
             "post_permutations": 48,
@@ -268,7 +417,15 @@ def compile_provider_set(repo_root: Path, output_dir: Path) -> dict[str, object]
             "debug_view_permutations": 2,
             "watermark_permutations": 1,
         },
-        "source_hashes_sha256": {name: sha256(path) for name, path in source_files.items()},
+        "source_hashes_sha256": {
+            **{name: sha256(path) for name, path in source_files.items()},
+            "pre_common": sha256(fsr4_root / "include" / "gpu" / "fsr4" / "pre_common.hlsli"),
+            "post_common": sha256(fsr4_root / "include" / "gpu" / "fsr4" / "post_common.hlsli"),
+            "mlsr_optimized_includes": sha256(fsr4_root / "include" / "gpu" / "fsr4" / "mlsr_optimized_includes.hlsli"),
+            "shader_resources": sha256(fsr4_root / "include" / "gpu" / "fsr4" / "ffx_fsr4_upscale_resources.h"),
+        },
+        "capture_overlay_hashes_sha256": {name: sha256(path) for name, path in capture_overlays.items()},
+        "capture_taps_enabled_in_debug_variant": True,
         "outputs": [
             {"file": path.name, "size_bytes": path.stat().st_size, "sha256": sha256(path)}
             for path in shader_outputs

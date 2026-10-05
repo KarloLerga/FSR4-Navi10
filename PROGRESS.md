@@ -27,8 +27,10 @@ The standalone harness lists adapters, runs a generic FP16 arithmetic probe, val
 
 - Added deterministic `.f4cap` package/validation tools and unit coverage, plus an audit of the pinned FSR4 provider pass IDs and dispatch expressions.
 - Compiled the pinned native/1080 I8 PRE/model/padding/POST shader set with FidelityFX_SC and linked AMD's D3D12 provider. The source checkout remains unmodified; the build generates the missing watermark shader, git metadata header, and PIX include shim in the ignored build tree.
-- Ran the provider on the RX 5700 XT with synthetic 1920x1080 RGBA16F color, depth and motion inputs. Two reset dispatches produced byte-identical output (SHA-256 `304bc89ba22b08e4ab12b2d27458179b6cf7af4cc7d4a35e5ccfe864edaa7813`); raw JSON is in `artifacts/results/fsr4_provider_smoke.json`. This verifies the actual provider frame graph and reset repeatability only.
-- Capturable raw controls/recurrent/model-input features, a real-scene input path, instrumented-vs-normal equivalence, valid teacher sequences, paired FSR3 data and Param4/Delta4 quality measurements remain unfinished.
+- Added capture-only shader overlays for the POST raw parameter/control taps and PRE current-source/semantic inputs. The D3D12 smoke reads recurrent state, reprojected history, and final RGB from provider resources without editing the pinned upstream checkout.
+- The overlay computes physical controls with stable mathematical tanh/sigmoid equivalents from raw parameters. Raw logits can exceed the FP32 exponential range; the derived capture tap does not feed reconstruction, and its transform is declared in manifest metadata.
+- Ran two instrumented and one ordinary provider reset dispatch on the RX 5700 XT with synthetic 1920x1080 RGBA16F color, depth and motion inputs. All outputs matched byte-for-byte at SHA-256 `304bc89ba22b08e4ab12b2d27458179b6cf7af4cc7d4a35e5ccfe864edaa7813`; repeated taps also matched. Generated and validated a 10-array, 211,507,200-byte `.f4cap` package under ignored `build/release/` output.
+- Real-scene/sequence input, representative teacher frames, aligned FSR3 data, long temporal stress, Param4/Delta4 runtime and quality measurements remain unfinished. The synthetic package is not teacher-quality evidence.
 
 ### NaviQSR addendum (2026-10-02)
 
