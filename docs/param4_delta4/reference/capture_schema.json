@@ -1,0 +1,18 @@
+{
+  "schema": "f4n10.teacher.capture.v1",
+  "description": "Logical fields required by Param4/Delta4 teacher capture. Concrete binary layout may differ.",
+  "frame_metadata": [
+    "sequence_id", "frame_index", "preset", "render_width", "render_height",
+    "output_width", "output_height", "jitter_current", "jitter_previous",
+    "exposure", "pre_exposure", "reset", "source_hash", "shader_hashes"
+  ],
+  "input_resources": [
+    "color", "depth", "motion_vectors", "reactive_mask", "transparency_composition_mask"
+  ],
+  "teacher_intermediates": [
+    "model_input_semantic_channels", "reprojected_history", "current_reconstruction_source",
+    "raw_model_parameters_p0_p3", "physical_rho_sx_sy_blend", "recurrent_r0_r3"
+  ],
+  "teacher_output": ["final_rgb"],
+  "optional": ["pass0_features", "bottleneck_features", "pass11_features", "pass12_features"]
+}

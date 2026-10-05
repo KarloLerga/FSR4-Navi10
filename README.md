@@ -39,6 +39,19 @@ Run `--benchmark-naviprism-msad4`, `--validate-naviprism-sarm`, `--validate-navi
 
 The hardware checks currently pass against deterministic synthetic inputs. They do not include an FSR4 teacher capture, image-quality/temporal evaluation, or a game-frame pipeline with SADNet/NaviQSR fallback dispatch. `msad4` lowers to a native masked-SAD instruction, but this benchmark shows near-parity with scalar integer SAD. NaviPRISM remains an experimental candidate alongside full FSR4 and NaviQSR. Results and open gates are in [`NAVIPRISM_RESULTS.md`](NAVIPRISM_RESULTS.md).
 
+## Param4 / Delta4 addendum
+
+Param4 and Delta4 are separate experimental candidates. The harness now builds AMD's pinned D3D12 provider with the native/1080 I8 shaders and can dispatch its PRE/model/POST graph on the RX 5700 XT. Run a synthetic reset smoke with:
+
+```powershell
+cmake --build build/release --target fsr4n10_harness --config Release
+build/release/fsr4n10_harness.exe --run-fsr4-provider-smoke build/release/fsr4_provider_smoke.json
+```
+
+It dispatches the provider twice with reset and checks that the output hashes match. The input is a generated gradient/checkerboard, so this verifies execution and repeatability only. It does not produce a valid real-scene teacher capture or image-quality result. Audit the pinned provider's stage IDs and dispatch expressions with `cmake --build build/release --target audit_teacher_provider_schedule`. Package and validate a capture only when its arrays come from the GPU provider and a real aligned frame sequence: `python tools/teacher/package_teacher_capture.py manifest.json arrays/ frame.f4cap`, then `python tools/teacher/validate_teacher_capture.py frame.f4cap`.
+
+The capture validator proves package structure, hashes, dimensions and finite numeric data. Capture origin and GPU identity are recorded metadata, not cryptographic proof. Internal model-parameter/recurrent taps, real-scene capture input, paired FSR3 data, Param4/Delta4 runtime paths, and image-quality measurements remain open. Neither candidate is enabled by default or claimed to match FSR4.
+
 ## Project documents
 
 - `docs/MASTER_SPEC.md` - scope and engineering requirements
@@ -46,6 +59,8 @@ The hardware checks currently pass against deterministic synthetic inputs. They 
 - `docs/naviqsr/NAVI_QSR_IMPLEMENTATION_PLAN.md` - NaviQSR subsystem requirements and acceptance gates
 - `docs/naviprism/README_NAVIPRISM_ADDENDUM.md` - NaviPRISM architecture and design requirements
 - `docs/naviprism/NAVIPRISM_ACCEPTANCE.md` - NaviPRISM runtime and evidence gates
+- `docs/param4_delta4/INTEGRATION_STATUS.md` - Param4/Delta4 implementation status and teacher gate
+- `docs/param4_delta4/CAPTURE_FORMAT.md` - deterministic teacher capture contract
 - `NAVIPRISM_RESULTS.md` - NaviPRISM measurements, limitations, and unresolved gates
 - `docs/ACCEPTANCE_CRITERIA.md` - definition of done
 - `PROGRESS.md`, `RESULTS.md` - current implementation and measurements

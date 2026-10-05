@@ -1,5 +1,6 @@
 #include "fsr4n10/device_caps.h"
 #include "fsr4n10/fp16_probe.h"
+#include "fsr4n10/gpu_teacher.h"
 #include "fsr4n10/model_pack.h"
 #include "fsr4n10/naviqsr_gpu.h"
 #include "fsr4n10/naviprism.h"
@@ -21,6 +22,7 @@ void print_usage() {
               << "  fsr4n10_harness.exe --list-adapters\n"
               << "  fsr4n10_harness.exe --run-fp16-probe\n"
               << "  fsr4n10_harness.exe --run-upstream-pass0-smoke\n"
+              << "  fsr4n10_harness.exe --run-fsr4-provider-smoke <report.json>\n"
               << "  fsr4n10_harness.exe --run-upstream-i8-zero-model-smoke\n"
               << "  fsr4n10_harness.exe --benchmark-upstream-i8-zero-model\n"
               << "  fsr4n10_harness.exe --run-upstream-i8-image-smoke <input.ppm> <output.bmp>\n"
@@ -84,6 +86,9 @@ int main(int argc, char** argv) {
         }
         if (argc == 2 && std::string_view(argv[1]) == "--run-upstream-pass0-smoke") {
             return fsr4n10::run_upstream_pass0_smoke();
+        }
+        if (argc == 3 && std::string_view(argv[1]) == "--run-fsr4-provider-smoke") {
+            return fsr4n10::run_fsr4_provider_smoke(std::filesystem::path(argv[2]));
         }
         if (argc == 2 && std::string_view(argv[1]) == "--run-upstream-i8-zero-model-smoke") {
             return fsr4n10::run_upstream_i8_zero_model_smoke();

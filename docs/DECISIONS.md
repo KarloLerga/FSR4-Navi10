@@ -82,3 +82,6 @@ Call the compact neural path the NaviQSR network and the primitive/filter path N
 
 ## D25 - Keep the phase-history reservoir disabled until A/B evidence exists
 The optional four-phase reservoir may be validated as a standalone GPU primitive, including reprojection, confidence/age decay, depth rejection, and reset behavior. Do not enable it in a frame path until persistent-history tests show a quality/performance or memory benefit against the normal HR history. The current RX 5700 XT smoke proves synthetic scalar parity only.
+
+## D26 - Keep Param4 and Delta4 as separate, teacher-gated experimental paths
+Preserve full FSR4, NaviQSR, and NaviPRISM. Param4 predicts source-derived FSR4 controls/recurrent state; Delta4 uses aligned FSR3 signals to predict a correction toward a GPU FSR4 teacher. Complete and validate the GPU teacher/capture path before training or interpreting teacher-dependent oracles. Do not claim FSR4 quality or enable either path by default without temporal final-RGB quality, stability, and RX 5700 XT performance evidence.

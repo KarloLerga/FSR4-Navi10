@@ -2,9 +2,9 @@
 
 ## 0. Purpose
 
-Build a complete DirectX 12 implementation of AMD FSR 4.0.2 targeted specifically at Radeon RX 5700 XT / Navi10 / gfx1010. Preserve the full FSR4 implementation as the correctness reference, quality teacher, and dense safety fallback. Keep the existing NaviQSR network family described in `docs/naviqsr/` and add NaviPRISM, the primitive/filter architecture described in `docs/naviprism/`, as independent candidate paths. None becomes a production candidate until its temporal quality, stability, and measured Navi10 break-even gates pass.
+Build a complete DirectX 12 implementation of AMD FSR 4.0.2 targeted specifically at Radeon RX 5700 XT / Navi10 / gfx1010. Preserve the full FSR4 implementation as the correctness reference, quality teacher, and dense safety fallback. Keep the existing NaviQSR network family described in `docs/naviqsr/`, NaviPRISM in `docs/naviprism/`, and the experimental Param4/Delta4 families in `docs/param4_delta4/` as independent candidate paths. None becomes a production candidate until its temporal quality, stability, and measured Navi10 break-even gates pass.
 
-This is not a project to create a generic AI upscaler, not a project to improve FSR3, and not a project to inject game-specific shaders. NaviQSR and NaviPRISM are project-specific paths evaluated against the full FSR4 reference and temporal ground truth; neither may be mislabeled as AMD FSR4. The goal remains the best measured image-quality/performance result on RX 5700 XT.
+This is not a project to create a generic AI upscaler, not a project to replace FSR3, and not a project to inject game-specific shaders. NaviQSR, NaviPRISM, Param4 and Delta4 are project-specific paths evaluated against the full FSR4 reference and temporal ground truth; none may be mislabeled as AMD FSR4. The goal remains the best measured image-quality/performance result on RX 5700 XT.
 
 ## 1. Required documents
 Before implementing a subsystem, read the relevant documents:
@@ -103,6 +103,10 @@ NaviPRISM is a separate candidate runtime and preserves the existing FSR4 and Na
 - `auto`: tile-coherent routing selected by measured quality and RX 5700 XT timing among NaviPRISM, NaviQSR, and full FSR4 reference modes.
 
 SARM residual motion, THFA lookup, and `msad4` speed remain hypotheses until scalar correctness, DXIL, actual Navi10 ISA, and GPU timing evidence agree.
+
+### 4.8 Param4 and Delta4 experimental families
+
+Param4 predicts FSR4 reconstruction controls and recurrent values while retaining source-derived FSR4 pre/post semantics. Delta4 reuses FSR3 temporal signals and predicts a correction toward an aligned GPU FSR4 teacher. They do not replace full FSR4, NaviQSR, or NaviPRISM and must remain separately named. Implement the GPU teacher/capture path before teacher-dependent training or oracle claims. Do not enable either path by default or claim FSR4-equivalent quality without paired temporal measurements and final-RGB comparisons on the RX 5700 XT.
 
 ## 5. Repository layout to converge toward
 

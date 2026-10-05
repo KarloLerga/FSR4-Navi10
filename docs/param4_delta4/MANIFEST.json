@@ -1,0 +1,28 @@
+{
+  "name": "FSR4-Navi10-Param4-Delta4-Addendum",
+  "baseline_repo": "https://github.com/KarloLerga/FSR4-Navi10",
+  "baseline_commit": "e739364564fd9d68242b0fdd79e51d8b81b5fcd3",
+  "purpose": "GPU teacher completion plus direct FSR4 control distillation and FSR3-front-end Delta4 research",
+  "files": [
+    "CODEX_INTEGRATE_PARAM4_DELTA4.txt",
+    "README_PARAM4_DELTA4_ADDENDUM.md",
+    "docs/ACCEPTANCE_PARAM4_DELTA4.md",
+    "docs/CONTROL_FIELD_ORACLES.md",
+    "docs/CONTROL_GRID_AND_CODEBOOK.md",
+    "docs/DELTA4_BASIS_ORACLE.md",
+    "docs/DELTA4_FSR3_FRONTEND.md",
+    "docs/FSR4_CONTROL_HEAD_DISCOVERY.md",
+    "docs/FULL_FSR4_COMPATIBILITY_NEXT.md",
+    "docs/GPU_TEACHER_CAPTURE.md",
+    "docs/IMPLEMENTATION_ORDER.md",
+    "docs/PARAM4_SHIFT_ARCHITECTURE.md",
+    "docs/REPO_AUDIT_E739364.md",
+    "docs/SOURCES_PARAM4_DELTA4.md",
+    "docs/TEMPORAL_CONTROL_REUSE.md",
+    "docs/TRAINING_AND_DISTILLATION.md",
+    "reference/capture_schema.json",
+    "reference/control_grid_oracle.py",
+    "reference/delta4_basis_oracle.py",
+    "reference/param4_shift_model.py"
+  ]
+}

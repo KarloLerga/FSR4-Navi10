@@ -1,0 +1,159 @@
+{
+  "archive": "FSR4-Navi10-Param4-Delta4-Addendum.zip",
+  "archive_sha256": "8aa8db552013130fdbe8bb1fba63d4819dfa15bfc60bb0c2a9aad86c64083987",
+  "crc_check": "passed",
+  "embedded_agent_prompt_copied": false,
+  "reference_python_copied": false,
+  "terminology_normalization": "Copied proposal notes use Param4/Delta4 project terminology. Original archive sizes and SHA-256 values remain recorded as source_bytes and source_sha256.",
+  "copied_files": [
+    {
+      "source": "FSR4-Navi10-Param4-Delta4-Addendum/MANIFEST.json",
+      "path": "docs/param4_delta4/MANIFEST.json",
+      "bytes": 1084,
+      "sha256": "31cc06b9b766a020495919059fcd7af4c1c48e2c3ace9ae3cd58b1c2ba570f4f",
+      "source_bytes": 1084,
+      "source_sha256": "31cc06b9b766a020495919059fcd7af4c1c48e2c3ace9ae3cd58b1c2ba570f4f"
+    },
+    {
+      "source": "FSR4-Navi10-Param4-Delta4-Addendum/README_PARAM4_DELTA4_ADDENDUM.md",
+      "path": "docs/param4_delta4/README_PARAM4_DELTA4_ADDENDUM.md",
+      "bytes": 2478,
+      "sha256": "217374ced6110c73afe5d842c5823389287025e1c8ec7bd54ea5125885402d65",
+      "source_bytes": 2451,
+      "source_sha256": "9880ec5e8de3017124ceefecca23e9d8e6b976e47e80abc97fdfb913785a6698",
+      "transformation": "terminology-only edit; technical content retained"
+    },
+    {
+      "source": "FSR4-Navi10-Param4-Delta4-Addendum/docs/ACCEPTANCE_PARAM4_DELTA4.md",
+      "path": "docs/param4_delta4/docs/ACCEPTANCE_PARAM4_DELTA4.md",
+      "bytes": 1918,
+      "sha256": "fd9e2ad4b308fed96f0dd8123b31ddaff9536da2ac15b81b00cf445e408ea9f5",
+      "source_bytes": 1904,
+      "source_sha256": "2fd5442b8d82b4b9c30ecdd100331389d052be7d9be9f865925f5e63573f994c",
+      "transformation": "terminology-only edit; technical content retained"
+    },
+    {
+      "source": "FSR4-Navi10-Param4-Delta4-Addendum/docs/CONTROL_FIELD_ORACLES.md",
+      "path": "docs/param4_delta4/docs/CONTROL_FIELD_ORACLES.md",
+      "bytes": 4223,
+      "sha256": "71b7ca1ee2cfa5c260716e2d293fbf60caca2c8849ce1cef0f854ed74bf77fc4",
+      "source_bytes": 4211,
+      "source_sha256": "da24f613dfc2ba05296dd2fc81bb67a17430348716414c571e4a3edc1db5fc0c",
+      "transformation": "terminology-only edit; technical content retained"
+    },
+    {
+      "source": "FSR4-Navi10-Param4-Delta4-Addendum/docs/CONTROL_GRID_AND_CODEBOOK.md",
+      "path": "docs/param4_delta4/docs/CONTROL_GRID_AND_CODEBOOK.md",
+      "bytes": 2558,
+      "sha256": "63ffa3df43682002633bf33f624ec8ed924e9f32fffc160a1a2fc15488cd7c5b",
+      "source_bytes": 2558,
+      "source_sha256": "63ffa3df43682002633bf33f624ec8ed924e9f32fffc160a1a2fc15488cd7c5b"
+    },
+    {
+      "source": "FSR4-Navi10-Param4-Delta4-Addendum/docs/DELTA4_BASIS_ORACLE.md",
+      "path": "docs/param4_delta4/docs/DELTA4_BASIS_ORACLE.md",
+      "bytes": 2377,
+      "sha256": "adcfbcfeaeef3cb69c6fbf6e5f7729944a8e2f86549c886a75c4f94c5d874c26",
+      "source_bytes": 2373,
+      "source_sha256": "bd9dd98b333b1e0a8ed21c26759d1fe621bdf0cc994fd0e5efeb57734e888a92",
+      "transformation": "terminology-only edit; technical content retained"
+    },
+    {
+      "source": "FSR4-Navi10-Param4-Delta4-Addendum/docs/DELTA4_FSR3_FRONTEND.md",
+      "path": "docs/param4_delta4/docs/DELTA4_FSR3_FRONTEND.md",
+      "bytes": 3190,
+      "sha256": "b2a72ae79faf7a8681711d0d471f4dc88b32ae42e02e0877af641031b935280f",
+      "source_bytes": 3190,
+      "source_sha256": "b2a72ae79faf7a8681711d0d471f4dc88b32ae42e02e0877af641031b935280f"
+    },
+    {
+      "source": "FSR4-Navi10-Param4-Delta4-Addendum/docs/FSR4_CONTROL_HEAD_DISCOVERY.md",
+      "path": "docs/param4_delta4/docs/FSR4_CONTROL_HEAD_DISCOVERY.md",
+      "bytes": 3536,
+      "sha256": "05850bc9ba43d8f60f3f829845f4b4299683b32b206c1086bf10e39c9c2dc616",
+      "source_bytes": 3537,
+      "source_sha256": "5ff0aa6c2057ab5350cd972fa67f217d6fc74036760ef63f9f3c34e2e214cf5c",
+      "transformation": "terminology-only edit; technical content retained"
+    },
+    {
+      "source": "FSR4-Navi10-Param4-Delta4-Addendum/docs/FULL_FSR4_COMPATIBILITY_NEXT.md",
+      "path": "docs/param4_delta4/docs/FULL_FSR4_COMPATIBILITY_NEXT.md",
+      "bytes": 1831,
+      "sha256": "1ca138956bd70c71ce6c888a2c48fa391e8bc197c1be047095665da163864bc7",
+      "source_bytes": 1825,
+      "source_sha256": "ce8833f3a6f1062c620fc5b2e8050d8b8e98f30f4e8d9a2e873d8a780b109d90",
+      "transformation": "terminology-only edit; technical content retained"
+    },
+    {
+      "source": "FSR4-Navi10-Param4-Delta4-Addendum/docs/GPU_TEACHER_CAPTURE.md",
+      "path": "docs/param4_delta4/docs/GPU_TEACHER_CAPTURE.md",
+      "bytes": 4576,
+      "sha256": "81dca26c4eb3d83658d5379ead1214d4b256efb55cc3437224d8ae87604431e9",
+      "source_bytes": 4566,
+      "source_sha256": "7b14efb291ed53643fe335acf22eff028585dd7c4e0ff235b7bce39cd3f0202c",
+      "transformation": "terminology-only edit; technical content retained"
+    },
+    {
+      "source": "FSR4-Navi10-Param4-Delta4-Addendum/docs/IMPLEMENTATION_ORDER.md",
+      "path": "docs/param4_delta4/docs/IMPLEMENTATION_ORDER.md",
+      "bytes": 2079,
+      "sha256": "56bbea275d36f6882ccca8d176e4999eee49b9c08e1b84a1aa793a1c80dbfe29",
+      "source_bytes": 2072,
+      "source_sha256": "d2b3477a4bbd944e77f81c14fa4bf25b64d88b149c3cb33b549c9bbeb0c6af7e",
+      "transformation": "terminology-only edit; technical content retained"
+    },
+    {
+      "source": "FSR4-Navi10-Param4-Delta4-Addendum/docs/PARAM4_SHIFT_ARCHITECTURE.md",
+      "path": "docs/param4_delta4/docs/PARAM4_SHIFT_ARCHITECTURE.md",
+      "bytes": 4411,
+      "sha256": "1c54bce7e9caebcab2cf38191587f91cce6f62bdafa83294c9866d1775e88f23",
+      "source_bytes": 4407,
+      "source_sha256": "a68035a03c1425dc68fe7e430f50a94563829d01451f0c31efebcbcab1bf5ea3",
+      "transformation": "terminology-only edit; technical content retained"
+    },
+    {
+      "source": "FSR4-Navi10-Param4-Delta4-Addendum/docs/REPO_AUDIT_E739364.md",
+      "path": "docs/param4_delta4/docs/REPO_AUDIT_E739364.md",
+      "bytes": 3229,
+      "sha256": "8bd19ce19deddbfe0c940010c68a3961802815a18ab6ed2e65b0d3ecb986d7d9",
+      "source_bytes": 3219,
+      "source_sha256": "b00015f3f63c5c333c477bb5a6109bd7e3c68aa160f9524d42ff95b472d9828f",
+      "transformation": "terminology-only edit; technical content retained"
+    },
+    {
+      "source": "FSR4-Navi10-Param4-Delta4-Addendum/docs/SOURCES_PARAM4_DELTA4.md",
+      "path": "docs/param4_delta4/docs/SOURCES_PARAM4_DELTA4.md",
+      "bytes": 5398,
+      "sha256": "c81210041b2c54a45e9b119a8a88cbc70ff7ab24c6a11b114053e510af7f84ab",
+      "source_bytes": 5400,
+      "source_sha256": "5922e78c86f9d1c613c23a002a502f195fea888104e576afcbad8527129c5342",
+      "transformation": "terminology-only edit; technical content retained"
+    },
+    {
+      "source": "FSR4-Navi10-Param4-Delta4-Addendum/docs/TEMPORAL_CONTROL_REUSE.md",
+      "path": "docs/param4_delta4/docs/TEMPORAL_CONTROL_REUSE.md",
+      "bytes": 1576,
+      "sha256": "17bba01096532dec73fb86310ef03be943013a041e79d4b1b287dedbd3564999",
+      "source_bytes": 1576,
+      "source_sha256": "17bba01096532dec73fb86310ef03be943013a041e79d4b1b287dedbd3564999"
+    },
+    {
+      "source": "FSR4-Navi10-Param4-Delta4-Addendum/docs/TRAINING_AND_DISTILLATION.md",
+      "path": "docs/param4_delta4/docs/TRAINING_AND_DISTILLATION.md",
+      "bytes": 2843,
+      "sha256": "12f8fac9b020e3e3239f31f0d7f146b59aa20a617b246ef54aab53d378946970",
+      "source_bytes": 2805,
+      "source_sha256": "3372b4d6769cd538e2944c1948c13c6287f603c5777d0f7fd57348c98f37c979",
+      "transformation": "terminology-only edit; technical content retained"
+    },
+    {
+      "source": "FSR4-Navi10-Param4-Delta4-Addendum/reference/capture_schema.json",
+      "path": "docs/param4_delta4/reference/capture_schema.json",
+      "bytes": 860,
+      "sha256": "26cb43cc640e14bfe799ca06ce823965e96287502015dabdf3dde6d389a90e51",
+      "source_bytes": 860,
+      "source_sha256": "26cb43cc640e14bfe799ca06ce823965e96287502015dabdf3dde6d389a90e51"
+    }
+  ],
+  "review_note": "Technical proposals only. Validate source claims against the pinned upstream and do not treat proposed acceptance criteria as completed work."
+}

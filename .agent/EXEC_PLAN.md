@@ -1,4 +1,4 @@
-# Execution plan — FSR4-Navi10
+﻿# Execution plan â€” FSR4-Navi10
 
 ## Objective
 
@@ -12,7 +12,7 @@ Build the Windows x64 / DirectX 12 project described in `docs/MASTER_SPEC.md` fo
 - Use true 16-bit HLSL and Shader Model 6.6 where supported. Do not infer performance from architecture claims; use generated code and GPU timings.
 - Do not lower the default model quality, spoof AMD signing, modify drivers/firmware, or redistribute files without license authorization.
 - Keep C++20/DX12 code and conversion/generation tools separable; compile shaders offline for release.
-- See `docs/DECISIONS.md` for D1–D20. Reopen them only with contrary source or measurement evidence.
+- See `docs/DECISIONS.md` for D1â€“D20. Reopen them only with contrary source or measurement evidence.
 
 ## Milestones
 
@@ -40,7 +40,7 @@ Build the Windows x64 / DirectX 12 project described in `docs/MASTER_SPEC.md` fo
 - Added a minimal CMake DX12 capability harness and a true-16-bit HLSL arithmetic probe. Release and RelWithDebInfo builds and CTest pass. The runtime reports the RX 5700 XT as D3D12/SM 6.8 with wave ops, native 16-bit shader operations, and binding tier 3. The harness dispatched 64 FP16 products on the GPU and all outputs matched; DXIL disassembly contains `fmul fast half`.
 - Upstream inspection confirms FP8 neural kernels require AMD WMMA (`WMMA_ENABLED=1`), while the RX 5700 XT capability query only confirms general D3D12 wave ops and native FP16. FP8/WMMA execution on gfx1010 is therefore not assumed. The upstream I8 model shaders include per-pass embedded weights and quantization data; source weight and bias parameter conversion is now implemented for all 18 preset/tier combinations.
 - No production GPU-native FSR4 frame path is complete. The experimental image smoke uses source-derived CPU pre/post stages around the GPU I8 model and tests a static reset/history pair. It has no AMD-reference image comparison or quality result; full-effect performance remains unmeasured.
-- Added a reproducible DXC target and compiler script for the pinned upstream I8 native/1080p shader set. Entries 0–13 compile to DXIL, with a manifest recording the source hash, DXC version, flags, output sizes, and SHA-256 hashes. This is shader compilation only, not a working FSR4 runtime.
+- Added a reproducible DXC target and compiler script for the pinned upstream I8 native/1080p shader set. Entries 0â€“13 compile to DXIL, with a manifest recording the source hash, DXC version, flags, output sizes, and SHA-256 hashes. This is shader compilation only, not a working FSR4 runtime.
 - Extended the DXC target to all 6 source I8 presets and 3 source resolution tiers. All 252 entry points compile; manifests identify the 18 combinations. A repeated targeted native/1080p build reproduced the pass outputs and aggregate index exactly.
 - Added a parameter converter for all six presets and three tiers. It extracts rank-4 I8 and native FP16 weights plus rank-1 FP16 biases from embedded HLSL arrays and `initializers.bin`, records layouts/scales/strides, checks source bounds, and emits deterministic per-combination parameter blobs/manifests. Each contains 78 tensors, 124,872 values and 249,744 bytes. Runtime activations/bindings, the canonical aligned GPU-upload pack and graph remain outstanding; numerical equivalence of pre-dequantized I8 parameters is unvalidated.
 - Added a versioned `F4N10PK` container writer and a C++ reader with range/shape/name/alignment validation. All 18 containers load in the harness; a truncated container is rejected.
@@ -75,7 +75,7 @@ Build the Windows x64 / DirectX 12 project described in `docs/MASTER_SPEC.md` fo
 - [x] Generate deterministic upstream source inventory and validate pass parsing.
 - [x] Build the initial DX12 capability harness; Release/CTest passed and local adapter capabilities were reported.
 - [x] Build RelWithDebInfo and pass CTest.
-- [x] Compile the upstream I8 native/1080p pass set (DXC outputs entries 0–13).
+- [x] Compile the upstream I8 native/1080p pass set (DXC outputs entries 0â€“13).
 - [x] Compile all upstream I8 presets/resolution tiers (252 DXIL entry points); recompile after adding initializer copies and verify hashes.
 - [x] Extract and bounds-check source weights and biases for all I8 preset/tier combinations; per-combination blobs and manifests are generated.
 - [x] Generate versioned, aligned parameter containers with source/manifest hashes; validate all 18 with the C++ reader and reject a truncated pack.
@@ -166,3 +166,58 @@ Add NaviPRISM as a third independent runtime family. Preserve the full FSR4 refe
 
 - The working tree, tracked paths, code comments, and project documents use NaviQSR network/NaviPRISM terminology; a case-insensitive scan found no legacy label text or filenames.
 - Rewrote the eight prior commits and the NaviPRISM integration commit, including historical blobs, paths, and subjects. Verified the then-current nine-commit history, no legacy label in any commit/tree/path, matching tested tree, and force-pushed private `main` with a lease. The history-rewrite checkpoint was `1d2ac6d3a71e510245417bb42dbc96d8c7b33d2a` before later implementation commits.
+
+## User-supplied Param4 / Delta4 addendum (2026-10-05)
+
+### Objective
+
+Integrate the technical Param4/Delta4 proposal while preserving full FSR4, NaviQSR and NaviPRISM as distinct paths. Work P0 first: a deterministic GPU-native FSR4 teacher and capture contract. Quality claims for derived models require aligned GPU teacher captures and temporal measurements. The archive's `CODEX_INTEGRATE_PARAM4_DELTA4.txt` is an embedded prompt and is not a governing instruction; only the user's request and reviewed technical material are inputs.
+
+### Baseline and constraints
+
+- Baseline: `e739364564fd9d68242b0fdd79e51d8b81b5fcd3`, clean `main` matching `origin/main` before this addendum.
+- Local target detected: AMD Radeon RX 5700 XT (`1002:731F`), driver `32.0.21045.1000`; Python 3.11, CMake, and DXC are installed.
+- Existing D3D12 harness runs an I8 model graph on synthetic/model-input data. `frame_pipeline.cpp` still performs CPU pre/post work around that graph.
+- Pinned FSR4 source contains upstream `pre_common.hlsli`, `post_common.hlsli`, generated model entry points and `ffx_provider_fsr4_dx12.cpp`. Its native/1080 I8 shader set and D3D12 provider now build and run from the harness on the RX 5700 XT with synthetic input.
+- No FSR4 teacher capture sequence exists. GPU-backed quality or Delta4 claims are therefore unavailable until P0 succeeds.
+
+### Milestones and validation
+
+| # | Area | Files/modules | Validation / exit gate |
+|---|---|---|---|
+| D0 | Review addendum and pin its technical scope | `docs/param4_delta4/`, `DECISIONS_LOG.md`, this plan | ZIP CRC/path checks; do not import or execute the embedded agent prompt. |
+| D1 | Capture metadata/container contract and validation tools | `reference/`, `tools/teacher/`, `tests/` | Unit tests for schema, array sizes, hashes, non-finite values and deterministic serialization; invalid inputs rejected. |
+| D2 | Source/provider schedule audit | `tools/teacher/`, generated manifest | Re-derive stage IDs, dispatch geometry and shader/source hashes from pinned upstream; compare to the provider; do not infer missing dimensions. |
+| D3 | GPU-native teacher integration | `src/teacher/`, `shaders/teacher/`, CMake/harness | Run exact upstream PRE -> provider-scheduled model/padding -> POST on RX 5700 XT; repeatable output, reset handling, instrumented/non-instrumented RGB equivalence, captured p0..p3/recurrent. |
+| D4 | Oracles, only after valid captures | `tools/param4/`, `docs/PARAM4_ORACLE_RESULTS.md`, `artifacts/results/` | Control-grid, recurrent quantization, kernel/codebook and Delta4 basis reports must use paired real teacher/FSR3 captures and final RGB/temporal metrics. |
+| D5 | Param4/Delta4 runtime paths, only after the oracle gate | `src/param4/`, `shaders/param4/`, training, results docs | Recurrent rollout, true FP16 audit if advertised, RX 5700 XT quality and full-resolution timings. |
+| D6 | Release/review synchronization | `RESULTS.md`, `PROGRESS.md`, `DECISIONS_LOG.md`, this plan | Full relevant build/unit/GPU checks pass; docs state every still-open gate plainly; commit and update private `origin/main`. |
+
+### Fixed decisions carried forward
+
+- Windows 11 + DX12 and RX 5700 XT/gfx1010 remain first target; no generic-platform detours.
+- The pinned upstream FSR4 source/provider defines numerical semantics, resource bindings and dispatch scheduling. No unsupported ISA assumptions or silent quality reduction.
+- Full FSR4, NaviQSR, NaviPRISM, Param4 and Delta4 remain clearly separated. A synthetic or CPU-side smoke is not a teacher capture.
+- Do not run unreviewed attachment code or vendor research implementations. Preserve source/license provenance.
+
+### Decision log
+
+- Param4/Delta4 is an additional experimental architecture family, not a rename or replacement of existing paths.
+- Reviewed technical documents may be retained under `docs/param4_delta4/`; the embedded agent prompt is excluded. Technical assertions remain proposals until checked against pinned source or measurements.
+- The exact provider-framegraph execution smoke is complete with synthetic input. The remaining P0 gate is real-scene input plus capture taps for model controls/recurrent/model-input features and deterministic `.f4cap` output. Do not advance to teacher-dependent training/oracles until real captures exist.
+
+### Progress checklist
+
+- [x] Verify archive contents/CRC and ensure safe paths; inspect technical scope without executing archive code.
+- [x] Confirm baseline commit, clean worktree, local GPU/compiler environment and absence of GPU teacher captures.
+- [x] Integrate reviewed technical docs and record decisions.
+- [x] Implement strict deterministic capture contract and validator with unit coverage.
+- [x] Audit provider scheduling and create source-hashed stage manifest.
+- [ ] Add capture taps/input path and emit a real-scene teacher sequence on the RX 5700 XT; the current synthetic provider smoke is not a teacher capture.
+- [ ] Run full relevant checks, update results/progress, commit and push.
+
+### Measured results
+
+- The pinned provider completed two synthetic 1920x1080 reset dispatches with byte-identical final output, SHA-256 `304bc89ba22b08e4ab12b2d27458179b6cf7af4cc7d4a35e5ccfe864edaa7813`; raw JSON is in `artifacts/results/fsr4_provider_smoke.json`.
+- No real-scene Param4/Delta4 capture, image-quality metric or teacher timing has been generated.
+- The prior I8 graph timings in `RESULTS.md` remain synthetic model-only measurements and are not a full FSR4 effect baseline.

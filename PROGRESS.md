@@ -23,6 +23,13 @@
 
 The standalone harness lists adapters, runs a generic FP16 arithmetic probe, validates model containers and dispatches the upstream I8 graph on synthetic model-input features. The experimental I8 image smoke has CPU-side preprocessing/postprocessing and is not a complete FSR4 path. Full FSR4 frame preprocessing, temporal history, FP16 neural execution, quality validation, the FFX API adapter and stability testing remain open. GPU timings cover synthetic I8 execution and tiny NaviQSR network, AKR, and joined-graph microbenchmarks, not full-effect performance.
 
+### Param4 / Delta4 addendum (2026-10-05)
+
+- Added deterministic `.f4cap` package/validation tools and unit coverage, plus an audit of the pinned FSR4 provider pass IDs and dispatch expressions.
+- Compiled the pinned native/1080 I8 PRE/model/padding/POST shader set with FidelityFX_SC and linked AMD's D3D12 provider. The source checkout remains unmodified; the build generates the missing watermark shader, git metadata header, and PIX include shim in the ignored build tree.
+- Ran the provider on the RX 5700 XT with synthetic 1920x1080 RGBA16F color, depth and motion inputs. Two reset dispatches produced byte-identical output (SHA-256 `304bc89ba22b08e4ab12b2d27458179b6cf7af4cc7d4a35e5ccfe864edaa7813`); raw JSON is in `artifacts/results/fsr4_provider_smoke.json`. This verifies the actual provider frame graph and reset repeatability only.
+- Capturable raw controls/recurrent/model-input features, a real-scene input path, instrumented-vs-normal equivalence, valid teacher sequences, paired FSR3 data and Param4/Delta4 quality measurements remain unfinished.
+
 ### NaviQSR addendum (2026-10-02)
 
 - Inspected the user-supplied ZIP with path checks and CRC validation; read all five research/architecture/plan/source documents and kept the embedded Codex prompt separate from governing project instructions.

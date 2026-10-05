@@ -1,0 +1,17 @@
+{
+  "schema": "f4n10.fsr4-provider-smoke.v1",
+  "capture_eligible": false,
+  "input_kind": "synthetic_gradient_checkerboard",
+  "provider": "pinned_amd_fsr4_i8_native_1080",
+  "upstream_commit": "01446e6a74888bf349652fcf2cbf5f642d30c2bf",
+  "adapter": "AMD Radeon RX 5700 XT",
+  "pci_id": "1002:731F",
+  "render_size": [1920, 1080],
+  "output_size": [1920, 1080],
+  "format": "R16G16B16A16_FLOAT",
+  "reset_dispatches": 2,
+  "output_sha256_first": "304bc89ba22b08e4ab12b2d27458179b6cf7af4cc7d4a35e5ccfe864edaa7813",
+  "output_sha256_second": "304bc89ba22b08e4ab12b2d27458179b6cf7af4cc7d4a35e5ccfe864edaa7813",
+  "finite_output": true,
+  "identical_after_reset": true
+}

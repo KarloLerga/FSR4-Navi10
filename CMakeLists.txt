@@ -313,6 +313,116 @@ add_custom_target(generate_i8_pass_contracts
     VERBATIM
 )
 
+add_custom_target(audit_teacher_provider_schedule
+    COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/teacher/audit_provider_schedule.py"
+            --repo-root "${CMAKE_CURRENT_SOURCE_DIR}"
+            --preset native
+            --tier 1080
+            --output "${CMAKE_CURRENT_BINARY_DIR}/teacher/provider_schedule_i8_native_1080.json"
+    DEPENDS
+        "${CMAKE_CURRENT_SOURCE_DIR}/tools/teacher/audit_provider_schedule.py"
+        "${CMAKE_CURRENT_SOURCE_DIR}/third_party/LOCK.json"
+    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+    COMMENT "Auditing pinned FSR4 PRE/model/padding/POST provider scheduling"
+    VERBATIM
+)
+
+add_custom_target(compile_provider_i8_native_1080
+    COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/teacher/compile_provider_i8_native_1080.py"
+            --repo-root "${CMAKE_CURRENT_SOURCE_DIR}"
+            --output "${CMAKE_CURRENT_BINARY_DIR}/teacher/provider_i8_native_1080"
+    BYPRODUCTS "${CMAKE_CURRENT_BINARY_DIR}/teacher/provider_i8_native_1080/manifest.json"
+    DEPENDS
+        "${CMAKE_CURRENT_SOURCE_DIR}/tools/teacher/compile_provider_i8_native_1080.py"
+        "${CMAKE_CURRENT_SOURCE_DIR}/third_party/LOCK.json"
+    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+    COMMENT "Compiling pinned FSR4 I8 native/1080 provider PRE/model/padding/POST shader blobs"
+    VERBATIM
+)
+
+set(FSR4N10_PROVIDER_SHADER_DIR "${CMAKE_CURRENT_BINARY_DIR}/teacher/provider_i8_native_1080")
+set(FSR4N10_PROVIDER_INITIALIZER_CPP "${FSR4N10_PROVIDER_SHADER_DIR}/fsr4_model_v07_i8_native.cpp")
+set_source_files_properties("${FSR4N10_PROVIDER_INITIALIZER_CPP}" PROPERTIES GENERATED TRUE)
+set(FSR4N10_FIDELITYFX_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/third_party/fidelityfx-fsr4-source/Kits/FidelityFX")
+file(READ "${CMAKE_CURRENT_SOURCE_DIR}/third_party/LOCK.json" FSR4N10_THIRD_PARTY_LOCK)
+string(JSON FSR4N10_FSR4_SOURCE_COMMIT GET "${FSR4N10_THIRD_PARTY_LOCK}" fsr4Source actualCommit)
+set(FSR4N10_FIDELITYFX_COMPAT_DIR "${CMAKE_CURRENT_BINARY_DIR}/teacher/fidelityfx_build_compat")
+set(FSR4N10_FIDELITYFX_PROVIDER_OVERLAY "${CMAKE_CURRENT_BINARY_DIR}/teacher/fidelityfx_provider_overlay")
+file(MAKE_DIRECTORY
+    "${FSR4N10_FIDELITYFX_PROVIDER_OVERLAY}/Kits/FidelityFX/upscalers/fsr4/dx12"
+    "${FSR4N10_FIDELITYFX_PROVIDER_OVERLAY}/Kits/FidelityFX/api/internal")
+configure_file(
+    "${FSR4N10_FIDELITYFX_ROOT}/upscalers/fsr4/dx12/ffx_provider_fsr4_dx12.cpp"
+    "${FSR4N10_FIDELITYFX_PROVIDER_OVERLAY}/Kits/FidelityFX/upscalers/fsr4/dx12/ffx_provider_fsr4_dx12.cpp"
+    COPYONLY)
+configure_file(
+    "${FSR4N10_FIDELITYFX_ROOT}/api/internal/ffx_watermark.h"
+    "${FSR4N10_FIDELITYFX_PROVIDER_OVERLAY}/Kits/FidelityFX/api/internal/ffx_watermark.h"
+    COPYONLY)
+file(WRITE "${FSR4N10_FIDELITYFX_COMPAT_DIR}/pix3.h"
+    "/* Build-only include shim. The pinned backend declares its two PIX function pointer types locally and loads them dynamically; no PIX header declarations are used. */\n")
+file(WRITE "${FSR4N10_FIDELITYFX_PROVIDER_OVERLAY}/Kits/FidelityFX/api/internal/git_hash_branch.h"
+    "#pragma once\n#define GIT_HASH \"${FSR4N10_FSR4_SOURCE_COMMIT}\"\n#define GIT_COMMIT_SUBJECT \"FSR4 Navi10 pinned provider source\"\n")
+add_library(fsr4n10_fsr4_teacher_provider STATIC
+    src/teacher/provider_i8_native_1080_shader_selector.cpp
+    src/teacher/provider_query_compat.cpp
+    "${FSR4N10_FIDELITYFX_ROOT}/api/internal/dx12/amd_extensions.cpp"
+    "${FSR4N10_FIDELITYFX_ROOT}/api/internal/ffx_assert.cpp"
+    "${FSR4N10_FIDELITYFX_ROOT}/api/internal/ffx_message.cpp"
+    "${FSR4N10_FIDELITYFX_ROOT}/api/internal/ffx_object_management.cpp"
+    "${FSR4N10_FIDELITYFX_ROOT}/api/internal/ffx_watermark.cpp"
+    "${FSR4N10_FIDELITYFX_ROOT}/backend/dx12/ffx_backends_dx12.cpp"
+    "${FSR4N10_FIDELITYFX_ROOT}/backend/dx12/ffx_dx12.cpp"
+    "${FSR4N10_FIDELITYFX_PROVIDER_OVERLAY}/Kits/FidelityFX/upscalers/fsr4/dx12/ffx_provider_fsr4_dx12.cpp"
+    "${FSR4N10_PROVIDER_INITIALIZER_CPP}"
+)
+add_dependencies(fsr4n10_fsr4_teacher_provider compile_provider_i8_native_1080)
+target_include_directories(fsr4n10_fsr4_teacher_provider PRIVATE
+    "${FSR4N10_FIDELITYFX_COMPAT_DIR}"
+    "${FSR4N10_PROVIDER_SHADER_DIR}"
+    "${FSR4N10_FIDELITYFX_ROOT}/api/include"
+    "${FSR4N10_FIDELITYFX_ROOT}/api/include/dx12"
+    "${FSR4N10_FIDELITYFX_ROOT}/api/internal"
+    "${FSR4N10_FIDELITYFX_ROOT}/api/internal/dx12"
+    "${FSR4N10_FIDELITYFX_ROOT}/api/internal/gpu"
+    "${FSR4N10_FIDELITYFX_ROOT}/backend/dx12"
+    "${FSR4N10_FIDELITYFX_ROOT}/upscalers/include"
+    "${FSR4N10_FIDELITYFX_ROOT}/upscalers/fsr3/include"
+    "${FSR4N10_FIDELITYFX_ROOT}/upscalers/fsr4/include"
+    "${FSR4N10_FIDELITYFX_ROOT}/upscalers/fsr4/include/gpu"
+    "${FSR4N10_FIDELITYFX_ROOT}/upscalers/fsr4/include/gpu/fsr4"
+    "${FSR4N10_FIDELITYFX_ROOT}/upscalers/fsr4/internal"
+    "${FSR4N10_FIDELITYFX_ROOT}/upscalers/fsr4/dx12"
+)
+target_compile_definitions(fsr4n10_fsr4_teacher_provider PRIVATE
+    FFX_BACKEND_DX12
+    FFX_UPSCALER
+    FSR4_ENABLE_DOT4=1
+    NOMINMAX
+)
+target_link_libraries(fsr4n10_fsr4_teacher_provider PUBLIC d3d12 dxgi dxguid bcrypt user32)
+
+add_library(fsr4n10_teacher_runtime STATIC src/teacher/gpu_teacher.cpp)
+target_include_directories(fsr4n10_teacher_runtime PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}/include"
+    "${FSR4N10_FIDELITYFX_ROOT}/api/include"
+    "${FSR4N10_FIDELITYFX_ROOT}/api/include/dx12"
+    "${FSR4N10_FIDELITYFX_ROOT}/api/internal"
+    "${FSR4N10_FIDELITYFX_ROOT}/api/internal/dx12"
+    "${FSR4N10_FIDELITYFX_ROOT}/backend/dx12"
+    "${FSR4N10_FIDELITYFX_ROOT}/upscalers/include"
+    "${FSR4N10_FIDELITYFX_ROOT}/upscalers/fsr3/include"
+    "${FSR4N10_FIDELITYFX_ROOT}/upscalers/fsr4/include"
+)
+target_compile_definitions(fsr4n10_teacher_runtime PRIVATE
+    FFX_BACKEND_DX12
+    FFX_UPSCALER
+    NOMINMAX
+    "FSR4N10_FSR4_SOURCE_COMMIT=\"${FSR4N10_FSR4_SOURCE_COMMIT}\"")
+target_link_libraries(fsr4n10_teacher_runtime PUBLIC fsr4n10_fsr4_teacher_provider PRIVATE bcrypt d3d12 dxgi)
+fsr4n10_enable_warnings(fsr4n10_teacher_runtime)
+target_link_libraries(fsr4n10_harness PRIVATE fsr4n10_teacher_runtime)
+
 add_custom_target(compile_reference_i8_native_1080
     COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/shaders/compile_reference_passes.py"
             --fsr4-root "${CMAKE_CURRENT_SOURCE_DIR}/third_party/fidelityfx-fsr4-source/Kits/FidelityFX/upscalers/fsr4"

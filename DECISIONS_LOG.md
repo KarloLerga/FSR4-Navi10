@@ -13,3 +13,4 @@
 | 2026-10-04 | Add NaviPRISM as an independent filter/SAD reconstruction family and preserve FSR4 plus NaviQSR. | The supplied addendum defines separate `naviprism_filter`, `naviprism_sadnet`, `naviprism_phase`, and measured `auto` paths. |
 | 2026-10-04 | Use NaviQSR network and NaviPRISM naming throughout project artifacts and history. | The user explicitly requested the terminology change in source, comments, and commit history. |
 | 2026-10-04 | Keep PHR disabled despite adding a standalone GPU path. | Synthetic reprojection/reset parity is validated, but no temporal quality A/B or persistent frame-graph result exists. |
+| 2026-10-05 | Add Param4 and Delta4 as distinct experimental paths and keep the GPU FSR4 teacher as their prerequisite. | User-supplied technical addendum; there are no teacher captures yet, so training/oracle quality claims are not valid. The embedded agent prompt and reference programs were excluded from integration. |
