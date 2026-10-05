@@ -1,0 +1,185 @@
+{
+  "captures": [
+    {
+      "capture": "build\\release\\fsr4-delta-captures\\frame_0.f4cap",
+      "exact_half_match_fraction": 1.0,
+      "exposure_value": 1.0,
+      "frame_index": 0,
+      "jitter_current": [
+        0.0,
+        -0.1666666716337204
+      ],
+      "max_absolute_error": 0.0,
+      "mean_absolute_error": 0.0,
+      "nonfinite_replayed_model_pixels": 2073600,
+      "numerically_valid": false,
+      "output_size": [
+        1920,
+        1080
+      ],
+      "passed": false,
+      "profile": "pinned_fsr4_post_common_linear_rcas_off",
+      "provider_source_commit": "01446e6a74888bf349652fcf2cbf5f642d30c2bf",
+      "raw_exp_formula": true,
+      "raw_parameter_max_by_channel": [
+        189.625,
+        267.5,
+        242.0,
+        237.375
+      ],
+      "raw_parameter_min_by_channel": [
+        187.5,
+        199.0,
+        181.625,
+        201.125
+      ],
+      "reference_finite": true,
+      "reference_zero_fraction": 1.0,
+      "render_size": [
+        1920,
+        1080
+      ],
+      "replay_finite": true,
+      "replay_zero_fraction": 1.0,
+      "rgb_within_tolerance": true,
+      "rms_error": 0.0,
+      "scale": [
+        1.0,
+        1.0
+      ],
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "sequence_id": "procedural-mixed-17",
+      "shader_hashes": {
+        "provider_shader_manifest": "07615c0b1c680590fce06856f972b42463de65b15e3ceec4542eaddfbea5ca45"
+      },
+      "within_1e_3_fraction": 1.0
+    },
+    {
+      "capture": "build\\release\\fsr4-delta-captures\\frame_4.f4cap",
+      "exact_half_match_fraction": 1.0,
+      "exposure_value": 1.25,
+      "frame_index": 4,
+      "jitter_current": [
+        0.125,
+        0.2777777910232544
+      ],
+      "max_absolute_error": 0.0,
+      "mean_absolute_error": 0.0,
+      "nonfinite_replayed_model_pixels": 2073600,
+      "numerically_valid": false,
+      "output_size": [
+        1920,
+        1080
+      ],
+      "passed": false,
+      "profile": "pinned_fsr4_post_common_linear_rcas_off",
+      "provider_source_commit": "01446e6a74888bf349652fcf2cbf5f642d30c2bf",
+      "raw_exp_formula": true,
+      "raw_parameter_max_by_channel": [
+        189.625,
+        267.5,
+        242.0,
+        237.375
+      ],
+      "raw_parameter_min_by_channel": [
+        187.5,
+        199.0,
+        181.625,
+        201.125
+      ],
+      "reference_finite": true,
+      "reference_zero_fraction": 1.0,
+      "render_size": [
+        1920,
+        1080
+      ],
+      "replay_finite": true,
+      "replay_zero_fraction": 1.0,
+      "rgb_within_tolerance": true,
+      "rms_error": 0.0,
+      "scale": [
+        1.0,
+        1.0
+      ],
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "sequence_id": "procedural-mixed-17",
+      "shader_hashes": {
+        "provider_shader_manifest": "07615c0b1c680590fce06856f972b42463de65b15e3ceec4542eaddfbea5ca45"
+      },
+      "within_1e_3_fraction": 1.0
+    },
+    {
+      "capture": "build\\release\\fsr4-delta-captures\\frame_7.f4cap",
+      "exact_half_match_fraction": 0.9999741190843622,
+      "exposure_value": 1.0,
+      "frame_index": 7,
+      "jitter_current": [
+        -0.4375,
+        0.3888888955116272
+      ],
+      "max_absolute_error": 0.00048828125,
+      "mean_absolute_error": 6.642361327635626e-09,
+      "nonfinite_replayed_model_pixels": 2073528,
+      "numerically_valid": false,
+      "output_size": [
+        1920,
+        1080
+      ],
+      "passed": false,
+      "profile": "pinned_fsr4_post_common_linear_rcas_off",
+      "provider_source_commit": "01446e6a74888bf349652fcf2cbf5f642d30c2bf",
+      "raw_exp_formula": true,
+      "raw_parameter_max_by_channel": [
+        189.625,
+        267.5,
+        242.0,
+        237.375
+      ],
+      "raw_parameter_min_by_channel": [
+        -54.625,
+        -77.75,
+        -69.9375,
+        -69.5625
+      ],
+      "reference_finite": true,
+      "reference_zero_fraction": 0.9999652777777778,
+      "render_size": [
+        1920,
+        1080
+      ],
+      "replay_finite": true,
+      "replay_zero_fraction": 0.9999652777777778,
+      "rgb_within_tolerance": true,
+      "rms_error": 1.5777818589413073e-06,
+      "scale": [
+        1.0,
+        1.0
+      ],
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "sequence_id": "procedural-mixed-17",
+      "shader_hashes": {
+        "provider_shader_manifest": "07615c0b1c680590fce06856f972b42463de65b15e3ceec4542eaddfbea5ca45"
+      },
+      "within_1e_3_fraction": 1.0
+    }
+  ],
+  "configuration_assumptions": {
+    "auto_exposure_enabled": false,
+    "color_space": "linear",
+    "exposure_value": "input exposure texture / preExposure; zero input exposure maps to 1",
+    "rcas_enabled": false
+  },
+  "schema": "f4n10.fsr4-post-replay-oracle.v1",
+  "source": "pinned FSR4 post_common.hlsli::apply_model_filter; literal float32 equations",
+  "source_file": "third_party/fidelityfx-fsr4-source/Kits/FidelityFX/upscalers/fsr4/include/gpu/fsr4/post_common.hlsli",
+  "source_file_sha256": "6840d62c269ed240c4c48bf98167e4a5d36a3305b666ffbd90cbd643f76f4dba",
+  "validation": {
+    "all_captures_passed": false,
+    "all_intermediates_numerically_valid": false,
+    "capture_packages_validated": true,
+    "capture_set_consistent": true,
+    "per_channel_absolute_tolerance": 0.001,
+    "post_rgb_replay_matches": true,
+    "quality_claimed": false
+  }
+}

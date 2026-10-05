@@ -1,0 +1,139 @@
+{
+  "build_commit": "41f903fdbd174a0742f9b67f3ab23f95f20804b6",
+  "build_mode": "Release",
+  "dispatch": {
+    "camera_far": 1000.0,
+    "camera_fov_vertical_radians": 1.0,
+    "camera_near": 0.1,
+    "depth_inverted": false,
+    "hdr_linear_color": true,
+    "jitter_cancellation": false,
+    "sharpening": false,
+    "view_space_to_meters_factor": 1.0,
+    "watermark_injection_enabled": false
+  },
+  "driver_version": "0x00200000523503e8",
+  "frames": [
+    {
+      "camera_cut": false,
+      "capture_manifest": "build/release/fsr3-delta-captures/frame_0/manifest.json",
+      "frame_index": 0,
+      "input_frame_sha256": "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+      "instrumented_output_sha256": "056d091feb7f77b960e2e198a3a258057dafbe32e602d3cb977161e8654f49b6",
+      "instrumented_reference_match": true,
+      "reference_gpu_dispatch_us": 2188.32,
+      "reference_output_sha256": "056d091feb7f77b960e2e198a3a258057dafbe32e602d3cb977161e8654f49b6",
+      "reset": true
+    },
+    {
+      "camera_cut": false,
+      "frame_index": 1,
+      "input_frame_sha256": "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+      "instrumented_output_sha256": "73e1e0ca81562943e3f38e4e4a9b44bb8b86cf189ca23b49ee85164db8483190",
+      "instrumented_reference_match": true,
+      "reference_gpu_dispatch_us": 2513.24,
+      "reference_output_sha256": "73e1e0ca81562943e3f38e4e4a9b44bb8b86cf189ca23b49ee85164db8483190",
+      "reset": false
+    },
+    {
+      "camera_cut": false,
+      "frame_index": 2,
+      "input_frame_sha256": "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+      "instrumented_output_sha256": "56261f3334ce18c274d8a4183d86af65becfcfadd7d07252f2223b89e1e0ac5f",
+      "instrumented_reference_match": true,
+      "reference_gpu_dispatch_us": 2510.04,
+      "reference_output_sha256": "56261f3334ce18c274d8a4183d86af65becfcfadd7d07252f2223b89e1e0ac5f",
+      "reset": false
+    },
+    {
+      "camera_cut": false,
+      "frame_index": 3,
+      "input_frame_sha256": "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+      "instrumented_output_sha256": "53ed6d74a1c0445febea4d974f1ccffd98f5a7f5bf1a282c63aa0f7c74a6f614",
+      "instrumented_reference_match": true,
+      "reference_gpu_dispatch_us": 2593.2,
+      "reference_output_sha256": "53ed6d74a1c0445febea4d974f1ccffd98f5a7f5bf1a282c63aa0f7c74a6f614",
+      "reset": false
+    },
+    {
+      "camera_cut": true,
+      "capture_manifest": "build/release/fsr3-delta-captures/frame_4/manifest.json",
+      "frame_index": 4,
+      "input_frame_sha256": "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+      "instrumented_output_sha256": "5774ac52d4bae9d6ae7bca47708df1ba35710057fbb274819f11f00f2548026d",
+      "instrumented_reference_match": true,
+      "reference_gpu_dispatch_us": 2406.28,
+      "reference_output_sha256": "5774ac52d4bae9d6ae7bca47708df1ba35710057fbb274819f11f00f2548026d",
+      "reset": true
+    },
+    {
+      "camera_cut": false,
+      "frame_index": 5,
+      "input_frame_sha256": "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+      "instrumented_output_sha256": "d3f2017bf6622fd42751033f3335abbd23fa9af0f865a9dd94e2dee73deb3435",
+      "instrumented_reference_match": true,
+      "reference_gpu_dispatch_us": 2434.76,
+      "reference_output_sha256": "d3f2017bf6622fd42751033f3335abbd23fa9af0f865a9dd94e2dee73deb3435",
+      "reset": false
+    },
+    {
+      "camera_cut": false,
+      "frame_index": 6,
+      "input_frame_sha256": "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+      "instrumented_output_sha256": "29e0198b3a59e822143d8cdc8509961a675b5c4e9a74a0eaff5763960dc27b11",
+      "instrumented_reference_match": true,
+      "reference_gpu_dispatch_us": 2546.2,
+      "reference_output_sha256": "29e0198b3a59e822143d8cdc8509961a675b5c4e9a74a0eaff5763960dc27b11",
+      "reset": false
+    },
+    {
+      "camera_cut": false,
+      "capture_manifest": "build/release/fsr3-delta-captures/frame_7/manifest.json",
+      "frame_index": 7,
+      "input_frame_sha256": "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3",
+      "instrumented_output_sha256": "e9377afbce33e1ee2d6c8f55e2db78e335f8c36f15b060cb39ac7f7d84789688",
+      "instrumented_reference_match": true,
+      "reference_gpu_dispatch_us": 2617.16,
+      "reference_output_sha256": "e9377afbce33e1ee2d6c8f55e2db78e335f8c36f15b060cb39ac7f7d84789688",
+      "reset": false
+    }
+  ],
+  "gpu_name": "AMD Radeon RX 5700 XT",
+  "gpu_timing": {
+    "all_frames_mean_us": 2476.15,
+    "scope": "provider GPU work only; excludes input upload, output readback, CPU and packaging",
+    "source": "D3D12 timestamp queries around non-instrumented FSR3 provider Dispatch",
+    "steady_state_excludes_first_reset_and_cuts": true,
+    "steady_state_frame_count": 6,
+    "steady_state_mean_us": 2535.77,
+    "steady_state_p50_us": 2513.24,
+    "steady_state_p95_us": 2617.16,
+    "timestamp_frequency_hz": 100000000
+  },
+  "provider": "FidelityFX FSR3 Upscaler 3.1.5",
+  "schema": "f4n10.fsr3-reference-sequence.v1",
+  "sdk_commit": "60f4ea81909200d8542eca14dccb2628b763a9a3",
+  "sequence": {
+    "frame_count": 8,
+    "id": "procedural-mixed-17",
+    "motion_vector_convention": "current_to_previous_render_pixels_unjittered",
+    "output_size": [
+      1920,
+      1080
+    ],
+    "render_size": [
+      1920,
+      1080
+    ],
+    "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+    "source_hash": "03334c32d18f4e3878a44b92a4194da88ac4f5c19392db1ae650430363a7bf0b",
+    "source_kind": "procedural_synthetic"
+  },
+  "shader_manifest": "build/release/fsr3_reference/manifest.json",
+  "shader_manifest_sha256": "2f426f0a0591bff2da0e4280d5d8b2e0f716cc78624734b69016171d1e832794",
+  "validation": {
+    "gpu_timing_recorded": true,
+    "instrumented_reference_outputs_match": true,
+    "quality_claimed": false
+  }
+}

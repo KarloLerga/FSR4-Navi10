@@ -1,0 +1,121 @@
+{
+  "audit_capture_frames": [
+    0,
+    4,
+    7
+  ],
+  "cross_provider_output_equality_claimed": false,
+  "frames": [
+    {
+      "camera_cut": false,
+      "frame_index": 0,
+      "fsr3_gpu_dispatch_us": 2188.32,
+      "fsr3_output_sha256": "056d091feb7f77b960e2e198a3a258057dafbe32e602d3cb977161e8654f49b6",
+      "fsr4_gpu_dispatch_us": 7414.56,
+      "fsr4_output_sha256": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+      "input_frame_sha256": "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+      "reset": true
+    },
+    {
+      "camera_cut": false,
+      "frame_index": 1,
+      "fsr3_gpu_dispatch_us": 2513.24,
+      "fsr3_output_sha256": "73e1e0ca81562943e3f38e4e4a9b44bb8b86cf189ca23b49ee85164db8483190",
+      "fsr4_gpu_dispatch_us": 7398.72,
+      "fsr4_output_sha256": "b258f7216bb04dc355567bd52f7f5062442a7c212b60bd492e86c97f5b31a5fb",
+      "input_frame_sha256": "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+      "reset": false
+    },
+    {
+      "camera_cut": false,
+      "frame_index": 2,
+      "fsr3_gpu_dispatch_us": 2510.04,
+      "fsr3_output_sha256": "56261f3334ce18c274d8a4183d86af65becfcfadd7d07252f2223b89e1e0ac5f",
+      "fsr4_gpu_dispatch_us": 7421.52,
+      "fsr4_output_sha256": "a1f64bfbbbe96279992ccc7e8df65216dde62340e18fe36364ac8db2d70e7e73",
+      "input_frame_sha256": "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+      "reset": false
+    },
+    {
+      "camera_cut": false,
+      "frame_index": 3,
+      "fsr3_gpu_dispatch_us": 2593.2,
+      "fsr3_output_sha256": "53ed6d74a1c0445febea4d974f1ccffd98f5a7f5bf1a282c63aa0f7c74a6f614",
+      "fsr4_gpu_dispatch_us": 7512.96,
+      "fsr4_output_sha256": "8482b834c9fae75c385a2251303c02ae2f16e2368f546e38b6bc2c3defe7420e",
+      "input_frame_sha256": "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+      "reset": false
+    },
+    {
+      "camera_cut": true,
+      "frame_index": 4,
+      "fsr3_gpu_dispatch_us": 2406.28,
+      "fsr3_output_sha256": "5774ac52d4bae9d6ae7bca47708df1ba35710057fbb274819f11f00f2548026d",
+      "fsr4_gpu_dispatch_us": 7409.44,
+      "fsr4_output_sha256": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+      "input_frame_sha256": "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+      "reset": true
+    },
+    {
+      "camera_cut": false,
+      "frame_index": 5,
+      "fsr3_gpu_dispatch_us": 2434.76,
+      "fsr3_output_sha256": "d3f2017bf6622fd42751033f3335abbd23fa9af0f865a9dd94e2dee73deb3435",
+      "fsr4_gpu_dispatch_us": 7399.8,
+      "fsr4_output_sha256": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+      "input_frame_sha256": "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+      "reset": false
+    },
+    {
+      "camera_cut": false,
+      "frame_index": 6,
+      "fsr3_gpu_dispatch_us": 2546.2,
+      "fsr3_output_sha256": "29e0198b3a59e822143d8cdc8509961a675b5c4e9a74a0eaff5763960dc27b11",
+      "fsr4_gpu_dispatch_us": 7411.44,
+      "fsr4_output_sha256": "eb146d64351371e6fed94d0e1779683946ec86fbde6bae8e2d36bfc55977b250",
+      "input_frame_sha256": "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+      "reset": false
+    },
+    {
+      "camera_cut": false,
+      "frame_index": 7,
+      "fsr3_gpu_dispatch_us": 2617.16,
+      "fsr3_output_sha256": "e9377afbce33e1ee2d6c8f55e2db78e335f8c36f15b060cb39ac7f7d84789688",
+      "fsr4_gpu_dispatch_us": 7552.44,
+      "fsr4_output_sha256": "33e4ffd0a516046a42b77a759ec1af6aca5b6621eba31a454cddb63a05b4987e",
+      "input_frame_sha256": "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3",
+      "reset": false
+    }
+  ],
+  "fsr3_provider": "FidelityFX FSR3 Upscaler 3.1.5",
+  "fsr3_sdk_commit": "60f4ea81909200d8542eca14dccb2628b763a9a3",
+  "fsr4_provider": "pinned_amd_fsr4_i8_native_1080",
+  "fsr4_upstream_commit": "01446e6a74888bf349652fcf2cbf5f642d30c2bf",
+  "gpu": "AMD Radeon RX 5700 XT",
+  "input_frames_aligned_by_sha256": true,
+  "instrumented_outputs_match_ordinary_provider": true,
+  "quality_claimed": false,
+  "schema": "f4n10.provider-pairing-report.v1",
+  "sequence": {
+    "frame_count": 8,
+    "id": "procedural-mixed-17",
+    "output_size": [
+      1920,
+      1080
+    ],
+    "render_size": [
+      1920,
+      1080
+    ],
+    "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+    "source_kind": "procedural_synthetic"
+  },
+  "timing_us": {
+    "fsr3_steady_state_mean": 2535.77,
+    "fsr3_steady_state_p50": 2513.24,
+    "fsr3_steady_state_p95": 2617.16,
+    "fsr4_steady_state_mean": 7449.48,
+    "fsr4_steady_state_p50": 7411.44,
+    "fsr4_steady_state_p95": 7552.44
+  }
+}
