@@ -257,14 +257,19 @@ Integrate the reviewed DeltaControl V2 research and enable reproducible stateful
 
 - The local provider is compiled for native/1080 only. Preset/tier permutation support must be audited before any 1440p or 4K runs.
 - The deterministic `.f4seq` reader/generator, stateful FSR4 sequence dispatch, pinned FSR3.1.5 sequence runner, and aligned 8-frame synthetic provider reports now exist. They validate the plumbing only.
-- FSR4 O0 RGB replay agrees within 1e-3 on audit frames 0, 4, and 7, but fails numerical validity: source-equation intermediates are non-finite at 2,073,600 / 2,073,600 pixels on frames 0 and 4 and 2,073,528 / 2,073,600 on frame 7. The captured FSR4 RGB is entirely black on frames 0 and 4 and 99.9965% zero on frame 7. Matching black output does not clear O0.
-- The current FSR3 taps do not include exact `C` and `H` at the accumulation site; the existing `internal_upscaled_color_after_accumulate` tap is after blending and cannot substitute. Do not run the Delta4 basis oracle until those capture-only taps exist.
-- No representative rendered scene input exists. Synthetic data cannot clear O0-O13 teacher-quality gates or justify DeltaControl training/runtime selection.
+- FSR4 O0 RGB replay agrees within 1e-3 on audit frames 0, 4, and 7, but fails numerical validity: source-equation intermediates are non-finite at 2,073,600 / 2,073,600 pixels on frames 0 and 4 and 2,073,528 / 2,073,600 on frame 7. The captured FSR4 RGB is entirely black on frames 0 and 4 and 99.9965% zero on frame 7. Resolve the native/1080 model-output overflow or capture semantics, then rerun O0 with finite intermediates before starting O1-O13.
+- The current FSR3 taps do not include exact `C` and `H` at the accumulation site; the existing `internal_upscaled_color_after_accumulate` tap is after blending and cannot substitute. Add capture-only taps at the exact accumulation site before using FSR3 for the Delta4 basis oracle.
+- No representative rendered scene input exists. Capture or pack an actual rendered temporal sequence, then rerun both providers with matching per-frame hashes. Synthetic data cannot clear O0-O13 teacher-quality gates or justify DeltaControl training/runtime selection.
 
-### Decision log and progress
+### Decision log and progress (2026-10-05)
 
-- V0 complete: ZIP CRC and source manifest hashes/sizes verified; 16 reviewed README/technical documents retained with archive hash in `docs/delta_control_v2/ADDENDUM_SOURCE_MANIFEST.json`; embedded prompt deliberately excluded.
-- V1 complete for format, deterministic generator, validator, and Python coverage. V2 complete for the native/1080 synthetic multi-frame provider path, reset/cut handling, input hashes, exposure/mask bindings, timing, and instrumented/ordinary per-frame equality.
-- V3 partially complete: pinned FSR3.1.5 consumes the same eight frames and reports aligned input hashes, source-confirmed resource taps, timing, and instrumented/ordinary output equality. Exact accumulation-site C/H remain missing.
-- V4 replay tool is implemented. The synthetic captures reproduce their final RGB within 1e-3, but O0 fails its finite-intermediate requirement because the raw teacher controls overflow the source POST exponent formulas and produce nearly all-black output. Do not start O1-O13 or V5 until a representative, numerically valid capture set passes O0.
-- Current measurements and limitations are recorded in `RESULTS.md` and `artifacts/results/`. Do not claim real-scene quality or speed from generated fixtures.
+- [x] V0: verify ZIP CRC, safe paths and all source manifest hashes/sizes; retain 16 technical documents and archive provenance; exclude the embedded prompt.
+- [x] V1: implement `.f4seq` pack/read/validate, deterministic procedural generation, and malformed-input/hash/round-trip unit checks.
+- [x] V2: implement the stateful native/1080 FSR4 sequence path with reset/cut, jitter, delta, exposure and masks; per-frame instrumented/ordinary outputs match.
+- [x] V3 plumbing: pin and run FSR3.1.5 against the same eight frames; aligned hashes, source-confirmed taps, provider timings and instrumented/ordinary equality recorded.
+- [x] V4 tooling: implement exact source-equation POST replay; RGB replay, package validation, intermediate finite checks and machine-readable report are recorded.
+- [ ] V3 completion: add exact accumulation-site FSR3 C/H capture-only taps; validate they do not alter output.
+- [ ] V4 O0 exit: diagnose and resolve FSR4 raw-parameter overflow/capture validity, then pass output tolerance with finite intermediates on multiple frames and profiles.
+- [ ] V5 and O1-O13: remain gated until a numerically valid teacher capture set passes O0; use a representative rendered sequence for quality analyses.
+- [x] V6 current evidence: Release build, CTest (1/1), Python suite (54/54), provider sequence runs and reports completed; commits `41f903f` and `4c0ae25` pushed to private `origin/main`.
+- Do not claim real-scene quality or speed from generated fixtures. Measurements and limitations are in `RESULTS.md` and `artifacts/results/`.
