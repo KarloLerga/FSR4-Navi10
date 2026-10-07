@@ -19,7 +19,9 @@ sys.path.insert(0, str(REPO_ROOT))
 from tools.teacher.capture_format import validate_capture  # noqa: E402
 
 
-def replay_arrays(metadata: dict[str, Any], arrays: dict[str, np.ndarray], *, block_rows: int = 32) -> tuple[np.ndarray, dict[str, Any]]:
+def replay_arrays(
+    metadata: dict[str, Any], arrays: dict[str, np.ndarray], *, block_rows: int = 32, stable_transforms: bool = False
+) -> tuple[np.ndarray, dict[str, Any]]:
     """Evaluate post_common.hlsli::apply_model_filter plus its output conversion.
 
     This uses float32 intermediates and the source's literal exp-based formulas.
@@ -67,11 +69,30 @@ def replay_arrays(metadata: dict[str, Any], arrays: dict[str, np.ndarray], *, bl
             p = params[y0:y1]
             h = history[y0:y1]
 
-            rho = (np.exp(p[:, :, 0]) - np.exp(-p[:, :, 0])) / (
-                np.exp(p[:, :, 0]) + np.exp(-p[:, :, 0])
-            )
-            sx = np.float32(2.0) / (np.float32(1.0) + np.exp(-p[:, :, 1]))
-            sy = np.float32(2.0) / (np.float32(1.0) + np.exp(-p[:, :, 2]))
+            if stable_transforms:
+                e_rho = np.exp(np.float32(-2.0) * np.abs(p[:, :, 0]))
+                rho_mag = (np.float32(1.0) - e_rho) / (np.float32(1.0) + e_rho)
+                rho = np.where(p[:, :, 0] >= 0.0, rho_mag, -rho_mag)
+                e_sx = np.exp(-np.abs(p[:, :, 1]))
+                sig_sx = np.where(
+                    p[:, :, 1] >= 0.0,
+                    np.float32(1.0) / (np.float32(1.0) + e_sx),
+                    e_sx / (np.float32(1.0) + e_sx),
+                )
+                e_sy = np.exp(-np.abs(p[:, :, 2]))
+                sig_sy = np.where(
+                    p[:, :, 2] >= 0.0,
+                    np.float32(1.0) / (np.float32(1.0) + e_sy),
+                    e_sy / (np.float32(1.0) + e_sy),
+                )
+                sx = np.float32(2.0) * sig_sx
+                sy = np.float32(2.0) * sig_sy
+            else:
+                rho = (np.exp(p[:, :, 0]) - np.exp(-p[:, :, 0])) / (
+                    np.exp(p[:, :, 0]) + np.exp(-p[:, :, 0])
+                )
+                sx = np.float32(2.0) / (np.float32(1.0) + np.exp(-p[:, :, 1]))
+                sy = np.float32(2.0) / (np.float32(1.0) + np.exp(-p[:, :, 2]))
             sx2 = sx * sx
             sy2 = sy * sy
             sxy = sx * sy
@@ -104,7 +125,15 @@ def replay_arrays(metadata: dict[str, Any], arrays: dict[str, np.ndarray], *, bl
                     weighted_color += mu * weight[:, :, None]
 
             upsampled = weighted_color / total_weight[:, :, None]
-            blend = np.float32(1.0) / (np.float32(1.0) + np.exp(-p[:, :, 3]))
+            if stable_transforms:
+                e_blend = np.exp(-np.abs(p[:, :, 3]))
+                blend = np.where(
+                    p[:, :, 3] >= 0.0,
+                    np.float32(1.0) / (np.float32(1.0) + e_blend),
+                    e_blend / (np.float32(1.0) + e_blend),
+                )
+            else:
+                blend = np.float32(1.0) / (np.float32(1.0) + np.exp(-p[:, :, 3]))
             model_color = upsampled * (np.float32(1.0) - blend[:, :, None]) + h * blend[:, :, None]
             nan_model_pixels += int(np.count_nonzero(~np.isfinite(model_color).all(axis=2)))
 
@@ -122,7 +151,8 @@ def replay_arrays(metadata: dict[str, Any], arrays: dict[str, np.ndarray], *, bl
         "scale": [float(scale_x), float(scale_y)],
         "jitter_current": [float(jitter_x), float(jitter_y)],
         "exposure_value": float(exposure_value),
-        "raw_exp_formula": True,
+        "raw_exp_formula": not stable_transforms,
+        "stable_equivalent_transforms": stable_transforms,
         "nonfinite_replayed_model_pixels": nan_model_pixels,
         "raw_parameter_min_by_channel": [float(params[:, :, i].min()) for i in range(4)],
         "raw_parameter_max_by_channel": [float(params[:, :, i].max()) for i in range(4)],
@@ -149,14 +179,16 @@ def _load_capture_arrays(path: Path) -> tuple[dict[str, Any], dict[str, np.ndarr
     return metadata, arrays
 
 
-def replay_capture(path: Path, *, block_rows: int = 32) -> dict[str, Any]:
+def replay_capture(path: Path, *, block_rows: int = 32, stable_transforms: bool = False) -> dict[str, Any]:
     metadata, arrays = _load_capture_arrays(path)
-    replay, details = replay_arrays(metadata, arrays, block_rows=block_rows)
+    replay, details = replay_arrays(metadata, arrays, block_rows=block_rows, stable_transforms=stable_transforms)
     reference = arrays["final_rgb"].astype(np.float32)
     replay32 = replay.astype(np.float32)
     absolute = np.abs(replay32 - reference)
     rgb_match = bool(np.count_nonzero(absolute > np.float32(1e-3)) == 0)
     intermediate_finite = details["nonfinite_replayed_model_pixels"] == 0
+    reference_finite = bool(np.isfinite(reference).all())
+    replay_finite = bool(np.isfinite(replay32).all())
     return {
         "capture": str(path),
         "frame_index": metadata["frame_index"],
@@ -165,8 +197,8 @@ def replay_capture(path: Path, *, block_rows: int = 32) -> dict[str, Any]:
         "provider_source_commit": metadata["source_commit"],
         "shader_hashes": metadata["shader_hashes"],
         **details,
-        "reference_finite": bool(np.isfinite(reference).all()),
-        "replay_finite": bool(np.isfinite(replay32).all()),
+        "reference_finite": reference_finite,
+        "replay_finite": replay_finite,
         "reference_zero_fraction": float(np.count_nonzero(reference == 0.0) / reference.size),
         "replay_zero_fraction": float(np.count_nonzero(replay32 == 0.0) / replay32.size),
         "exact_half_match_fraction": float(np.count_nonzero(replay == arrays["final_rgb"]) / replay.size),
@@ -176,7 +208,7 @@ def replay_capture(path: Path, *, block_rows: int = 32) -> dict[str, Any]:
         "rms_error": float(np.sqrt(np.mean(absolute * absolute))),
         "rgb_within_tolerance": rgb_match,
         "numerically_valid": intermediate_finite,
-        "passed": rgb_match and intermediate_finite,
+        "passed": rgb_match and intermediate_finite and reference_finite and replay_finite,
     }
 
 
@@ -185,9 +217,14 @@ def main() -> int:
     parser.add_argument("captures", nargs="+", type=Path)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--block-rows", type=int, default=32)
+    parser.add_argument("--stable-transforms", action="store_true",
+                        help="replay overflow-stable tanh/sigmoid equivalents used by the diagnostic POST variant")
     args = parser.parse_args()
 
-    results = [replay_capture(path, block_rows=args.block_rows) for path in args.captures]
+    results = [
+        replay_capture(path, block_rows=args.block_rows, stable_transforms=args.stable_transforms)
+        for path in args.captures
+    ]
     first = results[0]
     consistent = all(
         result["sequence_hash"] == first["sequence_hash"]
@@ -197,7 +234,11 @@ def main() -> int:
     )
     report = {
         "schema": "f4n10.fsr4-post-replay-oracle.v1",
-        "source": "pinned FSR4 post_common.hlsli::apply_model_filter; literal float32 equations",
+        "source": (
+            "pinned FSR4 post_common.hlsli::apply_model_filter; overflow-stable equivalent transforms"
+            if args.stable_transforms else
+            "pinned FSR4 post_common.hlsli::apply_model_filter; literal float32 equations"
+        ),
         "source_file": "third_party/fidelityfx-fsr4-source/Kits/FidelityFX/upscalers/fsr4/include/gpu/fsr4/post_common.hlsli",
         "source_file_sha256": hashlib.sha256(
             (REPO_ROOT / "third_party/fidelityfx-fsr4-source/Kits/FidelityFX/upscalers/fsr4/include/gpu/fsr4/post_common.hlsli").read_bytes()

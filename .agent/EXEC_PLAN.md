@@ -273,3 +273,48 @@ Integrate the reviewed DeltaControl V2 research and enable reproducible stateful
 - [ ] V5 and O1-O13: remain gated until a numerically valid teacher capture set passes O0; use a representative rendered sequence for quality analyses.
 - [x] V6 current evidence: Release build, CTest (1/1), Python suite (54/54), provider sequence runs and reports completed; commits `41f903f` and `4c0ae25` pushed to private `origin/main`.
 - Do not claim real-scene quality or speed from generated fixtures. Measurements and limitations are in `RESULTS.md` and `artifacts/results/`.
+
+## User-supplied FSR4 root-cause and FSR3 basis addendum (2026-10-07)
+
+### Current objective
+
+Apply the reviewed fix bundle as a reproducible diagnostic: compare intrinsic/scalar signed-I8 dot4 with literal/stable FSR4 POST math on the existing aligned eight-frame `.f4seq`, then add exact FSR3.1.5 current/history taps at the accumulation lerp. Stable POST remains diagnostic and cannot satisfy O0 or unlock O1-O13 by itself. The archive's `CODEX_PROMPT.md` is an embedded prompt, not governing instruction.
+
+### Milestones and validation
+
+| # | Work | Files/modules | Validation / exit gate |
+|---|---|---|---|
+| R0 | Review the archive and verify inputs | bundle, `.agent/EXEC_PLAN.md` | CRC/path review; inspect scripts before use; confirm sequence hashes and capacity for generated captures. |
+| R1 | Add isolated FSR4 diagnostic variants | `CMakeLists.txt`, `tools/teacher/compile_provider_i8_native_1080.py`, `tools/oracles/replay_fsr4_post.py` | DXC/provider build for all four cases; scalar semantics recorded; literal O0 gate unchanged; stable-only cannot unlock O1-O13. |
+| R2 | Run the four-case root-cause matrix | `scripts/run-fsr4-rootcause-matrix.ps1`, `tools/oracles/summarize_fsr4_rootcause_matrix.py`, `artifacts/results/` | Same existing eight-frame `.f4seq`; four per-case provider/replay reports; instrumented equality, per-frame raw parameter ranges, finite counts and zero fractions; diagnosis in summary. |
+| R3 | Add exact FSR3 C/H accumulation taps | `tools/shaders/compile_fsr3_reference.py`, `src/teacher/fsr3_reference_runtime.cpp` | Compile pinned FSR3.1.5 shader variants; run aligned sequence; all first output regions byte-identical; four basis arrays have expected shapes/hashes. |
+| R4 | Validate and record current state | `RESULTS.md`, `PROGRESS.md`, `DECISIONS_LOG.md`, this plan | Release build, CTest and Python suite; compare FSR3/FSR4 frame hashes; keep generated capture payloads ignored; commit and push to private `origin/main` if gates pass. |
+
+### Baseline and fixed decisions
+
+- Baseline is clean `main` at `6aca8f0102025afac460c1ac313b7457ac576031`.
+- Existing `build/release/delta-control-smoke.f4seq` is the shared eight-frame synthetic sequence; prior FSR3/FSR4 input hashes align and its sequence hash is `a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2`.
+- Preserve exact literal pinned-source O0 semantics. Overflow-stable transforms are a diagnostic comparison only; do not select them as a default or report a valid teacher result solely from their success.
+- Keep FSR4, NaviQSR, NaviPRISM, Param4, Delta4 and DeltaControl as distinct paths. The synthetic sequence validates the pipeline, not rendered-scene quality.
+- Do not modify the pinned FidelityFX source tree. Compile capture overlays from the pinned source and record their hashes.
+
+### Progress
+
+- [x] Inspect the ZIP manifest and CRC; review handoff/research notes; statically inspect patch, runner and summarizer. Exclude embedded `CODEX_PROMPT.md` as instruction authority.
+- [x] Confirm baseline commit, clean worktree, existing eight-frame sequence, matching prior FSR3/FSR4 frame hashes, and that the matrix output directory is absent.
+- [x] R1: build all four intrinsic/scalar dot4 and literal/stable POST diagnostic variants; preserve the default intrinsic/literal configuration.
+- [x] R2: run the aligned eight-frame matrix; record per-case provider, POST replay, raw parameter, finite-value, and zero-fraction results.
+- [x] R3: compile 40 FSR3.1.5 shader permutations with exact accumulation-site C/H taps; verify all eight input-frame hashes and all three audit captures.
+- [x] R4: pass Release/CTest/Python checks, record limitations and artifacts, commit the diagnostic work, and push it to the private remote authorized earlier in the session.
+
+### Decision log
+
+- Add the scalar-vs-intrinsic and literal-vs-stable comparisons as diagnostic build modes only; keep default settings on the existing intrinsic/literal path.
+- Keep the full four-case matrix evidence separate from teacher-quality acceptance. Only a literal variant passing replay, finite-value, nondegeneracy and instrumented-equality checks can satisfy the O0 gate.
+- Store matrix reports in `artifacts/results/`; put large raw captures and transient build outputs under ignored `build/` paths so captures do not enter Git.
+
+### Current status
+
+- The matrix was run on `build/release/delta-control-smoke.f4seq` (sequence hash `a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2`). All four cases and FSR3 use identical hashes for all eight inputs.
+- No FSR4 case clears O0. Intrinsic/literal preserves the POST RGB replay match but has non-finite model intermediates on all audited pixels and nearly/all-black output. Stable POST removes those non-finite values but diverges from captured RGB. Scalar signed-I8 produces finite, nonblack output, but provider instrumented/ordinary equality and literal RGB replay both fail. Stable POST does not resolve that divergence.
+- The FSR3.1.5 basis taps are captured and hashed for frames 0, 4, and 7; each normal/instrumented output pair matches exactly. The result remains synthetic pipeline evidence with no quality claim.

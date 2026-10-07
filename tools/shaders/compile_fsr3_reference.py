@@ -35,6 +35,7 @@ BASE_FLAGS = (
     "-Wno-ambig-lit-shift",
     "-DFFX_HLSL=1",
     "-DFFX_FSR3UPSCALER_EMBED_ROOTSIG=0",
+    "-DFSR4N10_CAPTURE_DELTA_BASIS=1",
 )
 
 VARIANTS = (
@@ -51,6 +52,59 @@ def sha256(path: Path) -> str:
         for block in iter(lambda: stream.read(1024 * 1024), b""):
             digest.update(block)
     return digest.hexdigest()
+
+
+def replace_exactly_once(text: str, old: str, new: str, label: str) -> str:
+    count = text.count(old)
+    if count != 1:
+        raise RuntimeError(f"expected one {label} in pinned FSR3 shader source, found {count}")
+    return text.replace(old, new, 1)
+
+
+def create_delta_basis_overlay(sdk_root: Path, output_root: Path) -> Path:
+    source = sdk_root / "upscalers/fsr3/include/gpu/fsr3upscaler/ffx_fsr3upscaler_accumulate.h"
+    text = source.read_text(encoding="utf-8-sig")
+    old = """    const FfxFloat32 fAlpha = ffxSaturate(data.fUpsampledWeight / data.fHistoryWeight);
+    data.fHistoryColor      = ffxLerp(data.fHistoryColor, data.fUpsampledColor, fAlpha);
+"""
+    new = """    const FfxFloat32 fAlpha = ffxSaturate(data.fUpsampledWeight / data.fHistoryWeight);
+
+#if defined(FSR4N10_CAPTURE_DELTA_BASIS) && FSR4N10_CAPTURE_DELTA_BASIS && defined(FSR3UPSCALER_BIND_UAV_UPSCALED_OUTPUT)
+    // Capture-only tap atlas. The ordinary provider uses a normal-width output UAV,
+    // so this path is inactive there. A 5x-wide instrumented UAV stores four extra
+    // regions without feeding any captured value back into reconstruction.
+    FfxUInt32 captureWidth = 0;
+    FfxUInt32 captureHeight = 0;
+    rw_upscaled_output.GetDimensions(captureWidth, captureHeight);
+    const FfxUInt32 baseWidth = FfxUInt32(UpscaleSize().x);
+    const FfxUInt32 baseHeight = FfxUInt32(UpscaleSize().y);
+    if (captureWidth >= baseWidth * 5u && captureHeight >= baseHeight) {
+        const FfxFloat32x3 currentAccum = data.fUpsampledColor;
+        const FfxFloat32x3 historyAccum = data.fHistoryColor;
+        FfxFloat32x3 currentLinear = YCoCgToRGB(currentAccum);
+        FfxFloat32x3 historyLinear = YCoCgToRGB(historyAccum);
+#if FFX_FSR3UPSCALER_OPTION_HDR_COLOR_INPUT
+        currentLinear = InverseTonemap(currentLinear);
+        historyLinear = InverseTonemap(historyLinear);
+#endif
+        currentLinear = ffxMax(currentLinear / Exposure(), FfxFloat32x3(0.0f, 0.0f, 0.0f));
+        historyLinear = ffxMax(historyLinear / Exposure(), FfxFloat32x3(0.0f, 0.0f, 0.0f));
+        const FfxInt32 stride = UpscaleSize().x;
+        rw_upscaled_output[params.iPxHrPos + FfxInt32x2(stride, 0)] = FfxFloat32x4(currentAccum, fAlpha);
+        rw_upscaled_output[params.iPxHrPos + FfxInt32x2(stride * 2, 0)] = FfxFloat32x4(historyAccum, fAlpha);
+        rw_upscaled_output[params.iPxHrPos + FfxInt32x2(stride * 3, 0)] = FfxFloat32x4(currentLinear, fAlpha);
+        rw_upscaled_output[params.iPxHrPos + FfxInt32x2(stride * 4, 0)] = FfxFloat32x4(historyLinear, fAlpha);
+    }
+#endif
+
+    data.fHistoryColor      = ffxLerp(data.fHistoryColor, data.fUpsampledColor, fAlpha);
+"""
+    text = replace_exactly_once(text, old, new, "Delta basis accumulation tap")
+    overlay_root = output_root / "capture_overlay"
+    destination = overlay_root / "fsr3upscaler" / source.name
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    destination.write_text(text, encoding="utf-8")
+    return overlay_root
 
 
 def shader_sources(sdk_root: Path) -> list[Path]:
@@ -91,7 +145,9 @@ def main() -> int:
     output_root = args.output.resolve()
     output_dir = output_root / "ffx_sc_output"
     output_dir.mkdir(parents=True, exist_ok=True)
+    capture_overlay = create_delta_basis_overlay(sdk_root, output_root)
     include_dirs = (
+        capture_overlay,
         sdk_root / "api/internal/gpu",
         sdk_root / "upscalers/fsr3/include/gpu",
     )
@@ -137,6 +193,18 @@ def main() -> int:
         "permutationHeaderCount": len(permutation_headers),
         "variants": [name for name, _, _ in VARIANTS],
         "flags": list(BASE_FLAGS),
+        "deltaBasisCapture": {
+            "enabled": True,
+            "activation": "output UAV width >= 5 * logical upscale width",
+            "regions": [
+                "final_output",
+                "current_candidate_accum_ycocg_plus_alpha",
+                "reprojected_history_accum_ycocg_plus_alpha",
+                "current_candidate_linear_rgb_plus_alpha",
+                "reprojected_history_linear_rgb_plus_alpha",
+            ],
+            "overlaySha256": sha256(capture_overlay / "fsr3upscaler/ffx_fsr3upscaler_accumulate.h"),
+        },
         "shaderSources": [
             {"file": path.relative_to(sdk_root).as_posix(), "sha256": sha256(path)} for path in sources
         ],

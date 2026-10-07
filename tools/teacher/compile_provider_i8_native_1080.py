@@ -26,6 +26,46 @@ BASE_FLAGS = (
 )
 
 
+SCALAR_DOT4_HLSL = r"""
+int fsr4n10_sign_extend_i8(uint value)
+{
+    return (int(value << 24)) >> 24;
+}
+
+int fsr4n10_scalar_dot4add_i8packed(uint a, uint b, int acc)
+{
+    const int4 av = int4(
+        fsr4n10_sign_extend_i8(a & 0xffu),
+        fsr4n10_sign_extend_i8((a >> 8) & 0xffu),
+        fsr4n10_sign_extend_i8((a >> 16) & 0xffu),
+        fsr4n10_sign_extend_i8((a >> 24) & 0xffu));
+    const int4 bv = int4(
+        fsr4n10_sign_extend_i8(b & 0xffu),
+        fsr4n10_sign_extend_i8((b >> 8) & 0xffu),
+        fsr4n10_sign_extend_i8((b >> 16) & 0xffu),
+        fsr4n10_sign_extend_i8((b >> 24) & 0xffu));
+    return acc + av.x * bv.x + av.y * bv.y + av.z * bv.z + av.w * bv.w;
+}
+
+#define dot4add_i8packed fsr4n10_scalar_dot4add_i8packed
+"""
+
+STABLE_POST_HLSL = r"""
+float fsr4n10_stable_sigmoid(float x)
+{
+    const float e = exp(-abs(x));
+    return x >= 0.0f ? (1.0f / (1.0f + e)) : (e / (1.0f + e));
+}
+
+float fsr4n10_stable_tanh(float x)
+{
+    const float e = exp(-2.0f * abs(x));
+    const float t = (1.0f - e) / (1.0f + e);
+    return x >= 0.0f ? t : -t;
+}
+"""
+
+
 def sha256(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as stream:
@@ -41,7 +81,9 @@ def replace_exactly_once(text: str, old: str, new: str, label: str) -> str:
     return text.replace(old, new, 1)
 
 
-def create_capture_shader_overlays(fsr4_root: Path, output_dir: Path) -> tuple[Path, dict[str, Path]]:
+def create_capture_shader_overlays(
+    fsr4_root: Path, output_dir: Path, *, scalar_dot4: bool = False, stable_post_math: bool = False
+) -> tuple[Path, dict[str, Path]]:
     """Build derived capture-only include overrides without editing the pinned source tree."""
     source_dir = fsr4_root / "include" / "gpu" / "fsr4"
     overlay_dir = output_dir / "capture_shader_overrides"
@@ -122,6 +164,10 @@ float DebugSamplePredictedBlendFactor(float2 fUv)
 
     post_source = source_dir / "post_common.hlsli"
     post_text = post_source.read_text(encoding="utf-8-sig")
+    if scalar_dot4:
+        post_text = SCALAR_DOT4_HLSL + "\n" + post_text
+    if stable_post_math:
+        post_text = STABLE_POST_HLSL + "\n" + post_text
     post_anchor = """    const float blending_factor = (1.0 / (1.0 + exp(-filter[3])));
 
     float3 res"""
@@ -159,6 +205,32 @@ float DebugSamplePredictedBlendFactor(float2 fUv)
     post_text = replace_exactly_once(
         post_text, old_parameter_capture, new_parameter_capture, "raw model-parameter tap location"
     )
+
+    if stable_post_math:
+        post_text = replace_exactly_once(
+            post_text,
+            "const float correlation_factor = ((exp(filter[0]) - exp(-filter[0])) / (exp(filter[0]) + exp(-filter[0])));",
+            "const float correlation_factor = fsr4n10_stable_tanh(filter[0]);",
+            "stable POST correlation transform",
+        )
+        post_text = replace_exactly_once(
+            post_text,
+            "const float scale_factor_x = 2.0 / (1.0 + exp(-filter[1]));",
+            "const float scale_factor_x = 2.0f * fsr4n10_stable_sigmoid(filter[1]);",
+            "stable POST scale-x transform",
+        )
+        post_text = replace_exactly_once(
+            post_text,
+            "const float scale_factor_y = 2.0 / (1.0 + exp(-filter[2]));",
+            "const float scale_factor_y = 2.0f * fsr4n10_stable_sigmoid(filter[2]);",
+            "stable POST scale-y transform",
+        )
+        post_text = replace_exactly_once(
+            post_text,
+            "const float blending_factor = (1.0 / (1.0 + exp(-filter[3])));",
+            "const float blending_factor = fsr4n10_stable_sigmoid(filter[3]);",
+            "stable POST blend transform",
+        )
 
     overlays = {
         "resources": overlay_dir / resources_source.name,
@@ -244,7 +316,9 @@ def generate_initializer_sources(model_dir: Path, output_dir: Path) -> list[Path
     return [header_path, cpp_path]
 
 
-def compile_provider_set(repo_root: Path, output_dir: Path) -> dict[str, object]:
+def compile_provider_set(
+    repo_root: Path, output_dir: Path, *, scalar_dot4: bool = False, stable_post_math: bool = False
+) -> dict[str, object]:
     sdk_root = repo_root / "third_party" / "fidelityfx-fsr4-source" / "Kits" / "FidelityFX"
     fsr4_root = sdk_root / "upscalers" / "fsr4"
     model_dir = fsr4_root / "internal" / "shaders" / MODEL
@@ -267,7 +341,23 @@ def compile_provider_set(repo_root: Path, output_dir: Path) -> dict[str, object]
             raise FileNotFoundError(f"pinned FSR4 provider source is missing: {path}")
 
     output_dir.mkdir(parents=True, exist_ok=True)
-    capture_overlay_dir, capture_overlays = create_capture_shader_overlays(fsr4_root, output_dir)
+    capture_overlay_dir, capture_overlays = create_capture_shader_overlays(
+        fsr4_root, output_dir, scalar_dot4=scalar_dot4, stable_post_math=stable_post_math
+    )
+    model_source = source_files["model"]
+    model_shader_includes = (fsr4_root / "dx12", sdk_root / "api" / "internal" / "dx12")
+    if scalar_dot4:
+        model_wrapper = capture_overlay_dir / f"passes_{TIER}_scalar_dot4.hlsl"
+        model_wrapper.write_text(
+            SCALAR_DOT4_HLSL + f'\n#include "{source_files["model"].name}"\n', encoding="utf-8"
+        )
+        capture_overlays["model_scalar_dot4_wrapper"] = model_wrapper
+        model_source = model_wrapper
+        model_shader_includes = (
+            model_dir,
+            fsr4_root / "dx12",
+            sdk_root / "api" / "internal" / "dx12",
+        )
     include_dirs = (
         sdk_root / "api" / "internal" / "gpu",
         sdk_root / "api" / "internal" / "dx12",
@@ -313,21 +403,21 @@ def compile_provider_set(repo_root: Path, output_dir: Path) -> dict[str, object]
     for pass_index in range(1, 13):
         compile_one(
             f"{MODEL}_{TIER}_{pass_index}",
-            source_files["model"],
+            model_source,
             f"fsr4_model_v07_i8_pass{pass_index}",
             (f"-DMLSR_PASS_{pass_index}=1",),
             f"n10p{pass_index}",
-            (fsr4_root / "dx12", sdk_root / "api" / "internal" / "dx12"),
+            model_shader_includes,
         )
 
     for pass_index in range(13):
         compile_one(
             f"{MODEL}_{TIER}_{pass_index}_post",
-            source_files["model"],
+            model_source,
             f"fsr4_model_v07_i8_pass{pass_index}_post",
             (f"-DMLSR_PASS_{pass_index}_POST=1",),
             f"n10z{pass_index}",
-            (fsr4_root / "dx12", sdk_root / "api" / "internal" / "dx12"),
+            model_shader_includes,
         )
 
     post_definitions = (
@@ -407,6 +497,11 @@ def compile_provider_set(repo_root: Path, output_dir: Path) -> dict[str, object]
         "watermark_target": "cs_6_4",
         "compiler": "FidelityFX_SC.exe from pinned FidelityFX source tree",
         "flags": list(BASE_FLAGS),
+        "diagnostic_modes": {
+            "scalar_dot4": scalar_dot4,
+            "stable_post_math": stable_post_math,
+            "scalar_dot4_semantics": "signed i8x4 lane products accumulated into int32" if scalar_dot4 else "HLSL dot4add_i8packed intrinsic",
+        },
         "shader_counts": {
             "pre_permutations": 384,
             "model": 12,
@@ -444,9 +539,16 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--repo-root", type=Path, default=Path(__file__).resolve().parents[2])
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--scalar-dot4", action="store_true",
+                        help="replace HLSL dot4add_i8packed with an explicit signed-byte scalar reference")
+    parser.add_argument("--stable-post-math", action="store_true",
+                        help="use overflow-stable tanh/sigmoid forms in FSR4 POST")
     args = parser.parse_args()
     try:
-        manifest = compile_provider_set(args.repo_root.resolve(), args.output.resolve())
+        manifest = compile_provider_set(
+            args.repo_root.resolve(), args.output.resolve(),
+            scalar_dot4=args.scalar_dot4, stable_post_math=args.stable_post_math,
+        )
     except (OSError, KeyError, json.JSONDecodeError, subprocess.CalledProcessError, RuntimeError) as error:
         print(f"compile_provider_i8_native_1080: {error}", file=sys.stderr)
         return 2

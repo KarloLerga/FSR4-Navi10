@@ -135,4 +135,31 @@ Timestamp queries bracket provider GPU work only. Excluding the first reset and 
 
 The literal float32 replay of pinned `post_common.hlsli` agrees with final RGB within 1e-3 at audited frames 0, 4 and 7. O0 still **fails**: the replay has non-finite model-color intermediates at 2,073,600/2,073,600, 2,073,600/2,073,600, and 2,073,528/2,073,600 pixels. The captured final RGB is all zero on frames 0 and 4 and 99.9965% zero on frame 7. The output match is caused by the same NaN-to-black clamp behavior; these captures cannot support control statistics, training, or quality analysis. Full per-frame values and replay source hash are in `artifacts/results/fsr4_post_replay_smoke.json`.
 
-FSR3 source-confirmed taps and timing are present, but the current post-accumulation color tap is not the exact current candidate C; exact C/H at the accumulation site are still required. No representative rendered `.f4seq` was supplied, so O1-O13 and DeltaControl/Delta4 architecture selection remain gated on valid teacher captures.
+FSR3 source-confirmed taps and timing are present. Exact current/history basis taps were added and audited below. No representative rendered `.f4seq` was supplied, so O1-O13 and DeltaControl/Delta4 architecture selection remain gated on valid teacher captures.
+
+## FSR4 root-cause matrix and FSR3 accumulation basis (2026-10-07)
+
+The diagnostic matrix compared native signed-I8 `dot4` with a scalar bytewise signed-I8 implementation, each paired with literal or overflow-stable POST transforms. All four builds ran on the RX 5700 XT (`1002:731F`, driver `0x00200000523503e8`) over the same eight-frame synthetic sequence used by the prior FSR3 run. The sequence hash is `a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2`; independently checked input hashes align across FSR3 and every matrix case.
+
+| FSR4 diagnostic case | Provider output finite | Instrumented equals ordinary | POST RGB replay matches | Max non-finite model pixels | Max exact-zero RGB fraction | O0 eligible |
+|---|---:|---:|---:|---:|---:|---:|
+| Intrinsic `dot4`, literal POST | Yes | No | Yes* | 2,073,600 | 1.000000 | No |
+| Intrinsic `dot4`, stable POST | Yes | No | No | 0 | 1.000000 | No |
+| Scalar signed-I8, literal POST | Yes | No | No | 0 | 0.000000 | No |
+| Scalar signed-I8, stable POST | Yes | No | No | 0 | 0.000000 | No |
+
+*The intrinsic/literal replay matches captured RGB even though its source-equation intermediates are non-finite: frames 0 and 4 have 2,073,600/2,073,600 affected pixels, and frame 7 has 2,073,528/2,073,600. Its reference output is all zero on frames 0 and 4 and 99.9965% zero on frame 7. This is an invalid numerical match. Both scalar cases produce finite, nonblack values, but their RGB replay errors are material (max absolute error 0.01660, 0.04883, and 0.03589 on frames 0, 4, and 7) and instrumented output differs from the ordinary provider output on all eight frames. Their raw-parameter absolute maxima are 11.6953 and 12.0781, compared with 267.5 for the intrinsic cases; this change alone does not establish correctness.
+
+The matrix therefore leaves the defect upstream of a source-valid POST unresolved. O1-O13 remain locked; the stable transform is diagnostic only. The replay and provider reports plus the case summary are in `artifacts/results/fsr4-rootcause-matrix/summary.json` and the adjacent per-case JSON files. Large raw captures remain under ignored `build/fsr4-rootcause-matrix/`.
+
+The FSR3.1.5 reference was rebuilt with 40 shader permutations and capture-only taps at the exact accumulation lerp. On the same sequence, all eight input hashes align with all FSR4 cases, and FSR3 instrumented/ordinary outputs match byte-for-byte. Frames 0, 4, and 7 capture the four `C`/`H` arrays as little-endian FP16 with shape `[1080, 1920, 4]` (16,588,800 bytes per array); each frame's captured final-output region also matches the normal reference output hash. Hashes and gate results are recorded in `artifacts/results/fsr3_delta_basis_capture_audit.json`; the sequence report is `artifacts/results/fsr3_rootcause_basis_sequence.json`. This is synthetic diagnostic evidence and carries no quality claim. The raw capture arrays are retained under ignored `build/release/fsr3-rootcause-captures/`.
+
+Recreate the audit after the matrix and FSR3 sequence runs with:
+
+```powershell
+python tools/sequence/audit_fsr3_delta_basis.py `
+  --fsr3-report artifacts/results/fsr3_rootcause_basis_sequence.json `
+  --fsr4-matrix-dir artifacts/results/fsr4-rootcause-matrix `
+  --capture-root build/release/fsr3-rootcause-captures `
+  --output artifacts/results/fsr3_delta_basis_capture_audit.json
+```

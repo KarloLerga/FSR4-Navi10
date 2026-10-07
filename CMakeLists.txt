@@ -333,10 +333,21 @@ add_custom_target(audit_teacher_provider_schedule
     VERBATIM
 )
 
+option(FSR4N10_FORCE_SCALAR_DOT4 "Use scalar signed-I8 dot4 fallback for Navi10 validation" OFF)
+option(FSR4N10_STABLE_POST_MATH "Use overflow-stable but mathematically equivalent FSR4 POST tanh/sigmoid transforms" OFF)
+set(FSR4N10_PROVIDER_DIAGNOSTIC_ARGS)
+if(FSR4N10_FORCE_SCALAR_DOT4)
+    list(APPEND FSR4N10_PROVIDER_DIAGNOSTIC_ARGS --scalar-dot4)
+endif()
+if(FSR4N10_STABLE_POST_MATH)
+    list(APPEND FSR4N10_PROVIDER_DIAGNOSTIC_ARGS --stable-post-math)
+endif()
+
 add_custom_target(compile_provider_i8_native_1080
     COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/teacher/compile_provider_i8_native_1080.py"
             --repo-root "${CMAKE_CURRENT_SOURCE_DIR}"
             --output "${CMAKE_CURRENT_BINARY_DIR}/teacher/provider_i8_native_1080"
+            ${FSR4N10_PROVIDER_DIAGNOSTIC_ARGS}
     BYPRODUCTS "${CMAKE_CURRENT_BINARY_DIR}/teacher/provider_i8_native_1080/manifest.json"
     DEPENDS
         "${CMAKE_CURRENT_SOURCE_DIR}/tools/teacher/compile_provider_i8_native_1080.py"
@@ -439,6 +450,7 @@ target_compile_definitions(fsr4n10_fsr4_teacher_provider PRIVATE
     FFX_BACKEND_DX12
     FFX_UPSCALER
     FSR4_ENABLE_DOT4=1
+    _WINDOWS
     NOMINMAX
 )
 target_link_libraries(fsr4n10_fsr4_teacher_provider PUBLIC d3d12 dxgi dxguid bcrypt user32)
@@ -460,6 +472,7 @@ add_custom_command(
     DEPENDS
         "${CMAKE_CURRENT_SOURCE_DIR}/tools/shaders/compile_fsr3_reference.py"
         "${FSR4N10_FSR3_SDK_ROOT}/upscalers/fsr3/internal/ffx_fsr3upscaler_shaderblobs.cpp"
+        "${FSR4N10_FSR3_SDK_ROOT}/upscalers/fsr3/include/gpu/fsr3upscaler/ffx_fsr3upscaler_accumulate.h"
         "${FSR4N10_FIDELITYFX_SC}"
         ${FSR4N10_FSR3_SHADER_SOURCES}
     COMMENT "Compiling pinned FidelityFX FSR3.1.5 shader permutations"
@@ -661,6 +674,7 @@ target_include_directories(fsr4n10_fsr3_reference PRIVATE
 target_compile_definitions(fsr4n10_fsr3_reference PRIVATE
     "FFX_BACKEND_DX12=0"
     FFX_UPSCALER
+    _WINDOWS
     NOMINMAX
     "FSR4N10_FSR3_SDK_COMMIT=\"${FSR4N10_FSR3_SDK_COMMIT}\""
     "FSR4N10_BUILD_COMMIT=\"${FSR4N10_BUILD_COMMIT}\""

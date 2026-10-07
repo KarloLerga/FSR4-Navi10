@@ -1,0 +1,377 @@
+{
+  "cases": {
+    "intrinsic_literal": {
+      "all_captures_passed": false,
+      "all_intermediates_numerically_valid": false,
+      "audited_frames": [
+        {
+          "frame_index": 0,
+          "nonfinite_replayed_model_pixels": 2073600,
+          "numerically_valid": false,
+          "raw_parameter_max_by_channel": [
+            189.625,
+            267.5,
+            242.0,
+            237.375
+          ],
+          "raw_parameter_min_by_channel": [
+            187.5,
+            199.0,
+            181.625,
+            201.125
+          ],
+          "reference_finite": true,
+          "reference_zero_fraction": 1.0,
+          "replay_finite": true,
+          "rgb_within_tolerance": true
+        },
+        {
+          "frame_index": 4,
+          "nonfinite_replayed_model_pixels": 2073600,
+          "numerically_valid": false,
+          "raw_parameter_max_by_channel": [
+            189.625,
+            267.5,
+            242.0,
+            237.375
+          ],
+          "raw_parameter_min_by_channel": [
+            187.5,
+            199.0,
+            181.625,
+            201.125
+          ],
+          "reference_finite": true,
+          "reference_zero_fraction": 1.0,
+          "replay_finite": true,
+          "rgb_within_tolerance": true
+        },
+        {
+          "frame_index": 7,
+          "nonfinite_replayed_model_pixels": 2073528,
+          "numerically_valid": false,
+          "raw_parameter_max_by_channel": [
+            189.625,
+            267.5,
+            242.0,
+            237.375
+          ],
+          "raw_parameter_min_by_channel": [
+            -54.625,
+            -77.75,
+            -69.9375,
+            -69.5625
+          ],
+          "reference_finite": true,
+          "reference_zero_fraction": 0.9999652777777778,
+          "replay_finite": true,
+          "rgb_within_tolerance": true
+        }
+      ],
+      "capture_frames_aligned": true,
+      "instrumented_matches_reference": false,
+      "literal_o0_eligible": false,
+      "matrix_inputs_aligned": true,
+      "max_nonfinite_model_pixels": 2073600,
+      "max_reference_zero_fraction": 1.0,
+      "nondegenerate_mixed_sequence_output": false,
+      "post_rgb_replay_matches": true,
+      "provider_audit_frames": [
+        0,
+        4,
+        7
+      ],
+      "provider_frame_count": 8,
+      "provider_outputs_finite": true,
+      "raw_parameter_abs_max": 267.5,
+      "replay_frames": [
+        0,
+        4,
+        7
+      ],
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2"
+    },
+    "intrinsic_stable": {
+      "all_captures_passed": false,
+      "all_intermediates_numerically_valid": true,
+      "audited_frames": [
+        {
+          "frame_index": 0,
+          "nonfinite_replayed_model_pixels": 0,
+          "numerically_valid": true,
+          "raw_parameter_max_by_channel": [
+            189.625,
+            267.5,
+            242.0,
+            237.375
+          ],
+          "raw_parameter_min_by_channel": [
+            187.5,
+            199.0,
+            181.625,
+            201.125
+          ],
+          "reference_finite": true,
+          "reference_zero_fraction": 1.0,
+          "replay_finite": true,
+          "rgb_within_tolerance": false
+        },
+        {
+          "frame_index": 4,
+          "nonfinite_replayed_model_pixels": 0,
+          "numerically_valid": true,
+          "raw_parameter_max_by_channel": [
+            189.625,
+            267.5,
+            242.0,
+            237.375
+          ],
+          "raw_parameter_min_by_channel": [
+            187.5,
+            199.0,
+            181.625,
+            201.125
+          ],
+          "reference_finite": true,
+          "reference_zero_fraction": 1.0,
+          "replay_finite": true,
+          "rgb_within_tolerance": false
+        },
+        {
+          "frame_index": 7,
+          "nonfinite_replayed_model_pixels": 0,
+          "numerically_valid": true,
+          "raw_parameter_max_by_channel": [
+            189.625,
+            267.5,
+            242.0,
+            237.375
+          ],
+          "raw_parameter_min_by_channel": [
+            -54.625,
+            -77.75,
+            -69.9375,
+            -69.5625
+          ],
+          "reference_finite": true,
+          "reference_zero_fraction": 0.9999594907407408,
+          "replay_finite": true,
+          "rgb_within_tolerance": false
+        }
+      ],
+      "capture_frames_aligned": true,
+      "instrumented_matches_reference": false,
+      "literal_o0_eligible": false,
+      "matrix_inputs_aligned": true,
+      "max_nonfinite_model_pixels": 0,
+      "max_reference_zero_fraction": 1.0,
+      "nondegenerate_mixed_sequence_output": false,
+      "post_rgb_replay_matches": false,
+      "provider_audit_frames": [
+        0,
+        4,
+        7
+      ],
+      "provider_frame_count": 8,
+      "provider_outputs_finite": true,
+      "raw_parameter_abs_max": 267.5,
+      "replay_frames": [
+        0,
+        4,
+        7
+      ],
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2"
+    },
+    "scalar_literal": {
+      "all_captures_passed": false,
+      "all_intermediates_numerically_valid": true,
+      "audited_frames": [
+        {
+          "frame_index": 0,
+          "nonfinite_replayed_model_pixels": 0,
+          "numerically_valid": true,
+          "raw_parameter_max_by_channel": [
+            1.1171875,
+            0.7451171875,
+            1.0234375,
+            -1.900390625
+          ],
+          "raw_parameter_min_by_channel": [
+            -0.6826171875,
+            -1.6171875,
+            -1.318359375,
+            -8.34375
+          ],
+          "reference_finite": true,
+          "reference_zero_fraction": 0.0,
+          "replay_finite": true,
+          "rgb_within_tolerance": false
+        },
+        {
+          "frame_index": 4,
+          "nonfinite_replayed_model_pixels": 0,
+          "numerically_valid": true,
+          "raw_parameter_max_by_channel": [
+            1.0771484375,
+            0.71484375,
+            0.94384765625,
+            -1.4326171875
+          ],
+          "raw_parameter_min_by_channel": [
+            -0.6669921875,
+            -1.5234375,
+            -1.2265625,
+            -8.3828125
+          ],
+          "reference_finite": true,
+          "reference_zero_fraction": 0.0,
+          "replay_finite": true,
+          "rgb_within_tolerance": false
+        },
+        {
+          "frame_index": 7,
+          "nonfinite_replayed_model_pixels": 0,
+          "numerically_valid": true,
+          "raw_parameter_max_by_channel": [
+            0.90625,
+            1.845703125,
+            2.1640625,
+            7.89453125
+          ],
+          "raw_parameter_min_by_channel": [
+            -0.74072265625,
+            -1.78515625,
+            -2.02734375,
+            -11.6953125
+          ],
+          "reference_finite": true,
+          "reference_zero_fraction": 0.0,
+          "replay_finite": true,
+          "rgb_within_tolerance": false
+        }
+      ],
+      "capture_frames_aligned": true,
+      "instrumented_matches_reference": false,
+      "literal_o0_eligible": false,
+      "matrix_inputs_aligned": true,
+      "max_nonfinite_model_pixels": 0,
+      "max_reference_zero_fraction": 0.0,
+      "nondegenerate_mixed_sequence_output": true,
+      "post_rgb_replay_matches": false,
+      "provider_audit_frames": [
+        0,
+        4,
+        7
+      ],
+      "provider_frame_count": 8,
+      "provider_outputs_finite": true,
+      "raw_parameter_abs_max": 11.6953125,
+      "replay_frames": [
+        0,
+        4,
+        7
+      ],
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2"
+    },
+    "scalar_stable": {
+      "all_captures_passed": false,
+      "all_intermediates_numerically_valid": true,
+      "audited_frames": [
+        {
+          "frame_index": 0,
+          "nonfinite_replayed_model_pixels": 0,
+          "numerically_valid": true,
+          "raw_parameter_max_by_channel": [
+            1.1171875,
+            0.7451171875,
+            1.0234375,
+            -1.900390625
+          ],
+          "raw_parameter_min_by_channel": [
+            -0.6826171875,
+            -1.6171875,
+            -1.318359375,
+            -8.3203125
+          ],
+          "reference_finite": true,
+          "reference_zero_fraction": 0.0,
+          "replay_finite": true,
+          "rgb_within_tolerance": false
+        },
+        {
+          "frame_index": 4,
+          "nonfinite_replayed_model_pixels": 0,
+          "numerically_valid": true,
+          "raw_parameter_max_by_channel": [
+            1.0771484375,
+            0.71484375,
+            0.94384765625,
+            -1.4326171875
+          ],
+          "raw_parameter_min_by_channel": [
+            -0.6669921875,
+            -1.5234375,
+            -1.2265625,
+            -8.3828125
+          ],
+          "reference_finite": true,
+          "reference_zero_fraction": 0.0,
+          "replay_finite": true,
+          "rgb_within_tolerance": false
+        },
+        {
+          "frame_index": 7,
+          "nonfinite_replayed_model_pixels": 0,
+          "numerically_valid": true,
+          "raw_parameter_max_by_channel": [
+            0.96533203125,
+            1.845703125,
+            2.1640625,
+            7.89453125
+          ],
+          "raw_parameter_min_by_channel": [
+            -0.74072265625,
+            -1.78515625,
+            -2.025390625,
+            -12.078125
+          ],
+          "reference_finite": true,
+          "reference_zero_fraction": 0.0,
+          "replay_finite": true,
+          "rgb_within_tolerance": false
+        }
+      ],
+      "capture_frames_aligned": true,
+      "instrumented_matches_reference": false,
+      "literal_o0_eligible": false,
+      "matrix_inputs_aligned": true,
+      "max_nonfinite_model_pixels": 0,
+      "max_reference_zero_fraction": 0.0,
+      "nondegenerate_mixed_sequence_output": true,
+      "post_rgb_replay_matches": false,
+      "provider_audit_frames": [
+        0,
+        4,
+        7
+      ],
+      "provider_frame_count": 8,
+      "provider_outputs_finite": true,
+      "raw_parameter_abs_max": 12.078125,
+      "replay_frames": [
+        0,
+        4,
+        7
+      ],
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2"
+    }
+  },
+  "diagnosis": "root cause remains upstream of a source-valid POST; inspect PRE/model tensor scaling, initializer selection, signed-I8 arithmetic and pass-boundary tensors before enabling O1-O13",
+  "input_frame_hashes_aligned_across_cases": true,
+  "mixed_sequence_zero_fraction_gate": 0.999,
+  "o1_o13_may_proceed_on_at_least_one_literal_variant": false,
+  "rule": "Unlock O1-O13 only on a literal pinned-source variant with aligned inputs, finite intermediates, replay agreement, nondegenerate mixed-sequence output, and instrumented/reference equality. Stable POST alone never unlocks O1-O13.",
+  "schema": "f4n10.fsr4-rootcause-matrix.v3",
+  "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+  "sequence_hashes_aligned_across_cases": true,
+  "stable_post_is_diagnostic_only": true
+}

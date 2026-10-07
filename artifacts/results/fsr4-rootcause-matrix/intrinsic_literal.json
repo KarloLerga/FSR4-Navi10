@@ -1,0 +1,258 @@
+{
+  "adapter": "AMD Radeon RX 5700 XT",
+  "audit_capture_packages": [
+    {
+      "array_bytes": 215654400,
+      "array_count": 12,
+      "capture_origin_claim": "procedural_synthetic_gpu_provider_capture",
+      "frame_index": 0,
+      "output_size": [
+        1920,
+        1080
+      ],
+      "path": "build/fsr4-rootcause-matrix/case-data/intrinsic_literal/captures/frame_0.f4cap",
+      "preset": "native",
+      "render_size": [
+        1920,
+        1080
+      ],
+      "schema": "f4n10.teacher.capture.v1",
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "sequence_id": "procedural-mixed-17",
+      "validation_note": "Integrity checks passed; capture provenance and GPU origin remain self-reported metadata.",
+      "validity": {
+        "depth": true,
+        "input_color": true,
+        "motion_vectors": true,
+        "reactive_mask": true,
+        "transparency_composition_mask": true
+      }
+    },
+    {
+      "array_bytes": 215654400,
+      "array_count": 12,
+      "capture_origin_claim": "procedural_synthetic_gpu_provider_capture",
+      "frame_index": 4,
+      "output_size": [
+        1920,
+        1080
+      ],
+      "path": "build/fsr4-rootcause-matrix/case-data/intrinsic_literal/captures/frame_4.f4cap",
+      "preset": "native",
+      "render_size": [
+        1920,
+        1080
+      ],
+      "schema": "f4n10.teacher.capture.v1",
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "sequence_id": "procedural-mixed-17",
+      "validation_note": "Integrity checks passed; capture provenance and GPU origin remain self-reported metadata.",
+      "validity": {
+        "depth": true,
+        "input_color": true,
+        "motion_vectors": true,
+        "reactive_mask": true,
+        "transparency_composition_mask": true
+      }
+    },
+    {
+      "array_bytes": 215654400,
+      "array_count": 12,
+      "capture_origin_claim": "procedural_synthetic_gpu_provider_capture",
+      "frame_index": 7,
+      "output_size": [
+        1920,
+        1080
+      ],
+      "path": "build/fsr4-rootcause-matrix/case-data/intrinsic_literal/captures/frame_7.f4cap",
+      "preset": "native",
+      "render_size": [
+        1920,
+        1080
+      ],
+      "schema": "f4n10.teacher.capture.v1",
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "sequence_id": "procedural-mixed-17",
+      "validation_note": "Integrity checks passed; capture provenance and GPU origin remain self-reported metadata.",
+      "validity": {
+        "depth": true,
+        "input_color": true,
+        "motion_vectors": true,
+        "reactive_mask": true,
+        "transparency_composition_mask": true
+      }
+    }
+  ],
+  "build_commit": "6aca8f0102025afac460c1ac313b7457ac576031",
+  "capture_frames": [
+    0,
+    4,
+    7
+  ],
+  "driver_version": "0x00200000523503e8",
+  "frame_count": 8,
+  "frames": [
+    {
+      "camera_cut": false,
+      "capture_manifest": "build/fsr4-rootcause-matrix/case-data/intrinsic_literal/captures/frame_0/manifest.json",
+      "capture_package": "build/fsr4-rootcause-matrix/case-data/intrinsic_literal/captures/frame_0.f4cap",
+      "frame_index": 0,
+      "input_frame_sha256": "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+      "instrumented_output_sha256": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+      "jitter_current": [
+        0,
+        -0.166667
+      ],
+      "output_identical": true,
+      "outputs_finite": true,
+      "raw_parameter_sha256": "db5fdd5fb5b79315dcbd610c0e80df0f7cf3f49d6556fee3c5d6b1dd4b9f3fef",
+      "recurrent_state_sha256": "598ddbfa658eaf70a2e0c50fa12f914c28a4496bbb150a21d6d77d73b0d8c55d",
+      "reference_gpu_dispatch_us": 9544.15,
+      "reference_output_sha256": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+      "reset": true
+    },
+    {
+      "camera_cut": false,
+      "frame_index": 1,
+      "input_frame_sha256": "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+      "instrumented_output_sha256": "b258f7216bb04dc355567bd52f7f5062442a7c212b60bd492e86c97f5b31a5fb",
+      "jitter_current": [
+        -0.25,
+        0.166667
+      ],
+      "output_identical": true,
+      "outputs_finite": true,
+      "reference_gpu_dispatch_us": 8171.84,
+      "reference_output_sha256": "b258f7216bb04dc355567bd52f7f5062442a7c212b60bd492e86c97f5b31a5fb",
+      "reset": false
+    },
+    {
+      "camera_cut": false,
+      "frame_index": 2,
+      "input_frame_sha256": "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+      "instrumented_output_sha256": "a1f64bfbbbe96279992ccc7e8df65216dde62340e18fe36364ac8db2d70e7e73",
+      "jitter_current": [
+        0.25,
+        -0.388889
+      ],
+      "output_identical": true,
+      "outputs_finite": true,
+      "reference_gpu_dispatch_us": 7706.16,
+      "reference_output_sha256": "a1f64bfbbbe96279992ccc7e8df65216dde62340e18fe36364ac8db2d70e7e73",
+      "reset": false
+    },
+    {
+      "camera_cut": false,
+      "frame_index": 3,
+      "input_frame_sha256": "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+      "instrumented_output_sha256": "8482b834c9fae75c385a2251303c02ae2f16e2368f546e38b6bc2c3defe7420e",
+      "jitter_current": [
+        -0.375,
+        -0.0555556
+      ],
+      "output_identical": false,
+      "outputs_finite": true,
+      "reference_gpu_dispatch_us": 8893.12,
+      "reference_output_sha256": "08edca6183a891ba3a0629e7ca67e9a923fc380d5e59184e152c82f47e484ffe",
+      "reset": false
+    },
+    {
+      "camera_cut": true,
+      "capture_manifest": "build/fsr4-rootcause-matrix/case-data/intrinsic_literal/captures/frame_4/manifest.json",
+      "capture_package": "build/fsr4-rootcause-matrix/case-data/intrinsic_literal/captures/frame_4.f4cap",
+      "frame_index": 4,
+      "input_frame_sha256": "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+      "instrumented_output_sha256": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+      "jitter_current": [
+        0.125,
+        0.277778
+      ],
+      "output_identical": true,
+      "outputs_finite": true,
+      "raw_parameter_sha256": "db5fdd5fb5b79315dcbd610c0e80df0f7cf3f49d6556fee3c5d6b1dd4b9f3fef",
+      "recurrent_state_sha256": "598ddbfa658eaf70a2e0c50fa12f914c28a4496bbb150a21d6d77d73b0d8c55d",
+      "reference_gpu_dispatch_us": 8140.28,
+      "reference_output_sha256": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+      "reset": true
+    },
+    {
+      "camera_cut": false,
+      "frame_index": 5,
+      "input_frame_sha256": "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+      "instrumented_output_sha256": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+      "jitter_current": [
+        -0.125,
+        -0.277778
+      ],
+      "output_identical": true,
+      "outputs_finite": true,
+      "reference_gpu_dispatch_us": 7794.92,
+      "reference_output_sha256": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+      "reset": false
+    },
+    {
+      "camera_cut": false,
+      "frame_index": 6,
+      "input_frame_sha256": "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+      "instrumented_output_sha256": "eb146d64351371e6fed94d0e1779683946ec86fbde6bae8e2d36bfc55977b250",
+      "jitter_current": [
+        0.375,
+        0.0555556
+      ],
+      "output_identical": true,
+      "outputs_finite": true,
+      "reference_gpu_dispatch_us": 8655.08,
+      "reference_output_sha256": "eb146d64351371e6fed94d0e1779683946ec86fbde6bae8e2d36bfc55977b250",
+      "reset": false
+    },
+    {
+      "camera_cut": false,
+      "capture_manifest": "build/fsr4-rootcause-matrix/case-data/intrinsic_literal/captures/frame_7/manifest.json",
+      "capture_package": "build/fsr4-rootcause-matrix/case-data/intrinsic_literal/captures/frame_7.f4cap",
+      "frame_index": 7,
+      "input_frame_sha256": "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3",
+      "instrumented_output_sha256": "33e4ffd0a516046a42b77a759ec1af6aca5b6621eba31a454cddb63a05b4987e",
+      "jitter_current": [
+        -0.4375,
+        0.388889
+      ],
+      "output_identical": true,
+      "outputs_finite": true,
+      "raw_parameter_sha256": "9ec7a4f80b0f2309e6bc936283a3dbc8183fcf83f65d6b636f6c88e8d6ee5d03",
+      "recurrent_state_sha256": "5f3f26e6f9a5b8170e3d8deb06668c9aa6e44a588937c8bb65da6c25c14e3cf8",
+      "reference_gpu_dispatch_us": 8060.36,
+      "reference_output_sha256": "33e4ffd0a516046a42b77a759ec1af6aca5b6621eba31a454cddb63a05b4987e",
+      "reset": false
+    }
+  ],
+  "gpu_timing": {
+    "all_frames_mean_us": 8370.74,
+    "scope": "provider GPU work only; excludes input upload, output readback, CPU and packaging",
+    "source": "D3D12 timestamp queries around non-instrumented FSR4 provider Dispatch",
+    "steady_state_excludes_first_reset_and_cuts": true,
+    "steady_state_frame_count": 6,
+    "steady_state_mean_us": 8213.58,
+    "steady_state_p50_us": 8060.36,
+    "steady_state_p95_us": 8893.12,
+    "timestamp_frequency_hz": 100000000
+  },
+  "gpu_timing_recorded": true,
+  "instrumentation_matches_reference": false,
+  "output_size": [
+    1920,
+    1080
+  ],
+  "preset": "native",
+  "provider": "pinned_amd_fsr4_i8_native_1080",
+  "provider_outputs_finite": true,
+  "render_size": [
+    1920,
+    1080
+  ],
+  "schema": "f4n10.fsr4-provider-sequence.v1",
+  "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+  "sequence_id": "procedural-mixed-17",
+  "shader_manifest": null,
+  "source_kind": "procedural_synthetic",
+  "upstream_commit": "01446e6a74888bf349652fcf2cbf5f642d30c2bf"
+}

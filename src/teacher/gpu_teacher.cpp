@@ -1514,6 +1514,7 @@ int run_fsr4_provider_sequence(const std::filesystem::path& sequence_path,
     reference_gpu_times.reserve(sequence_metadata.frame_count);
     steady_state_gpu_times.reserve(sequence_metadata.frame_count);
     bool all_match = true;
+    bool all_outputs_finite = true;
     for (std::uint32_t frame_index = 0; frame_index < sequence_metadata.frame_count; ++frame_index) {
         auto frame = sequence.read_frame(frame_index);
         upload_frame(frame);
@@ -1540,15 +1541,18 @@ int run_fsr4_provider_sequence(const std::filesystem::path& sequence_path,
         }
         const std::string reference_hash = sha256_hex(reference[0]);
         const bool matches = instrumented[0] == reference[0];
+        const bool instrumented_finite = all_half_values_are_finite(instrumented[0]);
+        const bool reference_finite = all_half_values_are_finite(reference[0]);
         all_match = all_match && matches;
-        if (!matches || !all_half_values_are_finite(instrumented[0]) ||
-            !all_half_values_are_finite(reference[0])) {
+        all_outputs_finite = all_outputs_finite && instrumented_finite && reference_finite;
+        if (!matches || !instrumented_finite || !reference_finite) {
             std::ostringstream error;
             error << "stateful FSR4 provider validation failed on frame " << frame_index
                   << ": instrumented/reference match=" << matches
+                  << ", instrumented/reference finite=" << instrumented_finite << '/' << reference_finite
                   << ", instrumented SHA-256=" << instrumented_hash
                   << ", reference SHA-256=" << reference_hash;
-            throw std::runtime_error(error.str());
+            std::cerr << error.str() << '\n';
         }
 
         std::ostringstream frame_json;
@@ -1560,6 +1564,7 @@ int run_fsr4_provider_sequence(const std::filesystem::path& sequence_path,
                    << ", \"reference_gpu_dispatch_us\": " << std::setprecision(9) << reference_gpu_time_us
                    << ", \"instrumented_output_sha256\": \"" << instrumented_hash << "\""
                    << ", \"reference_output_sha256\": \"" << reference_hash << "\""
+                   << ", \"outputs_finite\": " << (instrumented_finite && reference_finite ? "true" : "false")
                    << ", \"output_identical\": " << (matches ? "true" : "false");
         if (audit) {
             frame_json << ", \"raw_parameter_sha256\": \"" << parameter_hash << "\""
@@ -1606,6 +1611,7 @@ int run_fsr4_provider_sequence(const std::filesystem::path& sequence_path,
            << "  \"output_size\": [" << kWidth << ", " << kHeight << "],\n"
            << "  \"frame_count\": " << sequence_metadata.frame_count << ",\n"
            << "  \"instrumentation_matches_reference\": " << (all_match ? "true" : "false") << ",\n"
+           << "  \"provider_outputs_finite\": " << (all_outputs_finite ? "true" : "false") << ",\n"
            << "  \"gpu_timing_recorded\": true,\n"
            << "  \"gpu_timing\": {\"source\": \"D3D12 timestamp queries around non-instrumented FSR4 provider Dispatch\", "
            << "\"scope\": \"provider GPU work only; excludes input upload, output readback, CPU and packaging\", "

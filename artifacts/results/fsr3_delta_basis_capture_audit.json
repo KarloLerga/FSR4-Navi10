@@ -1,0 +1,229 @@
+{
+  "audit_frames": [
+    {
+      "final_output_matches_reference": true,
+      "final_output_sha256": "69816231c054441f534ddc33cc8c902b7975665c5426c9f905770ff5e0c44432",
+      "final_output_well_formed": true,
+      "frame_index": 0,
+      "input_frame_sha256": "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+      "taps": {
+        "current_candidate_accum_ycocg_plus_alpha": {
+          "bytes": 16588800,
+          "dtype": "<f2",
+          "expected_bytes": 16588800,
+          "present": true,
+          "sha256": "f8a990de1b9648610ecb432bcd1659c77abb2310935ea5d719d85b134c4de1a6",
+          "shape": [
+            1080,
+            1920,
+            4
+          ],
+          "well_formed": true
+        },
+        "current_candidate_linear_rgb_plus_alpha": {
+          "bytes": 16588800,
+          "dtype": "<f2",
+          "expected_bytes": 16588800,
+          "present": true,
+          "sha256": "69816231c054441f534ddc33cc8c902b7975665c5426c9f905770ff5e0c44432",
+          "shape": [
+            1080,
+            1920,
+            4
+          ],
+          "well_formed": true
+        },
+        "reprojected_history_accum_ycocg_plus_alpha": {
+          "bytes": 16588800,
+          "dtype": "<f2",
+          "expected_bytes": 16588800,
+          "present": true,
+          "sha256": "5774a6c0e0f0dee4f11f3049466b1ae597b09562abb551ec7fbacc5a33eae69c",
+          "shape": [
+            1080,
+            1920,
+            4
+          ],
+          "well_formed": true
+        },
+        "reprojected_history_linear_rgb_plus_alpha": {
+          "bytes": 16588800,
+          "dtype": "<f2",
+          "expected_bytes": 16588800,
+          "present": true,
+          "sha256": "4ad591503b987570ae807d464763ad10b03901e2961b27b42541b3df5cee26b2",
+          "shape": [
+            1080,
+            1920,
+            4
+          ],
+          "well_formed": true
+        }
+      }
+    },
+    {
+      "final_output_matches_reference": true,
+      "final_output_sha256": "e0530cbeb117a5e82b61397233499c1d3691b98b0a80ccae03736df44fa878e7",
+      "final_output_well_formed": true,
+      "frame_index": 4,
+      "input_frame_sha256": "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+      "taps": {
+        "current_candidate_accum_ycocg_plus_alpha": {
+          "bytes": 16588800,
+          "dtype": "<f2",
+          "expected_bytes": 16588800,
+          "present": true,
+          "sha256": "a48ad049f4601c8dccfed3695a269b863a228d6a349f48baef58375f455d74af",
+          "shape": [
+            1080,
+            1920,
+            4
+          ],
+          "well_formed": true
+        },
+        "current_candidate_linear_rgb_plus_alpha": {
+          "bytes": 16588800,
+          "dtype": "<f2",
+          "expected_bytes": 16588800,
+          "present": true,
+          "sha256": "e0530cbeb117a5e82b61397233499c1d3691b98b0a80ccae03736df44fa878e7",
+          "shape": [
+            1080,
+            1920,
+            4
+          ],
+          "well_formed": true
+        },
+        "reprojected_history_accum_ycocg_plus_alpha": {
+          "bytes": 16588800,
+          "dtype": "<f2",
+          "expected_bytes": 16588800,
+          "present": true,
+          "sha256": "f5c5799fc9277e3c22ef0f78a105996bb1e20a3876af3e706e5e766bae9209a8",
+          "shape": [
+            1080,
+            1920,
+            4
+          ],
+          "well_formed": true
+        },
+        "reprojected_history_linear_rgb_plus_alpha": {
+          "bytes": 16588800,
+          "dtype": "<f2",
+          "expected_bytes": 16588800,
+          "present": true,
+          "sha256": "3da1551e5420cb0a660a2870ced50eea8b8aa6da4cabd7a8cb11e2f7dbff31a6",
+          "shape": [
+            1080,
+            1920,
+            4
+          ],
+          "well_formed": true
+        }
+      }
+    },
+    {
+      "final_output_matches_reference": true,
+      "final_output_sha256": "2e0a44e57b273cc609e7e5da3019a488d57a61e9c0cd8b0c714c59133e8d638a",
+      "final_output_well_formed": true,
+      "frame_index": 7,
+      "input_frame_sha256": "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3",
+      "taps": {
+        "current_candidate_accum_ycocg_plus_alpha": {
+          "bytes": 16588800,
+          "dtype": "<f2",
+          "expected_bytes": 16588800,
+          "present": true,
+          "sha256": "cb8ba5f7f031002e54fe4981c53f5867f75dc54e781122ab5f7b5d80d07bfc05",
+          "shape": [
+            1080,
+            1920,
+            4
+          ],
+          "well_formed": true
+        },
+        "current_candidate_linear_rgb_plus_alpha": {
+          "bytes": 16588800,
+          "dtype": "<f2",
+          "expected_bytes": 16588800,
+          "present": true,
+          "sha256": "30bc8313a059ef5cd403d462106b5dfac850217e4ad778293f216c6809364008",
+          "shape": [
+            1080,
+            1920,
+            4
+          ],
+          "well_formed": true
+        },
+        "reprojected_history_accum_ycocg_plus_alpha": {
+          "bytes": 16588800,
+          "dtype": "<f2",
+          "expected_bytes": 16588800,
+          "present": true,
+          "sha256": "a6f085a35bb9298c073d4f3d0f700621a57f8ab777d1ec419cfe19fd249e9e18",
+          "shape": [
+            1080,
+            1920,
+            4
+          ],
+          "well_formed": true
+        },
+        "reprojected_history_linear_rgb_plus_alpha": {
+          "bytes": 16588800,
+          "dtype": "<f2",
+          "expected_bytes": 16588800,
+          "present": true,
+          "sha256": "54569beaf9f4284446ed2dcb3ab065c49e03de42d5be92c7bf6bd4112a5fcb4b",
+          "shape": [
+            1080,
+            1920,
+            4
+          ],
+          "well_formed": true
+        }
+      }
+    }
+  ],
+  "checks": {
+    "final_output_capture_matches_reference": true,
+    "four_taps_present_with_expected_shape_and_dtype": true,
+    "fsr3_exact_accumulation_site_basis_taps": true,
+    "fsr3_instrumented_reference_outputs_match": true,
+    "input_frame_hashes_aligned": true,
+    "quality_not_claimed": true
+  },
+  "gpu_name": "AMD Radeon RX 5700 XT",
+  "input_frame_alignment": {
+    "all_expected_frames_present": true,
+    "all_fsr4_cases_match_each_other": true,
+    "cases": {
+      "intrinsic_literal": {
+        "frame_count": 8,
+        "matches_fsr3": true
+      },
+      "intrinsic_stable": {
+        "frame_count": 8,
+        "matches_fsr3": true
+      },
+      "scalar_literal": {
+        "frame_count": 8,
+        "matches_fsr3": true
+      },
+      "scalar_stable": {
+        "frame_count": 8,
+        "matches_fsr3": true
+      }
+    },
+    "expected_frame_count": 8,
+    "frame_count": 8,
+    "fsr3_matches_every_fsr4_case": true
+  },
+  "note": "C/H taps are recorded at the FSR3.1.5 accumulation site for diagnostic comparison; this audit makes no quality claim.",
+  "passed": true,
+  "provider": "FidelityFX FSR3 Upscaler 3.1.5",
+  "quality_claimed": false,
+  "schema": "f4n10.fsr3-delta-basis-capture-audit.v1",
+  "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+  "sequence_id": "procedural-mixed-17",
+  "shader_manifest_sha256": "116bdd11506a3c0ee3baaa4f64e79953f66a339d548a999cb80ec672460a49da"
+}

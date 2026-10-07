@@ -1,0 +1,140 @@
+{
+  "build_commit": "6aca8f0102025afac460c1ac313b7457ac576031",
+  "build_mode": "Release",
+  "dispatch": {
+    "camera_far": 1000.0,
+    "camera_fov_vertical_radians": 1.0,
+    "camera_near": 0.1,
+    "depth_inverted": false,
+    "hdr_linear_color": true,
+    "jitter_cancellation": false,
+    "sharpening": false,
+    "view_space_to_meters_factor": 1.0,
+    "watermark_injection_enabled": false
+  },
+  "driver_version": "0x00200000523503e8",
+  "frames": [
+    {
+      "camera_cut": false,
+      "capture_manifest": "build/release/fsr3-rootcause-captures/frame_0/manifest.json",
+      "frame_index": 0,
+      "input_frame_sha256": "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+      "instrumented_output_sha256": "69816231c054441f534ddc33cc8c902b7975665c5426c9f905770ff5e0c44432",
+      "instrumented_reference_match": true,
+      "reference_gpu_dispatch_us": 2203.88,
+      "reference_output_sha256": "69816231c054441f534ddc33cc8c902b7975665c5426c9f905770ff5e0c44432",
+      "reset": true
+    },
+    {
+      "camera_cut": false,
+      "frame_index": 1,
+      "input_frame_sha256": "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+      "instrumented_output_sha256": "0d44c426f7ac44e8b7b96730aa2f27f95ccc4b7b23047282cae65d0ac5e36ad9",
+      "instrumented_reference_match": true,
+      "reference_gpu_dispatch_us": 2548.96,
+      "reference_output_sha256": "0d44c426f7ac44e8b7b96730aa2f27f95ccc4b7b23047282cae65d0ac5e36ad9",
+      "reset": false
+    },
+    {
+      "camera_cut": false,
+      "frame_index": 2,
+      "input_frame_sha256": "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+      "instrumented_output_sha256": "f448283ac0e9bcbd44eea8c1f06868dc17bb7f5fb7c1eeef9a2eb379d4543f99",
+      "instrumented_reference_match": true,
+      "reference_gpu_dispatch_us": 2547,
+      "reference_output_sha256": "f448283ac0e9bcbd44eea8c1f06868dc17bb7f5fb7c1eeef9a2eb379d4543f99",
+      "reset": false
+    },
+    {
+      "camera_cut": false,
+      "frame_index": 3,
+      "input_frame_sha256": "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+      "instrumented_output_sha256": "ff4ffc56ffde2d22861de0fe003176426c6e692b987fc905262e2fe138a8beb5",
+      "instrumented_reference_match": true,
+      "reference_gpu_dispatch_us": 2622.2,
+      "reference_output_sha256": "ff4ffc56ffde2d22861de0fe003176426c6e692b987fc905262e2fe138a8beb5",
+      "reset": false
+    },
+    {
+      "camera_cut": true,
+      "capture_manifest": "build/release/fsr3-rootcause-captures/frame_4/manifest.json",
+      "frame_index": 4,
+      "input_frame_sha256": "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+      "instrumented_output_sha256": "e0530cbeb117a5e82b61397233499c1d3691b98b0a80ccae03736df44fa878e7",
+      "instrumented_reference_match": true,
+      "reference_gpu_dispatch_us": 2437.68,
+      "reference_output_sha256": "e0530cbeb117a5e82b61397233499c1d3691b98b0a80ccae03736df44fa878e7",
+      "reset": true
+    },
+    {
+      "camera_cut": false,
+      "frame_index": 5,
+      "input_frame_sha256": "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+      "instrumented_output_sha256": "6d89618fa18fd69ec7aa68285db21b3ff4e64a6961d81f744d1bd62949fb1b4d",
+      "instrumented_reference_match": true,
+      "reference_gpu_dispatch_us": 2474.36,
+      "reference_output_sha256": "6d89618fa18fd69ec7aa68285db21b3ff4e64a6961d81f744d1bd62949fb1b4d",
+      "reset": false
+    },
+    {
+      "camera_cut": false,
+      "frame_index": 6,
+      "input_frame_sha256": "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+      "instrumented_output_sha256": "a5c61588307a2acf517f52c5f2096a7212f38cf7e21906a8c4ef87859fa74caa",
+      "instrumented_reference_match": true,
+      "reference_gpu_dispatch_us": 2586.04,
+      "reference_output_sha256": "a5c61588307a2acf517f52c5f2096a7212f38cf7e21906a8c4ef87859fa74caa",
+      "reset": false
+    },
+    {
+      "camera_cut": false,
+      "capture_manifest": "build/release/fsr3-rootcause-captures/frame_7/manifest.json",
+      "frame_index": 7,
+      "input_frame_sha256": "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3",
+      "instrumented_output_sha256": "2e0a44e57b273cc609e7e5da3019a488d57a61e9c0cd8b0c714c59133e8d638a",
+      "instrumented_reference_match": true,
+      "reference_gpu_dispatch_us": 2651.76,
+      "reference_output_sha256": "2e0a44e57b273cc609e7e5da3019a488d57a61e9c0cd8b0c714c59133e8d638a",
+      "reset": false
+    }
+  ],
+  "gpu_name": "AMD Radeon RX 5700 XT",
+  "gpu_timing": {
+    "all_frames_mean_us": 2508.99,
+    "scope": "provider GPU work only; excludes input upload, output readback, CPU and packaging",
+    "source": "D3D12 timestamp queries around non-instrumented FSR3 provider Dispatch",
+    "steady_state_excludes_first_reset_and_cuts": true,
+    "steady_state_frame_count": 6,
+    "steady_state_mean_us": 2571.72,
+    "steady_state_p50_us": 2548.96,
+    "steady_state_p95_us": 2651.76,
+    "timestamp_frequency_hz": 100000000
+  },
+  "provider": "FidelityFX FSR3 Upscaler 3.1.5",
+  "schema": "f4n10.fsr3-reference-sequence.v1",
+  "sdk_commit": "60f4ea81909200d8542eca14dccb2628b763a9a3",
+  "sequence": {
+    "frame_count": 8,
+    "id": "procedural-mixed-17",
+    "motion_vector_convention": "current_to_previous_render_pixels_unjittered",
+    "output_size": [
+      1920,
+      1080
+    ],
+    "render_size": [
+      1920,
+      1080
+    ],
+    "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+    "source_hash": "03334c32d18f4e3878a44b92a4194da88ac4f5c19392db1ae650430363a7bf0b",
+    "source_kind": "procedural_synthetic"
+  },
+  "shader_manifest": "build/release/fsr3_reference/manifest.json",
+  "shader_manifest_sha256": "116bdd11506a3c0ee3baaa4f64e79953f66a339d548a999cb80ec672460a49da",
+  "validation": {
+    "exact_accumulation_site_basis_taps": true,
+    "gpu_timing_recorded": true,
+    "instrumented_reference_outputs_match": true,
+    "quality_claimed": false
+  }
+}

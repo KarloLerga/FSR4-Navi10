@@ -485,6 +485,29 @@ struct TargetFormat {
     std::size_t bytes_per_pixel;
 };
 
+std::vector<std::byte> extract_horizontal_region(
+    const std::vector<std::byte>& atlas, std::uint32_t atlas_width,
+    std::uint32_t region_width, std::uint32_t height,
+    std::uint32_t region_index, std::size_t bytes_per_pixel) {
+    if (region_width == 0 || height == 0 || bytes_per_pixel == 0 ||
+        atlas_width < region_width * (region_index + 1)) {
+        throw std::runtime_error("invalid horizontal capture-atlas region");
+    }
+    const std::size_t atlas_row_bytes = static_cast<std::size_t>(atlas_width) * bytes_per_pixel;
+    const std::size_t region_row_bytes = static_cast<std::size_t>(region_width) * bytes_per_pixel;
+    if (atlas.size() != atlas_row_bytes * height) {
+        throw std::runtime_error("FSR3 capture atlas byte size does not match its dimensions");
+    }
+    std::vector<std::byte> out(region_row_bytes * height);
+    const std::size_t x_offset = static_cast<std::size_t>(region_index) * region_row_bytes;
+    for (std::uint32_t row = 0; row < height; ++row) {
+        std::memcpy(out.data() + static_cast<std::size_t>(row) * region_row_bytes,
+                    atlas.data() + static_cast<std::size_t>(row) * atlas_row_bytes + x_offset,
+                    region_row_bytes);
+    }
+    return out;
+}
+
 TargetFormat target_format(DXGI_FORMAT format) {
     switch (format) {
     case DXGI_FORMAT_R8_UNORM: return {"|u1", 1, 1};
@@ -727,7 +750,8 @@ int run_fsr3_reference_sequence(const std::filesystem::path& sequence_path,
                                      D3D12_RESOURCE_STATE_COPY_DEST);
     inputs.transparency = create_texture(target.device.Get(), render_width, render_height, DXGI_FORMAT_R8_UNORM,
                                          D3D12_RESOURCE_STATE_COPY_DEST);
-    auto instrumented_output = create_texture(target.device.Get(), output_width, output_height,
+    const std::uint32_t instrumented_output_width = capture_root.empty() ? output_width : output_width * 5;
+    auto instrumented_output = create_texture(target.device.Get(), instrumented_output_width, output_height,
                                                DXGI_FORMAT_R16G16B16A16_FLOAT,
                                                D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
                                                D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS);
@@ -787,6 +811,7 @@ int run_fsr3_reference_sequence(const std::filesystem::path& sequence_path,
     reference_gpu_times.reserve(metadata.frame_count);
     steady_state_gpu_times.reserve(metadata.frame_count);
     bool all_match = true;
+    bool all_capture_taps_present = !capture_root.empty();
     for (std::uint32_t frame_index = 0; frame_index < metadata.frame_count; ++frame_index) {
         SequenceFrame frame = sequence.read_frame(frame_index);
         upload_frame_inputs(target.device.Get(), queue.Get(), allocator.Get(), command_list.Get(), waiter,
@@ -836,13 +861,56 @@ int run_fsr3_reference_sequence(const std::filesystem::path& sequence_path,
             for (const auto& texture : textures)
                 requests.push_back({texture.texture, texture.state, texture.format.bytes_per_pixel});
             auto data = read_textures(target.device.Get(), queue.Get(), command_list.Get(), waiter, requests);
-            if (data.size() != textures.size() || data.front().size() != output_bytes)
-                throw std::runtime_error("FSR3 output readback has an unexpected size");
+            if (data.size() != textures.size())
+                throw std::runtime_error("FSR3 output readback count does not match capture descriptors");
+            if (instrumented_provider && !capture_root.empty()) {
+                const std::uint32_t atlas_width = output_width * 5;
+                auto atlas = std::move(data.front());
+                data.front() = extract_horizontal_region(
+                    atlas, atlas_width, output_width, output_height, 0, 8);
+                textures.front().name = "final_output";
+                textures.front().width = output_width;
+                if (capture_taps) {
+                    const std::array<const char*, 4> basis_names{
+                        "current_candidate_accum_ycocg_plus_alpha",
+                        "reprojected_history_accum_ycocg_plus_alpha",
+                        "current_candidate_linear_rgb_plus_alpha",
+                        "reprojected_history_linear_rgb_plus_alpha",
+                    };
+                    for (std::uint32_t region = 1; region <= basis_names.size(); ++region) {
+                        CapturedTexture descriptor;
+                        descriptor.name = basis_names[region - 1];
+                        descriptor.texture = nullptr;
+                        descriptor.state = D3D12_RESOURCE_STATE_COMMON;
+                        descriptor.width = output_width;
+                        descriptor.height = output_height;
+                        descriptor.format = {"<f2", 4, 8};
+                        textures.push_back(std::move(descriptor));
+                        data.push_back(extract_horizontal_region(
+                            atlas, atlas_width, output_width, output_height, region, 8));
+                    }
+                }
+            }
+            if (data.front().size() != output_bytes)
+                throw std::runtime_error("FSR3 final-output readback has an unexpected size");
             if (!instrumented_provider) reference_gpu_time_us = gpu_timer.elapsed_microseconds();
             return std::pair{std::move(textures), std::move(data)};
         };
 
         auto instrumented = run_dispatch(instrumented_context, instrumented_output.Get(), true, audit);
+        if (audit && all_capture_taps_present) {
+            const std::array<const char*, 4> basis_names{
+                "current_candidate_accum_ycocg_plus_alpha",
+                "reprojected_history_accum_ycocg_plus_alpha",
+                "current_candidate_linear_rgb_plus_alpha",
+                "reprojected_history_linear_rgb_plus_alpha",
+            };
+            for (const char* name : basis_names) {
+                all_capture_taps_present = all_capture_taps_present && std::any_of(
+                    instrumented.first.begin(), instrumented.first.end(),
+                    [name](const CapturedTexture& texture) { return texture.name == name; });
+            }
+        }
         auto reference = run_dispatch(reference_context, reference_output.Get(), false, false);
         reference_gpu_times.push_back(reference_gpu_time_us);
         if (frame_index != 0 && !frame.metadata.reset && !frame.metadata.camera_cut)
@@ -945,6 +1013,7 @@ int run_fsr3_reference_sequence(const std::filesystem::path& sequence_path,
            << ", \"steady_state_p50_us\": " << percentile(steady_state_gpu_times, 0.50)
            << ", \"steady_state_p95_us\": " << percentile(steady_state_gpu_times, 0.95) << "},\n"
            << "  \"validation\": {\"instrumented_reference_outputs_match\": " << (all_match ? "true" : "false")
+           << ", \"exact_accumulation_site_basis_taps\": " << (all_capture_taps_present ? "true" : "false")
            << ", \"gpu_timing_recorded\": true, \"quality_claimed\": false},\n"
            << "  \"frames\": [\n";
     for (std::size_t index = 0; index < frame_reports.size(); ++index)
