@@ -1,5 +1,7 @@
 #include "fsr4n10/device_caps.h"
+#include "fsr4n10/dot4_probe.h"
 #include "fsr4n10/fp16_probe.h"
+#include "fsr4n10/fsr4_post_oracle.h"
 #include "fsr4n10/gpu_teacher.h"
 #include "fsr4n10/model_pack.h"
 #include "fsr4n10/naviqsr_gpu.h"
@@ -22,6 +24,8 @@ void print_usage() {
               << "  fsr4n10_harness.exe --version\n"
               << "  fsr4n10_harness.exe --list-adapters\n"
               << "  fsr4n10_harness.exe --run-fp16-probe\n"
+              << "  fsr4n10_harness.exe --run-dot4-conformance <report.json>\n"
+              << "  fsr4n10_harness.exe --run-fsr4-post-gpu-oracle <case.f4postcase> <report.json>\n"
               << "  fsr4n10_harness.exe --run-upstream-pass0-smoke\n"
               << "  fsr4n10_harness.exe --run-fsr4-provider-smoke <report.json>\n"
               << "  fsr4n10_harness.exe --validate-f4seq <sequence.f4seq>\n"
@@ -105,6 +109,13 @@ int main(int argc, char** argv) {
         }
         if (argc == 2 && std::string_view(argv[1]) == "--run-fp16-probe") {
             return fsr4n10::run_fp16_probe();
+        }
+        if (argc == 3 && std::string_view(argv[1]) == "--run-dot4-conformance") {
+            return fsr4n10::run_dot4_conformance(std::filesystem::path(argv[2]));
+        }
+        if (argc == 4 && std::string_view(argv[1]) == "--run-fsr4-post-gpu-oracle") {
+            return fsr4n10::run_fsr4_post_gpu_oracle(std::filesystem::path(argv[2]),
+                                                     std::filesystem::path(argv[3]));
         }
         if (argc == 2 && std::string_view(argv[1]) == "--run-upstream-pass0-smoke") {
             return fsr4n10::run_upstream_pass0_smoke();

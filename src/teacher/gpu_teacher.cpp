@@ -1378,7 +1378,8 @@ int run_fsr4_provider_sequence(const std::filesystem::path& sequence_path,
     };
 
     const auto write_sequence_capture = [&](const SequenceFrame& frame,
-                                             const std::vector<std::vector<std::byte>>& capture) {
+                                             const std::vector<std::vector<std::byte>>& capture,
+                                             const std::vector<std::byte>& reference_output) {
         if (capture.size() != 4) {
             throw std::runtime_error("sequence audit capture is missing provider taps");
         }
@@ -1394,6 +1395,7 @@ int run_fsr4_provider_sequence(const std::filesystem::path& sequence_path,
         const auto physical_controls = extract_rgba32_region(capture[1], 4, kWidth * 5, kWidth, kHeight, 4);
         const auto reprojected_history = extract_rgba16_rgb(capture[3], pixel_count);
         const auto final_rgb = extract_rgba16_rgb(capture[0], pixel_count);
+        const auto reference_rgb = extract_rgba16_rgb(reference_output, pixel_count);
         write_binary_file(arrays_dir / "input_color.raw", input_color);
         write_binary_file(arrays_dir / "depth.raw", input_depth);
         write_binary_file(arrays_dir / "motion_vectors.raw", input_motion);
@@ -1404,6 +1406,7 @@ int run_fsr4_provider_sequence(const std::filesystem::path& sequence_path,
         write_binary_file(arrays_dir / "physical_controls.raw", physical_controls);
         write_binary_file(arrays_dir / "recurrent_state.raw", capture[2]);
         write_binary_file(arrays_dir / "final_rgb.raw", final_rgb);
+        write_binary_file(arrays_dir / "reference_rgb.raw", reference_rgb);
         if (frame.metadata.reactive_mask_valid) {
             write_binary_file(arrays_dir / "reactive_mask.raw", bytes_from_values(frame.reactive_mask));
         }
@@ -1424,7 +1427,7 @@ int run_fsr4_provider_sequence(const std::filesystem::path& sequence_path,
                      << dtype << "\", \"shape\": [" << height << ", " << width << ", " << channels << "]}"
                      << (last ? "\n" : ",\n");
         };
-        const std::size_t descriptor_count = 10 + static_cast<std::size_t>(reactive_valid) + static_cast<std::size_t>(tcr_valid);
+        const std::size_t descriptor_count = 11 + static_cast<std::size_t>(reactive_valid) + static_cast<std::size_t>(tcr_valid);
         std::size_t written = 0;
         const auto desc = [&](const char* name, const char* dtype, std::uint32_t width,
                               std::uint32_t height, std::uint32_t channels) {
@@ -1483,6 +1486,7 @@ int run_fsr4_provider_sequence(const std::filesystem::path& sequence_path,
         desc("physical_controls", "<f4", kWidth, kHeight, 4);
         desc("recurrent_state", "|u1", kWidth, kHeight, 4);
         desc("final_rgb", "<f2", kWidth, kHeight, 3);
+        desc("reference_rgb", "<f2", kWidth, kHeight, 3);
         if (reactive_valid) {
             desc("reactive_mask", "|u1", kWidth, kHeight, 1);
         }
@@ -1530,7 +1534,7 @@ int run_fsr4_provider_sequence(const std::filesystem::path& sequence_path,
         if (audit) {
             parameter_hash = sha256_hex(extract_rgba32_region(instrumented[1], 3, kWidth * 5, kWidth, kHeight, 4));
             recurrent_hash = sha256_hex(instrumented[2]);
-            capture_manifest_path = write_sequence_capture(frame, instrumented).string();
+            // Capture is written after the ordinary provider output for this frame is available.
         }
 
         auto reference = run_dispatch(reference_context, frame.metadata, reference_output_texture.Get(), false,
@@ -1540,6 +1544,9 @@ int run_fsr4_provider_sequence(const std::filesystem::path& sequence_path,
             steady_state_gpu_times.push_back(reference_gpu_time_us);
         }
         const std::string reference_hash = sha256_hex(reference[0]);
+        if (audit) {
+            capture_manifest_path = write_sequence_capture(frame, instrumented, reference[0]).string();
+        }
         const bool matches = instrumented[0] == reference[0];
         const bool instrumented_finite = all_half_values_are_finite(instrumented[0]);
         const bool reference_finite = all_half_values_are_finite(reference[0]);

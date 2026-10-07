@@ -41,6 +41,7 @@ OPTIONAL_ARRAYS = {
     "bottleneck_features",
     "pass11_features",
     "pass12_features",
+    "reference_rgb",
 }
 VALIDITY_FIELDS = {
     "input_color",
@@ -204,6 +205,7 @@ def validate_manifest(manifest: dict[str, Any], *, for_packaging: bool = False) 
         "physical_controls": ((output_h, output_w, 4),),
         "recurrent_state": ((output_h, output_w, 4),),
         "final_rgb": ((output_h, output_w, 3),),
+        "reference_rgb": ((output_h, output_w, 3),),
     }
     normalized: dict[str, dict[str, Any]] = {}
     used_paths: set[str] = set()

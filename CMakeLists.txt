@@ -30,6 +30,8 @@ fsr4n10_enable_warnings(fsr4n10_core)
 add_executable(fsr4n10_harness
     src/harness/main.cpp
     src/harness/fp16_probe.cpp
+    src/harness/dot4_probe.cpp
+    src/harness/fsr4_post_oracle.cpp
     src/harness/upstream_pass0_smoke.cpp
     src/harness/frame_pipeline.cpp
     src/naviqsr/naviqsr_gpu.cpp
@@ -60,6 +62,40 @@ add_custom_command(TARGET fsr4n10_harness POST_BUILD
             "$<TARGET_FILE_DIR:fsr4n10_harness>/fp16_probe.dxil"
     VERBATIM
 )
+
+fsr4n10_compile_hlsl(
+    compile_dot4_conformance
+    "${CMAKE_CURRENT_SOURCE_DIR}/shaders/runtime/dot4_conformance.hlsl"
+    main
+    "${CMAKE_CURRENT_BINARY_DIR}/generated-shaders/dot4_conformance.dxil"
+    cs_6_6
+)
+set(DOT4_CONFORMANCE_SHADER "${compile_dot4_conformance_OUTPUT}")
+add_custom_target(compile_dot4_conformance_shader ALL
+    COMMAND "${CMAKE_COMMAND}" -E copy_if_different
+            "${DOT4_CONFORMANCE_SHADER}"
+            "$<TARGET_FILE_DIR:fsr4n10_harness>/dot4_conformance.dxil"
+    DEPENDS "${DOT4_CONFORMANCE_SHADER}"
+    VERBATIM
+)
+add_dependencies(fsr4n10_harness compile_dot4_conformance_shader)
+
+fsr4n10_compile_hlsl(
+    compile_fsr4_post_oracle
+    "${CMAKE_CURRENT_SOURCE_DIR}/shaders/runtime/fsr4_post_oracle.hlsl"
+    main
+    "${CMAKE_CURRENT_BINARY_DIR}/generated-shaders/fsr4_post_oracle.dxil"
+    cs_6_6
+)
+set(FSR4_POST_ORACLE_SHADER "${compile_fsr4_post_oracle_OUTPUT}")
+add_custom_target(compile_fsr4_post_oracle_shader ALL
+    COMMAND "${CMAKE_COMMAND}" -E copy_if_different
+            "${FSR4_POST_ORACLE_SHADER}"
+            "$<TARGET_FILE_DIR:fsr4n10_harness>/fsr4_post_oracle.dxil"
+    DEPENDS "${FSR4_POST_ORACLE_SHADER}"
+    VERBATIM
+)
+add_dependencies(fsr4n10_harness compile_fsr4_post_oracle_shader)
 
 fsr4n10_compile_hlsl(
     compile_naviqsr_akr_4tap

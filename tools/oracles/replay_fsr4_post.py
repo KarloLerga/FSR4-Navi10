@@ -19,12 +19,23 @@ sys.path.insert(0, str(REPO_ROOT))
 from tools.teacher.capture_format import validate_capture  # noqa: E402
 
 
+def _post_sample_coordinates(center: np.ndarray, offset: int, extent: int) -> tuple[np.ndarray, np.ndarray]:
+    """Mirror POST's uint sample arithmetic, float distance, and signed clamped load."""
+    if center.dtype != np.int32 or offset not in (0, 1, 2) or extent <= 0:
+        raise ValueError("POST sample coordinates require int32 centers, a 3-tap offset, and positive extent")
+    raw_unsigned = center.view(np.uint32) + np.uint32(offset) - np.uint32(1)
+    distance_coordinate = raw_unsigned.astype(np.float32)
+    load_coordinate = np.clip(raw_unsigned.view(np.int32), 0, extent - 1)
+    return distance_coordinate, load_coordinate
+
+
 def replay_arrays(
     metadata: dict[str, Any], arrays: dict[str, np.ndarray], *, block_rows: int = 32, stable_transforms: bool = False
 ) -> tuple[np.ndarray, dict[str, Any]]:
     """Evaluate post_common.hlsli::apply_model_filter plus its output conversion.
 
-    This uses float32 intermediates and the source's literal exp-based formulas.
+    This uses float32 intermediates and the source's literal exp-based formulas
+    unless the diagnostic stable-equivalent option is selected.
     `np.fmax`/`np.fmin` model the source shader's NaN-tolerant clamp behavior.
     It intentionally does not stabilize the raw logits: doing so would conceal
     a discrepancy between the pinned POST source and captured output.
@@ -105,12 +116,12 @@ def replay_arrays(
             total_weight = np.zeros((y1 - y0, output_w), dtype=np.float32)
             weighted_color = np.zeros((y1 - y0, output_w, 3), dtype=np.float32)
             for dy in range(3):
-                iy = np.clip(center_y + dy - 1, 0, render_h - 1)
-                y_dist = (iy.astype(np.float32) - lr_y) * scale_y
+                sample_y_distance, iy = _post_sample_coordinates(center_y, dy, render_h)
+                y_dist = (sample_y_distance - lr_y) * scale_y
                 y_dist2 = y_dist * y_dist
                 for dx in range(3):
-                    ix = np.clip(center_x + dx - 1, 0, render_w - 1)
-                    x_dist = (ix.astype(np.float32) - lr_x) * scale_x
+                    sample_x_distance, ix = _post_sample_coordinates(center_x, dx, render_w)
+                    x_dist = (sample_x_distance - lr_x) * scale_x
                     x_dist2 = x_dist * x_dist
                     exponent = kernel_factor * (
                         x_dist2 * sx2

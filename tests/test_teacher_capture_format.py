@@ -93,6 +93,26 @@ class TeacherCaptureFormatTests(unittest.TestCase):
         self.assertEqual("synthetic-validation-only", result["sequence_id"])
         self.assertIn("self-reported", result["validation_note"])
 
+    def test_reference_rgb_is_optional_and_shape_checked(self) -> None:
+        legacy = self.root / "legacy.f4cap"
+        package_capture(self.manifest, self.array_root, legacy)
+        self.assertEqual(10, validate_capture(legacy)["array_count"])
+
+        filename = "arrays/reference_rgb.raw"
+        (self.array_root / filename).write_bytes(struct.pack("<f", 0.5) * (2 * 2 * 3))
+        self.manifest["arrays"]["reference_rgb"] = {
+            "file": filename,
+            "dtype": "<f4",
+            "shape": [2, 2, 3],
+        }
+        current = self.root / "current.f4cap"
+        package_capture(self.manifest, self.array_root, current)
+        self.assertEqual(11, validate_capture(current)["array_count"])
+
+        self.manifest["arrays"]["reference_rgb"]["shape"] = [2, 2, 4]
+        with self.assertRaisesRegex(CaptureFormatError, "does not match"):
+            package_capture(self.manifest, self.array_root, self.root / "bad.f4cap")
+
     def test_optional_mask_requires_both_data_and_validity(self) -> None:
         self.manifest["validity"]["reactive_mask"] = True
         with self.assertRaisesRegex(CaptureFormatError, "presence must match"):
