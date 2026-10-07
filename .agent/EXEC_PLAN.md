@@ -349,7 +349,7 @@ Test the proposed FSR4 O0 unblock path from the clean `312bd98ebea52ea316a9cbb2f
 - [x] U1: update CPU edge replay and optional reference capture; regenerate scalar-literal captures and record numeric comparison.
 - [x] U2: build the isolated GPU POST and signed-I8 dot4 oracles; run both on the RX 5700 XT.
 - [x] U3: evaluate corrected CPU/GPU POST, ordinary-output parity, same-input run repeatability, eight-frame alignment, FSR3 C/H audit, and dot4 evidence. Gate correctly remains closed on output parity and repeatability.
-- [ ] U4: final checks, record verified outcomes, commit, and push to the previously authorized private remote.
+- [x] U4: Release/CTest/Python/GPU and artifact checks passed; implementation and evidence commits are pushed to the previously authorized private remote. The O0 gate remains closed on numeric parity and repeatability.
 
 ### Decision log
 
@@ -362,3 +362,4 @@ Test the proposed FSR4 O0 unblock path from the clean `312bd98ebea52ea316a9cbb2f
 - Eight FSR3/FSR4 input frame hashes align and the committed FSR3 C/H audit passes. Instrumented/reference numeric comparison fails its required tolerance: max errors are 0.1152344/0.0754395/0.2144775 and within-1e-3 fractions are 0.998459/0.997550/0.926073 for frames 0/4/7.
 - A second run with the same build commit, GPU/driver, sequence hash, and all eight input hashes changes both instrumented and ordinary output hashes on all eight frames. Captured model-input channels match at frames 0 and 4, while raw model parameters differ at those frames; frame 7 also differs in model-input channels and reprojected history. This places run-to-run variation at or before model-parameter generation; the lower-level cause is not yet known.
 - O1-O13 remain locked on both numeric provider parity and run-to-run repeatability. The captured sequence is procedural synthetic input and supports no quality claim. Reports are under `artifacts/results/`; large captures stay ignored under `build/`.
+- Implementation commit `bb13a6d819657512e4612e2ab78ac15ef651ab6e` and evidence commit `d6286a2` were pushed to private `origin/main`.
