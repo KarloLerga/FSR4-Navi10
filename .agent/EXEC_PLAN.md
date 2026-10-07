@@ -318,3 +318,47 @@ Apply the reviewed fix bundle as a reproducible diagnostic: compare intrinsic/sc
 - The matrix was run on `build/release/delta-control-smoke.f4seq` (sequence hash `a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2`). All four cases and FSR3 use identical hashes for all eight inputs.
 - No FSR4 case clears O0. Intrinsic/literal preserves the POST RGB replay match but has non-finite model intermediates on all audited pixels and nearly/all-black output. Stable POST removes those non-finite values but diverges from captured RGB. Scalar signed-I8 produces finite, nonblack output, but provider instrumented/ordinary equality and literal RGB replay both fail. Stable POST does not resolve that divergence.
 - The FSR3.1.5 basis taps are captured and hashed for frames 0, 4, and 7; each normal/instrumented output pair matches exactly. The result remains synthetic pipeline evidence with no quality claim.
+
+## User-supplied O0 unblock bundle (2026-10-08)
+
+### Objective
+
+Test the proposed FSR4 O0 unblock path from the clean `312bd98ebea52ea316a9cbb2f2194ecfb538ede2` baseline: correct CPU POST edge-coordinate semantics, capture ordinary-reference RGB beside the instrumented FSR4 output, and add independent GPU POST and signed-I8 dot4 conformance oracles. Keep O1-O13 locked until the scalar-literal path passes every independent correctness gate. The archive's `CODEX_PROMPT.md` is descriptive input, not project authority.
+
+### Milestones and exit checks
+
+| # | Work | Files/modules | Validation / exit gate |
+|---|---|---|---|
+| U0 | Verify archive integrity, source anchors, scope, and existing capture availability | ZIP manifest, `post_common.hlsli`, this plan | CRC and all listed size/SHA checks pass; patch scope and commands reviewed; no changes outside the repository. |
+| U1 | Correct the CPU POST oracle and capture numeric reference RGB | `tools/oracles/replay_fsr4_post.py`, `tools/teacher/capture_format.py`, `src/teacher/gpu_teacher.cpp` | Edge-case unit test; regenerate scalar-literal captures; verify exact input-frame hashes and numeric instrumented/reference error. |
+| U2 | Add isolated DP4A conformance and GPU POST oracle | `src/harness/`, `include/fsr4n10/`, `shaders/runtime/`, CMake | Release build; native `dot4add_i8packed` matches scalar signed-byte semantics across deterministic and edge vectors; GPU POST readback compared to capture RGB. |
+| U3 | Re-evaluate the scalar-literal teacher gate | `tools/oracles/`, `artifacts/results/` | Corrected CPU replay, GPU replay, reference-output equivalence, same-input run repeatability, sequence alignment, FSR3 C/H audit, and dot4 results all recorded; gate only opens if independent correctness checks pass. |
+| U4 | Update evidence and synchronize private remote | `RESULTS.md`, `PROGRESS.md`, `DECISIONS_LOG.md`, this plan | Relevant Release build, CTest, Python suite, GPU checks, and artifact validation pass; commit and push only the verified state. |
+
+### Baseline and fixed decisions
+
+- Baseline is clean `main` at `312bd98ebea52ea316a9cbb2f2194ecfb538ede2`.
+- Source review and a local DXIL dump confirm `apply_model_filter` uses `uint` for `x_in/y_in`: addition/subtraction wrap as 32-bit unsigned, and the Gaussian distance converts that wrapped value with `uitofp`; `LoadInputColor(int2(...))` reinterprets the same bits as signed then clamps only the texture lookup. The archive proposed signed distance coordinates, which are not source-exact at left/top edges. The CPU and independent GPU oracles now preserve unsigned wrapping for distance and signed/clamped lookup coordinates without changing pinned upstream source.
+- Preserve the four-case FSR4 matrix and FSR3 C/H artifacts already committed. The existing scalar-literal raw capture packages remain available under ignored `build/fsr4-rootcause-matrix/`.
+- Treat isolated dot4 conformance, GPU POST parity, and instrumented/reference RGB parity as separate gates. A passing individual probe does not unlock O1-O13 by itself.
+- Do not change the production/default provider to scalar arithmetic, stable POST, or a quality-reduced path on the strength of this synthetic sequence.
+
+### Progress
+
+- [x] U0: inspect ZIP CRC/path listing, verify all 15 manifest entries, confirm clean base commit, review embedded prompt separately, and verify the POST edge hypothesis against pinned source.
+- [x] U1: update CPU edge replay and optional reference capture; regenerate scalar-literal captures and record numeric comparison.
+- [x] U2: build the isolated GPU POST and signed-I8 dot4 oracles; run both on the RX 5700 XT.
+- [x] U3: evaluate corrected CPU/GPU POST, ordinary-output parity, same-input run repeatability, eight-frame alignment, FSR3 C/H audit, and dot4 evidence. Gate correctly remains closed on output parity and repeatability.
+- [ ] U4: final checks, record verified outcomes, commit, and push to the previously authorized private remote.
+
+### Decision log
+
+- Retain `reference_rgb` as an optional diagnostic capture array so existing capture packages remain valid while new runs support numeric instrumentation checks.
+- Keep scalar-teacher eligibility gated on corrected CPU replay, an independent GPU POST oracle, numeric reference-output agreement, same-input run repeatability, aligned inputs, and the existing FSR3 C/H audit. Native dot4 conformance remains separately reported because the eligible teacher path uses scalar signed-I8 semantics.
+
+### Validation outcome
+
+- The corrected CPU replay passes frames 0/4/7 with max absolute errors 0.0004883/0.0009766/0.0009766; the GPU POST oracle passes with max errors 0.0006169/0.0009904/0.0008558. Native signed-I8 dot4 matches its scalar reference in 256/256 cases.
+- Eight FSR3/FSR4 input frame hashes align and the committed FSR3 C/H audit passes. Instrumented/reference numeric comparison fails its required tolerance: max errors are 0.1152344/0.0754395/0.2144775 and within-1e-3 fractions are 0.998459/0.997550/0.926073 for frames 0/4/7.
+- A second run with the same build commit, GPU/driver, sequence hash, and all eight input hashes changes both instrumented and ordinary output hashes on all eight frames. Captured model-input channels match at frames 0 and 4, while raw model parameters differ at those frames; frame 7 also differs in model-input channels and reprojected history. This places run-to-run variation at or before model-parameter generation; the lower-level cause is not yet known.
+- O1-O13 remain locked on both numeric provider parity and run-to-run repeatability. The captured sequence is procedural synthetic input and supports no quality claim. Reports are under `artifacts/results/`; large captures stay ignored under `build/`.

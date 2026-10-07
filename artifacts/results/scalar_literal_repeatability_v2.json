@@ -1,0 +1,145 @@
+{
+  "schema": "f4n10.fsr4-sequence-repeatability.v1",
+  "first_report_build_commit": "bb13a6d819657512e4612e2ab78ac15ef651ab6e",
+  "repeat_report_build_commit": "bb13a6d819657512e4612e2ab78ac15ef651ab6e",
+  "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+  "adapter": "AMD Radeon RX 5700 XT",
+  "driver_version": "0x00200000523503e8",
+  "same_provenance": true,
+  "same_inputs": true,
+  "frames_compared": 8,
+  "instrumented_outputs_repeatable": false,
+  "ordinary_outputs_repeatable": false,
+  "instrumented_changed_frames": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "ordinary_changed_frames": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "captured_audit_arrays_repeatable": false,
+  "capture_array_audit": {
+    "audit_frames": [
+      0,
+      4,
+      7
+    ],
+    "all_array_hashes_repeatable": false,
+    "frames": [
+      {
+        "frame_index": 0,
+        "changed_arrays": [
+          {
+            "name": "final_rgb",
+            "first_sha256": "af09fc822d1309eb6771b0deec04a07a9f30c03a30f551370bb80cdfc07bfbac",
+            "repeat_sha256": "f523449d238cf9e3e95524a414bfa240390d4c9c05a444003e3ee906fdf2223e"
+          },
+          {
+            "name": "physical_controls",
+            "first_sha256": "d9842408c07155ff36dc2e6a3b14086a2dff8d10dca5556972004fba916ca016",
+            "repeat_sha256": "e4f91139fbb8c3c232287ff9e989bb0c26f48e170b28887d76b04ba634596f19"
+          },
+          {
+            "name": "raw_model_parameters",
+            "first_sha256": "905792df93c8cc6ea0f0cb853ee47c3c20193a40a4d5615d5570eecaabb3140a",
+            "repeat_sha256": "1ccca642adea95127dc90cc2f42b9bd8da34ff649152835d69ae1066a2f902c0"
+          },
+          {
+            "name": "recurrent_state",
+            "first_sha256": "faf25fb2c4bbae976810f358be5fc212f4b2610662f8f2d8d24c168431a52409",
+            "repeat_sha256": "f2840635f5a3d727bcf5d858c375b9e7795871e2f3c51c7fa9ec8a7fe69cbc75"
+          },
+          {
+            "name": "reference_rgb",
+            "first_sha256": "0e49b462a84d672d12914694610a55f64a6fd60ebbe1012380f0e3aaf8e40c6d",
+            "repeat_sha256": "df7d2e5559aa5a0a21e475a24bca1c8cc4ba4097f3212a087c379b370b4fff26"
+          }
+        ]
+      },
+      {
+        "frame_index": 4,
+        "changed_arrays": [
+          {
+            "name": "final_rgb",
+            "first_sha256": "157fe2334e152eef0ec24a81814c18a7ffbabb169c8e46f12ee85d3756bac76c",
+            "repeat_sha256": "fba54852b13ee494821772342a76386ec90e64b5f32a43d44036a086f0e0d42a"
+          },
+          {
+            "name": "physical_controls",
+            "first_sha256": "6b4ea541fe6db1f10c3bade93ba612e773b48ee86bdd26bb01398dd7b0a49a7c",
+            "repeat_sha256": "451cebaabd319b9dae369cbd397a372692d4775db52ba9dc389a3ad822128813"
+          },
+          {
+            "name": "raw_model_parameters",
+            "first_sha256": "5766dc06de3e21e4ee3a89f1cb423dadfb7d3cb137e6c829bda55322e480013a",
+            "repeat_sha256": "5e42f232aea860069330e2c4aaebc193a582364415e4213df13e2e3c609629ff"
+          },
+          {
+            "name": "recurrent_state",
+            "first_sha256": "cea74059bb390c74568167a82f0b8fc89bbdb46a556efd580a66969bbd781d0b",
+            "repeat_sha256": "95825961c090428e0a9ba53766805d19da96f73b9605bacb7cbe63f69029b01e"
+          },
+          {
+            "name": "reference_rgb",
+            "first_sha256": "53e3eece18eb34055af92e2ffdd9759a0d51b9503f168b1188cdca55b073854f",
+            "repeat_sha256": "06837d8b237b8a2379aaa5857183e9dcc30674e96dc73f091482628a252ce9d9"
+          }
+        ]
+      },
+      {
+        "frame_index": 7,
+        "changed_arrays": [
+          {
+            "name": "final_rgb",
+            "first_sha256": "8f309f3e66f7362dd8a3bf1dde4b3080860d06b7ff712894231924f88f766695",
+            "repeat_sha256": "d960d948fd07f7fc66fe94865c4607e55c5aa0142897a2c48f99f01e621f7738"
+          },
+          {
+            "name": "model_input_semantic_channels",
+            "first_sha256": "afd3a930ba3a4957ba41f83390638be3382b2886ee2c63e50b192ea9699c3350",
+            "repeat_sha256": "57f7f5bb35599e03d2c263f9fb3719f173021b9889e86df816183a1318957290"
+          },
+          {
+            "name": "physical_controls",
+            "first_sha256": "6269c8b5673ead616554837b2b4507136deb114ab6915730dd00fec6002ce5c3",
+            "repeat_sha256": "94ea5549e9672e0eabef38c30aeec374ffd74f70ca8aad4b055db891ad31d1f1"
+          },
+          {
+            "name": "raw_model_parameters",
+            "first_sha256": "3d19067e7f5b2cfa850e06513d12894e445ac14f36cac7043263835ce678abe5",
+            "repeat_sha256": "f8695ae9e7029b3f233d83cf5bfe9c1a13a42b65bca0711d321fbfb3fa4453a2"
+          },
+          {
+            "name": "recurrent_state",
+            "first_sha256": "7e63fa42ea894134a6fbdc1c3b7f9a1783a0686ec5d41a8a787c2bc733a8b4d9",
+            "repeat_sha256": "32c1be9782f358998b149e7f699bc3b5688022eacc7db7d6e8300788f2f16112"
+          },
+          {
+            "name": "reference_rgb",
+            "first_sha256": "a4993fe674d0f74490aa493887af43566a5174767ebc623f1a95924cc2478e3d",
+            "repeat_sha256": "c7d65a0bacf66ccdf565fcb35d6aa13f1f66c3c7d58b75f10088107ff48a0186"
+          },
+          {
+            "name": "reprojected_history",
+            "first_sha256": "515af9708be0caf2cefcf59548e683aaa19e8fe0a41f60b9f740114ba88138a7",
+            "repeat_sha256": "f9276c23a2b336c54805cd4b9673f7d134c682e1ff8d21b7edfcdb5fcdb4dffd"
+          }
+        ]
+      }
+    ]
+  },
+  "repeatable": false
+}

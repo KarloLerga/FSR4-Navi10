@@ -1,0 +1,12 @@
+{
+  "schema": "f4n10.fsr4-post-gpu-oracle.v1",
+  "adapter": "AMD Radeon RX 5700 XT",
+  "render_size": [1920, 1080],
+  "output_size": [1920, 1080],
+  "nonfinite_components": 0,
+  "within_1e_3_fraction": 1,
+  "max_absolute_error": 0.000990391,
+  "mean_absolute_error": 0.000171406,
+  "rms_error": 0.000241088,
+  "passed": true
+}

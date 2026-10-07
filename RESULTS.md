@@ -163,3 +163,81 @@ python tools/sequence/audit_fsr3_delta_basis.py `
   --capture-root build/release/fsr3-rootcause-captures `
   --output artifacts/results/fsr3_delta_basis_capture_audit.json
 ```
+
+## O0 unblock bundle validation (2026-10-08)
+
+Applied the supplied diagnostic bundle on the RX 5700 XT without changing the default provider configuration or pinned upstream source. The corrected CPU replay follows the compiled source semantics at image edges: `x_in/y_in` wrap as unsigned 32-bit coordinates for distance conversion (`uitofp` in DXIL), while the texture lookup reinterprets the bits as signed and clamps. The attached bundle's proposed signed-distance edge coordinates would not match this source behavior.
+
+The Release harness now captures optional `reference_rgb` from the ordinary provider dispatch and includes independent GPU POST and signed-I8 dot4 conformance modes. On the scalar/literal provider build, the CPU replay matched instrumented final RGB within 1e-3 for every component at frames 0, 4, and 7; the independent GPU POST oracle also stayed within 1e-3 for every component. Native `dot4add_i8packed` matched the scalar signed-I8 reference on 256/256 deterministic and edge cases. These probes validate shader/oracle behavior, not FSR4 quality or intrinsic performance.
+
+| Frame | CPU replay exact half fraction | CPU replay max abs | GPU POST max abs | Instrumented/reference within 1e-3 | Instrumented/reference max abs |
+|---:|---:|---:|---:|---:|---:|
+| 0 | 0.315227 | 0.0004883 | 0.0006169 | 0.998459 | 0.1152344 |
+| 4 | 0.507629 | 0.0009766 | 0.0009904 | 0.997550 | 0.0754395 |
+| 7 | 0.500038 | 0.0009766 | 0.0008558 | 0.926073 | 0.2144775 |
+
+The independent checks pass for CPU POST, GPU POST, all eight aligned FSR3/FSR4 input frames, the existing FSR3 accumulation-site C/H audit, and dot4 semantics. The teacher gate still **fails** on instrumented/reference parity: maximum RGB errors exceed the 0.0025 limit and within-1e-3 fractions fall below 0.99999.
+
+A second run using the same build commit (`bb13a6d819657512e4612e2ab78ac15ef651ab6e`), RX 5700 XT/driver, sequence hash, and all eight input-frame hashes produced different instrumented and ordinary output hashes in all eight frames. Comparing validated audit captures also shows different `raw_model_parameters`, recurrent values, and final/reference RGB at frames 0 and 4 while the captured model-input channels match; frame 7 additionally differs in model-input channels and reprojected history. This places the repeatability break at or before model-parameter generation; its lower-level cause remains unresolved. O1-O13 stay locked. Both runs use procedural synthetic input and support no image-quality or game-compatibility claim.
+
+Machine-readable records: `artifacts/results/scalar_literal_o0_unblock_v2.json`, `scalar_literal_repeat_capture_v2.json`, `scalar_literal_repeat_run_v2.json`, `scalar_literal_repeatability_v2.json`, `scalar_literal_post_replay_v2.json`, `scalar_literal_instrumentation_audit_v2.json`, `scalar_literal_gpu_post_frame_{0,4,7}.json`, `dot4_conformance_o0_unblock.json`, and `scalar_teacher_gate_o0_unblock_v2.json`. Raw capture packages and `.f4postcase` payloads are in ignored `build/fsr4-rootcause-matrix/case-data/scalar_literal_o0_unblock_v2/`.
+
+Recreate the scalar/literal capture and gates from PowerShell:
+
+```powershell
+. .\scripts\BuildEnvironment.ps1
+Initialize-Fsr4Navi10VsEnvironment
+cmake -S . -B build\fsr4-rootcause-matrix -G Ninja `
+  -DFSR4N10_FORCE_SCALAR_DOT4=ON -DFSR4N10_STABLE_POST_MATH=OFF
+cmake --build build\fsr4-rootcause-matrix --config Release
+python tools\sequence\run_fsr4_teacher.py `
+  build\fsr4-rootcause-matrix\fsr4n10_harness.exe `
+  build\release\delta-control-smoke.f4seq `
+  artifacts\results\scalar_literal_o0_unblock_v2.json `
+  --capture-root build\fsr4-rootcause-matrix\case-data\scalar_literal_o0_unblock_v2\captures
+python tools\sequence\run_fsr4_teacher.py `
+  build\fsr4-rootcause-matrix\fsr4n10_harness.exe `
+  build\release\delta-control-smoke.f4seq `
+  artifacts\results\scalar_literal_repeat_capture_v2.json `
+  --capture-root build\fsr4-rootcause-matrix\case-data\scalar_literal_o0_unblock_v2\captures_repeat
+python tools\sequence\run_fsr4_teacher.py `
+  build\fsr4-rootcause-matrix\fsr4n10_harness.exe `
+  build\release\delta-control-smoke.f4seq `
+  artifacts\results\scalar_literal_repeat_run_v2.json
+$captureRoot = 'build\fsr4-rootcause-matrix\case-data\scalar_literal_o0_unblock_v2'
+python tools\oracles\compare_fsr4_sequence_repeatability.py `
+  artifacts\results\scalar_literal_o0_unblock_v2.json `
+  artifacts\results\scalar_literal_repeat_capture_v2.json `
+  --first-capture-root "$captureRoot\captures" `
+  --repeat-capture-root "$captureRoot\captures_repeat" `
+  --output artifacts\results\scalar_literal_repeatability_v2.json
+$captures = @(Get-ChildItem build\fsr4-rootcause-matrix\case-data\scalar_literal_o0_unblock_v2\captures `
+  -Filter '*.f4cap' | ForEach-Object { $_.FullName })
+python tools\oracles\replay_fsr4_post.py @captures `
+  --output artifacts\results\scalar_literal_post_replay_v2.json
+python tools\oracles\compare_fsr4_capture_reference.py @captures `
+  --output artifacts\results\scalar_literal_instrumentation_audit_v2.json
+build\fsr4-rootcause-matrix\fsr4n10_harness.exe --run-dot4-conformance `
+  artifacts\results\dot4_conformance_o0_unblock.json
+foreach ($frame in @(0, 4, 7)) {
+  $capture = "build\fsr4-rootcause-matrix\case-data\scalar_literal_o0_unblock_v2\captures\frame_$frame.f4cap"
+  $case = "build\fsr4-rootcause-matrix\case-data\scalar_literal_o0_unblock_v2\frame_$frame.f4postcase"
+  python tools\oracles\export_fsr4_post_case.py $capture $case
+  build\fsr4-rootcause-matrix\fsr4n10_harness.exe --run-fsr4-post-gpu-oracle `
+    $case "artifacts\results\scalar_literal_gpu_post_frame_$frame.json"
+}
+python tools\oracles\evaluate_scalar_teacher_gate.py `
+  --cpu artifacts\results\scalar_literal_post_replay_v2.json `
+  --gpu artifacts\results\scalar_literal_gpu_post_frame_0.json `
+        artifacts\results\scalar_literal_gpu_post_frame_4.json `
+        artifacts\results\scalar_literal_gpu_post_frame_7.json `
+  --instrumentation artifacts\results\scalar_literal_instrumentation_audit_v2.json `
+  --dot4 artifacts\results\dot4_conformance_o0_unblock.json `
+  --sequence-report artifacts\results\scalar_literal_o0_unblock_v2.json `
+  --fsr3-report artifacts\results\fsr3_rootcause_basis_sequence.json `
+  --basis-audit artifacts\results\fsr3_delta_basis_capture_audit.json `
+  --repeatability artifacts\results\scalar_literal_repeatability_v2.json `
+  --output artifacts\results\scalar_teacher_gate_o0_unblock_v2.json
+```
+
+The two comparison commands and teacher gate return a nonzero status while their reports record the observed mismatches; that is expected for the current failing O0 gates.

@@ -1,0 +1,188 @@
+{
+  "captures": [
+    {
+      "capture": "C:\\src\\FSR4-Navi10\\build\\fsr4-rootcause-matrix\\case-data\\scalar_literal_o0_unblock_v2\\captures\\frame_0.f4cap",
+      "exact_half_match_fraction": 0.31522730195473253,
+      "exposure_value": 1.0,
+      "frame_index": 0,
+      "jitter_current": [
+        0.0,
+        -0.1666666716337204
+      ],
+      "max_absolute_error": 0.00048828125,
+      "mean_absolute_error": 0.00019266446179244667,
+      "nonfinite_replayed_model_pixels": 0,
+      "numerically_valid": true,
+      "output_size": [
+        1920,
+        1080
+      ],
+      "passed": true,
+      "profile": "pinned_fsr4_post_common_linear_rcas_off",
+      "provider_source_commit": "01446e6a74888bf349652fcf2cbf5f642d30c2bf",
+      "raw_exp_formula": true,
+      "raw_parameter_max_by_channel": [
+        1.1171875,
+        0.7451171875,
+        1.0234375,
+        -1.900390625
+      ],
+      "raw_parameter_min_by_channel": [
+        -0.6826171875,
+        -1.6171875,
+        -1.318359375,
+        -8.34375
+      ],
+      "reference_finite": true,
+      "reference_zero_fraction": 0.0,
+      "render_size": [
+        1920,
+        1080
+      ],
+      "replay_finite": true,
+      "replay_zero_fraction": 0.0,
+      "rgb_within_tolerance": true,
+      "rms_error": 0.0002680841716937721,
+      "scale": [
+        1.0,
+        1.0
+      ],
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "sequence_id": "procedural-mixed-17",
+      "shader_hashes": {
+        "provider_shader_manifest": "896c54961a408149720985fbea68236a5f5160a2351a6abdcca867182532fdc9"
+      },
+      "stable_equivalent_transforms": false,
+      "within_1e_3_fraction": 1.0
+    },
+    {
+      "capture": "C:\\src\\FSR4-Navi10\\build\\fsr4-rootcause-matrix\\case-data\\scalar_literal_o0_unblock_v2\\captures\\frame_4.f4cap",
+      "exact_half_match_fraction": 0.5076290830761316,
+      "exposure_value": 1.25,
+      "frame_index": 4,
+      "jitter_current": [
+        0.125,
+        0.2777777910232544
+      ],
+      "max_absolute_error": 0.0009765625,
+      "mean_absolute_error": 0.00015974872803781182,
+      "nonfinite_replayed_model_pixels": 0,
+      "numerically_valid": true,
+      "output_size": [
+        1920,
+        1080
+      ],
+      "passed": true,
+      "profile": "pinned_fsr4_post_common_linear_rcas_off",
+      "provider_source_commit": "01446e6a74888bf349652fcf2cbf5f642d30c2bf",
+      "raw_exp_formula": true,
+      "raw_parameter_max_by_channel": [
+        1.0771484375,
+        0.71484375,
+        0.94384765625,
+        -1.4326171875
+      ],
+      "raw_parameter_min_by_channel": [
+        -0.6669921875,
+        -1.5234375,
+        -1.2265625,
+        -8.3828125
+      ],
+      "reference_finite": true,
+      "reference_zero_fraction": 0.0,
+      "render_size": [
+        1920,
+        1080
+      ],
+      "replay_finite": true,
+      "replay_zero_fraction": 0.0,
+      "rgb_within_tolerance": true,
+      "rms_error": 0.0002752681612037122,
+      "scale": [
+        1.0,
+        1.0
+      ],
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "sequence_id": "procedural-mixed-17",
+      "shader_hashes": {
+        "provider_shader_manifest": "896c54961a408149720985fbea68236a5f5160a2351a6abdcca867182532fdc9"
+      },
+      "stable_equivalent_transforms": false,
+      "within_1e_3_fraction": 1.0
+    },
+    {
+      "capture": "C:\\src\\FSR4-Navi10\\build\\fsr4-rootcause-matrix\\case-data\\scalar_literal_o0_unblock_v2\\captures\\frame_7.f4cap",
+      "exact_half_match_fraction": 0.5000376157407408,
+      "exposure_value": 1.0,
+      "frame_index": 7,
+      "jitter_current": [
+        -0.4375,
+        0.3888888955116272
+      ],
+      "max_absolute_error": 0.0009765625,
+      "mean_absolute_error": 0.00013964057143311948,
+      "nonfinite_replayed_model_pixels": 0,
+      "numerically_valid": true,
+      "output_size": [
+        1920,
+        1080
+      ],
+      "passed": true,
+      "profile": "pinned_fsr4_post_common_linear_rcas_off",
+      "provider_source_commit": "01446e6a74888bf349652fcf2cbf5f642d30c2bf",
+      "raw_exp_formula": true,
+      "raw_parameter_max_by_channel": [
+        0.90625,
+        1.853515625,
+        2.1640625,
+        7.97265625
+      ],
+      "raw_parameter_min_by_channel": [
+        -0.74072265625,
+        -1.78515625,
+        -2.025390625,
+        -12.5546875
+      ],
+      "reference_finite": true,
+      "reference_zero_fraction": 0.0,
+      "render_size": [
+        1920,
+        1080
+      ],
+      "replay_finite": true,
+      "replay_zero_fraction": 0.0,
+      "rgb_within_tolerance": true,
+      "rms_error": 0.00022677413653582335,
+      "scale": [
+        1.0,
+        1.0
+      ],
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "sequence_id": "procedural-mixed-17",
+      "shader_hashes": {
+        "provider_shader_manifest": "896c54961a408149720985fbea68236a5f5160a2351a6abdcca867182532fdc9"
+      },
+      "stable_equivalent_transforms": false,
+      "within_1e_3_fraction": 1.0
+    }
+  ],
+  "configuration_assumptions": {
+    "auto_exposure_enabled": false,
+    "color_space": "linear",
+    "exposure_value": "input exposure texture / preExposure; zero input exposure maps to 1",
+    "rcas_enabled": false
+  },
+  "schema": "f4n10.fsr4-post-replay-oracle.v1",
+  "source": "pinned FSR4 post_common.hlsli::apply_model_filter; literal float32 equations",
+  "source_file": "third_party/fidelityfx-fsr4-source/Kits/FidelityFX/upscalers/fsr4/include/gpu/fsr4/post_common.hlsli",
+  "source_file_sha256": "6840d62c269ed240c4c48bf98167e4a5d36a3305b666ffbd90cbd643f76f4dba",
+  "validation": {
+    "all_captures_passed": true,
+    "all_intermediates_numerically_valid": true,
+    "capture_packages_validated": true,
+    "capture_set_consistent": true,
+    "per_channel_absolute_tolerance": 0.001,
+    "post_rgb_replay_matches": true,
+    "quality_claimed": false
+  }
+}

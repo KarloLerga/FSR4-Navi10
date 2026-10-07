@@ -1,0 +1,31 @@
+{
+  "schema": "f4n10.instrumented-reference-numeric.v1",
+  "capture_count": 3,
+  "numerically_close": false,
+  "frames": [
+    {
+      "frame_index": 0,
+      "exact_fraction": 0.9975172003600823,
+      "within_1e_3_fraction": 0.9984588798868312,
+      "max_absolute_error": 0.115234375,
+      "mean_absolute_error": 8.592753147240728e-06,
+      "rms_error": 0.0003108222153969109
+    },
+    {
+      "frame_index": 4,
+      "exact_fraction": 0.9961140046296296,
+      "within_1e_3_fraction": 0.9975503150720164,
+      "max_absolute_error": 0.075439453125,
+      "mean_absolute_error": 1.3872095223632641e-05,
+      "rms_error": 0.0003926762146875262
+    },
+    {
+      "frame_index": 7,
+      "exact_fraction": 0.8644963670267489,
+      "within_1e_3_fraction": 0.9260731738683128,
+      "max_absolute_error": 0.2144775390625,
+      "mean_absolute_error": 0.0004049984854646027,
+      "rms_error": 0.0021339929662644863
+    }
+  ]
+}

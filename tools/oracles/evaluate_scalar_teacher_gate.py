@@ -40,6 +40,7 @@ def main() -> int:
     ap.add_argument("--sequence-report", required=True)
     ap.add_argument("--fsr3-report", required=True)
     ap.add_argument("--basis-audit", required=True)
+    ap.add_argument("--repeatability", required=True)
     ap.add_argument("--output", required=True)
     a = ap.parse_args()
 
@@ -50,6 +51,7 @@ def main() -> int:
     sequence = read(a.sequence_report)
     fsr3 = read(a.fsr3_report)
     basis = read(a.basis_audit)
+    repeatability = read(a.repeatability)
 
     cpu_ok = bool(cpu.get("validation", {}).get("all_captures_passed"))
     gpu_ok = bool(gpu) and all(bool(x.get("passed")) for x in gpu)
@@ -73,8 +75,15 @@ def main() -> int:
         basis.get("passed") is True
         and basis.get("sequence_hash") == sequence.get("sequence_hash")
     )
+    repeatability_ok = (
+        repeatability.get("repeatable") is True
+        and repeatability.get("same_inputs") is True
+        and repeatability.get("sequence_hash") == sequence.get("sequence_hash")
+        and repeatability.get("first_report_build_commit") == sequence.get("build_commit")
+        and repeatability.get("repeat_report_build_commit") == sequence.get("build_commit")
+    )
 
-    eligible = cpu_ok and gpu_ok and inst_ok and alignment_ok and basis_ok
+    eligible = cpu_ok and gpu_ok and inst_ok and alignment_ok and basis_ok and repeatability_ok
     if eligible:
         if dot_ok:
             next_action = (
@@ -98,6 +107,8 @@ def main() -> int:
             failed.append("FSR3/FSR4 input-frame alignment")
         if not basis_ok:
             failed.append("FSR3 accumulation-site basis audit")
+        if not repeatability_ok:
+            failed.append("same-input FSR4 run-to-run repeatability")
         next_action = "Keep O1-O13 locked. Fix: " + ", ".join(failed) + "."
 
     report = {
@@ -109,6 +120,7 @@ def main() -> int:
         "sequence_alignment_ok": alignment_ok,
         "aligned_frame_count": frame_count if alignment_ok else 0,
         "fsr3_basis_audit_ok": basis_ok,
+        "run_to_run_repeatability_ok": repeatability_ok,
         "native_dot4_matches_scalar": dot_ok,
         "next_action": next_action,
     }

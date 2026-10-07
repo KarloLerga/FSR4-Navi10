@@ -78,3 +78,13 @@ The standalone harness lists adapters, runs a generic FP16 arithmetic probe, val
 - These are pipeline diagnostics on procedural synthetic input. No FSR4 quality or performance conclusion is claimed; O1-O13 and architecture selection remain blocked on a valid O0 capture.
 - Release build passed after the implementation changes; CTest passed (1/1), Python tests passed (54/54), Python compilation passed, and the PowerShell matrix runner parsed successfully.
 - Final diff and staged-change checks passed; the diagnostic implementation and machine-readable evidence are being committed to the previously authorized private `origin/main`.
+
+### O0 unblock bundle (2026-10-08)
+
+- Verified the supplied ZIP CRC and every manifest size/SHA-256 entry, inspected the patch scope, and treated its embedded prompt as document content. Left pinned third-party source unchanged.
+- Corrected CPU POST edge-coordinate replay after confirming upstream `uint` wrap and DXIL `uitofp`; the lookup path separately reinterprets coordinates as signed and clamps them. Added matching GPU POST oracle behavior and edge regression coverage.
+- Added optional ordinary-provider `reference_rgb` to audit captures, a numeric comparison tool, a scalar-teacher gate that also checks full-sequence FSR3/FSR4 input alignment and the FSR3 C/H audit, and an RX 5700 XT native-vs-scalar signed-I8 dot4 probe.
+- Release build passed. CTest passed (1/1). The final Python suite passed (60/60), and the new oracle scripts passed Python compilation. Native dot4 matched scalar semantics for 256/256 cases. CPU and GPU POST checks passed at frames 0, 4, and 7; CPU max absolute errors were 0.0004883/0.0009766/0.0009766, and GPU max errors were 0.0006169/0.0009904/0.0008558.
+- Eight FSR3/FSR4 input frame hashes align and the FSR3 C/H basis audit passes. The teacher gate remains closed: instrumented/reference output max absolute errors are 0.1152344/0.0754395/0.2144775 on frames 0/4/7, above the 0.0025 limit.
+- A same-build repeat run with identical eight input hashes changed both providers' output hashes on all eight frames. Audit frames 0 and 4 retain identical captured model-input channels but have changed raw model parameters, recurrent values, and output arrays. The repeatability break is at or before model-parameter generation; its lower-level cause remains unresolved. O1-O13 remain locked; the sequence is synthetic and makes no quality claim.
+- Machine-readable results are under `artifacts/results/*o0_unblock*`, `artifacts/results/scalar_literal_*_v2.json`, and `artifacts/results/scalar_literal_gpu_post_frame_*.json`; raw GPU captures remain ignored under `build/fsr4-rootcause-matrix/case-data/scalar_literal_o0_unblock_v2/`.
