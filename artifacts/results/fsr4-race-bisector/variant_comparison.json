@@ -1,0 +1,997 @@
+{
+  "schema": "f4n10.scratch-campaign-variant-comparison.v1",
+  "standard_variant": "standard",
+  "barrier_variant": "global-barrier",
+  "standard_case_count": 84,
+  "barrier_case_count": 84,
+  "common_case_count": 84,
+  "case_coverage_complete": true,
+  "missing_from_barrier": [],
+  "missing_from_standard": [],
+  "all_common_inputs_equal": true,
+  "full_rgb_differences_on_equal_inputs": 6,
+  "scratch_differences_on_equal_inputs": 18,
+  "interpretation": [
+    "Captured results differ between builds on identical inputs. This is consistent with order/timing sensitivity, but existing nondeterminism and independent run state prevent attributing the difference to barriers alone."
+  ],
+  "cases": [
+    {
+      "seed": "a5",
+      "pass_name": "full",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": false,
+        "ordinary": false
+      },
+      "full_rgb": {
+        "frame_count_standard": 8,
+        "frame_count_barrier": 8,
+        "inputs_equal": true,
+        "outputs_equal": {
+          "instrumented": false,
+          "ordinary": false
+        }
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "full",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": false,
+        "ordinary": false
+      },
+      "full_rgb": {
+        "frame_count_standard": 8,
+        "frame_count_barrier": 8,
+        "inputs_equal": true,
+        "outputs_equal": {
+          "instrumented": false,
+          "ordinary": false
+        }
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_00",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_00",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_01",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_01",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_02",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_02",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_03",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_03",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_04",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_04",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_05",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_05",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_06",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_06",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_07",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_07",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_08",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_08",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_09",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_09",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_10",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_10",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_11",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": false,
+        "ordinary": false
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_11",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": false,
+        "ordinary": false
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_12",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": false,
+        "ordinary": false
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_12",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": false,
+        "ordinary": false
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "full",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": false,
+        "ordinary": false
+      },
+      "full_rgb": {
+        "frame_count_standard": 8,
+        "frame_count_barrier": 8,
+        "inputs_equal": true,
+        "outputs_equal": {
+          "instrumented": false,
+          "ordinary": false
+        }
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "full",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": false,
+        "ordinary": false
+      },
+      "full_rgb": {
+        "frame_count_standard": 8,
+        "frame_count_barrier": 8,
+        "inputs_equal": true,
+        "outputs_equal": {
+          "instrumented": false,
+          "ordinary": false
+        }
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_00",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_00",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_01",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_01",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_02",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_02",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_03",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_03",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_04",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_04",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_05",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_05",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_06",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_06",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_07",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_07",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_08",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_08",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_09",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_09",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_10",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_10",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_11",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": false,
+        "ordinary": false
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_11",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": false,
+        "ordinary": false
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_12",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": false,
+        "ordinary": false
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_12",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": false,
+        "ordinary": false
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "full",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": false,
+        "ordinary": false
+      },
+      "full_rgb": {
+        "frame_count_standard": 8,
+        "frame_count_barrier": 8,
+        "inputs_equal": true,
+        "outputs_equal": {
+          "instrumented": false,
+          "ordinary": false
+        }
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "full",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": false,
+        "ordinary": false
+      },
+      "full_rgb": {
+        "frame_count_standard": 8,
+        "frame_count_barrier": 8,
+        "inputs_equal": true,
+        "outputs_equal": {
+          "instrumented": false,
+          "ordinary": false
+        }
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_00",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_00",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_01",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_01",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_02",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_02",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_03",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_03",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_04",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_04",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_05",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_05",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_06",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_06",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_07",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_07",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_08",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_08",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_09",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_09",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_10",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_10",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_11",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": false,
+        "ordinary": false
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_11",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": false,
+        "ordinary": false
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_12",
+      "repeat": 1,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": false,
+        "ordinary": false
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_12",
+      "repeat": 2,
+      "valid": true,
+      "inputs_equal": true,
+      "scratch_equal": {
+        "instrumented": false,
+        "ordinary": false
+      }
+    }
+  ]
+}

@@ -19,6 +19,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <cstring>
+#include <cstdlib>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -59,6 +60,7 @@ constexpr std::size_t kOutputBytesPerPixel = 8;
 constexpr std::uint32_t kFsr4ResourceRecurrent = 13;
 constexpr std::uint32_t kFsr4ResourceHistoryReprojected = 15;
 constexpr std::uint32_t kFsr4ResourceDebugInformation = 23;
+constexpr std::uint32_t kFsr4ResourceScratch = 22;
 
 void check_hr(HRESULT result, const char* operation) {
     if (FAILED(result)) {
@@ -703,6 +705,8 @@ std::vector<std::byte> read_binary_file(const std::filesystem::path& path) {
     return data;
 }
 
+#include "scratch_diag.inc"
+
 void write_capture_manifest(
     const std::filesystem::path& manifest_path,
     const TargetDevice& target,
@@ -1160,6 +1164,45 @@ int run_fsr4_provider_sequence(const std::filesystem::path& sequence_path,
     QueueWaiter waiter(target.device.Get());
     GpuDispatchTimer gpu_timer(target.device.Get(), queue.Get());
 
+    std::wstring scratch_mode_wide;
+    if (!fsr4n10_read_environment(L"FSR4N10_SCRATCH_INIT", scratch_mode_wide))
+        scratch_mode_wide = L"off";
+    std::string scratch_mode;
+    const std::uint32_t scratch_pattern =
+        fsr4n10_scratch_pattern_from_mode(scratch_mode_wide, scratch_mode);
+    const bool scratch_fill_enabled = !scratch_mode_wide.empty() && scratch_mode_wide != L"off";
+    std::unique_ptr<Fsr4N10ScratchFill> scratch_filler;
+    if (scratch_fill_enabled)
+        scratch_filler = std::make_unique<Fsr4N10ScratchFill>(target.device.Get());
+
+    std::wstring last_pass_text;
+    const bool prefix_diagnostic = fsr4n10_read_environment(L"FSR4N10_LAST_MODEL_PASS", last_pass_text) &&
+                                   !last_pass_text.empty();
+#if !defined(FSR4N10_ENABLE_PASS_PREFIX_DIAGNOSTIC)
+    if (prefix_diagnostic)
+        throw std::runtime_error("FSR4N10_LAST_MODEL_PASS requires FSR4N10_ENABLE_PASS_PREFIX_DIAGNOSTIC=ON");
+#endif
+    const int last_pass = prefix_diagnostic
+        ? fsr4n10_parse_environment_integer(last_pass_text, 0, 12)
+        : -1;
+    if (prefix_diagnostic && !capture_root.empty())
+        throw std::runtime_error("Pass-prefix runs are diagnostic only: omit capture-root, never generate a teacher .f4cap");
+
+    std::wstring trace_dir_text;
+    const std::filesystem::path scratch_trace_dir = fsr4n10_read_environment(
+        L"FSR4N10_TRACE_SCRATCH_DIR", trace_dir_text) ? std::filesystem::path(trace_dir_text) :
+                                                       std::filesystem::path{};
+    std::wstring trace_frame_text;
+    const bool has_trace_frame = fsr4n10_read_environment(L"FSR4N10_TRACE_FRAME", trace_frame_text) &&
+                                 !trace_frame_text.empty();
+    const int scratch_trace_frame = has_trace_frame
+        ? fsr4n10_parse_environment_integer(trace_frame_text, 0,
+                                            static_cast<int>(sequence_metadata.frame_count) - 1)
+        : 0;
+    if (!scratch_trace_dir.empty() && (scratch_trace_frame < 0 || scratch_trace_frame >=
+        static_cast<int>(sequence_metadata.frame_count)))
+        throw std::runtime_error("FSR4N10_TRACE_FRAME outside sequence range");
+
     auto color_texture = create_texture(target.device.Get(), kWidth, kHeight, DXGI_FORMAT_R16G16B16A16_FLOAT,
                                         D3D12_RESOURCE_STATE_COPY_DEST);
     auto depth_texture = create_texture(target.device.Get(), kWidth, kHeight, DXGI_FORMAT_R32_FLOAT,
@@ -1314,6 +1357,25 @@ int run_fsr4_provider_sequence(const std::filesystem::path& sequence_path,
         inputs_uploaded = true;
     };
 
+    const auto trace_scratch_if_requested = [&](ProviderContext& context,
+                                                 const SequenceFrameMetadata& frame_metadata,
+                                                 bool instrumented) {
+        if (scratch_trace_dir.empty() ||
+            static_cast<int>(frame_metadata.frame_index) != scratch_trace_frame)
+            return;
+        const auto resource = get_provider_resource(context.address(), kFsr4ResourceScratch, true);
+        auto* buffer = static_cast<ID3D12Resource*>(resource.resource);
+        const auto state = dx12_state_from_ffx(resource.state);
+        const auto scratch_bytes = fsr4n10_read_scratch(
+            target.device.Get(), queue.Get(), allocator.Get(), command_list.Get(), waiter,
+            buffer, state);
+        const std::string label = prefix_diagnostic ? std::to_string(last_pass) : "full";
+        const std::string mode = instrumented ? "instrumented" : "ordinary";
+        const auto filename = "frame_" + std::to_string(frame_metadata.frame_index) +
+                              "_pass_" + label + "_" + mode + ".bin";
+        write_binary_file(scratch_trace_dir / filename, scratch_bytes);
+    };
+
     const auto run_dispatch = [&](ProviderContext& context, const SequenceFrameMetadata& frame_metadata,
                                   ID3D12Resource* destination_texture, bool instrumented, bool capture_taps,
                                   bool measure_gpu_time, double* measured_gpu_time_us) {
@@ -1332,6 +1394,13 @@ int run_fsr4_provider_sequence(const std::filesystem::path& sequence_path,
         dispatch.frameTimeDelta = frame_metadata.frame_time_delta_ms;
         dispatch.preExposure = frame_metadata.pre_exposure;
         dispatch.reset = frame_metadata.reset;
+        if (scratch_filler) {
+            const auto resource = get_provider_resource(context.address(), kFsr4ResourceScratch, true);
+            if (dx12_state_from_ffx(resource.state) != D3D12_RESOURCE_STATE_UNORDERED_ACCESS)
+                throw std::runtime_error("Scratch initialization requires UAV resource state");
+            scratch_filler->record(command_list.Get(),
+                                   static_cast<ID3D12Resource*>(resource.resource), scratch_pattern);
+        }
         if (measure_gpu_time) {
             gpu_timer.begin(command_list.Get());
         }
@@ -1347,6 +1416,7 @@ int run_fsr4_provider_sequence(const std::filesystem::path& sequence_path,
             if (measure_gpu_time && measured_gpu_time_us != nullptr) {
                 *measured_gpu_time_us = gpu_timer.elapsed_microseconds();
             }
+            trace_scratch_if_requested(context, frame_metadata, instrumented);
             return result;
         }
         const auto debug_resource = get_provider_resource(
@@ -1369,12 +1439,14 @@ int run_fsr4_provider_sequence(const std::filesystem::path& sequence_path,
             history_desc.Format != DXGI_FORMAT_R16G16B16A16_FLOAT) {
             throw std::runtime_error("FSR4 provider sequence tap resource dimensions or formats changed");
         }
-        return read_textures(
+        auto capture_result = read_textures(
             target.device.Get(), queue.Get(), allocator.Get(), command_list.Get(), waiter,
             {{destination_texture, D3D12_RESOURCE_STATE_UNORDERED_ACCESS, kOutputBytesPerPixel},
              {debug_texture, dx12_state_from_ffx(debug_resource.state), 4 * sizeof(float)},
              {recurrent_texture, dx12_state_from_ffx(recurrent_resource.state), 4},
              {history_texture, dx12_state_from_ffx(history_resource.state), kOutputBytesPerPixel}}, true);
+        trace_scratch_if_requested(context, frame_metadata, instrumented);
+        return capture_result;
     };
 
     const auto write_sequence_capture = [&](const SequenceFrame& frame,
@@ -1617,6 +1689,9 @@ int run_fsr4_provider_sequence(const std::filesystem::path& sequence_path,
            << "  \"render_size\": [" << kWidth << ", " << kHeight << "],\n"
            << "  \"output_size\": [" << kWidth << ", " << kHeight << "],\n"
            << "  \"frame_count\": " << sequence_metadata.frame_count << ",\n"
+           << "  \"scratch_initialization\": \"" << json_escape(scratch_mode) << "\",\n"
+           << "  \"diagnostic_prefix_only\": " << (prefix_diagnostic ? "true" : "false") << ",\n"
+           << "  \"diagnostic_last_model_pass\": " << last_pass << ",\n"
            << "  \"instrumentation_matches_reference\": " << (all_match ? "true" : "false") << ",\n"
            << "  \"provider_outputs_finite\": " << (all_outputs_finite ? "true" : "false") << ",\n"
            << "  \"gpu_timing_recorded\": true,\n"

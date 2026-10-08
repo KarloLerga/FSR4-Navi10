@@ -67,6 +67,8 @@ The capture validator proves package structure, hashes, dimensions and finite nu
 - `docs/naviprism/NAVIPRISM_ACCEPTANCE.md` - NaviPRISM runtime and evidence gates
 - `docs/param4_delta4/INTEGRATION_STATUS.md` - Param4/Delta4 implementation status and teacher gate
 - `docs/param4_delta4/CAPTURE_FORMAT.md` - deterministic teacher capture contract
+- `docs/RACE_BISECTOR.md` - scratch initialization, barrier, and first-divergence diagnostics
+- `docs/RACE_BISECTOR_RESEARCH.md` - source review and separate diagnostic hypotheses
 - `NAVIPRISM_RESULTS.md` - NaviPRISM measurements, limitations, and unresolved gates
 - `docs/ACCEPTANCE_CRITERIA.md` - definition of done
 - `PROGRESS.md`, `RESULTS.md` - current implementation and measurements

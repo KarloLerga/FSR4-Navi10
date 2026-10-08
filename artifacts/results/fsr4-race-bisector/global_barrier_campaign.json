@@ -1,0 +1,2698 @@
+{
+  "schema": "f4n10.scratch-campaign.v1",
+  "variant": "global-barrier",
+  "harness": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\build-global-barrier\\fsr4n10_harness.exe",
+  "sequence": "C:\\src\\FSR4-Navi10\\build\\release\\delta-control-smoke.f4seq",
+  "repeats": 2,
+  "trace_frame": 0,
+  "cases": [
+    {
+      "seed": "off",
+      "pass": null,
+      "pass_name": "full",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\full\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\full\\run_1\\frame_0_pass_full_instrumented.bin",
+          "size": 20880256,
+          "sha256": "b6cfcbb0cb46e967635ea28e9753877bcfde810fb5ba39d7c4f1db27fdd03027"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\full\\run_1\\frame_0_pass_full_ordinary.bin",
+          "size": 20880256,
+          "sha256": "e8eb327657efe375227d591f9d205a42795d53cef0d36e7392808025350d2226"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "off",
+      "pass": null,
+      "pass_name": "full",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\full\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\full\\run_2\\frame_0_pass_full_instrumented.bin",
+          "size": 20880256,
+          "sha256": "ba8aeba99b04ddf23c0e4e0ba078503fb0333ad99b804a6a82a8cd6175dcd5cd"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\full\\run_2\\frame_0_pass_full_ordinary.bin",
+          "size": 20880256,
+          "sha256": "6bf66efa64a0728b144025ed5d310f5e7d36bf41ca76f496443ec0e586b666c5"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "off",
+      "pass": 0,
+      "pass_name": "pass_00",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_00\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_00\\run_1\\frame_0_pass_0_instrumented.bin",
+          "size": 20880256,
+          "sha256": "4296c8210b12075e68ac4549e3008dee69b7d2b02ddea3f6293b9608cbbd8e0a"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_00\\run_1\\frame_0_pass_0_ordinary.bin",
+          "size": 20880256,
+          "sha256": "4296c8210b12075e68ac4549e3008dee69b7d2b02ddea3f6293b9608cbbd8e0a"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "off",
+      "pass": 0,
+      "pass_name": "pass_00",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_00\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_00\\run_2\\frame_0_pass_0_instrumented.bin",
+          "size": 20880256,
+          "sha256": "4296c8210b12075e68ac4549e3008dee69b7d2b02ddea3f6293b9608cbbd8e0a"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_00\\run_2\\frame_0_pass_0_ordinary.bin",
+          "size": 20880256,
+          "sha256": "4296c8210b12075e68ac4549e3008dee69b7d2b02ddea3f6293b9608cbbd8e0a"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "off",
+      "pass": 1,
+      "pass_name": "pass_01",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_01\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_01\\run_1\\frame_0_pass_1_instrumented.bin",
+          "size": 20880256,
+          "sha256": "3f0c4c7bfb606db237284c8f33775404662d5eb9e7bf46dff4f45854c6583fc2"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_01\\run_1\\frame_0_pass_1_ordinary.bin",
+          "size": 20880256,
+          "sha256": "3f0c4c7bfb606db237284c8f33775404662d5eb9e7bf46dff4f45854c6583fc2"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "off",
+      "pass": 1,
+      "pass_name": "pass_01",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_01\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_01\\run_2\\frame_0_pass_1_instrumented.bin",
+          "size": 20880256,
+          "sha256": "3f0c4c7bfb606db237284c8f33775404662d5eb9e7bf46dff4f45854c6583fc2"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_01\\run_2\\frame_0_pass_1_ordinary.bin",
+          "size": 20880256,
+          "sha256": "3f0c4c7bfb606db237284c8f33775404662d5eb9e7bf46dff4f45854c6583fc2"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "off",
+      "pass": 2,
+      "pass_name": "pass_02",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_02\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_02\\run_1\\frame_0_pass_2_instrumented.bin",
+          "size": 20880256,
+          "sha256": "ecf48a4cb21fb61ff894c06832384a8e1c51a13c305b9150589296f1fd8af102"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_02\\run_1\\frame_0_pass_2_ordinary.bin",
+          "size": 20880256,
+          "sha256": "ecf48a4cb21fb61ff894c06832384a8e1c51a13c305b9150589296f1fd8af102"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "off",
+      "pass": 2,
+      "pass_name": "pass_02",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_02\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_02\\run_2\\frame_0_pass_2_instrumented.bin",
+          "size": 20880256,
+          "sha256": "ecf48a4cb21fb61ff894c06832384a8e1c51a13c305b9150589296f1fd8af102"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_02\\run_2\\frame_0_pass_2_ordinary.bin",
+          "size": 20880256,
+          "sha256": "ecf48a4cb21fb61ff894c06832384a8e1c51a13c305b9150589296f1fd8af102"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "off",
+      "pass": 3,
+      "pass_name": "pass_03",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_03\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_03\\run_1\\frame_0_pass_3_instrumented.bin",
+          "size": 20880256,
+          "sha256": "eb030bb246d30ef35af2c825919e8065b6287d94f82b1b943ffef6248a7e14f4"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_03\\run_1\\frame_0_pass_3_ordinary.bin",
+          "size": 20880256,
+          "sha256": "eb030bb246d30ef35af2c825919e8065b6287d94f82b1b943ffef6248a7e14f4"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "off",
+      "pass": 3,
+      "pass_name": "pass_03",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_03\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_03\\run_2\\frame_0_pass_3_instrumented.bin",
+          "size": 20880256,
+          "sha256": "eb030bb246d30ef35af2c825919e8065b6287d94f82b1b943ffef6248a7e14f4"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_03\\run_2\\frame_0_pass_3_ordinary.bin",
+          "size": 20880256,
+          "sha256": "eb030bb246d30ef35af2c825919e8065b6287d94f82b1b943ffef6248a7e14f4"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "off",
+      "pass": 4,
+      "pass_name": "pass_04",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_04\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_04\\run_1\\frame_0_pass_4_instrumented.bin",
+          "size": 20880256,
+          "sha256": "f42f384b01a9967a3ae09619c1b284bc1ec2a3b24ab28c6e5c70c77851799cd4"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_04\\run_1\\frame_0_pass_4_ordinary.bin",
+          "size": 20880256,
+          "sha256": "f42f384b01a9967a3ae09619c1b284bc1ec2a3b24ab28c6e5c70c77851799cd4"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "off",
+      "pass": 4,
+      "pass_name": "pass_04",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_04\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_04\\run_2\\frame_0_pass_4_instrumented.bin",
+          "size": 20880256,
+          "sha256": "f42f384b01a9967a3ae09619c1b284bc1ec2a3b24ab28c6e5c70c77851799cd4"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_04\\run_2\\frame_0_pass_4_ordinary.bin",
+          "size": 20880256,
+          "sha256": "f42f384b01a9967a3ae09619c1b284bc1ec2a3b24ab28c6e5c70c77851799cd4"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "off",
+      "pass": 5,
+      "pass_name": "pass_05",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_05\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_05\\run_1\\frame_0_pass_5_instrumented.bin",
+          "size": 20880256,
+          "sha256": "0af5b3e053beda0a33776c04bc71ca35fdc6480229bc427d7e09df2a1abec1be"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_05\\run_1\\frame_0_pass_5_ordinary.bin",
+          "size": 20880256,
+          "sha256": "0af5b3e053beda0a33776c04bc71ca35fdc6480229bc427d7e09df2a1abec1be"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "off",
+      "pass": 5,
+      "pass_name": "pass_05",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_05\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_05\\run_2\\frame_0_pass_5_instrumented.bin",
+          "size": 20880256,
+          "sha256": "0af5b3e053beda0a33776c04bc71ca35fdc6480229bc427d7e09df2a1abec1be"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_05\\run_2\\frame_0_pass_5_ordinary.bin",
+          "size": 20880256,
+          "sha256": "0af5b3e053beda0a33776c04bc71ca35fdc6480229bc427d7e09df2a1abec1be"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "off",
+      "pass": 6,
+      "pass_name": "pass_06",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_06\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_06\\run_1\\frame_0_pass_6_instrumented.bin",
+          "size": 20880256,
+          "sha256": "fb3f6689f03cbed82747cc9ed84eff22ce8f1349059dc5534258f267030497d8"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_06\\run_1\\frame_0_pass_6_ordinary.bin",
+          "size": 20880256,
+          "sha256": "fb3f6689f03cbed82747cc9ed84eff22ce8f1349059dc5534258f267030497d8"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "off",
+      "pass": 6,
+      "pass_name": "pass_06",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_06\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_06\\run_2\\frame_0_pass_6_instrumented.bin",
+          "size": 20880256,
+          "sha256": "fb3f6689f03cbed82747cc9ed84eff22ce8f1349059dc5534258f267030497d8"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_06\\run_2\\frame_0_pass_6_ordinary.bin",
+          "size": 20880256,
+          "sha256": "fb3f6689f03cbed82747cc9ed84eff22ce8f1349059dc5534258f267030497d8"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "off",
+      "pass": 7,
+      "pass_name": "pass_07",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_07\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_07\\run_1\\frame_0_pass_7_instrumented.bin",
+          "size": 20880256,
+          "sha256": "019912a46994c44a03e3a42d98763d8fe8c94f74f685145f44d66b56eb7d2f29"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_07\\run_1\\frame_0_pass_7_ordinary.bin",
+          "size": 20880256,
+          "sha256": "019912a46994c44a03e3a42d98763d8fe8c94f74f685145f44d66b56eb7d2f29"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "off",
+      "pass": 7,
+      "pass_name": "pass_07",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_07\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_07\\run_2\\frame_0_pass_7_instrumented.bin",
+          "size": 20880256,
+          "sha256": "019912a46994c44a03e3a42d98763d8fe8c94f74f685145f44d66b56eb7d2f29"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_07\\run_2\\frame_0_pass_7_ordinary.bin",
+          "size": 20880256,
+          "sha256": "019912a46994c44a03e3a42d98763d8fe8c94f74f685145f44d66b56eb7d2f29"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "off",
+      "pass": 8,
+      "pass_name": "pass_08",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_08\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_08\\run_1\\frame_0_pass_8_instrumented.bin",
+          "size": 20880256,
+          "sha256": "0ac4cf3cbd539516ac96c24269586f388fbb9e202f3407bdf54d8faa50a9657b"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_08\\run_1\\frame_0_pass_8_ordinary.bin",
+          "size": 20880256,
+          "sha256": "0ac4cf3cbd539516ac96c24269586f388fbb9e202f3407bdf54d8faa50a9657b"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "off",
+      "pass": 8,
+      "pass_name": "pass_08",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_08\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_08\\run_2\\frame_0_pass_8_instrumented.bin",
+          "size": 20880256,
+          "sha256": "0ac4cf3cbd539516ac96c24269586f388fbb9e202f3407bdf54d8faa50a9657b"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_08\\run_2\\frame_0_pass_8_ordinary.bin",
+          "size": 20880256,
+          "sha256": "0ac4cf3cbd539516ac96c24269586f388fbb9e202f3407bdf54d8faa50a9657b"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "off",
+      "pass": 9,
+      "pass_name": "pass_09",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_09\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_09\\run_1\\frame_0_pass_9_instrumented.bin",
+          "size": 20880256,
+          "sha256": "406b00b84afb083a74d226e0d9346599cb58deb15e3cb7c5ff18b78654f41d8b"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_09\\run_1\\frame_0_pass_9_ordinary.bin",
+          "size": 20880256,
+          "sha256": "406b00b84afb083a74d226e0d9346599cb58deb15e3cb7c5ff18b78654f41d8b"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "off",
+      "pass": 9,
+      "pass_name": "pass_09",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_09\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_09\\run_2\\frame_0_pass_9_instrumented.bin",
+          "size": 20880256,
+          "sha256": "406b00b84afb083a74d226e0d9346599cb58deb15e3cb7c5ff18b78654f41d8b"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_09\\run_2\\frame_0_pass_9_ordinary.bin",
+          "size": 20880256,
+          "sha256": "406b00b84afb083a74d226e0d9346599cb58deb15e3cb7c5ff18b78654f41d8b"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "off",
+      "pass": 10,
+      "pass_name": "pass_10",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_10\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_10\\run_1\\frame_0_pass_10_instrumented.bin",
+          "size": 20880256,
+          "sha256": "b7fe38452f1fb3057a8ffc6776384cd26fe9215da9dedee1a324ab5c6a36cd79"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_10\\run_1\\frame_0_pass_10_ordinary.bin",
+          "size": 20880256,
+          "sha256": "b7fe38452f1fb3057a8ffc6776384cd26fe9215da9dedee1a324ab5c6a36cd79"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "off",
+      "pass": 10,
+      "pass_name": "pass_10",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_10\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_10\\run_2\\frame_0_pass_10_instrumented.bin",
+          "size": 20880256,
+          "sha256": "b7fe38452f1fb3057a8ffc6776384cd26fe9215da9dedee1a324ab5c6a36cd79"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_10\\run_2\\frame_0_pass_10_ordinary.bin",
+          "size": 20880256,
+          "sha256": "b7fe38452f1fb3057a8ffc6776384cd26fe9215da9dedee1a324ab5c6a36cd79"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "off",
+      "pass": 11,
+      "pass_name": "pass_11",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_11\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_11\\run_1\\frame_0_pass_11_instrumented.bin",
+          "size": 20880256,
+          "sha256": "1057e02fb537f8efd09bd68b15aa206fa89762ecb6e15addbc6fd73c124965fc"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_11\\run_1\\frame_0_pass_11_ordinary.bin",
+          "size": 20880256,
+          "sha256": "a26bae97758a79c9e185ae36d6fb3f6b62b3b5ba599deeea49daf2af7067fbe4"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "off",
+      "pass": 11,
+      "pass_name": "pass_11",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_11\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_11\\run_2\\frame_0_pass_11_instrumented.bin",
+          "size": 20880256,
+          "sha256": "ffab6557f803b403361899dacf325ab891cc1503021cea078c3b4b8438756623"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_11\\run_2\\frame_0_pass_11_ordinary.bin",
+          "size": 20880256,
+          "sha256": "90bc1c426bcf85c2e2b78b9f7651af928f4cb4be90f66ec85a200ba730339ae8"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "off",
+      "pass": 12,
+      "pass_name": "pass_12",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_12\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_12\\run_1\\frame_0_pass_12_instrumented.bin",
+          "size": 20880256,
+          "sha256": "16dfb556ad2adc6de9182cf73948bff6505684e6b2b4a63ce4332d59ad19c2c9"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_12\\run_1\\frame_0_pass_12_ordinary.bin",
+          "size": 20880256,
+          "sha256": "0e7a96ad5b1a54b30b8a4d4791c5a7c3d4d7bc26ab45a9c55d68a8cb341d3e80"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "off",
+      "pass": 12,
+      "pass_name": "pass_12",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_12\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_12\\run_2\\frame_0_pass_12_instrumented.bin",
+          "size": 20880256,
+          "sha256": "4a2d752178a42fd855d0da8e7c4cbfa3bdb3dcda25837e1a5128118a1e72ce01"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_off\\pass_12\\run_2\\frame_0_pass_12_ordinary.bin",
+          "size": 20880256,
+          "sha256": "4154c68480cfe4e28c27adaaccc28a5e1502abf6800ad1e672b915da4123cae9"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "zero",
+      "pass": null,
+      "pass_name": "full",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\full\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\full\\run_1\\frame_0_pass_full_instrumented.bin",
+          "size": 20880256,
+          "sha256": "4583e49bd2b43aff52979324052dae9695657d19b02ea1df79f8ec454314425a"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\full\\run_1\\frame_0_pass_full_ordinary.bin",
+          "size": 20880256,
+          "sha256": "a24bf2ba2be2a194385ce8b06306cb1a4f6ea863d8dfa9f10e58d96a8104af0b"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "zero",
+      "pass": null,
+      "pass_name": "full",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\full\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\full\\run_2\\frame_0_pass_full_instrumented.bin",
+          "size": 20880256,
+          "sha256": "bb8d5d0ceb2e057217f2409c0901461d9b6460cac60e5e22fb122e268a99928f"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\full\\run_2\\frame_0_pass_full_ordinary.bin",
+          "size": 20880256,
+          "sha256": "a5b8aadca28cefd8ddc2f61769c4c015594699052011236753bc5593f6976910"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "zero",
+      "pass": 0,
+      "pass_name": "pass_00",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_00\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_00\\run_1\\frame_0_pass_0_instrumented.bin",
+          "size": 20880256,
+          "sha256": "4296c8210b12075e68ac4549e3008dee69b7d2b02ddea3f6293b9608cbbd8e0a"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_00\\run_1\\frame_0_pass_0_ordinary.bin",
+          "size": 20880256,
+          "sha256": "4296c8210b12075e68ac4549e3008dee69b7d2b02ddea3f6293b9608cbbd8e0a"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "zero",
+      "pass": 0,
+      "pass_name": "pass_00",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_00\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_00\\run_2\\frame_0_pass_0_instrumented.bin",
+          "size": 20880256,
+          "sha256": "4296c8210b12075e68ac4549e3008dee69b7d2b02ddea3f6293b9608cbbd8e0a"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_00\\run_2\\frame_0_pass_0_ordinary.bin",
+          "size": 20880256,
+          "sha256": "4296c8210b12075e68ac4549e3008dee69b7d2b02ddea3f6293b9608cbbd8e0a"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "zero",
+      "pass": 1,
+      "pass_name": "pass_01",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_01\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_01\\run_1\\frame_0_pass_1_instrumented.bin",
+          "size": 20880256,
+          "sha256": "3f0c4c7bfb606db237284c8f33775404662d5eb9e7bf46dff4f45854c6583fc2"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_01\\run_1\\frame_0_pass_1_ordinary.bin",
+          "size": 20880256,
+          "sha256": "3f0c4c7bfb606db237284c8f33775404662d5eb9e7bf46dff4f45854c6583fc2"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "zero",
+      "pass": 1,
+      "pass_name": "pass_01",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_01\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_01\\run_2\\frame_0_pass_1_instrumented.bin",
+          "size": 20880256,
+          "sha256": "3f0c4c7bfb606db237284c8f33775404662d5eb9e7bf46dff4f45854c6583fc2"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_01\\run_2\\frame_0_pass_1_ordinary.bin",
+          "size": 20880256,
+          "sha256": "3f0c4c7bfb606db237284c8f33775404662d5eb9e7bf46dff4f45854c6583fc2"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "zero",
+      "pass": 2,
+      "pass_name": "pass_02",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_02\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_02\\run_1\\frame_0_pass_2_instrumented.bin",
+          "size": 20880256,
+          "sha256": "ecf48a4cb21fb61ff894c06832384a8e1c51a13c305b9150589296f1fd8af102"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_02\\run_1\\frame_0_pass_2_ordinary.bin",
+          "size": 20880256,
+          "sha256": "ecf48a4cb21fb61ff894c06832384a8e1c51a13c305b9150589296f1fd8af102"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "zero",
+      "pass": 2,
+      "pass_name": "pass_02",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_02\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_02\\run_2\\frame_0_pass_2_instrumented.bin",
+          "size": 20880256,
+          "sha256": "ecf48a4cb21fb61ff894c06832384a8e1c51a13c305b9150589296f1fd8af102"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_02\\run_2\\frame_0_pass_2_ordinary.bin",
+          "size": 20880256,
+          "sha256": "ecf48a4cb21fb61ff894c06832384a8e1c51a13c305b9150589296f1fd8af102"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "zero",
+      "pass": 3,
+      "pass_name": "pass_03",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_03\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_03\\run_1\\frame_0_pass_3_instrumented.bin",
+          "size": 20880256,
+          "sha256": "eb030bb246d30ef35af2c825919e8065b6287d94f82b1b943ffef6248a7e14f4"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_03\\run_1\\frame_0_pass_3_ordinary.bin",
+          "size": 20880256,
+          "sha256": "eb030bb246d30ef35af2c825919e8065b6287d94f82b1b943ffef6248a7e14f4"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "zero",
+      "pass": 3,
+      "pass_name": "pass_03",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_03\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_03\\run_2\\frame_0_pass_3_instrumented.bin",
+          "size": 20880256,
+          "sha256": "eb030bb246d30ef35af2c825919e8065b6287d94f82b1b943ffef6248a7e14f4"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_03\\run_2\\frame_0_pass_3_ordinary.bin",
+          "size": 20880256,
+          "sha256": "eb030bb246d30ef35af2c825919e8065b6287d94f82b1b943ffef6248a7e14f4"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "zero",
+      "pass": 4,
+      "pass_name": "pass_04",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_04\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_04\\run_1\\frame_0_pass_4_instrumented.bin",
+          "size": 20880256,
+          "sha256": "f42f384b01a9967a3ae09619c1b284bc1ec2a3b24ab28c6e5c70c77851799cd4"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_04\\run_1\\frame_0_pass_4_ordinary.bin",
+          "size": 20880256,
+          "sha256": "f42f384b01a9967a3ae09619c1b284bc1ec2a3b24ab28c6e5c70c77851799cd4"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "zero",
+      "pass": 4,
+      "pass_name": "pass_04",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_04\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_04\\run_2\\frame_0_pass_4_instrumented.bin",
+          "size": 20880256,
+          "sha256": "f42f384b01a9967a3ae09619c1b284bc1ec2a3b24ab28c6e5c70c77851799cd4"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_04\\run_2\\frame_0_pass_4_ordinary.bin",
+          "size": 20880256,
+          "sha256": "f42f384b01a9967a3ae09619c1b284bc1ec2a3b24ab28c6e5c70c77851799cd4"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "zero",
+      "pass": 5,
+      "pass_name": "pass_05",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_05\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_05\\run_1\\frame_0_pass_5_instrumented.bin",
+          "size": 20880256,
+          "sha256": "0af5b3e053beda0a33776c04bc71ca35fdc6480229bc427d7e09df2a1abec1be"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_05\\run_1\\frame_0_pass_5_ordinary.bin",
+          "size": 20880256,
+          "sha256": "0af5b3e053beda0a33776c04bc71ca35fdc6480229bc427d7e09df2a1abec1be"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "zero",
+      "pass": 5,
+      "pass_name": "pass_05",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_05\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_05\\run_2\\frame_0_pass_5_instrumented.bin",
+          "size": 20880256,
+          "sha256": "0af5b3e053beda0a33776c04bc71ca35fdc6480229bc427d7e09df2a1abec1be"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_05\\run_2\\frame_0_pass_5_ordinary.bin",
+          "size": 20880256,
+          "sha256": "0af5b3e053beda0a33776c04bc71ca35fdc6480229bc427d7e09df2a1abec1be"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "zero",
+      "pass": 6,
+      "pass_name": "pass_06",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_06\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_06\\run_1\\frame_0_pass_6_instrumented.bin",
+          "size": 20880256,
+          "sha256": "fb3f6689f03cbed82747cc9ed84eff22ce8f1349059dc5534258f267030497d8"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_06\\run_1\\frame_0_pass_6_ordinary.bin",
+          "size": 20880256,
+          "sha256": "fb3f6689f03cbed82747cc9ed84eff22ce8f1349059dc5534258f267030497d8"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "zero",
+      "pass": 6,
+      "pass_name": "pass_06",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_06\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_06\\run_2\\frame_0_pass_6_instrumented.bin",
+          "size": 20880256,
+          "sha256": "fb3f6689f03cbed82747cc9ed84eff22ce8f1349059dc5534258f267030497d8"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_06\\run_2\\frame_0_pass_6_ordinary.bin",
+          "size": 20880256,
+          "sha256": "fb3f6689f03cbed82747cc9ed84eff22ce8f1349059dc5534258f267030497d8"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "zero",
+      "pass": 7,
+      "pass_name": "pass_07",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_07\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_07\\run_1\\frame_0_pass_7_instrumented.bin",
+          "size": 20880256,
+          "sha256": "019912a46994c44a03e3a42d98763d8fe8c94f74f685145f44d66b56eb7d2f29"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_07\\run_1\\frame_0_pass_7_ordinary.bin",
+          "size": 20880256,
+          "sha256": "019912a46994c44a03e3a42d98763d8fe8c94f74f685145f44d66b56eb7d2f29"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "zero",
+      "pass": 7,
+      "pass_name": "pass_07",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_07\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_07\\run_2\\frame_0_pass_7_instrumented.bin",
+          "size": 20880256,
+          "sha256": "019912a46994c44a03e3a42d98763d8fe8c94f74f685145f44d66b56eb7d2f29"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_07\\run_2\\frame_0_pass_7_ordinary.bin",
+          "size": 20880256,
+          "sha256": "019912a46994c44a03e3a42d98763d8fe8c94f74f685145f44d66b56eb7d2f29"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "zero",
+      "pass": 8,
+      "pass_name": "pass_08",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_08\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_08\\run_1\\frame_0_pass_8_instrumented.bin",
+          "size": 20880256,
+          "sha256": "0ac4cf3cbd539516ac96c24269586f388fbb9e202f3407bdf54d8faa50a9657b"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_08\\run_1\\frame_0_pass_8_ordinary.bin",
+          "size": 20880256,
+          "sha256": "0ac4cf3cbd539516ac96c24269586f388fbb9e202f3407bdf54d8faa50a9657b"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "zero",
+      "pass": 8,
+      "pass_name": "pass_08",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_08\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_08\\run_2\\frame_0_pass_8_instrumented.bin",
+          "size": 20880256,
+          "sha256": "0ac4cf3cbd539516ac96c24269586f388fbb9e202f3407bdf54d8faa50a9657b"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_08\\run_2\\frame_0_pass_8_ordinary.bin",
+          "size": 20880256,
+          "sha256": "0ac4cf3cbd539516ac96c24269586f388fbb9e202f3407bdf54d8faa50a9657b"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "zero",
+      "pass": 9,
+      "pass_name": "pass_09",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_09\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_09\\run_1\\frame_0_pass_9_instrumented.bin",
+          "size": 20880256,
+          "sha256": "406b00b84afb083a74d226e0d9346599cb58deb15e3cb7c5ff18b78654f41d8b"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_09\\run_1\\frame_0_pass_9_ordinary.bin",
+          "size": 20880256,
+          "sha256": "406b00b84afb083a74d226e0d9346599cb58deb15e3cb7c5ff18b78654f41d8b"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "zero",
+      "pass": 9,
+      "pass_name": "pass_09",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_09\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_09\\run_2\\frame_0_pass_9_instrumented.bin",
+          "size": 20880256,
+          "sha256": "406b00b84afb083a74d226e0d9346599cb58deb15e3cb7c5ff18b78654f41d8b"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_09\\run_2\\frame_0_pass_9_ordinary.bin",
+          "size": 20880256,
+          "sha256": "406b00b84afb083a74d226e0d9346599cb58deb15e3cb7c5ff18b78654f41d8b"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "zero",
+      "pass": 10,
+      "pass_name": "pass_10",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_10\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_10\\run_1\\frame_0_pass_10_instrumented.bin",
+          "size": 20880256,
+          "sha256": "b7fe38452f1fb3057a8ffc6776384cd26fe9215da9dedee1a324ab5c6a36cd79"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_10\\run_1\\frame_0_pass_10_ordinary.bin",
+          "size": 20880256,
+          "sha256": "b7fe38452f1fb3057a8ffc6776384cd26fe9215da9dedee1a324ab5c6a36cd79"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "zero",
+      "pass": 10,
+      "pass_name": "pass_10",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_10\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_10\\run_2\\frame_0_pass_10_instrumented.bin",
+          "size": 20880256,
+          "sha256": "b7fe38452f1fb3057a8ffc6776384cd26fe9215da9dedee1a324ab5c6a36cd79"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_10\\run_2\\frame_0_pass_10_ordinary.bin",
+          "size": 20880256,
+          "sha256": "b7fe38452f1fb3057a8ffc6776384cd26fe9215da9dedee1a324ab5c6a36cd79"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "zero",
+      "pass": 11,
+      "pass_name": "pass_11",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_11\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_11\\run_1\\frame_0_pass_11_instrumented.bin",
+          "size": 20880256,
+          "sha256": "70481dcd1488f5aa45f326b358aae2638934e9db6a584c5ff0bf8744033cb537"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_11\\run_1\\frame_0_pass_11_ordinary.bin",
+          "size": 20880256,
+          "sha256": "e816482d82fe5544e7b0bab8f20e15d1a6ab2c5d22f7daccc728001b014e83ca"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "zero",
+      "pass": 11,
+      "pass_name": "pass_11",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_11\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_11\\run_2\\frame_0_pass_11_instrumented.bin",
+          "size": 20880256,
+          "sha256": "1ac37865f07743864fe18e60a456eadb2fd994024b02a053e886a80380a68ae6"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_11\\run_2\\frame_0_pass_11_ordinary.bin",
+          "size": 20880256,
+          "sha256": "ac6378f88729a609e37a0db03aee3b74f81831fe2fc830243a595a81ca8ea68c"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "zero",
+      "pass": 12,
+      "pass_name": "pass_12",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_12\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_12\\run_1\\frame_0_pass_12_instrumented.bin",
+          "size": 20880256,
+          "sha256": "13888a3c7995163b8377958d345470d1b9c384d04ac5eefd07628a046f4ef720"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_12\\run_1\\frame_0_pass_12_ordinary.bin",
+          "size": 20880256,
+          "sha256": "5c8c1526bef7a5d04b107d6aec9fbf7bc37a684d3c4765a677491f8127e4db6c"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "zero",
+      "pass": 12,
+      "pass_name": "pass_12",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_12\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_12\\run_2\\frame_0_pass_12_instrumented.bin",
+          "size": 20880256,
+          "sha256": "0499e809fb9537b9c00cf1fa995b8ff9d236936ec5f8d83c87cb8f2d550d0aa3"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_zero\\pass_12\\run_2\\frame_0_pass_12_ordinary.bin",
+          "size": 20880256,
+          "sha256": "634dd6d942bc5c9c4ca825823cb9a774e3f54a4043a0a14bc2160a9e0a432e29"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "a5",
+      "pass": null,
+      "pass_name": "full",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\full\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\full\\run_1\\frame_0_pass_full_instrumented.bin",
+          "size": 20880256,
+          "sha256": "ab8cc3e5805853c29d2f5d35224c08de81280e03993371b5d02d1d1d5e9c5520"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\full\\run_1\\frame_0_pass_full_ordinary.bin",
+          "size": 20880256,
+          "sha256": "2a29c5610b88c1e5ae7832c4fa915eae22bc2c7155f6e7bbd713c80e0fdfadef"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "a5",
+      "pass": null,
+      "pass_name": "full",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\full\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\full\\run_2\\frame_0_pass_full_instrumented.bin",
+          "size": 20880256,
+          "sha256": "65cb533592d10f3038450d217d27fee02b9b52bb32153a6deaf87d555b30c22f"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\full\\run_2\\frame_0_pass_full_ordinary.bin",
+          "size": 20880256,
+          "sha256": "2def46c3b70b80f640ddd963821b67c2850fccc53f7d59665fda2f565aab464e"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "a5",
+      "pass": 0,
+      "pass_name": "pass_00",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_00\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_00\\run_1\\frame_0_pass_0_instrumented.bin",
+          "size": 20880256,
+          "sha256": "7bf3f67f84d268a30e631bdb2aecaffdf6b46a81088943441f85e7d0850c224b"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_00\\run_1\\frame_0_pass_0_ordinary.bin",
+          "size": 20880256,
+          "sha256": "7bf3f67f84d268a30e631bdb2aecaffdf6b46a81088943441f85e7d0850c224b"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "a5",
+      "pass": 0,
+      "pass_name": "pass_00",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_00\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_00\\run_2\\frame_0_pass_0_instrumented.bin",
+          "size": 20880256,
+          "sha256": "7bf3f67f84d268a30e631bdb2aecaffdf6b46a81088943441f85e7d0850c224b"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_00\\run_2\\frame_0_pass_0_ordinary.bin",
+          "size": 20880256,
+          "sha256": "7bf3f67f84d268a30e631bdb2aecaffdf6b46a81088943441f85e7d0850c224b"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "a5",
+      "pass": 1,
+      "pass_name": "pass_01",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_01\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_01\\run_1\\frame_0_pass_1_instrumented.bin",
+          "size": 20880256,
+          "sha256": "10ca7e2d00ca70dae3eeb89961dbca66f829c70442092a6dd69ac2c0015ed1c1"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_01\\run_1\\frame_0_pass_1_ordinary.bin",
+          "size": 20880256,
+          "sha256": "10ca7e2d00ca70dae3eeb89961dbca66f829c70442092a6dd69ac2c0015ed1c1"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "a5",
+      "pass": 1,
+      "pass_name": "pass_01",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_01\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_01\\run_2\\frame_0_pass_1_instrumented.bin",
+          "size": 20880256,
+          "sha256": "10ca7e2d00ca70dae3eeb89961dbca66f829c70442092a6dd69ac2c0015ed1c1"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_01\\run_2\\frame_0_pass_1_ordinary.bin",
+          "size": 20880256,
+          "sha256": "10ca7e2d00ca70dae3eeb89961dbca66f829c70442092a6dd69ac2c0015ed1c1"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "a5",
+      "pass": 2,
+      "pass_name": "pass_02",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_02\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_02\\run_1\\frame_0_pass_2_instrumented.bin",
+          "size": 20880256,
+          "sha256": "a284524dd08ba175bf9ba16cfe1368dd68681afa63e0416799a3e717032db38d"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_02\\run_1\\frame_0_pass_2_ordinary.bin",
+          "size": 20880256,
+          "sha256": "a284524dd08ba175bf9ba16cfe1368dd68681afa63e0416799a3e717032db38d"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "a5",
+      "pass": 2,
+      "pass_name": "pass_02",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_02\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_02\\run_2\\frame_0_pass_2_instrumented.bin",
+          "size": 20880256,
+          "sha256": "a284524dd08ba175bf9ba16cfe1368dd68681afa63e0416799a3e717032db38d"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_02\\run_2\\frame_0_pass_2_ordinary.bin",
+          "size": 20880256,
+          "sha256": "a284524dd08ba175bf9ba16cfe1368dd68681afa63e0416799a3e717032db38d"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "a5",
+      "pass": 3,
+      "pass_name": "pass_03",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_03\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_03\\run_1\\frame_0_pass_3_instrumented.bin",
+          "size": 20880256,
+          "sha256": "9f55cd3aa9be40dc6a99ade2bae2cefc20cfd816148aadd582020c90dd293020"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_03\\run_1\\frame_0_pass_3_ordinary.bin",
+          "size": 20880256,
+          "sha256": "9f55cd3aa9be40dc6a99ade2bae2cefc20cfd816148aadd582020c90dd293020"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "a5",
+      "pass": 3,
+      "pass_name": "pass_03",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_03\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_03\\run_2\\frame_0_pass_3_instrumented.bin",
+          "size": 20880256,
+          "sha256": "9f55cd3aa9be40dc6a99ade2bae2cefc20cfd816148aadd582020c90dd293020"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_03\\run_2\\frame_0_pass_3_ordinary.bin",
+          "size": 20880256,
+          "sha256": "9f55cd3aa9be40dc6a99ade2bae2cefc20cfd816148aadd582020c90dd293020"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "a5",
+      "pass": 4,
+      "pass_name": "pass_04",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_04\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_04\\run_1\\frame_0_pass_4_instrumented.bin",
+          "size": 20880256,
+          "sha256": "4ffe4745bd56b2595714952db71d8e93cb76dbd262952b2f1d023ff723dd95a5"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_04\\run_1\\frame_0_pass_4_ordinary.bin",
+          "size": 20880256,
+          "sha256": "4ffe4745bd56b2595714952db71d8e93cb76dbd262952b2f1d023ff723dd95a5"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "a5",
+      "pass": 4,
+      "pass_name": "pass_04",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_04\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_04\\run_2\\frame_0_pass_4_instrumented.bin",
+          "size": 20880256,
+          "sha256": "4ffe4745bd56b2595714952db71d8e93cb76dbd262952b2f1d023ff723dd95a5"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_04\\run_2\\frame_0_pass_4_ordinary.bin",
+          "size": 20880256,
+          "sha256": "4ffe4745bd56b2595714952db71d8e93cb76dbd262952b2f1d023ff723dd95a5"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "a5",
+      "pass": 5,
+      "pass_name": "pass_05",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_05\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_05\\run_1\\frame_0_pass_5_instrumented.bin",
+          "size": 20880256,
+          "sha256": "210fbf659ea3dc90f7bcd30eaae0a022f64d6d62c28cbcdcdfadd27ad63bed23"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_05\\run_1\\frame_0_pass_5_ordinary.bin",
+          "size": 20880256,
+          "sha256": "210fbf659ea3dc90f7bcd30eaae0a022f64d6d62c28cbcdcdfadd27ad63bed23"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "a5",
+      "pass": 5,
+      "pass_name": "pass_05",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_05\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_05\\run_2\\frame_0_pass_5_instrumented.bin",
+          "size": 20880256,
+          "sha256": "210fbf659ea3dc90f7bcd30eaae0a022f64d6d62c28cbcdcdfadd27ad63bed23"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_05\\run_2\\frame_0_pass_5_ordinary.bin",
+          "size": 20880256,
+          "sha256": "210fbf659ea3dc90f7bcd30eaae0a022f64d6d62c28cbcdcdfadd27ad63bed23"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "a5",
+      "pass": 6,
+      "pass_name": "pass_06",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_06\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_06\\run_1\\frame_0_pass_6_instrumented.bin",
+          "size": 20880256,
+          "sha256": "1f1879bd0d3fe0f589ee0c22855479016fe47f45bc3e85e67c350a4e11d87239"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_06\\run_1\\frame_0_pass_6_ordinary.bin",
+          "size": 20880256,
+          "sha256": "1f1879bd0d3fe0f589ee0c22855479016fe47f45bc3e85e67c350a4e11d87239"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "a5",
+      "pass": 6,
+      "pass_name": "pass_06",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_06\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_06\\run_2\\frame_0_pass_6_instrumented.bin",
+          "size": 20880256,
+          "sha256": "1f1879bd0d3fe0f589ee0c22855479016fe47f45bc3e85e67c350a4e11d87239"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_06\\run_2\\frame_0_pass_6_ordinary.bin",
+          "size": 20880256,
+          "sha256": "1f1879bd0d3fe0f589ee0c22855479016fe47f45bc3e85e67c350a4e11d87239"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "a5",
+      "pass": 7,
+      "pass_name": "pass_07",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_07\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_07\\run_1\\frame_0_pass_7_instrumented.bin",
+          "size": 20880256,
+          "sha256": "81d61296b80b76449f81f956d51b7129451a5a7db9c0f9b06e3c3a32f0120d2b"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_07\\run_1\\frame_0_pass_7_ordinary.bin",
+          "size": 20880256,
+          "sha256": "81d61296b80b76449f81f956d51b7129451a5a7db9c0f9b06e3c3a32f0120d2b"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "a5",
+      "pass": 7,
+      "pass_name": "pass_07",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_07\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_07\\run_2\\frame_0_pass_7_instrumented.bin",
+          "size": 20880256,
+          "sha256": "81d61296b80b76449f81f956d51b7129451a5a7db9c0f9b06e3c3a32f0120d2b"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_07\\run_2\\frame_0_pass_7_ordinary.bin",
+          "size": 20880256,
+          "sha256": "81d61296b80b76449f81f956d51b7129451a5a7db9c0f9b06e3c3a32f0120d2b"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "a5",
+      "pass": 8,
+      "pass_name": "pass_08",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_08\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_08\\run_1\\frame_0_pass_8_instrumented.bin",
+          "size": 20880256,
+          "sha256": "de788748e08992a618e21649a5106f46399fb2590e2aae41244614573421e988"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_08\\run_1\\frame_0_pass_8_ordinary.bin",
+          "size": 20880256,
+          "sha256": "de788748e08992a618e21649a5106f46399fb2590e2aae41244614573421e988"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "a5",
+      "pass": 8,
+      "pass_name": "pass_08",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_08\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_08\\run_2\\frame_0_pass_8_instrumented.bin",
+          "size": 20880256,
+          "sha256": "de788748e08992a618e21649a5106f46399fb2590e2aae41244614573421e988"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_08\\run_2\\frame_0_pass_8_ordinary.bin",
+          "size": 20880256,
+          "sha256": "de788748e08992a618e21649a5106f46399fb2590e2aae41244614573421e988"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "a5",
+      "pass": 9,
+      "pass_name": "pass_09",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_09\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_09\\run_1\\frame_0_pass_9_instrumented.bin",
+          "size": 20880256,
+          "sha256": "53491595aad949affa12c4199d78dadba88696e102c7baddbe26b707f2eb9ba6"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_09\\run_1\\frame_0_pass_9_ordinary.bin",
+          "size": 20880256,
+          "sha256": "53491595aad949affa12c4199d78dadba88696e102c7baddbe26b707f2eb9ba6"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "a5",
+      "pass": 9,
+      "pass_name": "pass_09",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_09\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_09\\run_2\\frame_0_pass_9_instrumented.bin",
+          "size": 20880256,
+          "sha256": "53491595aad949affa12c4199d78dadba88696e102c7baddbe26b707f2eb9ba6"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_09\\run_2\\frame_0_pass_9_ordinary.bin",
+          "size": 20880256,
+          "sha256": "53491595aad949affa12c4199d78dadba88696e102c7baddbe26b707f2eb9ba6"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "a5",
+      "pass": 10,
+      "pass_name": "pass_10",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_10\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_10\\run_1\\frame_0_pass_10_instrumented.bin",
+          "size": 20880256,
+          "sha256": "bedca88b3634e8501836109d3d63cecfa4eb3db181be3e13131ee200941dddbd"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_10\\run_1\\frame_0_pass_10_ordinary.bin",
+          "size": 20880256,
+          "sha256": "bedca88b3634e8501836109d3d63cecfa4eb3db181be3e13131ee200941dddbd"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "a5",
+      "pass": 10,
+      "pass_name": "pass_10",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_10\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_10\\run_2\\frame_0_pass_10_instrumented.bin",
+          "size": 20880256,
+          "sha256": "bedca88b3634e8501836109d3d63cecfa4eb3db181be3e13131ee200941dddbd"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_10\\run_2\\frame_0_pass_10_ordinary.bin",
+          "size": 20880256,
+          "sha256": "bedca88b3634e8501836109d3d63cecfa4eb3db181be3e13131ee200941dddbd"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "a5",
+      "pass": 11,
+      "pass_name": "pass_11",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_11\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_11\\run_1\\frame_0_pass_11_instrumented.bin",
+          "size": 20880256,
+          "sha256": "b673dd7972137a05737740954c1436aaa98892d1aee0102ab3579cb753a9e53c"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_11\\run_1\\frame_0_pass_11_ordinary.bin",
+          "size": 20880256,
+          "sha256": "8ea4adbb18ba53ba0630e10698cac21537c37720d14217bbf828d9ee768d871b"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "a5",
+      "pass": 11,
+      "pass_name": "pass_11",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_11\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_11\\run_2\\frame_0_pass_11_instrumented.bin",
+          "size": 20880256,
+          "sha256": "3e1e72d86056b874b8d25e841d9f216e6ca19d95528b0abc229eea20322be8df"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_11\\run_2\\frame_0_pass_11_ordinary.bin",
+          "size": 20880256,
+          "sha256": "62a8dfda6a87aa8b5fafccf2db01f82fa10f13d297eb58e7b97db6e944bfbabd"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "a5",
+      "pass": 12,
+      "pass_name": "pass_12",
+      "repeat": 1,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_12\\run_1\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_12\\run_1\\frame_0_pass_12_instrumented.bin",
+          "size": 20880256,
+          "sha256": "f2f461188f6ae0a9ffeef5def34016cb85b71b365cbbaabafd00aa221083b357"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_12\\run_1\\frame_0_pass_12_ordinary.bin",
+          "size": 20880256,
+          "sha256": "8d59458aee59151c080e79b0e3c1392688ed2799562b18b080a212801fdad311"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    },
+    {
+      "seed": "a5",
+      "pass": 12,
+      "pass_name": "pass_12",
+      "repeat": 2,
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_12\\run_2\\sequence.json",
+      "exit_code": 0,
+      "error": null,
+      "files": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_12\\run_2\\frame_0_pass_12_instrumented.bin",
+          "size": 20880256,
+          "sha256": "71b64b118ebbf9ab346565d84501e368d65ecc03b8dfa0ff683a82db05282184"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\fsr4n10-race-bisector\\results-global-barrier\\seed_a5\\pass_12\\run_2\\frame_0_pass_12_ordinary.bin",
+          "size": 20880256,
+          "sha256": "3219732fff8fa0d08fd31c7181524cbf035e7c3e4416995dc7cc933f1eb0ec9e"
+        }
+      },
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ]
+    }
+  ]
+}

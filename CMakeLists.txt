@@ -98,6 +98,23 @@ add_custom_target(compile_fsr4_post_oracle_shader ALL
 add_dependencies(fsr4n10_harness compile_fsr4_post_oracle_shader)
 
 fsr4n10_compile_hlsl(
+    compile_fsr4_scratch_fill
+    "${CMAKE_CURRENT_SOURCE_DIR}/shaders/runtime/fsr4_scratch_fill.hlsl"
+    main
+    "${CMAKE_CURRENT_BINARY_DIR}/generated-shaders/fsr4_scratch_fill.dxil"
+    cs_6_6
+)
+set(FSR4N10_SCRATCH_FILL_SHADER "${compile_fsr4_scratch_fill_OUTPUT}")
+add_custom_target(compile_fsr4_scratch_fill_shader ALL
+    COMMAND "${CMAKE_COMMAND}" -E copy_if_different
+            "${FSR4N10_SCRATCH_FILL_SHADER}"
+            "$<TARGET_FILE_DIR:fsr4n10_harness>/fsr4_scratch_fill.dxil"
+    DEPENDS "${FSR4N10_SCRATCH_FILL_SHADER}"
+    VERBATIM
+)
+add_dependencies(fsr4n10_harness compile_fsr4_scratch_fill_shader)
+
+fsr4n10_compile_hlsl(
     compile_naviqsr_akr_4tap
     "${CMAKE_CURRENT_SOURCE_DIR}/shaders/naviqsr/analytic_reconstruct.hlsl"
     main
@@ -369,6 +386,9 @@ add_custom_target(audit_teacher_provider_schedule
     VERBATIM
 )
 
+option(FSR4N10_ENABLE_PASS_PREFIX_DIAGNOSTIC "Build temporary prefix-pass diagnostic into FSR4 provider" OFF)
+option(FSR4N10_FORCE_GLOBAL_UAV_BARRIER "Diagnostic global UAV barrier after each backend compute dispatch" OFF)
+
 option(FSR4N10_FORCE_SCALAR_DOT4 "Use scalar signed-I8 dot4 fallback for Navi10 validation" OFF)
 option(FSR4N10_STABLE_POST_MATH "Use overflow-stable but mathematically equivalent FSR4 POST tanh/sigmoid transforms" OFF)
 set(FSR4N10_PROVIDER_DIAGNOSTIC_ARGS)
@@ -433,6 +453,24 @@ string(REPLACE
     "FFX_API_SURFACE_FORMAT_R32G32B32A32_FLOAT, maxUpscaleSize->width * 5, maxUpscaleSize->height"
     FSR4N10_FIDELITYFX_PROVIDER_OVERLAY_TEXT
     "${FSR4N10_FIDELITYFX_PROVIDER_OVERLAY_TEXT}")
+if(FSR4N10_ENABLE_PASS_PREFIX_DIAGNOSTIC)
+    # Git may check out pinned third_party with Windows CRLF; normalize the
+    # generated overlay before exact original-source ML-pass loop matching.
+    string(REPLACE "\r\n" "\n" FSR4N10_FIDELITYFX_PROVIDER_OVERLAY_TEXT
+        "${FSR4N10_FIDELITYFX_PROVIDER_OVERLAY_TEXT}")
+    set(FSR4N10_ML_PASS_LOOP_ORIGINAL
+        "        // ML passes\n        for (int i = 1; i < 13; ++i)\n        {\n")
+    set(FSR4N10_ML_PASS_LOOP_DIAG
+        "        // ML passes\n        const char* f4n10_last_text = std::getenv(\"FSR4N10_LAST_MODEL_PASS\");\n        const int f4n10_last_pass = f4n10_last_text ? std::atoi(f4n10_last_text) : -1;\n        for (int i = 1; i < 13; ++i)\n        {\n            if (f4n10_last_pass >= 0 && i > f4n10_last_pass)\n                break;\n")
+    string(FIND "${FSR4N10_FIDELITYFX_PROVIDER_OVERLAY_TEXT}"
+        "${FSR4N10_ML_PASS_LOOP_ORIGINAL}" FSR4N10_ML_LOOP_INDEX)
+    if(FSR4N10_ML_LOOP_INDEX EQUAL -1)
+        message(FATAL_ERROR "Pinned AMD FSR4 ML pass-loop anchor changed; refuse diagnostic injection")
+    endif()
+    string(REPLACE "${FSR4N10_ML_PASS_LOOP_ORIGINAL}" "${FSR4N10_ML_PASS_LOOP_DIAG}"
+        FSR4N10_FIDELITYFX_PROVIDER_OVERLAY_TEXT
+        "${FSR4N10_FIDELITYFX_PROVIDER_OVERLAY_TEXT}")
+endif()
 file(WRITE "${FSR4N10_FIDELITYFX_PROVIDER_OVERLAY_SOURCE}"
     "${FSR4N10_FIDELITYFX_PROVIDER_OVERLAY_TEXT}")
 file(APPEND "${FSR4N10_FIDELITYFX_PROVIDER_OVERLAY_SOURCE}"
@@ -451,6 +489,36 @@ file(WRITE "${FSR4N10_FIDELITYFX_COMPAT_DIR}/pix3.h"
     "/* Build-only compatibility shim: tracing entry points are loaded dynamically by the backend. */\n#define PIX_COLOR(r, g, b) ((((r) & 0xff) << 16) | (((g) & 0xff) << 8) | ((b) & 0xff))\n")
 file(WRITE "${FSR4N10_FIDELITYFX_PROVIDER_OVERLAY}/Kits/FidelityFX/api/internal/git_hash_branch.h"
     "#pragma once\n#define GIT_HASH \"${FSR4N10_FSR4_SOURCE_COMMIT}\"\n#define GIT_COMMIT_SUBJECT \"FSR4 Navi10 pinned provider source\"\n")
+set(FSR4N10_FIDELITYFX_BACKEND_DIAGNOSTIC_SOURCE
+    "${FSR4N10_FIDELITYFX_ROOT}/backend/dx12/ffx_dx12.cpp")
+if(FSR4N10_FORCE_GLOBAL_UAV_BARRIER)
+    set(FSR4N10_DX12_BACKEND_OVERLAY_DIR "${CMAKE_CURRENT_BINARY_DIR}/teacher/backend_diagnostic")
+    file(MAKE_DIRECTORY "${FSR4N10_DX12_BACKEND_OVERLAY_DIR}")
+    set(FSR4N10_FIDELITYFX_BACKEND_DIAGNOSTIC_SOURCE
+        "${FSR4N10_DX12_BACKEND_OVERLAY_DIR}/ffx_dx12.cpp")
+    file(READ "${FSR4N10_FIDELITYFX_ROOT}/backend/dx12/ffx_dx12.cpp" FSR4N10_DX12_TEXT)
+    string(REPLACE "\r\n" "\n" FSR4N10_DX12_TEXT "${FSR4N10_DX12_TEXT}")
+    # This source is relocated to a generated directory; repair only its three
+    # relative includes, using existing target api/internal include directories.
+    foreach(FSR4N10_RELATIVE_HEADER IN ITEMS ffx_interface.h ffx_util.h ffx_assert.h)
+        string(REPLACE "\"../../api/internal/${FSR4N10_RELATIVE_HEADER}\""
+                       "\"${FSR4N10_RELATIVE_HEADER}\""
+               FSR4N10_DX12_TEXT "${FSR4N10_DX12_TEXT}")
+    endforeach()
+    set(FSR4N10_DX12_DISPATCH_ANCHOR
+        "        dx12CommandList->Dispatch(job->computeJobDescriptor.dimensions[0], job->computeJobDescriptor.dimensions[1], job->computeJobDescriptor.dimensions[2]);")
+    set(FSR4N10_DX12_DISPATCH_WITH_BARRIER
+        "        dx12CommandList->Dispatch(job->computeJobDescriptor.dimensions[0], job->computeJobDescriptor.dimensions[1], job->computeJobDescriptor.dimensions[2]);\n        // FSR4-Navi10 diagnostic only: guarantee global UAV ordering after dispatch.\n        D3D12_RESOURCE_BARRIER f4n10_global_uav_barrier = {};\n        f4n10_global_uav_barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_UAV;\n        f4n10_global_uav_barrier.UAV.pResource = nullptr;\n        dx12CommandList->ResourceBarrier(1, &f4n10_global_uav_barrier);")
+    string(FIND "${FSR4N10_DX12_TEXT}" "${FSR4N10_DX12_DISPATCH_ANCHOR}"
+        FSR4N10_DX12_DISPATCH_POSITION)
+    if(FSR4N10_DX12_DISPATCH_POSITION EQUAL -1)
+        message(FATAL_ERROR "Pinned AMD backend dispatch anchor changed; cannot add UAV barrier")
+    endif()
+    string(REPLACE "${FSR4N10_DX12_DISPATCH_ANCHOR}" "${FSR4N10_DX12_DISPATCH_WITH_BARRIER}"
+        FSR4N10_DX12_TEXT "${FSR4N10_DX12_TEXT}")
+    file(WRITE "${FSR4N10_FIDELITYFX_BACKEND_DIAGNOSTIC_SOURCE}" "${FSR4N10_DX12_TEXT}")
+endif()
+
 add_library(fsr4n10_fsr4_teacher_provider STATIC
     src/teacher/provider_i8_native_1080_shader_selector.cpp
     src/teacher/provider_query_compat.cpp
@@ -460,7 +528,7 @@ add_library(fsr4n10_fsr4_teacher_provider STATIC
     "${FSR4N10_FIDELITYFX_ROOT}/api/internal/ffx_object_management.cpp"
     "${FSR4N10_FIDELITYFX_ROOT}/api/internal/ffx_watermark.cpp"
     "${FSR4N10_FIDELITYFX_ROOT}/backend/dx12/ffx_backends_dx12.cpp"
-    "${FSR4N10_FIDELITYFX_ROOT}/backend/dx12/ffx_dx12.cpp"
+    "${FSR4N10_FIDELITYFX_BACKEND_DIAGNOSTIC_SOURCE}"
     "${FSR4N10_FIDELITYFX_PROVIDER_OVERLAY}/Kits/FidelityFX/upscalers/fsr4/dx12/ffx_provider_fsr4_dx12.cpp"
     "${FSR4N10_PROVIDER_INITIALIZER_CPP}"
 )
@@ -741,6 +809,9 @@ target_compile_definitions(fsr4n10_teacher_runtime PRIVATE
     "FSR4N10_BUILD_CONFIGURATION=\"$<CONFIG>\""
     "FSR4N10_PROVIDER_SHADER_MANIFEST=\"${FSR4N10_PROVIDER_SHADER_DIR}/manifest.json\"")
 target_link_libraries(fsr4n10_teacher_runtime PUBLIC fsr4n10_fsr4_teacher_provider fsr4n10_sequence PRIVATE bcrypt d3d12 dxgi)
+if(FSR4N10_ENABLE_PASS_PREFIX_DIAGNOSTIC)
+    target_compile_definitions(fsr4n10_teacher_runtime PRIVATE FSR4N10_ENABLE_PASS_PREFIX_DIAGNOSTIC=1)
+endif()
 fsr4n10_enable_warnings(fsr4n10_teacher_runtime)
 target_link_libraries(fsr4n10_harness PRIVATE fsr4n10_teacher_runtime)
 

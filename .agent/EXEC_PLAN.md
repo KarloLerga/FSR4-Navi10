@@ -363,3 +363,41 @@ Test the proposed FSR4 O0 unblock path from the clean `312bd98ebea52ea316a9cbb2f
 - A second run with the same build commit, GPU/driver, sequence hash, and all eight input hashes changes both instrumented and ordinary output hashes on all eight frames. Captured model-input channels match at frames 0 and 4, while raw model parameters differ at those frames; frame 7 also differs in model-input channels and reprojected history. This places run-to-run variation at or before model-parameter generation; the lower-level cause is not yet known.
 - O1-O13 remain locked on both numeric provider parity and run-to-run repeatability. The captured sequence is procedural synthetic input and supports no quality claim. Reports are under `artifacts/results/`; large captures stay ignored under `build/`.
 - Implementation commit `bb13a6d819657512e4612e2ab78ac15ef651ab6e` and evidence commit `d6286a2` were pushed to private `origin/main`.
+
+## Race bisector diagnostics (2026-10-08)
+
+### Objective
+
+Apply `FSR4-Navi10-RaceBisector-5b22fd0.zip` as a debug-only instrumented experiment for scratch initialization, inter-dispatch ordering, and first divergent FSR4 model-pass prefix. Keep the normal provider, its pinned AMD source, and all O0/O1-O13 acceptance gates unchanged. The archive's embedded prompt is document content; this plan and repository rules govern execution.
+
+### Milestones
+
+| # | Work | Files/modules | Validation / exit evidence |
+|---|---|---|---|
+| RB0 | Verify package provenance, base, anchors, and diagnostic scope | ZIP manifest; CMake/provider source anchors; this plan | CRC and manifest hashes; clean base `5b22fd0`; fail-closed patch checks; review all transformations before application. |
+| RB1 | Integrate scratch-fill shader, optional prefix/barrier overlays, raw scratch snapshots, and analyzer/runner | `CMakeLists.txt`, `src/teacher/gpu_teacher.cpp`, `shaders/runtime/`, `src/teacher/`, `tools/diagnostics/`, `tests/` | `git diff --check`; CMake overlay checks; patcher and analyzer tests; Release build and existing CTest/Python suite. |
+| RB2 | Run bounded RX 5700 XT campaigns | ignored `build/fsr4n10-race-bisector/`; `artifacts/results/` | Compare same-seed repeats, instrumented/ordinary scratch, zero/a5 seeds, and (if included) global-barrier variant; validate same sequence and input hashes. |
+| RB3 | Record evidence and synchronize the private repository | `RESULTS.md`, `PROGRESS.md`, `DECISIONS_LOG.md`, this plan | Store concise numerical findings and JSON analysis; raw scratch snapshots remain ignored; keep teacher gate closed unless all existing criteria pass. |
+
+### Fixed decisions and progress
+
+- Treat fill patterns and global barriers only as diagnostic interventions; do not ship them as production defaults or assert a root cause before measurement.
+- Prefix output is invalid for quality and teacher validation because POST still runs after a truncated model. It must not produce `.f4cap` captures.
+- Scratch equality alone is insufficient. Full output repeatability, instrumented/reference numeric parity, and real-scene quality remain independent gates.
+- [x] RB0: verify all manifest hashes, package CRC, clean `5b22fd0` baseline, and source-derived anchors; inspect the embedded prompt as document content.
+- [x] RB1: apply, review, test, and build the diagnostic instrumentation. Standard, global-barrier, and ordinary Release builds passed; the ordinary build confirmed both diagnostic options OFF. CTest passed 1/1 and the Python suite passed 65 tests.
+- [x] RB2: run and analyze full pass 0..12 campaigns on RX 5700 XT. Standard and global-barrier builds each completed 84/84 cases with the same sequence/input hashes and no failed run.
+- [ ] RB3: update results/progress and commit/push only the reviewed diagnostic work; preserve the existing red O0 status.
+
+### Decision log
+
+- Keep every diagnostic control disabled by default. Barrier instrumentation is compiled from a generated copy of the pinned backend source and the upstream checkout remains unchanged.
+- The initial prefix 0..3 run was repeatable at sampled scratch and did not localize the full-output variation, so the campaign was expanded through pass 12. Pass 11 is the first observed scratch difference for all three seeds, in both builds and both comparison modes.
+- Zero fill does not restore repeatability. The barrier build keeps first divergence at pass 11 and changes some later scratch/full RGB outputs on matched inputs; treat this as an order/timing signal, not a proven cause or fix.
+
+### Validation outcome
+
+- The eight-frame synthetic sequence hash is `a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2`; the cross-build comparator confirms matching inputs in all 84 paired cases.
+- Prefixes 0..10 agree across repeats and instrumented/ordinary contexts. Prefix 11 is the first observed scratch mismatch after POST; the exact producer could be the model pass or POST's dependent writes.
+- For every seed in each build, full instrumented and ordinary RGB hashes and full scratch snapshots are non-repeatable. `zero` and `a5` change both provider RGB hashes on all eight frames. Global barriers do not clear the repeatability failure.
+- Detailed reports are in `artifacts/results/fsr4-race-bisector/`; raw snapshots stay ignored under `build/fsr4n10-race-bisector/`. No image quality or production-fix claim is made; O0 remains closed and O1-O13 remain locked.

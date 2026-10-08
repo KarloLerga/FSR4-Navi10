@@ -241,3 +241,42 @@ python tools\oracles\evaluate_scalar_teacher_gate.py `
 ```
 
 The two comparison commands and teacher gate return a nonzero status while their reports record the observed mismatches; that is expected for the current failing O0 gates.
+
+## FSR4 scratch race bisector (2026-10-08)
+
+Applied the `FSR4-Navi10-RaceBisector-5b22fd0` diagnostics without editing the
+pinned AMD checkout or changing default provider behavior. The standard and
+global-UAV-barrier Release builds each completed 84/84 fresh-process cases on
+the RX 5700 XT with no failed run. All cases used the existing eight-frame
+synthetic sequence (hash
+`a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2`), and the
+cross-build comparison confirmed matching inputs in all 84 paired cases.
+An additional ordinary Release build also passed with both diagnostic CMake
+options confirmed `OFF`.
+
+| Build | Seed | First repeat-divergent prefix | First instrumented/ordinary scratch mismatch |
+|---|---|---:|---:|
+| Standard | off / zero / a5 | 11 | 11 |
+| Global UAV barrier | off / zero / a5 | 11 | 11 |
+
+For every seed and build, scratch snapshots matched through prefix 10. The
+first changed snapshot was after prefix 11 plus POST; it therefore localizes
+the first observed difference to that prefix boundary, not to a proven shader
+instruction. Filling scratch with zero did not make the prefix-11 or full-model
+outputs repeatable, so uninitialized scratch alone is not the cause. Changing
+the seed from zero to `a5` changed ordinary and instrumented full RGB hashes on
+all eight frames despite identical inputs.
+
+The global barrier did not move the first observed divergence or restore
+full-model repeatability. Between standard and barrier builds, full RGB hashes
+differed for all six matching full-model seed/repeat pairs; scratch captures
+differed at prefixes 11 and 12 and in full-model cases. This is consistent with
+order/timing sensitivity but does not establish that barriers cause the
+nondeterminism. The exact pass-11/POST source remains unresolved; no production
+fix or quality claim follows from these diagnostics. O0 stays closed and O1-O13
+remain locked.
+
+The five machine-readable campaign/analysis files are in
+`artifacts/results/fsr4-race-bisector/`. Raw scratch buffers remain ignored in
+`build/fsr4n10-race-bisector/`. Run instructions and interpretation limits are
+in `docs/RACE_BISECTOR.md`.

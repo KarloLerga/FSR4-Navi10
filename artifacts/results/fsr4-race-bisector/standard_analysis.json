@@ -1,0 +1,4322 @@
+{
+  "schema": "f4n10.scratch-campaign-analysis.v1",
+  "variant": "standard",
+  "first_by_seed": {
+    "a5": {
+      "first_repeat_divergent_prefix": 11,
+      "first_instrumented_vs_ordinary_divergent_prefix": 11,
+      "compared_prefixes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    "off": {
+      "first_repeat_divergent_prefix": 11,
+      "first_instrumented_vs_ordinary_divergent_prefix": 11,
+      "compared_prefixes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    "zero": {
+      "first_repeat_divergent_prefix": 11,
+      "first_instrumented_vs_ordinary_divergent_prefix": 11,
+      "compared_prefixes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    }
+  },
+  "warnings": [
+    "Prefix scratch is observed after POST and may include POST writes.",
+    "Checksum parity of final RGB and real-scene validation remain independent O0 gates.",
+    "A match of scratch prefixes is necessary but not sufficient for a valid FSR4 teacher."
+  ],
+  "cross_seed_full_rgb": {
+    "zero_vs_a5": {
+      "pairs": [
+        {
+          "frame": 0,
+          "inputs_equal": true,
+          "reference_rgb_hash_equal": false,
+          "instrumented_rgb_hash_equal": false
+        },
+        {
+          "frame": 1,
+          "inputs_equal": true,
+          "reference_rgb_hash_equal": false,
+          "instrumented_rgb_hash_equal": false
+        },
+        {
+          "frame": 2,
+          "inputs_equal": true,
+          "reference_rgb_hash_equal": false,
+          "instrumented_rgb_hash_equal": false
+        },
+        {
+          "frame": 3,
+          "inputs_equal": true,
+          "reference_rgb_hash_equal": false,
+          "instrumented_rgb_hash_equal": false
+        },
+        {
+          "frame": 4,
+          "inputs_equal": true,
+          "reference_rgb_hash_equal": false,
+          "instrumented_rgb_hash_equal": false
+        },
+        {
+          "frame": 5,
+          "inputs_equal": true,
+          "reference_rgb_hash_equal": false,
+          "instrumented_rgb_hash_equal": false
+        },
+        {
+          "frame": 6,
+          "inputs_equal": true,
+          "reference_rgb_hash_equal": false,
+          "instrumented_rgb_hash_equal": false
+        },
+        {
+          "frame": 7,
+          "inputs_equal": true,
+          "reference_rgb_hash_equal": false,
+          "instrumented_rgb_hash_equal": false
+        }
+      ],
+      "all_inputs_equal": true,
+      "all_reference_rgb_equal": false
+    }
+  },
+  "full_rgb_repeatability": {
+    "off": {
+      "frame_count": 8,
+      "inputs_equal": true,
+      "ordinary_full_rgb_repeatable": false,
+      "instrumented_full_rgb_repeatable": false,
+      "full_scratch_repeatable": {
+        "instrumented": false,
+        "ordinary": false
+      }
+    },
+    "zero": {
+      "frame_count": 8,
+      "inputs_equal": true,
+      "ordinary_full_rgb_repeatable": false,
+      "instrumented_full_rgb_repeatable": false,
+      "full_scratch_repeatable": {
+        "instrumented": false,
+        "ordinary": false
+      }
+    },
+    "a5": {
+      "frame_count": 8,
+      "inputs_equal": true,
+      "ordinary_full_rgb_repeatable": false,
+      "instrumented_full_rgb_repeatable": false,
+      "full_scratch_repeatable": {
+        "instrumented": false,
+        "ordinary": false
+      }
+    }
+  },
+  "interpretation": [
+    "Different scratch fill patterns change ordinary full-provider RGB despite identical inputs: investigate a read-before-write or seed-dependent scratch path.",
+    "Seeded-zero scratch still diverges: uninitialized scratch alone is insufficient to explain repeatability."
+  ],
+  "results": [
+    {
+      "seed": "a5",
+      "pass_name": "full",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 50979,
+          "changed_fraction": 0.002441493054491286,
+          "first_changed_offset": 798727,
+          "changed_page_count": 95,
+          "first_changed_pages": [
+            {
+              "index": 195,
+              "changed_bytes": 441
+            },
+            {
+              "index": 198,
+              "changed_bytes": 805
+            },
+            {
+              "index": 199,
+              "changed_bytes": 7
+            },
+            {
+              "index": 202,
+              "changed_bytes": 708
+            },
+            {
+              "index": 206,
+              "changed_bytes": 808
+            },
+            {
+              "index": 210,
+              "changed_bytes": 744
+            },
+            {
+              "index": 213,
+              "changed_bytes": 402
+            },
+            {
+              "index": 214,
+              "changed_bytes": 8
+            },
+            {
+              "index": 221,
+              "changed_bytes": 465
+            },
+            {
+              "index": 225,
+              "changed_bytes": 762
+            },
+            {
+              "index": 228,
+              "changed_bytes": 480
+            },
+            {
+              "index": 229,
+              "changed_bytes": 9
+            },
+            {
+              "index": 232,
+              "changed_bytes": 738
+            },
+            {
+              "index": 236,
+              "changed_bytes": 492
+            },
+            {
+              "index": 240,
+              "changed_bytes": 725
+            },
+            {
+              "index": 243,
+              "changed_bytes": 412
+            }
+          ]
+        },
+        "ordinary": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 43418,
+          "changed_fraction": 0.002079380635946226,
+          "first_changed_offset": 844806,
+          "changed_page_count": 88,
+          "first_changed_pages": [
+            {
+              "index": 206,
+              "changed_bytes": 454
+            },
+            {
+              "index": 210,
+              "changed_bytes": 739
+            },
+            {
+              "index": 213,
+              "changed_bytes": 402
+            },
+            {
+              "index": 214,
+              "changed_bytes": 8
+            },
+            {
+              "index": 228,
+              "changed_bytes": 445
+            },
+            {
+              "index": 229,
+              "changed_bytes": 5
+            },
+            {
+              "index": 232,
+              "changed_bytes": 738
+            },
+            {
+              "index": 236,
+              "changed_bytes": 473
+            },
+            {
+              "index": 243,
+              "changed_bytes": 422
+            },
+            {
+              "index": 244,
+              "changed_bytes": 2
+            },
+            {
+              "index": 247,
+              "changed_bytes": 758
+            },
+            {
+              "index": 251,
+              "changed_bytes": 409
+            },
+            {
+              "index": 258,
+              "changed_bytes": 460
+            },
+            {
+              "index": 259,
+              "changed_bytes": 5
+            },
+            {
+              "index": 262,
+              "changed_bytes": 765
+            },
+            {
+              "index": 266,
+              "changed_bytes": 512
+            }
+          ]
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 40481,
+          "changed_fraction": 0.001938721440963176,
+          "first_changed_offset": 844806,
+          "changed_page_count": 81,
+          "first_changed_pages": [
+            {
+              "index": 206,
+              "changed_bytes": 454
+            },
+            {
+              "index": 210,
+              "changed_bytes": 739
+            },
+            {
+              "index": 213,
+              "changed_bytes": 402
+            },
+            {
+              "index": 214,
+              "changed_bytes": 8
+            },
+            {
+              "index": 228,
+              "changed_bytes": 445
+            },
+            {
+              "index": 229,
+              "changed_bytes": 5
+            },
+            {
+              "index": 232,
+              "changed_bytes": 738
+            },
+            {
+              "index": 236,
+              "changed_bytes": 473
+            },
+            {
+              "index": 258,
+              "changed_bytes": 460
+            },
+            {
+              "index": 259,
+              "changed_bytes": 5
+            },
+            {
+              "index": 262,
+              "changed_bytes": 765
+            },
+            {
+              "index": 266,
+              "changed_bytes": 512
+            },
+            {
+              "index": 270,
+              "changed_bytes": 772
+            },
+            {
+              "index": 273,
+              "changed_bytes": 429
+            },
+            {
+              "index": 274,
+              "changed_bytes": 6
+            },
+            {
+              "index": 296,
+              "changed_bytes": 465
+            }
+          ]
+        },
+        "run_2": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 52734,
+          "changed_fraction": 0.0025255437481226284,
+          "first_changed_offset": 798727,
+          "changed_page_count": 98,
+          "first_changed_pages": [
+            {
+              "index": 195,
+              "changed_bytes": 441
+            },
+            {
+              "index": 198,
+              "changed_bytes": 805
+            },
+            {
+              "index": 199,
+              "changed_bytes": 7
+            },
+            {
+              "index": 202,
+              "changed_bytes": 708
+            },
+            {
+              "index": 206,
+              "changed_bytes": 808
+            },
+            {
+              "index": 210,
+              "changed_bytes": 744
+            },
+            {
+              "index": 213,
+              "changed_bytes": 402
+            },
+            {
+              "index": 214,
+              "changed_bytes": 8
+            },
+            {
+              "index": 221,
+              "changed_bytes": 465
+            },
+            {
+              "index": 225,
+              "changed_bytes": 762
+            },
+            {
+              "index": 228,
+              "changed_bytes": 480
+            },
+            {
+              "index": 229,
+              "changed_bytes": 9
+            },
+            {
+              "index": 232,
+              "changed_bytes": 738
+            },
+            {
+              "index": 236,
+              "changed_bytes": 492
+            },
+            {
+              "index": 240,
+              "changed_bytes": 725
+            },
+            {
+              "index": 243,
+              "changed_bytes": 426
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_00",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_01",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_02",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_03",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_04",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_05",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_06",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_07",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_08",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_09",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_10",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_11",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 12816,
+          "changed_fraction": 0.0006137855781078546,
+          "first_changed_offset": 13240320,
+          "changed_page_count": 19,
+          "first_changed_pages": [
+            {
+              "index": 3232,
+              "changed_bytes": 795
+            },
+            {
+              "index": 3240,
+              "changed_bytes": 766
+            },
+            {
+              "index": 3277,
+              "changed_bytes": 786
+            },
+            {
+              "index": 3292,
+              "changed_bytes": 799
+            },
+            {
+              "index": 3315,
+              "changed_bytes": 801
+            },
+            {
+              "index": 3326,
+              "changed_bytes": 464
+            },
+            {
+              "index": 3330,
+              "changed_bytes": 764
+            },
+            {
+              "index": 3333,
+              "changed_bytes": 855
+            },
+            {
+              "index": 3337,
+              "changed_bytes": 420
+            },
+            {
+              "index": 3341,
+              "changed_bytes": 431
+            },
+            {
+              "index": 3360,
+              "changed_bytes": 775
+            },
+            {
+              "index": 3397,
+              "changed_bytes": 806
+            },
+            {
+              "index": 3435,
+              "changed_bytes": 786
+            },
+            {
+              "index": 3450,
+              "changed_bytes": 782
+            },
+            {
+              "index": 3465,
+              "changed_bytes": 783
+            },
+            {
+              "index": 3652,
+              "changed_bytes": 405
+            }
+          ]
+        },
+        "ordinary": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 26131,
+          "changed_fraction": 0.001251469330644222,
+          "first_changed_offset": 13271040,
+          "changed_page_count": 34,
+          "first_changed_pages": [
+            {
+              "index": 3240,
+              "changed_bytes": 766
+            },
+            {
+              "index": 3255,
+              "changed_bytes": 413
+            },
+            {
+              "index": 3277,
+              "changed_bytes": 398
+            },
+            {
+              "index": 3292,
+              "changed_bytes": 799
+            },
+            {
+              "index": 3307,
+              "changed_bytes": 811
+            },
+            {
+              "index": 3315,
+              "changed_bytes": 801
+            },
+            {
+              "index": 3322,
+              "changed_bytes": 830
+            },
+            {
+              "index": 3352,
+              "changed_bytes": 813
+            },
+            {
+              "index": 3360,
+              "changed_bytes": 775
+            },
+            {
+              "index": 3382,
+              "changed_bytes": 790
+            },
+            {
+              "index": 3397,
+              "changed_bytes": 806
+            },
+            {
+              "index": 3405,
+              "changed_bytes": 814
+            },
+            {
+              "index": 3487,
+              "changed_bytes": 412
+            },
+            {
+              "index": 3630,
+              "changed_bytes": 781
+            },
+            {
+              "index": 3975,
+              "changed_bytes": 815
+            },
+            {
+              "index": 4462,
+              "changed_bytes": 795
+            }
+          ]
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 16639,
+          "changed_fraction": 0.0007968772030381236,
+          "first_changed_offset": 13271040,
+          "changed_page_count": 23,
+          "first_changed_pages": [
+            {
+              "index": 3240,
+              "changed_bytes": 766
+            },
+            {
+              "index": 3270,
+              "changed_bytes": 841
+            },
+            {
+              "index": 3277,
+              "changed_bytes": 388
+            },
+            {
+              "index": 3307,
+              "changed_bytes": 811
+            },
+            {
+              "index": 3315,
+              "changed_bytes": 801
+            },
+            {
+              "index": 3322,
+              "changed_bytes": 830
+            },
+            {
+              "index": 3326,
+              "changed_bytes": 464
+            },
+            {
+              "index": 3337,
+              "changed_bytes": 838
+            },
+            {
+              "index": 3341,
+              "changed_bytes": 870
+            },
+            {
+              "index": 3352,
+              "changed_bytes": 813
+            },
+            {
+              "index": 3360,
+              "changed_bytes": 775
+            },
+            {
+              "index": 3382,
+              "changed_bytes": 790
+            },
+            {
+              "index": 3390,
+              "changed_bytes": 827
+            },
+            {
+              "index": 3397,
+              "changed_bytes": 806
+            },
+            {
+              "index": 3405,
+              "changed_bytes": 814
+            },
+            {
+              "index": 3420,
+              "changed_bytes": 787
+            }
+          ]
+        },
+        "run_2": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 28168,
+          "changed_fraction": 0.0013490256058163272,
+          "first_changed_offset": 13240320,
+          "changed_page_count": 37,
+          "first_changed_pages": [
+            {
+              "index": 3232,
+              "changed_bytes": 795
+            },
+            {
+              "index": 3240,
+              "changed_bytes": 766
+            },
+            {
+              "index": 3255,
+              "changed_bytes": 413
+            },
+            {
+              "index": 3270,
+              "changed_bytes": 841
+            },
+            {
+              "index": 3315,
+              "changed_bytes": 801
+            },
+            {
+              "index": 3330,
+              "changed_bytes": 764
+            },
+            {
+              "index": 3333,
+              "changed_bytes": 855
+            },
+            {
+              "index": 3337,
+              "changed_bytes": 418
+            },
+            {
+              "index": 3341,
+              "changed_bytes": 439
+            },
+            {
+              "index": 3360,
+              "changed_bytes": 775
+            },
+            {
+              "index": 3390,
+              "changed_bytes": 827
+            },
+            {
+              "index": 3397,
+              "changed_bytes": 806
+            },
+            {
+              "index": 3420,
+              "changed_bytes": 787
+            },
+            {
+              "index": 3435,
+              "changed_bytes": 786
+            },
+            {
+              "index": 3442,
+              "changed_bytes": 815
+            },
+            {
+              "index": 3465,
+              "changed_bytes": 783
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": "a5",
+      "pass_name": "pass_12",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 54385,
+          "changed_fraction": 0.0026046136599091507,
+          "first_changed_offset": 768003,
+          "changed_page_count": 105,
+          "first_changed_pages": [
+            {
+              "index": 187,
+              "changed_bytes": 400
+            },
+            {
+              "index": 191,
+              "changed_bytes": 753
+            },
+            {
+              "index": 195,
+              "changed_bytes": 406
+            },
+            {
+              "index": 202,
+              "changed_bytes": 439
+            },
+            {
+              "index": 206,
+              "changed_bytes": 780
+            },
+            {
+              "index": 210,
+              "changed_bytes": 732
+            },
+            {
+              "index": 213,
+              "changed_bytes": 402
+            },
+            {
+              "index": 214,
+              "changed_bytes": 8
+            },
+            {
+              "index": 221,
+              "changed_bytes": 465
+            },
+            {
+              "index": 225,
+              "changed_bytes": 762
+            },
+            {
+              "index": 228,
+              "changed_bytes": 448
+            },
+            {
+              "index": 229,
+              "changed_bytes": 3
+            },
+            {
+              "index": 232,
+              "changed_bytes": 568
+            },
+            {
+              "index": 236,
+              "changed_bytes": 389
+            },
+            {
+              "index": 243,
+              "changed_bytes": 422
+            },
+            {
+              "index": 244,
+              "changed_bytes": 2
+            }
+          ]
+        },
+        "ordinary": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 38945,
+          "changed_fraction": 0.00186515912448583,
+          "first_changed_offset": 783360,
+          "changed_page_count": 75,
+          "first_changed_pages": [
+            {
+              "index": 191,
+              "changed_bytes": 431
+            },
+            {
+              "index": 195,
+              "changed_bytes": 754
+            },
+            {
+              "index": 198,
+              "changed_bytes": 666
+            },
+            {
+              "index": 199,
+              "changed_bytes": 8
+            },
+            {
+              "index": 202,
+              "changed_bytes": 390
+            },
+            {
+              "index": 213,
+              "changed_bytes": 339
+            },
+            {
+              "index": 217,
+              "changed_bytes": 578
+            },
+            {
+              "index": 221,
+              "changed_bytes": 320
+            },
+            {
+              "index": 243,
+              "changed_bytes": 422
+            },
+            {
+              "index": 244,
+              "changed_bytes": 2
+            },
+            {
+              "index": 247,
+              "changed_bytes": 758
+            },
+            {
+              "index": 251,
+              "changed_bytes": 450
+            },
+            {
+              "index": 255,
+              "changed_bytes": 771
+            },
+            {
+              "index": 258,
+              "changed_bytes": 430
+            },
+            {
+              "index": 259,
+              "changed_bytes": 6
+            },
+            {
+              "index": 266,
+              "changed_bytes": 435
+            }
+          ]
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 55818,
+          "changed_fraction": 0.0026732430866747993,
+          "first_changed_offset": 783360,
+          "changed_page_count": 107,
+          "first_changed_pages": [
+            {
+              "index": 191,
+              "changed_bytes": 431
+            },
+            {
+              "index": 195,
+              "changed_bytes": 754
+            },
+            {
+              "index": 198,
+              "changed_bytes": 683
+            },
+            {
+              "index": 199,
+              "changed_bytes": 9
+            },
+            {
+              "index": 202,
+              "changed_bytes": 728
+            },
+            {
+              "index": 206,
+              "changed_bytes": 386
+            },
+            {
+              "index": 213,
+              "changed_bytes": 339
+            },
+            {
+              "index": 217,
+              "changed_bytes": 578
+            },
+            {
+              "index": 221,
+              "changed_bytes": 492
+            },
+            {
+              "index": 225,
+              "changed_bytes": 762
+            },
+            {
+              "index": 228,
+              "changed_bytes": 503
+            },
+            {
+              "index": 229,
+              "changed_bytes": 5
+            },
+            {
+              "index": 232,
+              "changed_bytes": 738
+            },
+            {
+              "index": 236,
+              "changed_bytes": 473
+            },
+            {
+              "index": 243,
+              "changed_bytes": 422
+            },
+            {
+              "index": 244,
+              "changed_bytes": 2
+            }
+          ]
+        },
+        "run_2": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 50193,
+          "changed_fraction": 0.002403849837856394,
+          "first_changed_offset": 768003,
+          "changed_page_count": 99,
+          "first_changed_pages": [
+            {
+              "index": 187,
+              "changed_bytes": 400
+            },
+            {
+              "index": 191,
+              "changed_bytes": 753
+            },
+            {
+              "index": 195,
+              "changed_bytes": 406
+            },
+            {
+              "index": 198,
+              "changed_bytes": 381
+            },
+            {
+              "index": 199,
+              "changed_bytes": 4
+            },
+            {
+              "index": 202,
+              "changed_bytes": 747
+            },
+            {
+              "index": 206,
+              "changed_bytes": 793
+            },
+            {
+              "index": 210,
+              "changed_bytes": 732
+            },
+            {
+              "index": 213,
+              "changed_bytes": 402
+            },
+            {
+              "index": 214,
+              "changed_bytes": 8
+            },
+            {
+              "index": 228,
+              "changed_bytes": 420
+            },
+            {
+              "index": 229,
+              "changed_bytes": 5
+            },
+            {
+              "index": 232,
+              "changed_bytes": 608
+            },
+            {
+              "index": 236,
+              "changed_bytes": 398
+            },
+            {
+              "index": 243,
+              "changed_bytes": 422
+            },
+            {
+              "index": 244,
+              "changed_bytes": 2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "full",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 241725,
+          "changed_fraction": 0.011576725879222937,
+          "first_changed_offset": 783360,
+          "changed_page_count": 452,
+          "first_changed_pages": [
+            {
+              "index": 191,
+              "changed_bytes": 431
+            },
+            {
+              "index": 195,
+              "changed_bytes": 754
+            },
+            {
+              "index": 198,
+              "changed_bytes": 374
+            },
+            {
+              "index": 199,
+              "changed_bytes": 4
+            },
+            {
+              "index": 202,
+              "changed_bytes": 412
+            },
+            {
+              "index": 206,
+              "changed_bytes": 789
+            },
+            {
+              "index": 210,
+              "changed_bytes": 445
+            },
+            {
+              "index": 228,
+              "changed_bytes": 406
+            },
+            {
+              "index": 229,
+              "changed_bytes": 8
+            },
+            {
+              "index": 232,
+              "changed_bytes": 738
+            },
+            {
+              "index": 236,
+              "changed_bytes": 436
+            },
+            {
+              "index": 240,
+              "changed_bytes": 397
+            },
+            {
+              "index": 243,
+              "changed_bytes": 760
+            },
+            {
+              "index": 244,
+              "changed_bytes": 3
+            },
+            {
+              "index": 247,
+              "changed_bytes": 360
+            },
+            {
+              "index": 251,
+              "changed_bytes": 448
+            }
+          ]
+        },
+        "ordinary": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 133032,
+          "changed_fraction": 0.006371186253655127,
+          "first_changed_offset": 768001,
+          "changed_page_count": 255,
+          "first_changed_pages": [
+            {
+              "index": 187,
+              "changed_bytes": 388
+            },
+            {
+              "index": 191,
+              "changed_bytes": 617
+            },
+            {
+              "index": 195,
+              "changed_bytes": 771
+            },
+            {
+              "index": 198,
+              "changed_bytes": 377
+            },
+            {
+              "index": 199,
+              "changed_bytes": 4
+            },
+            {
+              "index": 206,
+              "changed_bytes": 454
+            },
+            {
+              "index": 210,
+              "changed_bytes": 739
+            },
+            {
+              "index": 213,
+              "changed_bytes": 381
+            },
+            {
+              "index": 214,
+              "changed_bytes": 8
+            },
+            {
+              "index": 217,
+              "changed_bytes": 578
+            },
+            {
+              "index": 221,
+              "changed_bytes": 320
+            },
+            {
+              "index": 251,
+              "changed_bytes": 403
+            },
+            {
+              "index": 255,
+              "changed_bytes": 619
+            },
+            {
+              "index": 258,
+              "changed_bytes": 429
+            },
+            {
+              "index": 273,
+              "changed_bytes": 386
+            },
+            {
+              "index": 274,
+              "changed_bytes": 11
+            }
+          ]
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 231989,
+          "changed_fraction": 0.01111044807113476,
+          "first_changed_offset": 768001,
+          "changed_page_count": 434,
+          "first_changed_pages": [
+            {
+              "index": 187,
+              "changed_bytes": 388
+            },
+            {
+              "index": 191,
+              "changed_bytes": 617
+            },
+            {
+              "index": 195,
+              "changed_bytes": 771
+            },
+            {
+              "index": 198,
+              "changed_bytes": 466
+            },
+            {
+              "index": 199,
+              "changed_bytes": 3
+            },
+            {
+              "index": 202,
+              "changed_bytes": 735
+            },
+            {
+              "index": 206,
+              "changed_bytes": 447
+            },
+            {
+              "index": 210,
+              "changed_bytes": 739
+            },
+            {
+              "index": 213,
+              "changed_bytes": 414
+            },
+            {
+              "index": 214,
+              "changed_bytes": 10
+            },
+            {
+              "index": 217,
+              "changed_bytes": 767
+            },
+            {
+              "index": 221,
+              "changed_bytes": 503
+            },
+            {
+              "index": 225,
+              "changed_bytes": 762
+            },
+            {
+              "index": 228,
+              "changed_bytes": 480
+            },
+            {
+              "index": 229,
+              "changed_bytes": 9
+            },
+            {
+              "index": 232,
+              "changed_bytes": 738
+            }
+          ]
+        },
+        "run_2": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 166731,
+          "changed_fraction": 0.007985103247776272,
+          "first_changed_offset": 783360,
+          "changed_page_count": 314,
+          "first_changed_pages": [
+            {
+              "index": 191,
+              "changed_bytes": 431
+            },
+            {
+              "index": 195,
+              "changed_bytes": 754
+            },
+            {
+              "index": 198,
+              "changed_bytes": 410
+            },
+            {
+              "index": 199,
+              "changed_bytes": 6
+            },
+            {
+              "index": 202,
+              "changed_bytes": 707
+            },
+            {
+              "index": 206,
+              "changed_bytes": 808
+            },
+            {
+              "index": 210,
+              "changed_bytes": 445
+            },
+            {
+              "index": 213,
+              "changed_bytes": 330
+            },
+            {
+              "index": 214,
+              "changed_bytes": 6
+            },
+            {
+              "index": 217,
+              "changed_bytes": 586
+            },
+            {
+              "index": 221,
+              "changed_bytes": 513
+            },
+            {
+              "index": 225,
+              "changed_bytes": 762
+            },
+            {
+              "index": 228,
+              "changed_bytes": 409
+            },
+            {
+              "index": 229,
+              "changed_bytes": 3
+            },
+            {
+              "index": 236,
+              "changed_bytes": 460
+            },
+            {
+              "index": 240,
+              "changed_bytes": 725
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_00",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_01",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_02",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_03",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_04",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_05",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_06",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_07",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_08",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_09",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_10",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_11",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 48362,
+          "changed_fraction": 0.002316159342107683,
+          "first_changed_offset": 13240320,
+          "changed_page_count": 63,
+          "first_changed_pages": [
+            {
+              "index": 3232,
+              "changed_bytes": 795
+            },
+            {
+              "index": 3240,
+              "changed_bytes": 766
+            },
+            {
+              "index": 3247,
+              "changed_bytes": 784
+            },
+            {
+              "index": 3255,
+              "changed_bytes": 834
+            },
+            {
+              "index": 3262,
+              "changed_bytes": 812
+            },
+            {
+              "index": 3270,
+              "changed_bytes": 841
+            },
+            {
+              "index": 3277,
+              "changed_bytes": 786
+            },
+            {
+              "index": 3285,
+              "changed_bytes": 816
+            },
+            {
+              "index": 3292,
+              "changed_bytes": 799
+            },
+            {
+              "index": 3300,
+              "changed_bytes": 806
+            },
+            {
+              "index": 3307,
+              "changed_bytes": 811
+            },
+            {
+              "index": 3337,
+              "changed_bytes": 838
+            },
+            {
+              "index": 3367,
+              "changed_bytes": 401
+            },
+            {
+              "index": 3375,
+              "changed_bytes": 388
+            },
+            {
+              "index": 3378,
+              "changed_bytes": 811
+            },
+            {
+              "index": 3390,
+              "changed_bytes": 415
+            }
+          ]
+        },
+        "ordinary": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 13556,
+          "changed_fraction": 0.0006492257566190759,
+          "first_changed_offset": 13240320,
+          "changed_page_count": 18,
+          "first_changed_pages": [
+            {
+              "index": 3232,
+              "changed_bytes": 795
+            },
+            {
+              "index": 3236,
+              "changed_bytes": 859
+            },
+            {
+              "index": 3240,
+              "changed_bytes": 766
+            },
+            {
+              "index": 3262,
+              "changed_bytes": 401
+            },
+            {
+              "index": 3277,
+              "changed_bytes": 786
+            },
+            {
+              "index": 3318,
+              "changed_bytes": 889
+            },
+            {
+              "index": 3322,
+              "changed_bytes": 830
+            },
+            {
+              "index": 3333,
+              "changed_bytes": 424
+            },
+            {
+              "index": 3337,
+              "changed_bytes": 838
+            },
+            {
+              "index": 3341,
+              "changed_bytes": 870
+            },
+            {
+              "index": 3345,
+              "changed_bytes": 766
+            },
+            {
+              "index": 3348,
+              "changed_bytes": 843
+            },
+            {
+              "index": 3375,
+              "changed_bytes": 782
+            },
+            {
+              "index": 3382,
+              "changed_bytes": 790
+            },
+            {
+              "index": 3435,
+              "changed_bytes": 786
+            },
+            {
+              "index": 3472,
+              "changed_bytes": 419
+            }
+          ]
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 47305,
+          "changed_fraction": 0.0022655373573963844,
+          "first_changed_offset": 13240320,
+          "changed_page_count": 62,
+          "first_changed_pages": [
+            {
+              "index": 3232,
+              "changed_bytes": 795
+            },
+            {
+              "index": 3247,
+              "changed_bytes": 784
+            },
+            {
+              "index": 3255,
+              "changed_bytes": 834
+            },
+            {
+              "index": 3262,
+              "changed_bytes": 411
+            },
+            {
+              "index": 3270,
+              "changed_bytes": 841
+            },
+            {
+              "index": 3285,
+              "changed_bytes": 816
+            },
+            {
+              "index": 3292,
+              "changed_bytes": 799
+            },
+            {
+              "index": 3300,
+              "changed_bytes": 806
+            },
+            {
+              "index": 3307,
+              "changed_bytes": 811
+            },
+            {
+              "index": 3318,
+              "changed_bytes": 889
+            },
+            {
+              "index": 3322,
+              "changed_bytes": 830
+            },
+            {
+              "index": 3333,
+              "changed_bytes": 424
+            },
+            {
+              "index": 3345,
+              "changed_bytes": 766
+            },
+            {
+              "index": 3348,
+              "changed_bytes": 843
+            },
+            {
+              "index": 3367,
+              "changed_bytes": 401
+            },
+            {
+              "index": 3375,
+              "changed_bytes": 394
+            }
+          ]
+        },
+        "run_2": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 6683,
+          "changed_fraction": 0.00032006312566282714,
+          "first_changed_offset": 13240320,
+          "changed_page_count": 9,
+          "first_changed_pages": [
+            {
+              "index": 3232,
+              "changed_bytes": 795
+            },
+            {
+              "index": 3236,
+              "changed_bytes": 859
+            },
+            {
+              "index": 3341,
+              "changed_bytes": 870
+            },
+            {
+              "index": 3427,
+              "changed_bytes": 817
+            },
+            {
+              "index": 3446,
+              "changed_bytes": 437
+            },
+            {
+              "index": 3450,
+              "changed_bytes": 782
+            },
+            {
+              "index": 3472,
+              "changed_bytes": 419
+            },
+            {
+              "index": 3540,
+              "changed_bytes": 859
+            },
+            {
+              "index": 3825,
+              "changed_bytes": 845
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": "off",
+      "pass_name": "pass_12",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 53904,
+          "changed_fraction": 0.0025815775438768566,
+          "first_changed_offset": 768003,
+          "changed_page_count": 99,
+          "first_changed_pages": [
+            {
+              "index": 187,
+              "changed_bytes": 400
+            },
+            {
+              "index": 191,
+              "changed_bytes": 747
+            },
+            {
+              "index": 195,
+              "changed_bytes": 377
+            },
+            {
+              "index": 236,
+              "changed_bytes": 460
+            },
+            {
+              "index": 240,
+              "changed_bytes": 725
+            },
+            {
+              "index": 243,
+              "changed_bytes": 468
+            },
+            {
+              "index": 244,
+              "changed_bytes": 4
+            },
+            {
+              "index": 247,
+              "changed_bytes": 610
+            },
+            {
+              "index": 251,
+              "changed_bytes": 383
+            },
+            {
+              "index": 258,
+              "changed_bytes": 420
+            },
+            {
+              "index": 259,
+              "changed_bytes": 4
+            },
+            {
+              "index": 262,
+              "changed_bytes": 765
+            },
+            {
+              "index": 266,
+              "changed_bytes": 512
+            },
+            {
+              "index": 270,
+              "changed_bytes": 772
+            },
+            {
+              "index": 273,
+              "changed_bytes": 429
+            },
+            {
+              "index": 274,
+              "changed_bytes": 6
+            }
+          ]
+        },
+        "ordinary": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 58729,
+          "changed_fraction": 0.0028126570861966445,
+          "first_changed_offset": 783360,
+          "changed_page_count": 115,
+          "first_changed_pages": [
+            {
+              "index": 191,
+              "changed_bytes": 431
+            },
+            {
+              "index": 195,
+              "changed_bytes": 754
+            },
+            {
+              "index": 198,
+              "changed_bytes": 377
+            },
+            {
+              "index": 199,
+              "changed_bytes": 4
+            },
+            {
+              "index": 206,
+              "changed_bytes": 454
+            },
+            {
+              "index": 210,
+              "changed_bytes": 739
+            },
+            {
+              "index": 213,
+              "changed_bytes": 402
+            },
+            {
+              "index": 214,
+              "changed_bytes": 8
+            },
+            {
+              "index": 221,
+              "changed_bytes": 421
+            },
+            {
+              "index": 225,
+              "changed_bytes": 587
+            },
+            {
+              "index": 228,
+              "changed_bytes": 493
+            },
+            {
+              "index": 229,
+              "changed_bytes": 5
+            },
+            {
+              "index": 232,
+              "changed_bytes": 738
+            },
+            {
+              "index": 236,
+              "changed_bytes": 524
+            },
+            {
+              "index": 240,
+              "changed_bytes": 725
+            },
+            {
+              "index": 243,
+              "changed_bytes": 412
+            }
+          ]
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 58640,
+          "changed_fraction": 0.0028083946863486733,
+          "first_changed_offset": 768003,
+          "changed_page_count": 111,
+          "first_changed_pages": [
+            {
+              "index": 187,
+              "changed_bytes": 400
+            },
+            {
+              "index": 191,
+              "changed_bytes": 749
+            },
+            {
+              "index": 195,
+              "changed_bytes": 760
+            },
+            {
+              "index": 198,
+              "changed_bytes": 377
+            },
+            {
+              "index": 199,
+              "changed_bytes": 4
+            },
+            {
+              "index": 206,
+              "changed_bytes": 454
+            },
+            {
+              "index": 210,
+              "changed_bytes": 739
+            },
+            {
+              "index": 213,
+              "changed_bytes": 402
+            },
+            {
+              "index": 214,
+              "changed_bytes": 8
+            },
+            {
+              "index": 228,
+              "changed_bytes": 445
+            },
+            {
+              "index": 229,
+              "changed_bytes": 5
+            },
+            {
+              "index": 232,
+              "changed_bytes": 738
+            },
+            {
+              "index": 236,
+              "changed_bytes": 524
+            },
+            {
+              "index": 240,
+              "changed_bytes": 725
+            },
+            {
+              "index": 243,
+              "changed_bytes": 468
+            },
+            {
+              "index": 244,
+              "changed_bytes": 4
+            }
+          ]
+        },
+        "run_2": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 54918,
+          "changed_fraction": 0.0026301401668638543,
+          "first_changed_offset": 906242,
+          "changed_page_count": 109,
+          "first_changed_pages": [
+            {
+              "index": 221,
+              "changed_bytes": 421
+            },
+            {
+              "index": 225,
+              "changed_bytes": 587
+            },
+            {
+              "index": 228,
+              "changed_bytes": 367
+            },
+            {
+              "index": 236,
+              "changed_bytes": 460
+            },
+            {
+              "index": 240,
+              "changed_bytes": 725
+            },
+            {
+              "index": 243,
+              "changed_bytes": 412
+            },
+            {
+              "index": 244,
+              "changed_bytes": 4
+            },
+            {
+              "index": 251,
+              "changed_bytes": 419
+            },
+            {
+              "index": 255,
+              "changed_bytes": 621
+            },
+            {
+              "index": 258,
+              "changed_bytes": 418
+            },
+            {
+              "index": 259,
+              "changed_bytes": 6
+            },
+            {
+              "index": 266,
+              "changed_bytes": 435
+            },
+            {
+              "index": 270,
+              "changed_bytes": 772
+            },
+            {
+              "index": 273,
+              "changed_bytes": 429
+            },
+            {
+              "index": 274,
+              "changed_bytes": 6
+            },
+            {
+              "index": 281,
+              "changed_bytes": 451
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "full",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 33507,
+          "changed_fraction": 0.0016047217045614766,
+          "first_changed_offset": 875520,
+          "changed_page_count": 67,
+          "first_changed_pages": [
+            {
+              "index": 213,
+              "changed_bytes": 400
+            },
+            {
+              "index": 214,
+              "changed_bytes": 9
+            },
+            {
+              "index": 217,
+              "changed_bytes": 767
+            },
+            {
+              "index": 221,
+              "changed_bytes": 395
+            },
+            {
+              "index": 228,
+              "changed_bytes": 445
+            },
+            {
+              "index": 229,
+              "changed_bytes": 5
+            },
+            {
+              "index": 232,
+              "changed_bytes": 738
+            },
+            {
+              "index": 236,
+              "changed_bytes": 473
+            },
+            {
+              "index": 281,
+              "changed_bytes": 502
+            },
+            {
+              "index": 285,
+              "changed_bytes": 809
+            },
+            {
+              "index": 288,
+              "changed_bytes": 434
+            },
+            {
+              "index": 289,
+              "changed_bytes": 5
+            },
+            {
+              "index": 303,
+              "changed_bytes": 423
+            },
+            {
+              "index": 304,
+              "changed_bytes": 4
+            },
+            {
+              "index": 307,
+              "changed_bytes": 737
+            },
+            {
+              "index": 311,
+              "changed_bytes": 473
+            }
+          ]
+        },
+        "ordinary": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 147513,
+          "changed_fraction": 0.0070647122334132305,
+          "first_changed_offset": 783360,
+          "changed_page_count": 281,
+          "first_changed_pages": [
+            {
+              "index": 191,
+              "changed_bytes": 431
+            },
+            {
+              "index": 195,
+              "changed_bytes": 754
+            },
+            {
+              "index": 198,
+              "changed_bytes": 410
+            },
+            {
+              "index": 199,
+              "changed_bytes": 6
+            },
+            {
+              "index": 202,
+              "changed_bytes": 735
+            },
+            {
+              "index": 206,
+              "changed_bytes": 475
+            },
+            {
+              "index": 210,
+              "changed_bytes": 739
+            },
+            {
+              "index": 213,
+              "changed_bytes": 402
+            },
+            {
+              "index": 214,
+              "changed_bytes": 8
+            },
+            {
+              "index": 221,
+              "changed_bytes": 465
+            },
+            {
+              "index": 225,
+              "changed_bytes": 762
+            },
+            {
+              "index": 228,
+              "changed_bytes": 409
+            },
+            {
+              "index": 229,
+              "changed_bytes": 3
+            },
+            {
+              "index": 236,
+              "changed_bytes": 394
+            },
+            {
+              "index": 240,
+              "changed_bytes": 547
+            },
+            {
+              "index": 243,
+              "changed_bytes": 370
+            }
+          ]
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 85125,
+          "changed_fraction": 0.004076817832118534,
+          "first_changed_offset": 783360,
+          "changed_page_count": 158,
+          "first_changed_pages": [
+            {
+              "index": 191,
+              "changed_bytes": 431
+            },
+            {
+              "index": 195,
+              "changed_bytes": 754
+            },
+            {
+              "index": 198,
+              "changed_bytes": 410
+            },
+            {
+              "index": 199,
+              "changed_bytes": 6
+            },
+            {
+              "index": 202,
+              "changed_bytes": 735
+            },
+            {
+              "index": 206,
+              "changed_bytes": 386
+            },
+            {
+              "index": 213,
+              "changed_bytes": 400
+            },
+            {
+              "index": 214,
+              "changed_bytes": 9
+            },
+            {
+              "index": 217,
+              "changed_bytes": 767
+            },
+            {
+              "index": 221,
+              "changed_bytes": 458
+            },
+            {
+              "index": 225,
+              "changed_bytes": 762
+            },
+            {
+              "index": 228,
+              "changed_bytes": 503
+            },
+            {
+              "index": 229,
+              "changed_bytes": 5
+            },
+            {
+              "index": 232,
+              "changed_bytes": 738
+            },
+            {
+              "index": 236,
+              "changed_bytes": 492
+            },
+            {
+              "index": 240,
+              "changed_bytes": 574
+            }
+          ]
+        },
+        "run_2": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 114338,
+          "changed_fraction": 0.00547589071704868,
+          "first_changed_offset": 844806,
+          "changed_page_count": 219,
+          "first_changed_pages": [
+            {
+              "index": 206,
+              "changed_bytes": 454
+            },
+            {
+              "index": 210,
+              "changed_bytes": 739
+            },
+            {
+              "index": 213,
+              "changed_bytes": 402
+            },
+            {
+              "index": 214,
+              "changed_bytes": 8
+            },
+            {
+              "index": 236,
+              "changed_bytes": 460
+            },
+            {
+              "index": 240,
+              "changed_bytes": 725
+            },
+            {
+              "index": 243,
+              "changed_bytes": 426
+            },
+            {
+              "index": 244,
+              "changed_bytes": 2
+            },
+            {
+              "index": 247,
+              "changed_bytes": 758
+            },
+            {
+              "index": 251,
+              "changed_bytes": 409
+            },
+            {
+              "index": 273,
+              "changed_bytes": 439
+            },
+            {
+              "index": 274,
+              "changed_bytes": 11
+            },
+            {
+              "index": 277,
+              "changed_bytes": 774
+            },
+            {
+              "index": 281,
+              "changed_bytes": 381
+            },
+            {
+              "index": 318,
+              "changed_bytes": 377
+            },
+            {
+              "index": 319,
+              "changed_bytes": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_00",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_01",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_02",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_03",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_04",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_05",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_06",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_07",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_08",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_09",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_10",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "ordinary": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        },
+        "run_2": {
+          "equal": true,
+          "size": 20880256,
+          "changed_bytes": 0,
+          "changed_fraction": 0.0,
+          "first_changed_offset": null,
+          "changed_page_count": 0,
+          "first_changed_pages": []
+        }
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_11",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 30310,
+          "changed_fraction": 0.001451610554966376,
+          "first_changed_offset": 13240320,
+          "changed_page_count": 42,
+          "first_changed_pages": [
+            {
+              "index": 3232,
+              "changed_bytes": 795
+            },
+            {
+              "index": 3270,
+              "changed_bytes": 421
+            },
+            {
+              "index": 3330,
+              "changed_bytes": 764
+            },
+            {
+              "index": 3337,
+              "changed_bytes": 838
+            },
+            {
+              "index": 3341,
+              "changed_bytes": 870
+            },
+            {
+              "index": 3345,
+              "changed_bytes": 766
+            },
+            {
+              "index": 3382,
+              "changed_bytes": 790
+            },
+            {
+              "index": 3390,
+              "changed_bytes": 827
+            },
+            {
+              "index": 3405,
+              "changed_bytes": 814
+            },
+            {
+              "index": 3408,
+              "changed_bytes": 429
+            },
+            {
+              "index": 3420,
+              "changed_bytes": 787
+            },
+            {
+              "index": 3427,
+              "changed_bytes": 817
+            },
+            {
+              "index": 3442,
+              "changed_bytes": 815
+            },
+            {
+              "index": 3562,
+              "changed_bytes": 398
+            },
+            {
+              "index": 3667,
+              "changed_bytes": 393
+            },
+            {
+              "index": 3750,
+              "changed_bytes": 781
+            }
+          ]
+        },
+        "ordinary": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 35170,
+          "changed_fraction": 0.0016843663219454782,
+          "first_changed_offset": 13286400,
+          "changed_page_count": 45,
+          "first_changed_pages": [
+            {
+              "index": 3243,
+              "changed_bytes": 846
+            },
+            {
+              "index": 3247,
+              "changed_bytes": 784
+            },
+            {
+              "index": 3270,
+              "changed_bytes": 841
+            },
+            {
+              "index": 3292,
+              "changed_bytes": 799
+            },
+            {
+              "index": 3307,
+              "changed_bytes": 811
+            },
+            {
+              "index": 3330,
+              "changed_bytes": 764
+            },
+            {
+              "index": 3337,
+              "changed_bytes": 838
+            },
+            {
+              "index": 3352,
+              "changed_bytes": 813
+            },
+            {
+              "index": 3371,
+              "changed_bytes": 867
+            },
+            {
+              "index": 3382,
+              "changed_bytes": 790
+            },
+            {
+              "index": 3397,
+              "changed_bytes": 806
+            },
+            {
+              "index": 3420,
+              "changed_bytes": 787
+            },
+            {
+              "index": 3423,
+              "changed_bytes": 435
+            },
+            {
+              "index": 3427,
+              "changed_bytes": 817
+            },
+            {
+              "index": 3435,
+              "changed_bytes": 786
+            },
+            {
+              "index": 3450,
+              "changed_bytes": 782
+            }
+          ]
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 30389,
+          "changed_fraction": 0.0014553940334831143,
+          "first_changed_offset": 13286400,
+          "changed_page_count": 41,
+          "first_changed_pages": [
+            {
+              "index": 3243,
+              "changed_bytes": 846
+            },
+            {
+              "index": 3247,
+              "changed_bytes": 784
+            },
+            {
+              "index": 3285,
+              "changed_bytes": 816
+            },
+            {
+              "index": 3292,
+              "changed_bytes": 799
+            },
+            {
+              "index": 3307,
+              "changed_bytes": 811
+            },
+            {
+              "index": 3315,
+              "changed_bytes": 801
+            },
+            {
+              "index": 3341,
+              "changed_bytes": 870
+            },
+            {
+              "index": 3367,
+              "changed_bytes": 779
+            },
+            {
+              "index": 3371,
+              "changed_bytes": 867
+            },
+            {
+              "index": 3405,
+              "changed_bytes": 814
+            },
+            {
+              "index": 3408,
+              "changed_bytes": 429
+            },
+            {
+              "index": 3420,
+              "changed_bytes": 787
+            },
+            {
+              "index": 3435,
+              "changed_bytes": 786
+            },
+            {
+              "index": 3450,
+              "changed_bytes": 782
+            },
+            {
+              "index": 3667,
+              "changed_bytes": 393
+            },
+            {
+              "index": 3727,
+              "changed_bytes": 434
+            }
+          ]
+        },
+        "run_2": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 32623,
+          "changed_fraction": 0.001562385058880504,
+          "first_changed_offset": 13240320,
+          "changed_page_count": 43,
+          "first_changed_pages": [
+            {
+              "index": 3232,
+              "changed_bytes": 795
+            },
+            {
+              "index": 3270,
+              "changed_bytes": 420
+            },
+            {
+              "index": 3285,
+              "changed_bytes": 816
+            },
+            {
+              "index": 3315,
+              "changed_bytes": 801
+            },
+            {
+              "index": 3345,
+              "changed_bytes": 766
+            },
+            {
+              "index": 3352,
+              "changed_bytes": 813
+            },
+            {
+              "index": 3367,
+              "changed_bytes": 779
+            },
+            {
+              "index": 3390,
+              "changed_bytes": 827
+            },
+            {
+              "index": 3397,
+              "changed_bytes": 806
+            },
+            {
+              "index": 3420,
+              "changed_bytes": 787
+            },
+            {
+              "index": 3423,
+              "changed_bytes": 435
+            },
+            {
+              "index": 3442,
+              "changed_bytes": 815
+            },
+            {
+              "index": 3457,
+              "changed_bytes": 846
+            },
+            {
+              "index": 3465,
+              "changed_bytes": 783
+            },
+            {
+              "index": 3480,
+              "changed_bytes": 754
+            },
+            {
+              "index": 3562,
+              "changed_bytes": 398
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_12",
+      "repeat_comparison": {
+        "instrumented": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 35689,
+          "changed_fraction": 0.0017092223390364563,
+          "first_changed_offset": 783360,
+          "changed_page_count": 67,
+          "first_changed_pages": [
+            {
+              "index": 191,
+              "changed_bytes": 431
+            },
+            {
+              "index": 195,
+              "changed_bytes": 754
+            },
+            {
+              "index": 198,
+              "changed_bytes": 377
+            },
+            {
+              "index": 199,
+              "changed_bytes": 4
+            },
+            {
+              "index": 236,
+              "changed_bytes": 460
+            },
+            {
+              "index": 240,
+              "changed_bytes": 725
+            },
+            {
+              "index": 243,
+              "changed_bytes": 481
+            },
+            {
+              "index": 244,
+              "changed_bytes": 4
+            },
+            {
+              "index": 247,
+              "changed_bytes": 758
+            },
+            {
+              "index": 251,
+              "changed_bytes": 491
+            },
+            {
+              "index": 255,
+              "changed_bytes": 771
+            },
+            {
+              "index": 258,
+              "changed_bytes": 504
+            },
+            {
+              "index": 259,
+              "changed_bytes": 4
+            },
+            {
+              "index": 262,
+              "changed_bytes": 765
+            },
+            {
+              "index": 266,
+              "changed_bytes": 499
+            },
+            {
+              "index": 270,
+              "changed_bytes": 772
+            }
+          ]
+        },
+        "ordinary": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 53605,
+          "changed_fraction": 0.002567257796072998,
+          "first_changed_offset": 783360,
+          "changed_page_count": 107,
+          "first_changed_pages": [
+            {
+              "index": 191,
+              "changed_bytes": 431
+            },
+            {
+              "index": 195,
+              "changed_bytes": 754
+            },
+            {
+              "index": 198,
+              "changed_bytes": 377
+            },
+            {
+              "index": 199,
+              "changed_bytes": 4
+            },
+            {
+              "index": 206,
+              "changed_bytes": 454
+            },
+            {
+              "index": 210,
+              "changed_bytes": 739
+            },
+            {
+              "index": 213,
+              "changed_bytes": 402
+            },
+            {
+              "index": 214,
+              "changed_bytes": 8
+            },
+            {
+              "index": 243,
+              "changed_bytes": 422
+            },
+            {
+              "index": 244,
+              "changed_bytes": 2
+            },
+            {
+              "index": 247,
+              "changed_bytes": 758
+            },
+            {
+              "index": 251,
+              "changed_bytes": 450
+            },
+            {
+              "index": 255,
+              "changed_bytes": 771
+            },
+            {
+              "index": 258,
+              "changed_bytes": 429
+            },
+            {
+              "index": 259,
+              "changed_bytes": 3
+            },
+            {
+              "index": 266,
+              "changed_bytes": 468
+            }
+          ]
+        }
+      },
+      "instrumentation_comparison": {
+        "run_1": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 46734,
+          "changed_fraction": 0.002238190949382996,
+          "first_changed_offset": 998403,
+          "changed_page_count": 92,
+          "first_changed_pages": [
+            {
+              "index": 243,
+              "changed_bytes": 422
+            },
+            {
+              "index": 244,
+              "changed_bytes": 2
+            },
+            {
+              "index": 247,
+              "changed_bytes": 758
+            },
+            {
+              "index": 251,
+              "changed_bytes": 409
+            },
+            {
+              "index": 258,
+              "changed_bytes": 460
+            },
+            {
+              "index": 259,
+              "changed_bytes": 5
+            },
+            {
+              "index": 262,
+              "changed_bytes": 765
+            },
+            {
+              "index": 266,
+              "changed_bytes": 499
+            },
+            {
+              "index": 270,
+              "changed_bytes": 772
+            },
+            {
+              "index": 273,
+              "changed_bytes": 429
+            },
+            {
+              "index": 274,
+              "changed_bytes": 6
+            },
+            {
+              "index": 288,
+              "changed_bytes": 414
+            },
+            {
+              "index": 289,
+              "changed_bytes": 7
+            },
+            {
+              "index": 292,
+              "changed_bytes": 752
+            },
+            {
+              "index": 296,
+              "changed_bytes": 498
+            },
+            {
+              "index": 300,
+              "changed_bytes": 757
+            }
+          ]
+        },
+        "run_2": {
+          "equal": false,
+          "size": 20880256,
+          "changed_bytes": 26501,
+          "changed_fraction": 0.0012691894198998326,
+          "first_changed_offset": 844806,
+          "changed_page_count": 52,
+          "first_changed_pages": [
+            {
+              "index": 206,
+              "changed_bytes": 454
+            },
+            {
+              "index": 210,
+              "changed_bytes": 739
+            },
+            {
+              "index": 213,
+              "changed_bytes": 402
+            },
+            {
+              "index": 214,
+              "changed_bytes": 8
+            },
+            {
+              "index": 236,
+              "changed_bytes": 460
+            },
+            {
+              "index": 240,
+              "changed_bytes": 725
+            },
+            {
+              "index": 243,
+              "changed_bytes": 481
+            },
+            {
+              "index": 244,
+              "changed_bytes": 4
+            },
+            {
+              "index": 247,
+              "changed_bytes": 758
+            },
+            {
+              "index": 251,
+              "changed_bytes": 442
+            },
+            {
+              "index": 266,
+              "changed_bytes": 468
+            },
+            {
+              "index": 270,
+              "changed_bytes": 772
+            },
+            {
+              "index": 273,
+              "changed_bytes": 429
+            },
+            {
+              "index": 274,
+              "changed_bytes": 6
+            },
+            {
+              "index": 281,
+              "changed_bytes": 502
+            },
+            {
+              "index": 285,
+              "changed_bytes": 809
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
