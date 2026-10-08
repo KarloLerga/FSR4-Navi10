@@ -24,6 +24,21 @@ def check_manifests(original: dict, guarded: dict) -> dict:
         raise ValueError('Expected OFF vs ON bounds toggles')
     if original.get('source_hashes_sha256') != guarded.get('source_hashes_sha256'):
         raise ValueError('Pinned model inputs, weights or other upstream files changed')
+    source_operator_hash = original.get('source_hashes_sha256', {}).get('pass11_fnb_operator')
+    original_include = original.get('pass11_operator_include', {})
+    guarded_include = guarded.get('pass11_operator_include', {})
+    if not source_operator_hash or original_include.get('sha256') != source_operator_hash:
+        raise ValueError('Baseline Pass 11 did not resolve the pinned upstream FNB operator')
+    original_path = original_include.get('path', '').replace('\\', '/')
+    if 'capture_shader_overrides' in original_path:
+        raise ValueError('Baseline unexpectedly resolves a build-local Pass 11 override')
+    overlay_hash = guarded.get('capture_overlay_hashes_sha256', {}).get('pass11_fnb_bounds_guard')
+    guarded_path = guarded_include.get('path', '').replace('\\', '/')
+    operator_suffix = '/'.join(('capture_shader_overrides',
+                                'FSR4N10_FNB_CT2D_ADD_PASS11_GUARD.hlsli'))
+    if (not overlay_hash or guarded_include.get('sha256') != overlay_hash or
+            not guarded_path.lower().endswith(operator_suffix.lower())):
+        raise ValueError('Guarded Pass 11 did not resolve the build-local FNB overlay')
     left = {x['file']: x['sha256'] for x in original.get('outputs', [])}
     right = {x['file']: x['sha256'] for x in guarded.get('outputs', [])}
     if set(left) != set(right) or PASS11 not in left:
@@ -32,6 +47,10 @@ def check_manifests(original: dict, guarded: dict) -> dict:
     return {'schema': 'f4n10.pass11-shader-manifest-diff.v1',
             'pass11_header': PASS11,
             'pass11_compiled_artifact_changed': PASS11 in changed,
+            'baseline_resolved_upstream_operator': True,
+            'guard_resolved_overlay_operator': True,
+            'upstream_operator_hash': source_operator_hash,
+            'guard_operator_hash': guarded_include['sha256'],
             'changed_shader_headers': changed,
             'unchanged_shader_header_count': len(left) - len(changed),
             'source_hashes_equal': True,

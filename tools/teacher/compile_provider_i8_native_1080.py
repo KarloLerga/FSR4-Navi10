@@ -12,7 +12,7 @@ import sys
 import tempfile
 from pathlib import Path
 
-from fnb_bounds_overlay import create_overlay as create_fnb_bounds_overlay
+from fnb_bounds_overlay import OVERLAY_NAME, OPERATOR_REL, create_overlay as create_fnb_bounds_overlay
 
 
 MODEL = "fsr4_model_v07_i8_native"
@@ -351,6 +351,8 @@ def compile_provider_set(
     if pass11_bounds_guard:
         guard_info = create_fnb_bounds_overlay(fsr4_root, output_dir)
         capture_overlays["pass11_fnb_bounds_guard"] = Path(guard_info["overlay"])
+        capture_overlays["pass11_model_source_shadow"] = Path(guard_info["model_overlay"])
+        model_source = Path(guard_info["model_overlay"])
     # Prefer the build-local operator include only when explicitly enabled.
     model_shader_includes = (
         (capture_overlay_dir,) if pass11_bounds_guard else ()
@@ -491,6 +493,21 @@ def compile_provider_set(
     if missing_headers:
         raise RuntimeError(f"provider shader build is incomplete; missing: {', '.join(missing_headers)}")
 
+    pass11_dependencies = output_dir / f"{MODEL}_{TIER}_11_permutations.h.d"
+    if not pass11_dependencies.is_file():
+        raise RuntimeError(f"FidelityFX_SC did not emit Pass 11 dependencies: {pass11_dependencies}")
+    dependency_tokens = pass11_dependencies.read_text(encoding="utf-8").replace("\\\n", " ").split()
+    operator_suffix = (OVERLAY_NAME if pass11_bounds_guard else "/".join(OPERATOR_REL.parts)).lower()
+    operator_matches = [Path(token) for token in dependency_tokens
+                        if token.replace("\\", "/").lower().endswith(operator_suffix)]
+    if len(operator_matches) != 1:
+        raise RuntimeError(f"Expected one resolved Pass 11 FNB operator include, found {operator_matches}")
+    pass11_operator = operator_matches[0].resolve()
+    expected_operator = (capture_overlays["pass11_fnb_bounds_guard"] if pass11_bounds_guard
+                         else fsr4_root / "dx12" / OPERATOR_REL).resolve()
+    if pass11_operator != expected_operator:
+        raise RuntimeError(f"Pass 11 resolved the wrong FNB include: {pass11_operator}; expected {expected_operator}")
+
     lock = json.loads((repo_root / "third_party" / "LOCK.json").read_text(encoding="utf-8-sig"))
     shader_outputs = sorted(
         (path for path in output_dir.iterdir() if path.is_file() and path.suffix.lower() == ".h"),
@@ -527,8 +544,13 @@ def compile_provider_set(
             "post_common": sha256(fsr4_root / "include" / "gpu" / "fsr4" / "post_common.hlsli"),
             "mlsr_optimized_includes": sha256(fsr4_root / "include" / "gpu" / "fsr4" / "mlsr_optimized_includes.hlsli"),
             "shader_resources": sha256(fsr4_root / "include" / "gpu" / "fsr4" / "ffx_fsr4_upscale_resources.h"),
+            "pass11_fnb_operator": sha256(fsr4_root / "dx12" / OPERATOR_REL),
         },
         "capture_overlay_hashes_sha256": {name: sha256(path) for name, path in capture_overlays.items()},
+        "pass11_operator_include": {
+            "path": pass11_operator.as_posix(),
+            "sha256": sha256(pass11_operator),
+        },
         "capture_taps_enabled_in_debug_variant": True,
         "outputs": [
             {"file": path.name, "size_bytes": path.stat().st_size, "sha256": sha256(path)}

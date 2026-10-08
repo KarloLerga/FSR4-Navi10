@@ -12,6 +12,8 @@ import re
 from pathlib import Path
 
 OPERATOR_REL = Path('ml2code_runtime/operators/int8_NHWC/Fused/FNB_CT2D_ADD.hlsli')
+OVERLAY_NAME = 'FSR4N10_FNB_CT2D_ADD_PASS11_GUARD.hlsli'
+MODEL_REL = Path('internal/shaders/fsr4_model_v07_i8_native/passes_1080.hlsl')
 SENTINEL = 'FSR4N10_BOUNDS_GUARD_PASS11_V1'
 START = '_Static_assert(numFeatures == 32, "NumFeatures must be 32");'
 END = '#if WMMA_ENABLED'
@@ -106,16 +108,50 @@ def guarded_operator(text: str) -> str:
     return result
 
 
+def redirect_pass11_operator_include(model_text: str, operator_path: Path) -> str:
+    """Redirect only the Pass 11 include in a build-local model source copy."""
+    matches = list(re.finditer(r'(?m)^[ \t]*#ifdef MLSR_PASS_11[ \t]*\r?$', model_text))
+    section_end = '#endif // #ifdef MLSR_PASS_11'
+    if len(matches) != 1:
+        raise ValueError('Expected one Native 1080 Pass 11 section in the model shadow')
+    start = matches[0].end()
+    end = model_text.find(section_end, start)
+    if end < 0:
+        raise ValueError('Pass 11 section end marker missing from the model shadow')
+    section = model_text[start:end]
+    old = f'#include "{OPERATOR_REL.as_posix()}"'
+    if section.count(old) != 1:
+        raise ValueError(f'Expected one Pass 11 FNB include to redirect, found {section.count(old)}')
+    if operator_path.name != OVERLAY_NAME:
+        raise ValueError(f'Unexpected build-local operator overlay name: {operator_path.name}')
+    new = f'#include "{OVERLAY_NAME}"'
+    redirected = section.replace(old, new, 1)
+    result = model_text[:start] + redirected + model_text[end:]
+    if result.count(new) != 1 or result.count(old) != model_text.count(old) - 1:
+        raise ValueError('Pass 11 FNB include redirection did not remain isolated')
+    return result
+
+
 def create_overlay(fsr4_root: Path, output_dir: Path) -> dict:
     provenance = verify_pass11_source(fsr4_root)
     source = fsr4_root / 'dx12' / OPERATOR_REL
-    destination = output_dir / 'capture_shader_overrides' / OPERATOR_REL
+    destination = output_dir / 'capture_shader_overrides' / OVERLAY_NAME
+    model_source = fsr4_root / MODEL_REL
+    model_overlay = output_dir / 'capture_shader_overrides' / 'passes_1080.hlsl'
     if not source.is_file():
         raise FileNotFoundError(f'Pinned FSR4 operator missing: {source}')
     original = source.read_bytes()
     transformed = guarded_operator(original.decode('utf-8-sig')).encode('utf-8')
     destination.parent.mkdir(parents=True, exist_ok=True)
     destination.write_bytes(transformed)
+    model_original = model_source.read_bytes()
+    model_overlay.parent.mkdir(parents=True, exist_ok=True)
+    # FidelityFX_SC resolves this nested quoted include to the upstream
+    # operator despite -I precedence. Redirect only Pass 11 in a local copy.
+    shadow_text = redirect_pass11_operator_include(
+        model_original.decode('utf-8-sig'), destination)
+    model_overlay_bytes = shadow_text.encode('utf-8')
+    model_overlay.write_bytes(model_overlay_bytes)
     return {
         'schema': 'f4n10.pass11-bounds-guard-overlay.v1',
         **provenance,
@@ -123,6 +159,8 @@ def create_overlay(fsr4_root: Path, output_dir: Path) -> dict:
         'source_sha256': sha256(original),
         'overlay': destination.as_posix(),
         'overlay_sha256': sha256(transformed),
+        'model_overlay': model_overlay.as_posix(),
+        'model_overlay_sha256': sha256(model_overlay_bytes),
         'guard_marker': SENTINEL,
         'overload': 'FNB_CT2D_ADD<32,1>',
         'scope': 'Build-local shader include, original model and weights unchanged',

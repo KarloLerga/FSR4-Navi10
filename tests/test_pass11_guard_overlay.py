@@ -53,6 +53,7 @@ class ShaderOverlayTest(unittest.TestCase):
             model = root / 'pinned/internal/shaders/fsr4_model_v07_i8_native/passes_1080.hlsl'
             model.parent.mkdir(parents=True)
             model.write_text('#ifdef MLSR_PASS_11\n[numthreads(64, 1, 1)]\n'
+                             '#include "ml2code_runtime/operators/int8_NHWC/Fused/FNB_CT2D_ADD.hlsli"\n'
                              'uint3(480, 270, 32)\nuint3(960, 540, 16)\n'
                              'threadGroupByteOffsetInTensor_slice_22 + 12441600\n'
                              'FNB_CT2D_ADD<32, 1>(\n#endif // #ifdef MLSR_PASS_11\n')
@@ -62,6 +63,13 @@ class ShaderOverlayTest(unittest.TestCase):
             self.assertEqual(original.read_text(), self.upstream)
             self.assertEqual(dest.read_text(), guarded_operator(self.upstream))
             self.assertNotEqual(result['source_sha256'], result['overlay_sha256'])
+            model_overlay = Path(result['model_overlay'])
+            expected_model = model.read_text().replace(
+                '#include "ml2code_runtime/operators/int8_NHWC/Fused/FNB_CT2D_ADD.hlsli"',
+                f'#include "{dest.name}"')
+            self.assertEqual(model_overlay.read_text(), expected_model)
+            self.assertEqual(result['model_overlay_sha256'], __import__('hashlib').sha256(model_overlay.read_bytes()).hexdigest())
+            self.assertEqual(model.read_text().count('FNB_CT2D_ADD.hlsli'), 1)
 
 if __name__ == '__main__':
     unittest.main()

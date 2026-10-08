@@ -84,7 +84,12 @@ separate runtime problem revealed by removing the race.
 `tools/teacher/fnb_bounds_overlay.py` copies the operator to a build-local
 include-override directory. The pinned `third_party/fidelityfx-fsr4-source`
 checkout is not modified. The shader compiler receives that directory FIRST
-in its model include search path. The CMake flag defaults to `OFF`.
+in its model include search path. FidelityFX_SC resolves the nested quoted
+operator include to the upstream file despite `-I` order, so a build-local copy
+of `passes_1080.hlsl` redirects only the Pass 11 include to a uniquely named
+guarded operator file, preventing resolution to the same-named upstream file.
+The compiler records and checks the actual Pass 11 operator dependency before
+accepting a build. The CMake flag defaults to `OFF`.
 
 ## Why 84 successful process exits are not a correctness check
 

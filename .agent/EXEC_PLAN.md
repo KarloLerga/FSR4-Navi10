@@ -429,7 +429,7 @@ Integrate a build-local, default-OFF bounds guard for the pinned FSR 4.0.2 Nativ
 
 ### Current blocker
 
-The archive's first installer preflight failed closed because the pinned operator contains two `numFeatures == 32` definitions: a non-WMMA implementation followed by a separate WMMA implementation. The bundle expected one. Resolve this by asserting the exact two-definition structure and delimiting the scalar overload before the WMMA section; tests must prove the WMMA suffix is byte-identical. Do not weaken the check to ?patch the first match? without validating the branch boundary.
+The source matcher was adapted to the two pinned `<32,1>` definitions and its tests prove the WMMA suffix remains byte-identical. The first three-configuration build then correctly stopped before GPU runs: the compiled Pass 11 header was unchanged, and FidelityFX_SC dependency output showed that a same-named `-I` override still resolved to the upstream operator. A build-local model copy now redirects only the Pass 11 include to a unique operator filename, and the compiler refuses a build unless the emitted dependency file resolves that exact overlay. A targeted guarded-scalar compile now records the overlay path/hash and emits a changed Pass 11 header. Remaining work is a fresh three-configuration build, full manifest comparison, CTest, and the 72-run GPU campaign.
 
 ### Decision log
 
@@ -437,6 +437,7 @@ The archive's first installer preflight failed closed because the pinned operato
 |---|---|---|
 | 2026-10-08 11:31 | Adapt the bundle's source matcher to the actual scalar/WMMA split and leave WMMA unchanged. | Source inspection and installer preflight showed two specializations; a single-match assumption is invalid for the pinned tree. |
 | 2026-10-08 11:31 | Keep the guard explicitly opt-in and out of the vendor tree. | The fix is a diagnostic candidate until shader inclusion and GPU/O0 evidence pass. |
+| 2026-10-08 11:45 | Redirect only pass 11 to a unique build-local operator and verify the resolved dependency. | The first compiled-artifact check proved the same-named `-I` overlay was not being used; the dependency file provides direct evidence of the operator selected by FidelityFX_SC. |
 
 ### Progress checklist
 
@@ -445,11 +446,12 @@ The archive's first installer preflight failed closed because the pinned operato
 - [x] Inspect current pass-11 model/provider geometry and the two operator implementations.
 - [x] Run installer check; it rejected the inaccurate one-specialization assumption before modifying the repo.
 - [x] Implement the precise non-WMMA-only overlay and integration; include every applicable runtime test but keep installer-only tests out of the repo.
-- [x] Run focused Python tests (22/22 passed in the repository; the extracted bundle installer suite passed 25/25 before installation).
-- [ ] Run project CTest, shader builds, and compiled artifact diff.
+- [x] Run focused Python tests (23/23 passed in the repository; the extracted bundle installer suite passed 25/25 before installation).
+- [x] Confirm the guarded scalar dependency resolves to the unique overlay and its Pass 11 header differs from the pre-fix guarded build.
+- [ ] Rebuild all three configurations, run the OFF-default CTest/build checks, and compare baseline/guard artifacts from the same compiler revision.
 - [ ] Run the GPU campaign if sequence/tooling is present; otherwise record the specific blocker.
 - [ ] Update result/progress reports, review diff, commit and push the private branch.
 
 ### Measured results
 
-ZIP integrity passed (20/20 entries). The baseline source is at the archive's exact target commit. Focused repo tests pass 22/22; bundle installer tests passed 25/25 before installation. No CMake build or GPU campaign measurements yet. The first preflight refusal was a source-matcher mismatch, not evidence against or for the bounds hypothesis.
+ZIP integrity passed (20/20 entries). The baseline source is at the archive's exact target commit. Focused repo tests pass 23/23; bundle installer tests passed 25/25 before installation. All three first-pass CMake builds succeeded, but the compiled-artifact gate caught that guard was not included and stopped before GPU runs. After redirecting Pass 11 to the unique overlay, the targeted guarded-scalar provider compile passed; its dependency hash matched the overlay hash `3720BAC4CBE7D608870C83A8661403AE6D97DF0688B431AC7187A26B9BDEBD48`, and the Pass 11 header changed from `31d66f685995a15601c58490fe3825f586386df79d6ce6d85fd7d4ddae4923ca` to `2c4bc8754e0179c54469e9040fe618333d34900408864954bd38362a73728243`. These are inclusion/build checks only, not GPU race or O0 results; a fresh full build/campaign remains pending.
