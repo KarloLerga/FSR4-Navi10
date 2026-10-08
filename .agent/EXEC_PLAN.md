@@ -402,3 +402,54 @@ Apply `FSR4-Navi10-RaceBisector-5b22fd0.zip` as a debug-only instrumented experi
 - For every seed in each build, full instrumented and ordinary RGB hashes and full scratch snapshots are non-repeatable. `zero` and `a5` change both provider RGB hashes on all eight frames. Global barriers do not clear the repeatability failure.
 - Detailed reports are in `artifacts/results/fsr4-race-bisector/`; raw snapshots stay ignored under `build/fsr4n10-race-bisector/`. No image quality or production-fix claim is made; O0 remains closed and O1-O13 remain locked.
 - Diagnostic implementation and evidence commit `3fa959f` was pushed to the private `origin/main`.
+
+
+## Pass 11 bounds guard continuation (2026-10-08)
+
+### Current objective
+
+Integrate a build-local, default-OFF bounds guard for the pinned FSR 4.0.2 Native/1080 I8 `FNB_CT2D_ADD<32,1>` shader used by pass 11. Preserve the FidelityFX checkout, weights, arithmetic, and the separate WMMA implementation. Validate the compiled shader and, when the local GPU/run sequence are available, compare baseline and guarded repeatability without changing the existing O0 gates.
+
+### Fixed architectural decisions
+
+- Follow D1-D22 above and `docs/DECISIONS.md`; Windows/DX12 and Navi10 remain the target.
+- Keep vendor source/model data local and unmodified. Generate the guarded include under the build output directory only.
+- Keep `FSR4N10_PASS11_BOUNDS_GUARD` OFF by default. This diagnostic repair does not unlock O0 or any O1-O13 mode.
+- Change no model weights, quantization, requested quality, precision, POST equations, or dispatch sizes.
+- Do not infer a GPU-confirmed race until the compiled artifact is verified and RX 5700 XT evidence is collected.
+
+### Milestones
+
+| # | Work and affected files | Validation |
+|---|---|---|
+| P11-1 | Adapt fail-closed overlay/install integration to the actual two `<32,1>` definitions in `FNB_CT2D_ADD.hlsli`; guard only the non-WMMA overload. Add the toggle/compiler manifest wiring, diagnostics, and tests. | `python -m unittest discover -s tests -p 'test_pass11_*.py' -v`; inspect generated overlay and `git diff --check`. |
+| P11-2 | Compile baseline scalar, guarded scalar, and guarded intrinsic Release configurations; preserve the default-OFF path. | `scripts/run-pass11-guard-campaign.ps1`; compare emitted provider manifests and Pass 11 header hashes; `ctest --test-dir <build> --output-on-failure`. |
+| P11-3 | Run zero/A5 scratch, pass 10/11/12/full, three fresh-process repeats on RX 5700 XT; inspect alias and full-frame reports. | Review all 72 case records, snapshots, hashes, alias-zone evidence, compiler diff, and `pass11_guard_evaluation.json`. |
+| P11-4 | Record exact outcomes and remaining gates. | Update `RESULTS.md`, `PROGRESS.md`, `docs/RACE_BISECTOR.md`, `artifacts/results/`, and this plan from observed output only. |
+
+### Current blocker
+
+The archive's first installer preflight failed closed because the pinned operator contains two `numFeatures == 32` definitions: a non-WMMA implementation followed by a separate WMMA implementation. The bundle expected one. Resolve this by asserting the exact two-definition structure and delimiting the scalar overload before the WMMA section; tests must prove the WMMA suffix is byte-identical. Do not weaken the check to ?patch the first match? without validating the branch boundary.
+
+### Decision log
+
+| Date (UTC) | Decision | Reason |
+|---|---|---|
+| 2026-10-08 11:31 | Adapt the bundle's source matcher to the actual scalar/WMMA split and leave WMMA unchanged. | Source inspection and installer preflight showed two specializations; a single-match assumption is invalid for the pinned tree. |
+| 2026-10-08 11:31 | Keep the guard explicitly opt-in and out of the vendor tree. | The fix is a diagnostic candidate until shader inclusion and GPU/O0 evidence pass. |
+
+### Progress checklist
+
+- [x] Confirm clean `main` at `7671af74b2c0038848d8983f0748ecccf227183c`; create `fix/fsr4-pass11-nhws-bounds-race`.
+- [x] Verify the attached ZIP CRC and all 20 manifest file hashes/sizes.
+- [x] Inspect current pass-11 model/provider geometry and the two operator implementations.
+- [x] Run installer check; it rejected the inaccurate one-specialization assumption before modifying the repo.
+- [x] Implement the precise non-WMMA-only overlay and integration; include every applicable runtime test but keep installer-only tests out of the repo.
+- [x] Run focused Python tests (22/22 passed in the repository; the extracted bundle installer suite passed 25/25 before installation).
+- [ ] Run project CTest, shader builds, and compiled artifact diff.
+- [ ] Run the GPU campaign if sequence/tooling is present; otherwise record the specific blocker.
+- [ ] Update result/progress reports, review diff, commit and push the private branch.
+
+### Measured results
+
+ZIP integrity passed (20/20 entries). The baseline source is at the archive's exact target commit. Focused repo tests pass 22/22; bundle installer tests passed 25/25 before installation. No CMake build or GPU campaign measurements yet. The first preflight refusal was a source-matcher mismatch, not evidence against or for the bounds hypothesis.

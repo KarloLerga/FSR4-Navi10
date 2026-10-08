@@ -389,6 +389,7 @@ add_custom_target(audit_teacher_provider_schedule
 option(FSR4N10_ENABLE_PASS_PREFIX_DIAGNOSTIC "Build temporary prefix-pass diagnostic into FSR4 provider" OFF)
 option(FSR4N10_FORCE_GLOBAL_UAV_BARRIER "Diagnostic global UAV barrier after each backend compute dispatch" OFF)
 
+option(FSR4N10_PASS11_BOUNDS_GUARD "Enable safe I8 <32,1> neural bounds guard in build overlay" OFF)
 option(FSR4N10_FORCE_SCALAR_DOT4 "Use scalar signed-I8 dot4 fallback for Navi10 validation" OFF)
 option(FSR4N10_STABLE_POST_MATH "Use overflow-stable but mathematically equivalent FSR4 POST tanh/sigmoid transforms" OFF)
 set(FSR4N10_PROVIDER_DIAGNOSTIC_ARGS)
@@ -399,6 +400,10 @@ if(FSR4N10_STABLE_POST_MATH)
     list(APPEND FSR4N10_PROVIDER_DIAGNOSTIC_ARGS --stable-post-math)
 endif()
 
+if(FSR4N10_PASS11_BOUNDS_GUARD)
+    list(APPEND FSR4N10_PROVIDER_DIAGNOSTIC_ARGS --pass11-bounds-guard)
+endif()
+
 add_custom_target(compile_provider_i8_native_1080
     COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/teacher/compile_provider_i8_native_1080.py"
             --repo-root "${CMAKE_CURRENT_SOURCE_DIR}"
@@ -407,6 +412,7 @@ add_custom_target(compile_provider_i8_native_1080
     BYPRODUCTS "${CMAKE_CURRENT_BINARY_DIR}/teacher/provider_i8_native_1080/manifest.json"
     DEPENDS
         "${CMAKE_CURRENT_SOURCE_DIR}/tools/teacher/compile_provider_i8_native_1080.py"
+        "${CMAKE_CURRENT_SOURCE_DIR}/tools/teacher/fnb_bounds_overlay.py"
         "${CMAKE_CURRENT_SOURCE_DIR}/third_party/LOCK.json"
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
     COMMENT "Compiling pinned FSR4 I8 native/1080 provider PRE/model/padding/POST shader blobs"

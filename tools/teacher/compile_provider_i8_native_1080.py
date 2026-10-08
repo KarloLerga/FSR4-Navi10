@@ -12,6 +12,8 @@ import sys
 import tempfile
 from pathlib import Path
 
+from fnb_bounds_overlay import create_overlay as create_fnb_bounds_overlay
+
 
 MODEL = "fsr4_model_v07_i8_native"
 TIER = "1080"
@@ -317,7 +319,8 @@ def generate_initializer_sources(model_dir: Path, output_dir: Path) -> list[Path
 
 
 def compile_provider_set(
-    repo_root: Path, output_dir: Path, *, scalar_dot4: bool = False, stable_post_math: bool = False
+    repo_root: Path, output_dir: Path, *, scalar_dot4: bool = False,
+    stable_post_math: bool = False, pass11_bounds_guard: bool = False
 ) -> dict[str, object]:
     sdk_root = repo_root / "third_party" / "fidelityfx-fsr4-source" / "Kits" / "FidelityFX"
     fsr4_root = sdk_root / "upscalers" / "fsr4"
@@ -345,7 +348,13 @@ def compile_provider_set(
         fsr4_root, output_dir, scalar_dot4=scalar_dot4, stable_post_math=stable_post_math
     )
     model_source = source_files["model"]
-    model_shader_includes = (fsr4_root / "dx12", sdk_root / "api" / "internal" / "dx12")
+    if pass11_bounds_guard:
+        guard_info = create_fnb_bounds_overlay(fsr4_root, output_dir)
+        capture_overlays["pass11_fnb_bounds_guard"] = Path(guard_info["overlay"])
+    # Prefer the build-local operator include only when explicitly enabled.
+    model_shader_includes = (
+        (capture_overlay_dir,) if pass11_bounds_guard else ()
+    ) + (fsr4_root / "dx12", sdk_root / "api" / "internal" / "dx12")
     if scalar_dot4:
         model_wrapper = capture_overlay_dir / f"passes_{TIER}_scalar_dot4.hlsl"
         model_wrapper.write_text(
@@ -354,9 +363,8 @@ def compile_provider_set(
         capture_overlays["model_scalar_dot4_wrapper"] = model_wrapper
         model_source = model_wrapper
         model_shader_includes = (
-            model_dir,
-            fsr4_root / "dx12",
-            sdk_root / "api" / "internal" / "dx12",
+            ((capture_overlay_dir,) if pass11_bounds_guard else ())
+            + (model_dir, fsr4_root / "dx12", sdk_root / "api" / "internal" / "dx12")
         )
     include_dirs = (
         sdk_root / "api" / "internal" / "gpu",
@@ -500,6 +508,7 @@ def compile_provider_set(
         "diagnostic_modes": {
             "scalar_dot4": scalar_dot4,
             "stable_post_math": stable_post_math,
+            "pass11_bounds_guard": pass11_bounds_guard,
             "scalar_dot4_semantics": "signed i8x4 lane products accumulated into int32" if scalar_dot4 else "HLSL dot4add_i8packed intrinsic",
         },
         "shader_counts": {
@@ -543,11 +552,14 @@ def main() -> int:
                         help="replace HLSL dot4add_i8packed with an explicit signed-byte scalar reference")
     parser.add_argument("--stable-post-math", action="store_true",
                         help="use overflow-stable tanh/sigmoid forms in FSR4 POST")
+    parser.add_argument("--pass11-bounds-guard", action="store_true",
+                        help="use a build-local bounds guard for the I8 <32,1> FNB operator")
     args = parser.parse_args()
     try:
         manifest = compile_provider_set(
             args.repo_root.resolve(), args.output.resolve(),
             scalar_dot4=args.scalar_dot4, stable_post_math=args.stable_post_math,
+            pass11_bounds_guard=args.pass11_bounds_guard,
         )
     except (OSError, KeyError, json.JSONDecodeError, subprocess.CalledProcessError, RuntimeError) as error:
         print(f"compile_provider_i8_native_1080: {error}", file=sys.stderr)
