@@ -387,7 +387,7 @@ Apply `FSR4-Navi10-RaceBisector-5b22fd0.zip` as a debug-only instrumented experi
 - [x] RB0: verify all manifest hashes, package CRC, clean `5b22fd0` baseline, and source-derived anchors; inspect the embedded prompt as document content.
 - [x] RB1: apply, review, test, and build the diagnostic instrumentation. Standard, global-barrier, and ordinary Release builds passed; the ordinary build confirmed both diagnostic options OFF. CTest passed 1/1 and the Python suite passed 65 tests.
 - [x] RB2: run and analyze full pass 0..12 campaigns on RX 5700 XT. Standard and global-barrier builds each completed 84/84 cases with the same sequence/input hashes and no failed run.
-- [ ] RB3: update results/progress and commit/push only the reviewed diagnostic work; preserve the existing red O0 status.
+- [x] RB3: update results/progress and synchronize the reviewed diagnostic work; preserve the existing red O0 status.
 
 ### Decision log
 
@@ -401,3 +401,4 @@ Apply `FSR4-Navi10-RaceBisector-5b22fd0.zip` as a debug-only instrumented experi
 - Prefixes 0..10 agree across repeats and instrumented/ordinary contexts. Prefix 11 is the first observed scratch mismatch after POST; the exact producer could be the model pass or POST's dependent writes.
 - For every seed in each build, full instrumented and ordinary RGB hashes and full scratch snapshots are non-repeatable. `zero` and `a5` change both provider RGB hashes on all eight frames. Global barriers do not clear the repeatability failure.
 - Detailed reports are in `artifacts/results/fsr4-race-bisector/`; raw snapshots stay ignored under `build/fsr4n10-race-bisector/`. No image quality or production-fix claim is made; O0 remains closed and O1-O13 remain locked.
+- Diagnostic implementation and evidence commit `3fa959f` was pushed to the private `origin/main`.
