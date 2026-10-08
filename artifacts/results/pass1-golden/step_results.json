@@ -1,0 +1,148 @@
+{
+  "schema": "f4n10.pass1-golden-runner.v1",
+  "BaseCommit": "98657b4",
+  "Steps": [
+    {
+      "Stage": "final",
+      "Passed": true,
+      "Error": null,
+      "GpuCases": 8,
+      "Pass0InputsMatched": true
+    },
+    {
+      "Stage": "q0",
+      "Passed": true,
+      "Error": null,
+      "GpuCases": 8,
+      "Pass0InputsMatched": true
+    },
+    {
+      "Stage": "q1lo",
+      "Passed": true,
+      "Error": null,
+      "GpuCases": 8,
+      "Pass0InputsMatched": true
+    },
+    {
+      "Stage": "q1hi",
+      "Passed": true,
+      "Error": null,
+      "GpuCases": 8,
+      "Pass0InputsMatched": true
+    },
+    {
+      "Stage": "acc0_0",
+      "Passed": true,
+      "Error": null,
+      "GpuCases": 8,
+      "Pass0InputsMatched": true
+    },
+    {
+      "Stage": "acc0_1",
+      "Passed": true,
+      "Error": null,
+      "GpuCases": 8,
+      "Pass0InputsMatched": true
+    },
+    {
+      "Stage": "acc0_2",
+      "Passed": true,
+      "Error": null,
+      "GpuCases": 8,
+      "Pass0InputsMatched": true
+    },
+    {
+      "Stage": "acc0_3",
+      "Passed": true,
+      "Error": null,
+      "GpuCases": 8,
+      "Pass0InputsMatched": true
+    },
+    {
+      "Stage": "acc1_0",
+      "Passed": true,
+      "Error": null,
+      "GpuCases": 8,
+      "Pass0InputsMatched": true
+    },
+    {
+      "Stage": "acc1_1",
+      "Passed": true,
+      "Error": null,
+      "GpuCases": 8,
+      "Pass0InputsMatched": true
+    },
+    {
+      "Stage": "acc1_2",
+      "Passed": true,
+      "Error": null,
+      "GpuCases": 8,
+      "Pass0InputsMatched": true
+    },
+    {
+      "Stage": "acc1_3",
+      "Passed": true,
+      "Error": null,
+      "GpuCases": 8,
+      "Pass0InputsMatched": true
+    },
+    {
+      "Stage": "acc1_4",
+      "Passed": true,
+      "Error": null,
+      "GpuCases": 8,
+      "Pass0InputsMatched": true
+    },
+    {
+      "Stage": "acc1_5",
+      "Passed": true,
+      "Error": null,
+      "GpuCases": 8,
+      "Pass0InputsMatched": true
+    },
+    {
+      "Stage": "acc1_6",
+      "Passed": true,
+      "Error": null,
+      "GpuCases": 8,
+      "Pass0InputsMatched": true
+    },
+    {
+      "Stage": "acc1_7",
+      "Passed": true,
+      "Error": null,
+      "GpuCases": 8,
+      "Pass0InputsMatched": true
+    },
+    {
+      "Stage": "acc2_0",
+      "Passed": true,
+      "Error": null,
+      "GpuCases": 8,
+      "Pass0InputsMatched": true
+    },
+    {
+      "Stage": "acc2_1",
+      "Passed": true,
+      "Error": null,
+      "GpuCases": 8,
+      "Pass0InputsMatched": true
+    },
+    {
+      "Stage": "acc2_2",
+      "Passed": true,
+      "Error": null,
+      "GpuCases": 8,
+      "Pass0InputsMatched": true
+    },
+    {
+      "Stage": "acc2_3",
+      "Passed": true,
+      "Error": null,
+      "GpuCases": 8,
+      "Pass0InputsMatched": true
+    }
+  ],
+  "GpuCases": 160,
+  "ProductionApproved": false
+}

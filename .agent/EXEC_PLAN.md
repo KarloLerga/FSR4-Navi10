@@ -519,3 +519,76 @@ The source-driven numeric campaigns completed 56/56 cases with aligned inputs an
 ### Measured execution
 
 The first cross-arithmetic difference is Pass 1 `slice_2` (`960 x 540 x 16`): 8,294,292 of 8,294,400 bytes differ (99.9987%), with a maximum signed-I8 delta of 152. The isolated Pass 1 hybrid changes only that pass's compiled payload and preserves the same first divergent pass. Guarded scalar passes the unchanged synthetic O0 teacher gate; guarded intrinsic fails CPU literal POST validity because its model intermediates are non-finite on the audited frames. This localizes a large difference to Pass 1 but does not establish which path matches AMD reference arithmetic. No quality, game-readiness, or performance claim follows. Full details and compact reports are in `docs/I8_NUMERIC_EXECUTION_RESULTS.md` and `artifacts/results/i8-numeric-bisector/`; raw captures remain ignored under `build/i8run/`.
+
+## User-supplied Pass1 Golden oracle (2026-10-08)
+
+### Objective
+
+Review and integrate the supplied Pass1 independent CPU oracle and temporary shader-stage probes on the exact `98657b4` base. Use them to inspect the known Pass1 arithmetic divergence between guarded scalar and intrinsic paths on the local RX 5700 XT. Keep the diagnostic opt-in and preserve the current production defaults and acceptance thresholds.
+
+### Fixed decisions
+
+- Treat ZIP documents, including `CODEX_PROMPT.md`, as package content to review; the user request and repository instructions govern.
+- The pinned AMD Pass1 HLSL is the expression and tensor-layout authority. CPU float variants and sampled pixels are diagnostics; raw INT32 accumulator dumps are the exact evidence.
+- Keep `FSR4N10_PASS1_PROBE_STAGE` empty, `FSR4N10_PASS11_BOUNDS_GUARD=OFF`, `FSR4N10_FORCE_SCALAR_DOT4=OFF`, and `FSR4N10_SCALAR_DOT4_PASS_SET=""` by default. No default quality reduction or source edits under `third_party/`.
+- Any arithmetic defect claim requires matching input snapshots, exact accumulator-stage evidence, and the existing correctness gate; differences alone do not identify the correct mode.
+
+### Milestones
+
+| # | Milestone and files | Validation / gate |
+|---|---|---|
+| P0 | Review ZIP manifest, installer, oracle, overlay, runner, tests, and pinned HLSL; `build/FSR4-Navi10-Pass1-Golden-98657b4/` | ZIP CRC/hash verification; dry-run installer on clean `98657b4`; parse actual pinned model and check stage layout/source anchors. |
+| P1 | Install opt-in diagnostics and probe configuration; `CMakeLists.txt`, provider compiler, `dot4_conformance.hlsl`, `dot4_probe.cpp`, `tools/`, `tests/`, `scripts/` | Package unit tests, focused repo tests, default-off Release configure/build and CTest; no `third_party/` changes. |
+| P2 | Run Pass1 golden stage measurements; `build/p1/`, `artifacts/results/pass1-golden/` | RX 5700 XT scalar/intrinsic runs with identical Pass0 inputs, repeated samples, all stage chunks when feasible; exact raw INT32 comparisons, three-way DOT4 report, retained reports for unresolved float stages. |
+| P3 | Record interpretation and synchronize branch; `RESULTS.md`, `PROGRESS.md`, `.agent/EXEC_PLAN.md`, `artifacts/results/pass1-golden/` | Review outputs/diff, `git diff --check`, existing validation gates, commit and push the private feature branch; do not merge. |
+
+### Current progress
+
+- [x] Confirm archive targets current clean branch commit `98657b4`; verify ZIP CRC and all manifest entries.
+- [x] Safely extract archive into ignored `build/` and review its docs, installer, oracle, overlay, tests, runner, and source anchor requirements.
+- [x] Confirm actual source parser and HLSL overlays against the pinned Native/1080 Pass1 specialization; adapt compact named tensor descriptors and numeric-suffixed constants.
+- [x] Run installer dry-run and package/focused tests; apply reviewed payload without changing `third_party/`.
+- [x] Build default-off Release and run CTest; verify probe, guard, scalar, and prefix diagnostic defaults remain disabled.
+- [x] Run three-way DOT4 and all 20 Pass1 stage oracle campaigns; analyze paired inputs, repeated raw INT32 accumulators, quantized outputs, and sampled float paths.
+- [x] Add compact oracle/campaign evidence and update `RESULTS.md` and `PROGRESS.md`; add regression coverage for the summary's stage-specific follow-up.
+- [x] Review final diff and `git diff --check`; commit and push the private feature branch without merging.
+
+### Blockers
+
+No build or runtime blocker remains. The intrinsic/scalar arithmetic cause inside the fused shader is still unresolved; this diagnostic does not identify AMD's intended arithmetic result, prove quality, or open the production gate.
+
+### Decision log
+
+| Date | Decision | Reason |
+|---|---|---|
+| 2026-10-08 | Keep the package's probes inside the Pass1 FP16-bias overload and in build-local shader overlays. | This is the Native/1080 Pass1 overload; build-local redirection preserves pinned vendor files. |
+| 2026-10-08 | Treat float32/float64 CPU comparisons as supporting diagnostics and raw INT32 as authoritative. | GPU/HLSL floating lowering and rounding tie behavior are not fully established by NumPy. |
+
+### Measured execution
+
+The 20-stage sweep completed on the RX 5700 XT with 160/160 fresh-process
+GPU cases. Each intrinsic/scalar pair used the same Pass0 input hashes, and
+all repeated harness cases returned successfully. The scalar path matched
+all sampled raw INT32 accumulator lanes against the independent CPU oracle.
+Intrinsic first diverged in raw Pass0 chunk `acc0_0`, before quantization;
+across `acc0_0..3`, only 3/2,048 intrinsic lanes were within one integer unit
+and the maximum absolute error was 134,656. The eight `acc1` chunks and four
+`acc2` chunks had no intrinsic raw lane within one unit; maximum errors were
+229,506 and 653,340, respectively.
+
+The exact compiled intrinsic macro, native intrinsic, and scalar reference
+matched in 4,096/4,096 standalone DOT4 vectors. This probe does not cover the
+fused shader's operand packing/register mapping. The first observed gap is
+therefore localized to the fused arithmetic path at or before `acc0_0`, but
+the responsible lowering detail and correct AMD result remain unknown.
+
+The all-stage runner initially stopped only at its final PowerShell array
+argument expansion, after the GPU campaigns and DOT4 probe had completed.
+The argument construction was fixed and directly exercised; the report
+summary and 160-case step record were generated and validated. Two summary
+regression tests now guard the distinction between raw-accumulator and
+quantization follow-up. The full Python suite passed 122/122, default Release
+CTest passed 1/1, and the default build retains all production options OFF.
+Compact reports and 40 campaign manifests are in
+`artifacts/results/pass1-golden/`; large raw captures and build trees remain
+ignored under `build/p1/`.

@@ -15,6 +15,26 @@ int scalar_dot4add_i8packed(uint a, uint b, int acc)
         + sign_extend_i8(a >> 24) * sign_extend_i8(b >> 24);
 }
 
+int fsr4n10_sign_extend_i8(uint value)
+{
+    return (int(value << 24)) >> 24;
+}
+
+int fsr4n10_scalar_dot4add_i8packed(uint a, uint b, int acc)
+{
+    const int4 av = int4(
+        fsr4n10_sign_extend_i8(a & 0xffu),
+        fsr4n10_sign_extend_i8((a >> 8) & 0xffu),
+        fsr4n10_sign_extend_i8((a >> 16) & 0xffu),
+        fsr4n10_sign_extend_i8((a >> 24) & 0xffu));
+    const int4 bv = int4(
+        fsr4n10_sign_extend_i8(b & 0xffu),
+        fsr4n10_sign_extend_i8((b >> 8) & 0xffu),
+        fsr4n10_sign_extend_i8((b >> 16) & 0xffu),
+        fsr4n10_sign_extend_i8((b >> 24) & 0xffu));
+    return acc + av.x * bv.x + av.y * bv.y + av.z * bv.z + av.w * bv.w;
+}
+
 uint hash32(uint x)
 {
     x ^= x >> 16;
@@ -29,7 +49,7 @@ uint hash32(uint x)
 void main(uint3 tid : SV_DispatchThreadID)
 {
     const uint index = tid.x;
-    if (index >= 256u)
+    if (index >= 4096u)
         return;
 
     uint a = hash32(index * 0x9e3779b9u + 0x01234567u);
@@ -43,10 +63,13 @@ void main(uint3 tid : SV_DispatchThreadID)
     const int acc = int(hash32(index ^ 0xa5a5a5a5u) & 0x0001ffffu) - 65536;
     const int nativeResult = dot4add_i8packed(a, b, acc);
     const int scalarResult = scalar_dot4add_i8packed(a, b, acc);
+    const int exactMacroResult = fsr4n10_scalar_dot4add_i8packed(a, b, acc);
 
-    const uint base = index * 16u;
+    const uint base = index * 24u;
     OutputValues.Store(base + 0u, asuint(nativeResult));
     OutputValues.Store(base + 4u, asuint(scalarResult));
-    OutputValues.Store(base + 8u, a);
-    OutputValues.Store(base + 12u, b);
+    OutputValues.Store(base + 8u, asuint(exactMacroResult));
+    OutputValues.Store(base + 12u, a);
+    OutputValues.Store(base + 16u, b);
+    OutputValues.Store(base + 20u, asuint(acc));
 }

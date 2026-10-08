@@ -22,8 +22,8 @@
 namespace fsr4n10 {
 namespace {
 using Microsoft::WRL::ComPtr;
-constexpr std::size_t kCases = 256;
-constexpr std::size_t kStride = 16;
+constexpr std::size_t kCases = 4096;
+constexpr std::size_t kStride = 24;
 constexpr std::size_t kBytes = kCases * kStride;
 
 void check_hr(HRESULT result, const char* operation) {
@@ -211,16 +211,20 @@ int run_dot4_conformance(const std::filesystem::path& report_path) {
     readback->Unmap(0, &no_write);
 
     std::size_t mismatches = 0;
-    struct Example { std::size_t index; std::int32_t native; std::int32_t scalar; std::uint32_t a; std::uint32_t b; };
+    std::size_t macro_mismatches = 0;
+    struct Example { std::size_t index; std::int32_t native; std::int32_t scalar; std::int32_t macro; std::uint32_t a; std::uint32_t b; };
     std::vector<Example> examples;
     for (std::size_t index = 0; index < kCases; ++index) {
-        const std::size_t base = index * 4;
+        const std::size_t base = index * 6;
         const auto native_value = static_cast<std::int32_t>(words[base]);
         const auto scalar_value = static_cast<std::int32_t>(words[base + 1]);
-        if (native_value != scalar_value) {
-            ++mismatches;
+        const auto macro_value = static_cast<std::int32_t>(words[base + 2]);
+        if (macro_value != scalar_value) ++macro_mismatches;
+        if (native_value != scalar_value || macro_value != scalar_value) {
+            if (native_value != scalar_value) ++mismatches;
             if (examples.size() < 16)
-                examples.push_back({index, native_value, scalar_value, words[base + 2], words[base + 3]});
+                examples.push_back({index, native_value, scalar_value, macro_value,
+                                    words[base + 3], words[base + 4]});
         }
     }
 
@@ -232,7 +236,9 @@ int run_dot4_conformance(const std::filesystem::path& report_path) {
            << "  \"adapter\": \"" << adapter_name << "\",\n"
            << "  \"case_count\": " << kCases << ",\n"
            << "  \"mismatch_count\": " << mismatches << ",\n"
+           << "  \"macro_mismatch_count\": " << macro_mismatches << ",\n"
            << "  \"native_matches_scalar\": " << (mismatches == 0 ? "true" : "false") << ",\n"
+           << "  \"compiler_macro_matches_scalar\": " << (macro_mismatches == 0 ? "true" : "false") << ",\n"
            << "  \"examples\": [";
     for (std::size_t index = 0; index < examples.size(); ++index) {
         if (index) report << ',';
@@ -240,6 +246,7 @@ int run_dot4_conformance(const std::filesystem::path& report_path) {
         report << "\n    {\"index\": " << example.index
                << ", \"native\": " << example.native
                << ", \"scalar\": " << example.scalar
+               << ", \"compiler_macro\": " << example.macro
                << ", \"a\": \"0x" << std::hex << std::setw(8) << std::setfill('0') << example.a
                << "\", \"b\": \"0x" << std::setw(8) << example.b << "\"}" << std::dec;
     }
@@ -249,6 +256,6 @@ int run_dot4_conformance(const std::filesystem::path& report_path) {
     std::cout << "dot4add_i8packed conformance on " << adapter_name << ": "
               << (kCases - mismatches) << "/" << kCases
               << " cases matched scalar signed-I8 semantics.\n";
-    return mismatches == 0 ? 0 : 3;
+    return mismatches == 0 && macro_mismatches == 0 ? 0 : 3;
 }
 } // namespace fsr4n10

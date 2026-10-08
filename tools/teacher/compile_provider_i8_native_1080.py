@@ -14,6 +14,7 @@ from pathlib import Path
 
 from fnb_bounds_overlay import OVERLAY_NAME, OPERATOR_REL, create_overlay as create_fnb_bounds_overlay
 from i8_arithmetic_pass_overlay import parse_pass_set, build_selected_wrapper
+from pass1_stage_overlay import create_overlay as create_pass1_stage_overlay, valid_stage as valid_pass1_stage
 
 
 MODEL = "fsr4_model_v07_i8_native"
@@ -322,7 +323,7 @@ def generate_initializer_sources(model_dir: Path, output_dir: Path) -> list[Path
 def compile_provider_set(
     repo_root: Path, output_dir: Path, *, scalar_dot4: bool = False,
     stable_post_math: bool = False, pass11_bounds_guard: bool = False,
-    scalar_pass_set: str = ""
+    scalar_pass_set: str = "", pass1_probe_stage: str = ""
 ) -> dict[str, object]:
     sdk_root = repo_root / "third_party" / "fidelityfx-fsr4-source" / "Kits" / "FidelityFX"
     fsr4_root = sdk_root / "upscalers" / "fsr4"
@@ -348,6 +349,11 @@ def compile_provider_set(
     selected_scalar_passes = parse_pass_set(scalar_pass_set)
     if scalar_dot4 and selected_scalar_passes:
         raise ValueError("global scalar DOT4 and selected scalar passes must not be combined")
+    if pass1_probe_stage:
+        if not valid_pass1_stage(pass1_probe_stage):
+            raise ValueError(f"Invalid Pass1 probe stage: {pass1_probe_stage}")
+        if not pass11_bounds_guard:
+            raise ValueError("Pass1 probe requires guarded Pass11 and prefix-only execution")
     output_dir.mkdir(parents=True, exist_ok=True)
     # Clear generated local overrides before each full recompilation. A prior
     # guard-ON build must never influence a later guard-OFF compiler run.
@@ -371,6 +377,12 @@ def compile_provider_set(
         capture_overlays["pass11_fnb_bounds_guard"] = Path(guard_info["overlay"])
         capture_overlays["pass11_model_source_shadow"] = Path(guard_info["model_overlay"])
         model_source = Path(guard_info["model_overlay"])
+    if pass1_probe_stage:
+        stage_info = create_pass1_stage_overlay(
+            fsr4_root, output_dir, pass1_probe_stage, base_model=model_source)
+        capture_overlays["pass1_stage_operator"] = Path(stage_info["operator_overlay"])
+        capture_overlays["pass1_stage_model_shadow"] = Path(stage_info["model_source"])
+        model_source = Path(stage_info["model_source"])
     # Prefer the build-local operator include only when explicitly enabled.
     model_shader_includes = (
         (capture_overlay_dir,) if pass11_bounds_guard else ()
@@ -558,6 +570,7 @@ def compile_provider_set(
             "stable_post_math": stable_post_math,
             "pass11_bounds_guard": pass11_bounds_guard,
             "scalar_dot4_pass_set": list(selected_scalar_passes),
+            "pass1_probe_stage": pass1_probe_stage,
             "scalar_dot4_semantics": (
                 "signed i8x4 lane products accumulated into int32"
                 if scalar_dot4 else
@@ -616,6 +629,8 @@ def main() -> int:
                         help="use a build-local bounds guard for the I8 <32,1> FNB operator")
     parser.add_argument("--scalar-pass-set", default="",
                         help="comma-separated 1..12 pass indices for isolated scalar DOT4")
+    parser.add_argument("--pass1-probe-stage", default="",
+                        help="debug Pass1 internal stage; requires --pass11-bounds-guard")
     args = parser.parse_args()
     try:
         manifest = compile_provider_set(
@@ -623,6 +638,7 @@ def main() -> int:
             scalar_dot4=args.scalar_dot4, stable_post_math=args.stable_post_math,
             pass11_bounds_guard=args.pass11_bounds_guard,
             scalar_pass_set=args.scalar_pass_set,
+            pass1_probe_stage=args.pass1_probe_stage,
         )
     except (OSError, KeyError, json.JSONDecodeError, subprocess.CalledProcessError, RuntimeError) as error:
         print(f"compile_provider_i8_native_1080: {error}", file=sys.stderr)

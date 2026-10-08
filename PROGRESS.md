@@ -119,3 +119,11 @@ The standalone harness lists adapters, runs a generic FP16 arithmetic probe, val
 - This localizes a large arithmetic-path difference to Pass 1, but does not prove which compiled path matches AMD reference arithmetic. The scalar O0 result is synthetic evidence only; no visual-quality, game-readiness, or performance claim is made. Normal-build defaults remain unchanged.
 - FFX_SC failed to resolve the local guard include with a 163-character model-shadow path and passed at 144 characters. The one-command orchestrator default now uses `build/i8diag`; the short-path compile passed.
 - Machine-readable evidence is in `artifacts/results/i8-numeric-bisector/`; raw captures remain ignored under `build/i8run/`. See `docs/I8_NUMERIC_EXECUTION_RESULTS.md`.
+
+### Pass1 Golden oracle (2026-10-08)
+
+- Reviewed the Pass1 package as attachment content, verified it targets clean commit `98657b4`, and installed the validated diagnostics without changing pinned `third_party/` files or production defaults.
+- Adapted the model parser for the actual compact tensor descriptors and named constants in pinned Native/1080 HLSL. The full Python suite passes 122/122; default Release build and CTest pass 1/1.
+- Completed all 20 Pass1 stage probes and 160/160 fresh-process GPU cases on the RX 5700 XT with matched paired inputs. The scalar path matches the CPU INT32 oracle across every sampled stage; intrinsic first diverges in raw Pass0 `acc0_0`.
+- Standalone native/scalar/exact-compiler-macro DOT4 conformance passes 4096/4096. This does not validate the intrinsic inside the fused model shader; no arithmetic-path correctness, quality, or game-readiness conclusion is made.
+- Added compact oracle and campaign JSON to `artifacts/results/pass1-golden/`; large captures remain ignored in `build/p1/`. All diagnostic build switches retain their previous defaults.

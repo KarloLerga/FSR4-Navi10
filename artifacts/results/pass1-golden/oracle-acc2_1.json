@@ -1,0 +1,375 @@
+{
+  "schema": "f4n10.pass1-independent-cpu-oracle.v1",
+  "source_sha256": "e9a217349527a584cea67c6277fa092524aa638e8017e808e7a89e172e462157",
+  "pass1_input_quant_scale": 0.014608594588935375,
+  "pass1_output_quant_scale": 0.027550771832466125,
+  "stage": "acc2_1",
+  "sample_count": 128,
+  "pass0_inputs_equal": true,
+  "comparisons": {
+    "scalar": {
+      "exact_lanes": 512,
+      "near_lanes": 512,
+      "total": 512,
+      "max_abs_error": 0,
+      "bad_pixels": 0,
+      "exact_fraction": 1.0,
+      "within_one_lsb_fraction": 1.0
+    },
+    "intrinsic": {
+      "exact_lanes": 0,
+      "near_lanes": 0,
+      "total": 512,
+      "max_abs_error": 614259,
+      "bad_pixels": 128,
+      "exact_fraction": 0.0,
+      "within_one_lsb_fraction": 0.0
+    }
+  },
+  "preference": "scalar_matches_independent_cpu_oracle",
+  "examples": [
+    {
+      "x": 0,
+      "y": 0,
+      "cpu_float64": [
+        239,
+        -479,
+        24,
+        500
+      ],
+      "cpu_float32": [
+        239,
+        -479,
+        24,
+        500
+      ],
+      "scalar": [
+        239,
+        -479,
+        24,
+        500
+      ],
+      "intrinsic": [
+        3405,
+        28650,
+        26550,
+        25455
+      ]
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "cpu_float64": [
+        -233,
+        -368,
+        189,
+        13
+      ],
+      "cpu_float32": [
+        -233,
+        -368,
+        189,
+        13
+      ],
+      "scalar": [
+        -233,
+        -368,
+        189,
+        13
+      ],
+      "intrinsic": [
+        6475,
+        12572,
+        13076,
+        18158
+      ]
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "cpu_float64": [
+        -181,
+        -269,
+        183,
+        56
+      ],
+      "cpu_float32": [
+        -181,
+        -269,
+        183,
+        56
+      ],
+      "scalar": [
+        -181,
+        -269,
+        183,
+        56
+      ],
+      "intrinsic": [
+        15623,
+        22372,
+        23324,
+        36006
+      ]
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "cpu_float64": [
+        448,
+        -218,
+        269,
+        447
+      ],
+      "cpu_float32": [
+        448,
+        -218,
+        269,
+        447
+      ],
+      "scalar": [
+        448,
+        -218,
+        269,
+        447
+      ],
+      "intrinsic": [
+        29619,
+        62861,
+        31470,
+        25427
+      ]
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "cpu_float64": [
+        -33,
+        -238,
+        549,
+        30
+      ],
+      "cpu_float32": [
+        -33,
+        -238,
+        549,
+        30
+      ],
+      "scalar": [
+        -33,
+        -238,
+        549,
+        30
+      ],
+      "intrinsic": [
+        56515,
+        84870,
+        67947,
+        93208
+      ]
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "cpu_float64": [
+        183,
+        -342,
+        657,
+        95
+      ],
+      "cpu_float32": [
+        183,
+        -342,
+        657,
+        95
+      ],
+      "scalar": [
+        183,
+        -342,
+        657,
+        95
+      ],
+      "intrinsic": [
+        102118,
+        116628,
+        104238,
+        118673
+      ]
+    },
+    {
+      "x": 16,
+      "y": 16,
+      "cpu_float64": [
+        23,
+        -198,
+        499,
+        70
+      ],
+      "cpu_float32": [
+        23,
+        -198,
+        499,
+        70
+      ],
+      "scalar": [
+        23,
+        -198,
+        499,
+        70
+      ],
+      "intrinsic": [
+        118898,
+        144236,
+        128248,
+        140610
+      ]
+    },
+    {
+      "x": 32,
+      "y": 32,
+      "cpu_float64": [
+        259,
+        -158,
+        430,
+        221
+      ],
+      "cpu_float32": [
+        259,
+        -158,
+        430,
+        221
+      ],
+      "scalar": [
+        259,
+        -158,
+        430,
+        221
+      ],
+      "intrinsic": [
+        263903,
+        359607,
+        220198,
+        284146
+      ]
+    },
+    {
+      "x": 100,
+      "y": 100,
+      "cpu_float64": [
+        101,
+        -183,
+        512,
+        67
+      ],
+      "cpu_float32": [
+        101,
+        -183,
+        512,
+        67
+      ],
+      "scalar": [
+        101,
+        -183,
+        512,
+        67
+      ],
+      "intrinsic": [
+        429063,
+        537007,
+        409172,
+        473161
+      ]
+    },
+    {
+      "x": 240,
+      "y": 135,
+      "cpu_float64": [
+        -69,
+        -212,
+        517,
+        36
+      ],
+      "cpu_float32": [
+        -69,
+        -212,
+        517,
+        36
+      ],
+      "scalar": [
+        -69,
+        -212,
+        517,
+        36
+      ],
+      "intrinsic": [
+        450871,
+        578849,
+        468418,
+        504135
+      ]
+    },
+    {
+      "x": 480,
+      "y": 270,
+      "cpu_float64": [
+        214,
+        -220,
+        647,
+        43
+      ],
+      "cpu_float32": [
+        214,
+        -220,
+        647,
+        43
+      ],
+      "scalar": [
+        214,
+        -220,
+        647,
+        43
+      ],
+      "intrinsic": [
+        502920,
+        613918,
+        482727,
+        516890
+      ]
+    },
+    {
+      "x": 958,
+      "y": 538,
+      "cpu_float64": [
+        -187,
+        -217,
+        430,
+        139
+      ],
+      "cpu_float32": [
+        -187,
+        -217,
+        430,
+        139
+      ],
+      "scalar": [
+        -187,
+        -217,
+        430,
+        139
+      ],
+      "intrinsic": [
+        502920,
+        613918,
+        482727,
+        516890
+      ]
+    }
+  ],
+  "note": "CPU INT32 accumulators are mathematically exact. The float quantization path can differ by one LSB near rounding ties. This does NOT establish visual quality or production readiness.",
+  "input_paths": {
+    "scalar_pass0": "C:\\src\\FSR4-Navi10\\build\\p1\\csacc21\\seed_zero\\pass_00\\run_1\\frame_0_pass_0_ordinary.bin",
+    "scalar_pass1": "C:\\src\\FSR4-Navi10\\build\\p1\\csacc21\\seed_zero\\pass_01\\run_1\\frame_0_pass_1_ordinary.bin",
+    "intrinsic_pass0": "C:\\src\\FSR4-Navi10\\build\\p1\\ciacc21\\seed_zero\\pass_00\\run_1\\frame_0_pass_0_ordinary.bin",
+    "intrinsic_pass1": "C:\\src\\FSR4-Navi10\\build\\p1\\ciacc21\\seed_zero\\pass_01\\run_1\\frame_0_pass_1_ordinary.bin"
+  }
+}

@@ -391,6 +391,10 @@ option(FSR4N10_FORCE_GLOBAL_UAV_BARRIER "Diagnostic global UAV barrier after eac
 
 option(FSR4N10_PASS11_BOUNDS_GUARD "Enable safe I8 <32,1> neural bounds guard in build overlay" OFF)
 option(FSR4N10_FORCE_SCALAR_DOT4 "Use scalar signed-I8 dot4 fallback for Navi10 validation" OFF)
+set(FSR4N10_PASS1_PROBE_STAGE "" CACHE STRING "Diagnostic Pass1 ConvNextBlock stage (never production)")
+if(NOT FSR4N10_PASS1_PROBE_STAGE STREQUAL "" AND NOT FSR4N10_PASS11_BOUNDS_GUARD)
+    message(FATAL_ERROR "Pass1 probe requires FSR4N10_PASS11_BOUNDS_GUARD=ON")
+endif()
 set(FSR4N10_SCALAR_DOT4_PASS_SET "" CACHE STRING "Only the listed 1..12 model passes use scalar DOT4 (comma-separated)")
 option(FSR4N10_STABLE_POST_MATH "Use overflow-stable but mathematically equivalent FSR4 POST tanh/sigmoid transforms" OFF)
 set(FSR4N10_PROVIDER_DIAGNOSTIC_ARGS)
@@ -410,6 +414,9 @@ endif()
 if(FSR4N10_PASS11_BOUNDS_GUARD)
     list(APPEND FSR4N10_PROVIDER_DIAGNOSTIC_ARGS --pass11-bounds-guard)
 endif()
+if(NOT FSR4N10_PASS1_PROBE_STAGE STREQUAL "")
+    list(APPEND FSR4N10_PROVIDER_DIAGNOSTIC_ARGS --pass1-probe-stage "${FSR4N10_PASS1_PROBE_STAGE}")
+endif()
 
 add_custom_target(compile_provider_i8_native_1080
     COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/teacher/compile_provider_i8_native_1080.py"
@@ -421,6 +428,7 @@ add_custom_target(compile_provider_i8_native_1080
         "${CMAKE_CURRENT_SOURCE_DIR}/tools/teacher/compile_provider_i8_native_1080.py"
         "${CMAKE_CURRENT_SOURCE_DIR}/tools/teacher/fnb_bounds_overlay.py"
         "${CMAKE_CURRENT_SOURCE_DIR}/tools/teacher/i8_arithmetic_pass_overlay.py"
+        "${CMAKE_CURRENT_SOURCE_DIR}/tools/teacher/pass1_stage_overlay.py"
         "${CMAKE_CURRENT_SOURCE_DIR}/third_party/LOCK.json"
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
     COMMENT "Compiling pinned FSR4 I8 native/1080 provider PRE/model/padding/POST shader blobs"

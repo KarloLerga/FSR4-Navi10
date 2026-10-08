@@ -1,0 +1,200 @@
+{
+  "schema": "f4n10.pass1-golden-summary.v1",
+  "source_sha256": "e9a217349527a584cea67c6277fa092524aa638e8017e808e7a89e172e462157",
+  "rows": [
+    {
+      "stage": "acc0_0",
+      "preference": "scalar_matches_independent_cpu_oracle",
+      "scalar_within_one": 1.0,
+      "intrinsic_within_one": 0.001953125,
+      "scalar_max_error": 0,
+      "intrinsic_max_error": 84224,
+      "source_sha256": "e9a217349527a584cea67c6277fa092524aa638e8017e808e7a89e172e462157"
+    },
+    {
+      "stage": "acc0_1",
+      "preference": "scalar_matches_independent_cpu_oracle",
+      "scalar_within_one": 1.0,
+      "intrinsic_within_one": 0.001953125,
+      "scalar_max_error": 0,
+      "intrinsic_max_error": 134656,
+      "source_sha256": "e9a217349527a584cea67c6277fa092524aa638e8017e808e7a89e172e462157"
+    },
+    {
+      "stage": "acc0_2",
+      "preference": "scalar_matches_independent_cpu_oracle",
+      "scalar_within_one": 1.0,
+      "intrinsic_within_one": 0.001953125,
+      "scalar_max_error": 0,
+      "intrinsic_max_error": 80896,
+      "source_sha256": "e9a217349527a584cea67c6277fa092524aa638e8017e808e7a89e172e462157"
+    },
+    {
+      "stage": "acc0_3",
+      "preference": "scalar_matches_independent_cpu_oracle",
+      "scalar_within_one": 1.0,
+      "intrinsic_within_one": 0.0,
+      "scalar_max_error": 0,
+      "intrinsic_max_error": 83200,
+      "source_sha256": "e9a217349527a584cea67c6277fa092524aa638e8017e808e7a89e172e462157"
+    },
+    {
+      "stage": "q0",
+      "preference": "scalar_matches_independent_cpu_oracle",
+      "scalar_within_one": 1.0,
+      "intrinsic_within_one": 0.00732421875,
+      "scalar_max_error": 0,
+      "intrinsic_max_error": 146,
+      "source_sha256": "e9a217349527a584cea67c6277fa092524aa638e8017e808e7a89e172e462157"
+    },
+    {
+      "stage": "acc1_0",
+      "preference": "scalar_matches_independent_cpu_oracle",
+      "scalar_within_one": 1.0,
+      "intrinsic_within_one": 0.0,
+      "scalar_max_error": 0,
+      "intrinsic_max_error": 202215,
+      "source_sha256": "e9a217349527a584cea67c6277fa092524aa638e8017e808e7a89e172e462157"
+    },
+    {
+      "stage": "acc1_1",
+      "preference": "scalar_matches_independent_cpu_oracle",
+      "scalar_within_one": 1.0,
+      "intrinsic_within_one": 0.0,
+      "scalar_max_error": 0,
+      "intrinsic_max_error": 221650,
+      "source_sha256": "e9a217349527a584cea67c6277fa092524aa638e8017e808e7a89e172e462157"
+    },
+    {
+      "stage": "acc1_2",
+      "preference": "scalar_matches_independent_cpu_oracle",
+      "scalar_within_one": 1.0,
+      "intrinsic_within_one": 0.0,
+      "scalar_max_error": 0,
+      "intrinsic_max_error": 188058,
+      "source_sha256": "e9a217349527a584cea67c6277fa092524aa638e8017e808e7a89e172e462157"
+    },
+    {
+      "stage": "acc1_3",
+      "preference": "scalar_matches_independent_cpu_oracle",
+      "scalar_within_one": 1.0,
+      "intrinsic_within_one": 0.0,
+      "scalar_max_error": 0,
+      "intrinsic_max_error": 216477,
+      "source_sha256": "e9a217349527a584cea67c6277fa092524aa638e8017e808e7a89e172e462157"
+    },
+    {
+      "stage": "acc1_4",
+      "preference": "scalar_matches_independent_cpu_oracle",
+      "scalar_within_one": 1.0,
+      "intrinsic_within_one": 0.0,
+      "scalar_max_error": 0,
+      "intrinsic_max_error": 203989,
+      "source_sha256": "e9a217349527a584cea67c6277fa092524aa638e8017e808e7a89e172e462157"
+    },
+    {
+      "stage": "acc1_5",
+      "preference": "scalar_matches_independent_cpu_oracle",
+      "scalar_within_one": 1.0,
+      "intrinsic_within_one": 0.0,
+      "scalar_max_error": 0,
+      "intrinsic_max_error": 170356,
+      "source_sha256": "e9a217349527a584cea67c6277fa092524aa638e8017e808e7a89e172e462157"
+    },
+    {
+      "stage": "acc1_6",
+      "preference": "scalar_matches_independent_cpu_oracle",
+      "scalar_within_one": 1.0,
+      "intrinsic_within_one": 0.0,
+      "scalar_max_error": 0,
+      "intrinsic_max_error": 229506,
+      "source_sha256": "e9a217349527a584cea67c6277fa092524aa638e8017e808e7a89e172e462157"
+    },
+    {
+      "stage": "acc1_7",
+      "preference": "scalar_matches_independent_cpu_oracle",
+      "scalar_within_one": 1.0,
+      "intrinsic_within_one": 0.0,
+      "scalar_max_error": 0,
+      "intrinsic_max_error": 181078,
+      "source_sha256": "e9a217349527a584cea67c6277fa092524aa638e8017e808e7a89e172e462157"
+    },
+    {
+      "stage": "q1lo",
+      "preference": "scalar_matches_independent_cpu_oracle",
+      "scalar_within_one": 1.0,
+      "intrinsic_within_one": 0.0654296875,
+      "scalar_max_error": 0,
+      "intrinsic_max_error": 127,
+      "source_sha256": "e9a217349527a584cea67c6277fa092524aa638e8017e808e7a89e172e462157"
+    },
+    {
+      "stage": "q1hi",
+      "preference": "scalar_matches_independent_cpu_oracle",
+      "scalar_within_one": 1.0,
+      "intrinsic_within_one": 0.064453125,
+      "scalar_max_error": 0,
+      "intrinsic_max_error": 127,
+      "source_sha256": "e9a217349527a584cea67c6277fa092524aa638e8017e808e7a89e172e462157"
+    },
+    {
+      "stage": "acc2_0",
+      "preference": "scalar_matches_independent_cpu_oracle",
+      "scalar_within_one": 1.0,
+      "intrinsic_within_one": 0.0,
+      "scalar_max_error": 0,
+      "intrinsic_max_error": 578769,
+      "source_sha256": "e9a217349527a584cea67c6277fa092524aa638e8017e808e7a89e172e462157"
+    },
+    {
+      "stage": "acc2_1",
+      "preference": "scalar_matches_independent_cpu_oracle",
+      "scalar_within_one": 1.0,
+      "intrinsic_within_one": 0.0,
+      "scalar_max_error": 0,
+      "intrinsic_max_error": 614259,
+      "source_sha256": "e9a217349527a584cea67c6277fa092524aa638e8017e808e7a89e172e462157"
+    },
+    {
+      "stage": "acc2_2",
+      "preference": "scalar_matches_independent_cpu_oracle",
+      "scalar_within_one": 1.0,
+      "intrinsic_within_one": 0.0,
+      "scalar_max_error": 0,
+      "intrinsic_max_error": 653340,
+      "source_sha256": "e9a217349527a584cea67c6277fa092524aa638e8017e808e7a89e172e462157"
+    },
+    {
+      "stage": "acc2_3",
+      "preference": "scalar_matches_independent_cpu_oracle",
+      "scalar_within_one": 1.0,
+      "intrinsic_within_one": 0.0,
+      "scalar_max_error": 0,
+      "intrinsic_max_error": 519955,
+      "source_sha256": "e9a217349527a584cea67c6277fa092524aa638e8017e808e7a89e172e462157"
+    },
+    {
+      "stage": "final",
+      "preference": "scalar_matches_independent_cpu_oracle",
+      "scalar_within_one": 1.0,
+      "intrinsic_within_one": 0.0,
+      "scalar_max_error": 0,
+      "intrinsic_max_error": 151,
+      "source_sha256": "e9a217349527a584cea67c6277fa092524aa638e8017e808e7a89e172e462157"
+    }
+  ],
+  "first_large_path_gap": {
+    "stage": "acc0_0",
+    "preference": "scalar_matches_independent_cpu_oracle",
+    "scalar_within_one": 1.0,
+    "intrinsic_within_one": 0.001953125,
+    "scalar_max_error": 0,
+    "intrinsic_max_error": 84224,
+    "source_sha256": "e9a217349527a584cea67c6277fa092524aa638e8017e808e7a89e172e462157"
+  },
+  "tentative_conclusion": "arithmetic_path_diff_at_or_before_acc0_0",
+  "next_action": "Raw pass0 accumulator divergence is already present. Inspect fused intrinsic operand packing, register mapping, and generated ISA; standalone dot4 conformance does not isolate this context.",
+  "quality_proven": false,
+  "o0_production_approved": false,
+  "caveat": "Model weights and math are independent, but shader rounding/FP16 lowering still requires corroboration."
+}

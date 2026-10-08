@@ -1,0 +1,10 @@
+{
+  "schema": "f4n10.dot4-conformance.v1",
+  "adapter": "AMD Radeon RX 5700 XT",
+  "case_count": 4096,
+  "mismatch_count": 0,
+  "macro_mismatch_count": 0,
+  "native_matches_scalar": true,
+  "compiler_macro_matches_scalar": true,
+  "examples": [  ]
+}

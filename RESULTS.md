@@ -385,3 +385,47 @@ commit `01446e6a74888bf349652fcf2cbf5f642d30c2bf`. Compact campaign and O0
 reports are in `artifacts/results/i8-numeric-bisector/`; raw captures remain
 ignored under `build/i8run/`. Interpretation and reproduction steps are in
 `docs/I8_NUMERIC_EXECUTION_RESULTS.md`.
+
+## Pass1 independent CPU oracle (2026-10-08)
+
+Integrated the reviewed Pass1 golden-oracle tools and build-local stage probe.
+The 20-stage sweep ran on the RX 5700 XT (reported driver
+`0x00200000523503e8`), using sequence
+`a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2` and
+pinned FSR4 source commit `01446e6a74888bf349652fcf2cbf5f642d30c2bf`. All
+stage reports parse the same Pass1 model source SHA-256
+`e9a217349527a584cea67c6277fa092524aa638e8017e808e7a89e172e462157` and
+confirm equal Pass0 inputs. Each stage/mode campaign completed four fresh
+process cases (Pass 0/1 prefix, two repeats): 160/160 total, with identical
+paired input hashes and no process failures.
+
+The scalar signed-I8 path matched the independent CPU INT32 oracle exactly in
+all sampled raw accumulator lanes. The first intrinsic difference occurs
+before quantization, in the Pass0 `acc0_0` chunk. All four chunks cover the
+16-channel output; their combined results were:
+
+| Pass1 stage | Lanes | Scalar within 1 INT32 unit | Intrinsic within 1 unit | Intrinsic max absolute error |
+|---|---:|---:|---:|---:|
+| `acc0_0..3` | 2,048 | 2,048 | 3 | 134,656 |
+| `q0` | 2,048 | 2,048 | 15 | 146 I8 units |
+| `acc1_0..7` | 4,096 | 4,096 | 0 | 229,506 |
+| `q1lo` | 2,048 | 2,048 | 134 | 127 I8 units |
+| `q1hi` | 2,048 | 2,048 | 132 | 127 I8 units |
+| `acc2_0..3` | 2,048 | 2,048 | 0 | 653,340 |
+| `final` | 2,048 | 2,048 | 0 | 151 I8 units |
+
+The standalone native intrinsic, branch-safe scalar, and exact compiler-macro
+DOT4 probe matched signed-I8 scalar semantics for 4,096/4,096 vectors. That
+does not verify intrinsic operands or register mapping inside the fused model
+shader. Current evidence therefore narrows the mismatch to the fused
+arithmetic path at or before `acc0_0`; it does not determine which path matches
+AMD's intended hardware arithmetic. No quality or game-readiness claim follows.
+
+Validation: the default Release build and CTest pass (1/1); the full Python
+suite passes (122/122); all 20 shader overlay stages compiled in scalar and
+intrinsic diagnostic builds. `FSR4N10_PASS1_PROBE_STAGE` remains empty,
+`FSR4N10_PASS11_BOUNDS_GUARD`, `FSR4N10_FORCE_SCALAR_DOT4`, and prefix
+diagnostics remain OFF by default, and `FSR4N10_SCALAR_DOT4_PASS_SET` remains
+empty. Compact oracle reports and all 40 campaign manifests are in
+`artifacts/results/pass1-golden/`. Large captures and per-stage builds remain
+ignored in `build/p1/`. The current production gate remains closed.
