@@ -455,7 +455,7 @@ The guarded scalar and guarded intrinsic arithmetic modes differ from each other
 - [x] Rebuild all three configurations and compare baseline/guard artifacts from the same compiler revision; verify a separate default-OFF Release build and CTest.
 - [x] Run all 72 GPU campaign cases on RX 5700 XT and inspect every case, scratch alias map, frame hash, shader diff, and evaluation report.
 - [x] Record compact JSON evidence, update result/progress reports, and review the final diff.
-- [ ] Commit and push the private branch; do not merge to `main` while O0 remains closed.
+- [x] Commit and push the private branch (`fix/fsr4-pass11-nhws-bounds-race`, evidence commit `2c1ef16`); do not merge to `main` while O0 remains closed.
 
 ### Measured results
 
