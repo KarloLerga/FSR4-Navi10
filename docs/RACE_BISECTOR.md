@@ -109,3 +109,36 @@ Machine-readable reports are in
 [`artifacts/results/fsr4-race-bisector/`](../artifacts/results/fsr4-race-bisector/).
 Raw 20,880,256-byte-per-context scratch dumps remain in the ignored
 `build/fsr4n10-race-bisector/` directory.
+
+## Pass 11 bounds-guard continuation (2026-10-08)
+
+The follow-up campaign tested a build-local bounds guard in the scalar
+`FNB_CT2D_ADD<32,1>` used by Native/1080 Pass 11. It did not edit the pinned
+AMD tree or change dispatch size. A compiler dependency check confirmed the
+guarded shader resolved the unique local overlay, and the stable Pass 11
+selector/blob changed. An independent default Release build confirms the
+guard option remains `OFF` unless explicitly requested.
+
+The baseline scalar, guarded scalar, and guarded intrinsic Release builds
+completed all 72 RX 5700 XT cases (24 each) on the same eight-frame sequence.
+The baseline repeated through prefix 10 and first diverged after prefix 11.
+Every changed byte in all eight baseline alias-map comparisons fell in the
+predicted 64-pixel row-overlap region. The guarded builds had stable scratch,
+exact instrumented/ordinary output agreement, repeatable full RGB hashes,
+and equal full RGB hashes under zero and A5 scratch initialization.
+
+| Variant | Pass 11 scratch | Full RGB repeatability | Instrumentation parity |
+|---|---:|---:|---:|
+| Baseline scalar | fails | fails | fails |
+| Guarded scalar | passes | passes | passes |
+| Guarded intrinsic | passes | passes | passes |
+
+This supports the logical-bounds race hypothesis on the GPU. It does not
+establish quality or pass the existing O0 teacher gate. The guarded scalar and
+intrinsic results also differ from each other: their pass-10 scratch differs
+and all eight final RGB hashes differ, although each mode is independently
+repeatable. Treat cross-arithmetic equivalence as unresolved. Full geometry
+and limitation notes are in
+[`PASS11_BOUNDS_ROOTCAUSE.md`](PASS11_BOUNDS_ROOTCAUSE.md); compact machine
+reports are under
+[`artifacts/results/fsr4-pass11-guard/`](../artifacts/results/fsr4-pass11-guard/).

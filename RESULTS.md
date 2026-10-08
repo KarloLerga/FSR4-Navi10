@@ -280,3 +280,62 @@ The five machine-readable campaign/analysis files are in
 `artifacts/results/fsr4-race-bisector/`. Raw scratch buffers remain ignored in
 `build/fsr4n10-race-bisector/`. Run instructions and interpretation limits are
 in `docs/RACE_BISECTOR.md`.
+
+## Pass 11 Native/1080 I8 bounds guard (2026-10-08)
+
+Integrated the build-local, default-OFF bounds guard for the pinned FSR4
+Native/1080 I8 Pass 11 scalar `FNB_CT2D_ADD<32,1>` specialization. The
+upstream FidelityFX checkout, weights, dispatch dimensions, arithmetic,
+quality settings, and WMMA specialization remain unchanged. FidelityFX_SC's
+dependency record proves the guarded build selected the uniquely named local
+overlay (SHA-256
+`3720BAC4CBE7D608870C83A8661403AE6D97DF0688B431AC7187A26B9BDEBD48`); the
+stable Pass 11 selector and its content-addressed shader blob changed while
+all pinned source hashes remained equal. A separate Release build confirms
+`FSR4N10_PASS11_BOUNDS_GUARD=OFF` by default.
+
+FidelityFX_SC also changed selector-header hashes/order for Pass 0, Pass 13,
+and RCAS; their content-addressed shader payload digest sets were unchanged.
+The comparison report separates selector-header hashes from actual payload
+changes and identifies Pass 11 as the only payload set changed in this
+build comparison.
+
+On the RX 5700 XT (driver `32.0.21045.1000`), the baseline scalar, guarded
+scalar, and guarded intrinsic Release variants completed 72/72 fresh-process
+cases (24 each), with zero process failures. The test used the existing
+eight-frame procedural sequence, hash
+`a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2`, across
+zero/A5 scratch seeds, pass 10/11/12/full prefixes, and three repeats.
+
+| Variant | Pass 11 scratch repeatable | Full RGB repeatable | Instrumented = ordinary | Zero/A5 RGB equal |
+|---|---:|---:|---:|---:|
+| Baseline scalar | no | no | no | no |
+| Guarded scalar | yes | yes | yes | yes |
+| Guarded intrinsic | yes | yes | yes | yes |
+
+Baseline Pass 10 scratch repeated; Pass 11 was the first divergent prefix.
+All eight baseline alias comparisons placed every changed byte inside the
+source-predicted 64-pixel spill zone. The first changed byte in one ordinary
+A5 repeat comparison was offset `13,240,320`, matching the predicted row-52
+write collision. The bounds hypothesis is therefore supported by GPU
+evidence. Guarded modes had zero differing bytes in their scratch comparison
+sets and repeatable eight-frame RGB output across independent runs and both
+scratch seeds.
+
+The guarded scalar and intrinsic arithmetic modes differ from each other:
+all eight final RGB frame hashes differ, and their pass-10 scratch snapshots
+are not bit-identical. Each mode is stable on its own, but this campaign does
+not establish cross-mode numeric equivalence. Full-run provider-only steady
+state median dispatch means were 19,103.75 us for baseline scalar, 18,587.0
+us for guarded scalar, and 7,768.32 us for guarded intrinsic across six runs
+per variant. These modes have different dot4 arithmetic, so timings are
+reported as observations rather than an isolated guard performance claim.
+
+Validation: focused Pass 11 Python tests passed 25/25; default and guarded
+Release CTest each passed 1/1; the all-variant Release campaign compiled and
+ran all 72 cases. The existing O0 teacher gate remains closed: this is
+synthetic diagnostic input, and no FSR4-vs-reference quality claim follows.
+Machine-readable evidence is in
+`artifacts/results/fsr4-pass11-guard/`; raw scratch captures remain ignored in
+`build/pass11-guard-campaign/`. Source geometry, exact collision, command,
+and interpretation details are in `docs/PASS11_BOUNDS_ROOTCAUSE.md`.

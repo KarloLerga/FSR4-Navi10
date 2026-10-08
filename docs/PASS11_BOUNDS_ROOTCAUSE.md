@@ -51,14 +51,18 @@ The second writer is outside the **logical output tensor**, but inside
 allocated scratch memory because the out-of-range X is linearized. This is a
 specific within-dispatch **write/write collision**, not just reading random
 uninitialized bytes. A barrier between dispatches cannot order threads
-writing the same address inside a dispatch. The root-cause claim is
-**high-confidence based on source/geometry/capture correlation**, but **not
-GPU-confirmed** until guarded runs execute on RX 5700 XT.
+writing the same address inside a dispatch. The source/geometry/capture
+correlation is now supported by the RX 5700 XT campaign: baseline variation
+maps into the predicted alias region, and adding only logical bounds checks
+restores scratch and full-run repeatability in both guarded arithmetic modes.
+This is GPU evidence for the bounds-race hypothesis, while O0 parity and
+quality remain separate gates.
 
-The observed per-row changed byte counts frequently cluster near 400-900,
-within the 64-pixel x 16-byte = 1,024-byte predicted overlap window.
+The baseline observed per-row changed byte counts frequently cluster near
+400-900, within the 64-pixel x 16-byte = 1,024-byte predicted overlap window.
 `tools/diagnostics/analyze_pass11_alias.py` quantifies the overlap against
-raw snapshots rather than merely asserting it.
+raw snapshots rather than merely asserting it. In the completed RX 5700 XT
+campaign every baseline mismatch mapped wholly into this predicted alias zone.
 
 ## Minimal, semantically justified source fix
 
@@ -91,12 +95,13 @@ guarded operator file, preventing resolution to the same-named upstream file.
 The compiler records and checks the actual Pass 11 operator dependency before
 accepting a build. The CMake flag defaults to `OFF`.
 
-## Why 84 successful process exits are not a correctness check
+## Why successful process exits are not a correctness check
 
 The GPU may happily read/write a *valid resource address* that corresponds
 to an invalid **tensor coordinate**, so the D3D12 driver need not fault.
-The old 84/84 diagnostic run count shows robust process execution, but not
-correct geometry or model parameter parity.
+The earlier 84/84 diagnostic run count showed robust process execution, but
+not correct geometry or model parameter parity. The bounds campaign adds
+scratch, frame-hash, and alias-map evidence described below.
 
 ## Campaign and pass/fail discrimination
 
@@ -147,10 +152,39 @@ PRE history/recurrent and next-frame state using **validated guard build**.
 - The patcher does not change a user-owned checkout of FidelityFX sources.
 - Debug build trees and large captures remain ignored beneath `build/`.
 
-## Limitations
+## Measured RX 5700 XT result (2026-10-08)
 
-This bundle has no Windows GPU to validate D3D12 execution here. The upstream
-reference copy was inspected on GitHub; its current branch might differ from
-the user's pinned exact source, hence strict fail-closed source checks. A
-fully correct FSR4 adapter for games, quality vs AMD reference, native FP16
-optimizations and O1-O13 remain separate future engineering stages.
+The baseline scalar, guarded scalar, and guarded intrinsic Release builds all
+compiled from pinned FidelityFX source commit
+`01446e6a74888bf349652fcf2cbf5f642d30c2bf`. A dependency-file check proved
+that guarded Pass 11 compiled the build-local operator, while the baseline
+resolved the upstream operator. The Pass 11 content-addressed payload
+changed. Selector-header hashes/order also changed for Pass 0, Pass 13, and
+RCAS, but those three selectors retained the same payload digest sets; the
+other 27 payload sets were unchanged. The separate ordinary Release
+configuration retains `FSR4N10_PASS11_BOUNDS_GUARD=OFF`.
+
+The campaign ran 24 cases per variant: zero/A5 scratch initialization,
+pass-10/11/12/full prefixes, and three fresh processes. All 72 processes
+completed on the RX 5700 XT with matching sequence/input provenance. Baseline
+Pass 10 snapshots repeated, then Pass 11 was the first divergent prefix.
+Across the eight baseline alias comparisons, every changed byte was in the
+predicted output spill area; the first changed address in the ordinary A5
+repeat comparison was byte `13,240,320`, the source-derived row-52 collision
+above. The guarded scalar and intrinsic builds had no differing bytes in
+their scratch comparisons, and each was repeatable across full runs, exact
+between instrumented and ordinary output, and invariant to the zero/A5 seed.
+The exact machine-readable cases, alias maps, selector diff, and evaluation
+are retained in `artifacts/results/fsr4-pass11-guard/`.
+
+Each guarded arithmetic mode is internally repeatable, but scalar and
+intrinsic outputs are not bit-identical to each other: their prefix-10
+scratch and all eight full-run RGB frame hashes differ. This campaign did not
+establish cross-mode numeric equivalence or quality. The existing O0 teacher
+gate remains false, the input is procedural synthetic content, and neither
+this fix nor its performance measurements make FSR4 ready for game use.
+
+The source matcher and compiler guard remain fail-closed against unexpected
+upstream changes. The pinned AMD checkout is unmodified. Native FP16
+optimizations, full game integration, quality versus AMD reference, and
+O1-O13 remain separate engineering gates.

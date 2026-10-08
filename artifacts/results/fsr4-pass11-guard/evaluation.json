@@ -1,0 +1,204 @@
+{
+  "baseline": {
+    "candidate_fixed": false,
+    "case_count": 24,
+    "complete_coverage": true,
+    "cross_seed_full_rgb_equal": false,
+    "expected_guard": false,
+    "failed_cases": [],
+    "full_rgb": {
+      "a5": {
+        "complete": true,
+        "frame_count": 8,
+        "input_hashes_repeatable": true,
+        "instrumented_matches_ordinary_exact": false,
+        "instrumented_repeatable": false,
+        "ordinary_repeatable": false
+      },
+      "zero": {
+        "complete": true,
+        "frame_count": 8,
+        "input_hashes_repeatable": true,
+        "instrumented_matches_ordinary_exact": false,
+        "instrumented_repeatable": false,
+        "ordinary_repeatable": false
+      }
+    },
+    "full_rgb_repeatability_and_exact_parity": false,
+    "input_hashes_aligned": true,
+    "pass11_scratch_repeatable": false,
+    "run_failures": 0,
+    "scratch": {
+      "a5/full": {
+        "instrumented": false,
+        "ordinary": false
+      },
+      "a5/pass_10": {
+        "instrumented": true,
+        "ordinary": true
+      },
+      "a5/pass_11": {
+        "instrumented": false,
+        "ordinary": false
+      },
+      "a5/pass_12": {
+        "instrumented": false,
+        "ordinary": false
+      },
+      "zero/full": {
+        "instrumented": false,
+        "ordinary": false
+      },
+      "zero/pass_10": {
+        "instrumented": true,
+        "ordinary": true
+      },
+      "zero/pass_11": {
+        "instrumented": false,
+        "ordinary": false
+      },
+      "zero/pass_12": {
+        "instrumented": false,
+        "ordinary": false
+      }
+    },
+    "variant": "baseline_scalar"
+  },
+  "guard_intrinsic": {
+    "candidate_fixed": true,
+    "case_count": 24,
+    "complete_coverage": true,
+    "cross_seed_full_rgb_equal": true,
+    "expected_guard": true,
+    "failed_cases": [],
+    "full_rgb": {
+      "a5": {
+        "complete": true,
+        "frame_count": 8,
+        "input_hashes_repeatable": true,
+        "instrumented_matches_ordinary_exact": true,
+        "instrumented_repeatable": true,
+        "ordinary_repeatable": true
+      },
+      "zero": {
+        "complete": true,
+        "frame_count": 8,
+        "input_hashes_repeatable": true,
+        "instrumented_matches_ordinary_exact": true,
+        "instrumented_repeatable": true,
+        "ordinary_repeatable": true
+      }
+    },
+    "full_rgb_repeatability_and_exact_parity": true,
+    "input_hashes_aligned": true,
+    "pass11_scratch_repeatable": true,
+    "run_failures": 0,
+    "scratch": {
+      "a5/full": {
+        "instrumented": true,
+        "ordinary": true
+      },
+      "a5/pass_10": {
+        "instrumented": true,
+        "ordinary": true
+      },
+      "a5/pass_11": {
+        "instrumented": true,
+        "ordinary": true
+      },
+      "a5/pass_12": {
+        "instrumented": true,
+        "ordinary": true
+      },
+      "zero/full": {
+        "instrumented": true,
+        "ordinary": true
+      },
+      "zero/pass_10": {
+        "instrumented": true,
+        "ordinary": true
+      },
+      "zero/pass_11": {
+        "instrumented": true,
+        "ordinary": true
+      },
+      "zero/pass_12": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    "variant": "guard_intrinsic"
+  },
+  "guard_scalar": {
+    "candidate_fixed": true,
+    "case_count": 24,
+    "complete_coverage": true,
+    "cross_seed_full_rgb_equal": true,
+    "expected_guard": true,
+    "failed_cases": [],
+    "full_rgb": {
+      "a5": {
+        "complete": true,
+        "frame_count": 8,
+        "input_hashes_repeatable": true,
+        "instrumented_matches_ordinary_exact": true,
+        "instrumented_repeatable": true,
+        "ordinary_repeatable": true
+      },
+      "zero": {
+        "complete": true,
+        "frame_count": 8,
+        "input_hashes_repeatable": true,
+        "instrumented_matches_ordinary_exact": true,
+        "instrumented_repeatable": true,
+        "ordinary_repeatable": true
+      }
+    },
+    "full_rgb_repeatability_and_exact_parity": true,
+    "input_hashes_aligned": true,
+    "pass11_scratch_repeatable": true,
+    "run_failures": 0,
+    "scratch": {
+      "a5/full": {
+        "instrumented": true,
+        "ordinary": true
+      },
+      "a5/pass_10": {
+        "instrumented": true,
+        "ordinary": true
+      },
+      "a5/pass_11": {
+        "instrumented": true,
+        "ordinary": true
+      },
+      "a5/pass_12": {
+        "instrumented": true,
+        "ordinary": true
+      },
+      "zero/full": {
+        "instrumented": true,
+        "ordinary": true
+      },
+      "zero/pass_10": {
+        "instrumented": true,
+        "ordinary": true
+      },
+      "zero/pass_11": {
+        "instrumented": true,
+        "ordinary": true
+      },
+      "zero/pass_12": {
+        "instrumented": true,
+        "ordinary": true
+      }
+    },
+    "variant": "guard_scalar"
+  },
+  "input_provenance_aligned": true,
+  "next_steps": "If guarded builds stabilize: run existing unmodified O0 gates, build all modes/presets and investigate first-frame numeric deviations. If not: validate the compiled DXIL actually contains the guard, then inspect the pass-11 and POST boundaries and all RW resource OOB accesses.",
+  "o0_note": "Do not change the existing O0 gate. Re-run exact CPU/GPU POST, capture parity, reproducibility, finite arrays and real-scene audits.",
+  "o0_teacher_eligible": false,
+  "pass11_bounds_hypothesis_supported_by_gpu": true,
+  "pass11_local_scratch_nondeterminism_resolved": true,
+  "schema": "f4n10.pass11-bounds-evaluation.v1"
+}

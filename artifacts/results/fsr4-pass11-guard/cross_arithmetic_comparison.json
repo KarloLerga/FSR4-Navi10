@@ -1,0 +1,79 @@
+{
+  "comparisons": [
+    {
+      "rgb_equal_frames": 0,
+      "rgb_frames": 8,
+      "scratch_bytes": 20880256,
+      "scratch_different_bytes": 20716387,
+      "scratch_first_different_byte": 0,
+      "seed": "zero",
+      "stage": "pass_10"
+    },
+    {
+      "rgb_equal_frames": 0,
+      "rgb_frames": 8,
+      "scratch_bytes": 20880256,
+      "scratch_different_bytes": 20736000,
+      "scratch_first_different_byte": 0,
+      "seed": "zero",
+      "stage": "pass_11"
+    },
+    {
+      "rgb_equal_frames": 0,
+      "rgb_frames": 8,
+      "scratch_bytes": 20880256,
+      "scratch_different_bytes": 20736000,
+      "scratch_first_different_byte": 0,
+      "seed": "zero",
+      "stage": "pass_12"
+    },
+    {
+      "rgb_equal_frames": 0,
+      "rgb_frames": 8,
+      "scratch_bytes": 20880256,
+      "scratch_different_bytes": 20736000,
+      "scratch_first_different_byte": 0,
+      "seed": "zero",
+      "stage": "full"
+    },
+    {
+      "rgb_equal_frames": 0,
+      "rgb_frames": 8,
+      "scratch_bytes": 20880256,
+      "scratch_different_bytes": 20716387,
+      "scratch_first_different_byte": 0,
+      "seed": "a5",
+      "stage": "pass_10"
+    },
+    {
+      "rgb_equal_frames": 0,
+      "rgb_frames": 8,
+      "scratch_bytes": 20880256,
+      "scratch_different_bytes": 20736000,
+      "scratch_first_different_byte": 0,
+      "seed": "a5",
+      "stage": "pass_11"
+    },
+    {
+      "rgb_equal_frames": 0,
+      "rgb_frames": 8,
+      "scratch_bytes": 20880256,
+      "scratch_different_bytes": 20736000,
+      "scratch_first_different_byte": 0,
+      "seed": "a5",
+      "stage": "pass_12"
+    },
+    {
+      "rgb_equal_frames": 0,
+      "rgb_frames": 8,
+      "scratch_bytes": 20880256,
+      "scratch_different_bytes": 20736000,
+      "scratch_first_different_byte": 0,
+      "seed": "a5",
+      "stage": "full"
+    }
+  ],
+  "interpretation": "Each arithmetic mode is internally repeatable according to evaluation.json, but cross-mode scratch and RGB are not bit-identical. The bounds experiment therefore does not establish arithmetic equivalence.",
+  "schema": "f4n10.pass11-cross-arithmetic-comparison.v1",
+  "scope": "guard_scalar versus guard_intrinsic; same input sequence, seed and repeat 1"
+}

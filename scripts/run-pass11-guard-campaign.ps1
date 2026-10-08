@@ -47,7 +47,7 @@ foreach ($variant in $variants) {
     --baseline (Join-Path $Output 'build-baseline_scalar\teacher\provider_i8_native_1080\manifest.json') `
     --guard (Join-Path $Output 'build-guard_scalar\teacher\provider_i8_native_1080\manifest.json') `
     --output (Join-Path $Output 'compiled_shader_diff.json')
-if ($LASTEXITCODE -ne 0) { throw 'Compiled pass11 shader unchanged; include override invalid' }
+if ($LASTEXITCODE -ne 0) { throw 'Compiled Pass 11 artifact/include verification failed; GPU campaign was not run' }
 
 foreach ($variant in $variants) {
     $name = $variant.Name

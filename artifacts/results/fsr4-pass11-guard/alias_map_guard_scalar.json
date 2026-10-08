@@ -1,0 +1,190 @@
+{
+  "comparisons": [
+    {
+      "alias_examples": [],
+      "candidate_alias_zone_bytes": 0,
+      "changed_bytes": 0,
+      "comparison": "ordinary_repeat1_vs_repeat2",
+      "files": [
+        "frame_0_pass_11_ordinary.bin",
+        "frame_0_pass_11_ordinary.bin"
+      ],
+      "first_changed_offset": null,
+      "fraction_in_alias_zone": 0,
+      "inside_pass11_output": 0,
+      "outside_pass11_output": 0,
+      "same_bytes": true,
+      "seed": "a5",
+      "top_alias_rows": []
+    },
+    {
+      "alias_examples": [],
+      "candidate_alias_zone_bytes": 0,
+      "changed_bytes": 0,
+      "comparison": "instrumented_repeat1_vs_repeat2",
+      "files": [
+        "frame_0_pass_11_instrumented.bin",
+        "frame_0_pass_11_instrumented.bin"
+      ],
+      "first_changed_offset": null,
+      "fraction_in_alias_zone": 0,
+      "inside_pass11_output": 0,
+      "outside_pass11_output": 0,
+      "same_bytes": true,
+      "seed": "a5",
+      "top_alias_rows": []
+    },
+    {
+      "alias_examples": [],
+      "candidate_alias_zone_bytes": 0,
+      "changed_bytes": 0,
+      "comparison": "ordinary_vs_instrumented_repeat1",
+      "files": [
+        "frame_0_pass_11_ordinary.bin",
+        "frame_0_pass_11_instrumented.bin"
+      ],
+      "first_changed_offset": null,
+      "fraction_in_alias_zone": 0,
+      "inside_pass11_output": 0,
+      "outside_pass11_output": 0,
+      "same_bytes": true,
+      "seed": "a5",
+      "top_alias_rows": []
+    },
+    {
+      "alias_examples": [],
+      "candidate_alias_zone_bytes": 0,
+      "changed_bytes": 0,
+      "comparison": "ordinary_vs_instrumented_repeat2",
+      "files": [
+        "frame_0_pass_11_ordinary.bin",
+        "frame_0_pass_11_instrumented.bin"
+      ],
+      "first_changed_offset": null,
+      "fraction_in_alias_zone": 0,
+      "inside_pass11_output": 0,
+      "outside_pass11_output": 0,
+      "same_bytes": true,
+      "seed": "a5",
+      "top_alias_rows": []
+    },
+    {
+      "alias_examples": [],
+      "candidate_alias_zone_bytes": 0,
+      "changed_bytes": 0,
+      "comparison": "ordinary_repeat1_vs_repeat2",
+      "files": [
+        "frame_0_pass_11_ordinary.bin",
+        "frame_0_pass_11_ordinary.bin"
+      ],
+      "first_changed_offset": null,
+      "fraction_in_alias_zone": 0,
+      "inside_pass11_output": 0,
+      "outside_pass11_output": 0,
+      "same_bytes": true,
+      "seed": "zero",
+      "top_alias_rows": []
+    },
+    {
+      "alias_examples": [],
+      "candidate_alias_zone_bytes": 0,
+      "changed_bytes": 0,
+      "comparison": "instrumented_repeat1_vs_repeat2",
+      "files": [
+        "frame_0_pass_11_instrumented.bin",
+        "frame_0_pass_11_instrumented.bin"
+      ],
+      "first_changed_offset": null,
+      "fraction_in_alias_zone": 0,
+      "inside_pass11_output": 0,
+      "outside_pass11_output": 0,
+      "same_bytes": true,
+      "seed": "zero",
+      "top_alias_rows": []
+    },
+    {
+      "alias_examples": [],
+      "candidate_alias_zone_bytes": 0,
+      "changed_bytes": 0,
+      "comparison": "ordinary_vs_instrumented_repeat1",
+      "files": [
+        "frame_0_pass_11_ordinary.bin",
+        "frame_0_pass_11_instrumented.bin"
+      ],
+      "first_changed_offset": null,
+      "fraction_in_alias_zone": 0,
+      "inside_pass11_output": 0,
+      "outside_pass11_output": 0,
+      "same_bytes": true,
+      "seed": "zero",
+      "top_alias_rows": []
+    },
+    {
+      "alias_examples": [],
+      "candidate_alias_zone_bytes": 0,
+      "changed_bytes": 0,
+      "comparison": "ordinary_vs_instrumented_repeat2",
+      "files": [
+        "frame_0_pass_11_ordinary.bin",
+        "frame_0_pass_11_instrumented.bin"
+      ],
+      "first_changed_offset": null,
+      "fraction_in_alias_zone": 0,
+      "inside_pass11_output": 0,
+      "outside_pass11_output": 0,
+      "same_bytes": true,
+      "seed": "zero",
+      "top_alias_rows": []
+    }
+  ],
+  "geometry": {
+    "alias_pixels_at_next_row_start": 64,
+    "dispatch_groups_x": 8,
+    "input_height": 270,
+    "input_width": 480,
+    "invalid_threads_per_row": 32,
+    "launched_threads_x": 512,
+    "output_base": 12441600,
+    "output_channels": 16,
+    "output_end": 20736000,
+    "output_height": 540,
+    "output_stride": 15360,
+    "output_width": 960,
+    "row52_witness": {
+      "invalid_writer": {
+        "dispatch_thread_xy": [
+          480,
+          25
+        ],
+        "local_xy": [
+          0,
+          1
+        ],
+        "semantic_output_xy": [
+          960,
+          51
+        ]
+      },
+      "physical_output_row": 52,
+      "scratch_byte_offset": 13240320,
+      "valid_writer": {
+        "dispatch_thread_xy": [
+          0,
+          26
+        ],
+        "local_xy": [
+          0,
+          0
+        ],
+        "semantic_output_xy": [
+          0,
+          52
+        ]
+      }
+    },
+    "threads_per_group": 64
+  },
+  "interpretation": "Only a correlation with predicted alias locations; GPU root cause requires guarded shader proof.",
+  "raw_snapshot_files_committed": false,
+  "schema": "f4n10.pass11-physical-alias.v1"
+}

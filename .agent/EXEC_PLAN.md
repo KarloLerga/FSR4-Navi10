@@ -427,9 +427,13 @@ Integrate a build-local, default-OFF bounds guard for the pinned FSR 4.0.2 Nativ
 | P11-3 | Run zero/A5 scratch, pass 10/11/12/full, three fresh-process repeats on RX 5700 XT; inspect alias and full-frame reports. | Review all 72 case records, snapshots, hashes, alias-zone evidence, compiler diff, and `pass11_guard_evaluation.json`. |
 | P11-4 | Record exact outcomes and remaining gates. | Update `RESULTS.md`, `PROGRESS.md`, `docs/RACE_BISECTOR.md`, `artifacts/results/`, and this plan from observed output only. |
 
-### Current blocker
+### Validated outcome and remaining gate
 
-The source matcher was adapted to the two pinned `<32,1>` definitions and its tests prove the WMMA suffix remains byte-identical. The first three-configuration build then correctly stopped before GPU runs: the compiled Pass 11 header was unchanged, and FidelityFX_SC dependency output showed that a same-named `-I` override still resolved to the upstream operator. A build-local model copy now redirects only the Pass 11 include to a unique operator filename, and the compiler refuses a build unless the emitted dependency file resolves that exact overlay. A targeted guarded-scalar compile now records the overlay path/hash and emits a changed Pass 11 header. Remaining work is a fresh three-configuration build, full manifest comparison, CTest, and the 72-run GPU campaign.
+The source matcher was adapted to the two pinned `<32,1>` definitions and its tests prove the WMMA suffix remains byte-identical. The first compiled-artifact check caught that FidelityFX_SC still selected the upstream file despite a same-named `-I` override. A build-local model copy now redirects only the Pass 11 include to a unique operator filename, and the compiler verifies the emitted dependency path and hash. The accepted build changes the Pass 11 selector/blob while preserving source hashes. The compiler also reorders selector metadata for Pass 0, Pass 13, and RCAS, but their content-addressed payload digest sets are unchanged; the verifier reports selector hashes separately from actual payload changes.
+
+The fresh campaign compiled baseline scalar, guarded scalar, and guarded intrinsic Release variants and completed all 72 GPU cases on the RX 5700 XT. Baseline reproduced Pass 11 scratch variation; both guarded modes had stable scratch, exact instrumented/ordinary agreement, repeatable full RGB, and equal full RGB across zero/A5 scratch initialization. Every observed baseline Pass 11 scratch mismatch mapped into the predicted 64-pixel row-overlap alias region. This supports the bounds-race hypothesis on the GPU; it does not pass O0.
+
+The guarded scalar and guarded intrinsic arithmetic modes differ from each other: their captured scratch differs at prefix 10 and their eight final RGB frame hashes are not equal. Each is repeatable independently. Cross-arithmetic numerical parity is a separate open check and no parity claim is made. The default build keeps `FSR4N10_PASS11_BOUNDS_GUARD=OFF`; O0 remains closed pending the existing capture parity, numeric validity, and representative-content gates.
 
 ### Decision log
 
@@ -446,12 +450,15 @@ The source matcher was adapted to the two pinned `<32,1>` definitions and its te
 - [x] Inspect current pass-11 model/provider geometry and the two operator implementations.
 - [x] Run installer check; it rejected the inaccurate one-specialization assumption before modifying the repo.
 - [x] Implement the precise non-WMMA-only overlay and integration; include every applicable runtime test but keep installer-only tests out of the repo.
-- [x] Run focused Python tests (23/23 passed in the repository; the extracted bundle installer suite passed 25/25 before installation).
+- [x] Run focused Python tests (25/25 passed in the repository; the extracted bundle installer suite passed 25/25 before installation).
 - [x] Confirm the guarded scalar dependency resolves to the unique overlay and its Pass 11 header differs from the pre-fix guarded build.
-- [ ] Rebuild all three configurations, run the OFF-default CTest/build checks, and compare baseline/guard artifacts from the same compiler revision.
-- [ ] Run the GPU campaign if sequence/tooling is present; otherwise record the specific blocker.
-- [ ] Update result/progress reports, review diff, commit and push the private branch.
+- [x] Rebuild all three configurations and compare baseline/guard artifacts from the same compiler revision; verify a separate default-OFF Release build and CTest.
+- [x] Run all 72 GPU campaign cases on RX 5700 XT and inspect every case, scratch alias map, frame hash, shader diff, and evaluation report.
+- [x] Record compact JSON evidence, update result/progress reports, and review the final diff.
+- [ ] Commit and push the private branch; do not merge to `main` while O0 remains closed.
 
 ### Measured results
 
-ZIP integrity passed (20/20 entries). The baseline source is at the archive's exact target commit. Focused repo tests pass 23/23; bundle installer tests passed 25/25 before installation. All three first-pass CMake builds succeeded, but the compiled-artifact gate caught that guard was not included and stopped before GPU runs. After redirecting Pass 11 to the unique overlay, the targeted guarded-scalar provider compile passed; its dependency hash matched the overlay hash `3720BAC4CBE7D608870C83A8661403AE6D97DF0688B431AC7187A26B9BDEBD48`, and the Pass 11 header changed from `31d66f685995a15601c58490fe3825f586386df79d6ce6d85fd7d4ddae4923ca` to `2c4bc8754e0179c54469e9040fe618333d34900408864954bd38362a73728243`. These are inclusion/build checks only, not GPU race or O0 results; a fresh full build/campaign remains pending.
+ZIP integrity passed (20/20 entries), and the baseline source matches the archive target commit. Focused repo tests passed 25/25; the reviewed bundle installer suite passed 25/25 before installation. All three Release variants compiled, and a separate default Release build confirmed `FSR4N10_PASS11_BOUNDS_GUARD=OFF`; default and guarded CTest each passed 1/1. The guarded dependency resolved to build-local operator hash `3720BAC4CBE7D608870C83A8661403AE6D97DF0688B431AC7187A26B9BDEBD48`; the Pass 11 payload changed from blob `6c83bfdbb6b2f454411618b3661515d8.h` to `04d677d3499db8807a950c572a3a1ad7.h`, with upstream source hashes equal. Selector hashes also changed for Pass 0, Pass 13, and RCAS, but their content-addressed payload digest sets were unchanged; the verifier keeps these metadata/order changes separate from changed shader payloads.
+
+The 72/72 RX 5700 XT cases completed without run failures (24 per variant) on synthetic eight-frame sequence `a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2`. Baseline scratch repeatability failed first at Pass 11; all eight baseline alias comparisons had changes fully within the predicted overlap region. Guarded scalar and intrinsic each restored Pass 11 scratch stability and full-run repeatability, including instrumented/ordinary equality and zero/A5 cross-seed RGB equality. Scalar and intrinsic results are not bit-identical across modes (zero final RGB frame hashes equal); treat arithmetic equivalence as open. The O0 teacher gate remains false. Compact reports are in `artifacts/results/fsr4-pass11-guard/`; large raw scratch files remain ignored under `build/pass11-guard-campaign/`.

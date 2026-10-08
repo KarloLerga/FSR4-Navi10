@@ -1,0 +1,502 @@
+{
+  "cases": [
+    {
+      "audit_status": "parsed",
+      "input": [
+        480,
+        270,
+        32
+      ],
+      "non_wmma_overhang_threads_per_row": 32,
+      "numthreads": [
+        64,
+        1,
+        1
+      ],
+      "operator_32_1": true,
+      "output": [
+        960,
+        540,
+        16
+      ],
+      "predicted_next_row_alias_pixels": 64,
+      "preset": "native",
+      "requires_bounds_guard_or_corrected_dispatch": true,
+      "resolution_tier": "1080",
+      "sha256": "e9a217349527a584cea67c6277fa092524aa638e8017e808e7a89e172e462157",
+      "source": "third_party/fidelityfx-fsr4-source/Kits/FidelityFX/upscalers/fsr4/internal/shaders/fsr4_model_v07_i8_native/passes_1080.hlsl",
+      "source_only": true
+    },
+    {
+      "audit_status": "parsed",
+      "input": [
+        960,
+        540,
+        32
+      ],
+      "non_wmma_overhang_threads_per_row": 0,
+      "numthreads": [
+        64,
+        1,
+        1
+      ],
+      "operator_32_1": true,
+      "output": [
+        1920,
+        1080,
+        16
+      ],
+      "predicted_next_row_alias_pixels": 0,
+      "preset": "native",
+      "requires_bounds_guard_or_corrected_dispatch": false,
+      "resolution_tier": "2160",
+      "sha256": "f68213f93330287ae411402e8e4483804fe694b22d84eebd5b95d8b9c175cbfc",
+      "source": "third_party/fidelityfx-fsr4-source/Kits/FidelityFX/upscalers/fsr4/internal/shaders/fsr4_model_v07_i8_native/passes_2160.hlsl",
+      "source_only": true
+    },
+    {
+      "audit_status": "parsed",
+      "input": [
+        1920,
+        1080,
+        32
+      ],
+      "non_wmma_overhang_threads_per_row": 0,
+      "numthreads": [
+        64,
+        1,
+        1
+      ],
+      "operator_32_1": true,
+      "output": [
+        3840,
+        2160,
+        16
+      ],
+      "predicted_next_row_alias_pixels": 0,
+      "preset": "native",
+      "requires_bounds_guard_or_corrected_dispatch": false,
+      "resolution_tier": "4320",
+      "sha256": "d61d2a610031e57e873a93a8f612cdbead6d7dec2c6c74667162a63ae592b75a",
+      "source": "third_party/fidelityfx-fsr4-source/Kits/FidelityFX/upscalers/fsr4/internal/shaders/fsr4_model_v07_i8_native/passes_4320.hlsl",
+      "source_only": true
+    },
+    {
+      "audit_status": "parsed",
+      "input": [
+        480,
+        270,
+        32
+      ],
+      "non_wmma_overhang_threads_per_row": 32,
+      "numthreads": [
+        64,
+        1,
+        1
+      ],
+      "operator_32_1": true,
+      "output": [
+        960,
+        540,
+        16
+      ],
+      "predicted_next_row_alias_pixels": 64,
+      "preset": "quality",
+      "requires_bounds_guard_or_corrected_dispatch": true,
+      "resolution_tier": "1080",
+      "sha256": "ab6762596c4439b759557a048d9b13a907baab99c9bab57cd13c416935e99bac",
+      "source": "third_party/fidelityfx-fsr4-source/Kits/FidelityFX/upscalers/fsr4/internal/shaders/fsr4_model_v07_i8_quality/passes_1080.hlsl",
+      "source_only": true
+    },
+    {
+      "audit_status": "parsed",
+      "input": [
+        960,
+        540,
+        32
+      ],
+      "non_wmma_overhang_threads_per_row": 0,
+      "numthreads": [
+        64,
+        1,
+        1
+      ],
+      "operator_32_1": true,
+      "output": [
+        1920,
+        1080,
+        16
+      ],
+      "predicted_next_row_alias_pixels": 0,
+      "preset": "quality",
+      "requires_bounds_guard_or_corrected_dispatch": false,
+      "resolution_tier": "2160",
+      "sha256": "cf6aa141078f597381936643cf70ec0b65ed28f2a1d69ab9c4bb52f816758e69",
+      "source": "third_party/fidelityfx-fsr4-source/Kits/FidelityFX/upscalers/fsr4/internal/shaders/fsr4_model_v07_i8_quality/passes_2160.hlsl",
+      "source_only": true
+    },
+    {
+      "audit_status": "parsed",
+      "input": [
+        1920,
+        1080,
+        32
+      ],
+      "non_wmma_overhang_threads_per_row": 0,
+      "numthreads": [
+        64,
+        1,
+        1
+      ],
+      "operator_32_1": true,
+      "output": [
+        3840,
+        2160,
+        16
+      ],
+      "predicted_next_row_alias_pixels": 0,
+      "preset": "quality",
+      "requires_bounds_guard_or_corrected_dispatch": false,
+      "resolution_tier": "4320",
+      "sha256": "4f841d6231b7b6263d95bb75ade7f739cc329d68cdfe8bed28ae3757280aca21",
+      "source": "third_party/fidelityfx-fsr4-source/Kits/FidelityFX/upscalers/fsr4/internal/shaders/fsr4_model_v07_i8_quality/passes_4320.hlsl",
+      "source_only": true
+    },
+    {
+      "audit_status": "parsed",
+      "input": [
+        480,
+        270,
+        32
+      ],
+      "non_wmma_overhang_threads_per_row": 32,
+      "numthreads": [
+        64,
+        1,
+        1
+      ],
+      "operator_32_1": true,
+      "output": [
+        960,
+        540,
+        16
+      ],
+      "predicted_next_row_alias_pixels": 64,
+      "preset": "balanced",
+      "requires_bounds_guard_or_corrected_dispatch": true,
+      "resolution_tier": "1080",
+      "sha256": "728a565788fec81790011c2f42eec804e9169cc475a6d1604312630c90403132",
+      "source": "third_party/fidelityfx-fsr4-source/Kits/FidelityFX/upscalers/fsr4/internal/shaders/fsr4_model_v07_i8_balanced/passes_1080.hlsl",
+      "source_only": true
+    },
+    {
+      "audit_status": "parsed",
+      "input": [
+        960,
+        540,
+        32
+      ],
+      "non_wmma_overhang_threads_per_row": 0,
+      "numthreads": [
+        64,
+        1,
+        1
+      ],
+      "operator_32_1": true,
+      "output": [
+        1920,
+        1080,
+        16
+      ],
+      "predicted_next_row_alias_pixels": 0,
+      "preset": "balanced",
+      "requires_bounds_guard_or_corrected_dispatch": false,
+      "resolution_tier": "2160",
+      "sha256": "d074b2ac5ecca032ef8d38bd8e2f6b1f01440d4a6fde7c341013804480c7c6b4",
+      "source": "third_party/fidelityfx-fsr4-source/Kits/FidelityFX/upscalers/fsr4/internal/shaders/fsr4_model_v07_i8_balanced/passes_2160.hlsl",
+      "source_only": true
+    },
+    {
+      "audit_status": "parsed",
+      "input": [
+        1920,
+        1080,
+        32
+      ],
+      "non_wmma_overhang_threads_per_row": 0,
+      "numthreads": [
+        64,
+        1,
+        1
+      ],
+      "operator_32_1": true,
+      "output": [
+        3840,
+        2160,
+        16
+      ],
+      "predicted_next_row_alias_pixels": 0,
+      "preset": "balanced",
+      "requires_bounds_guard_or_corrected_dispatch": false,
+      "resolution_tier": "4320",
+      "sha256": "ab26ed7cac5830e8cc6df122a4eb3040dc850998e80486eb713bd75e9c97ccba",
+      "source": "third_party/fidelityfx-fsr4-source/Kits/FidelityFX/upscalers/fsr4/internal/shaders/fsr4_model_v07_i8_balanced/passes_4320.hlsl",
+      "source_only": true
+    },
+    {
+      "audit_status": "parsed",
+      "input": [
+        480,
+        270,
+        32
+      ],
+      "non_wmma_overhang_threads_per_row": 32,
+      "numthreads": [
+        64,
+        1,
+        1
+      ],
+      "operator_32_1": true,
+      "output": [
+        960,
+        540,
+        16
+      ],
+      "predicted_next_row_alias_pixels": 64,
+      "preset": "performance",
+      "requires_bounds_guard_or_corrected_dispatch": true,
+      "resolution_tier": "1080",
+      "sha256": "58d5a7fbbd7408e28d1903095a8a9706e4c2c0dfc1dc977fe68ac9bf68b3207d",
+      "source": "third_party/fidelityfx-fsr4-source/Kits/FidelityFX/upscalers/fsr4/internal/shaders/fsr4_model_v07_i8_performance/passes_1080.hlsl",
+      "source_only": true
+    },
+    {
+      "audit_status": "parsed",
+      "input": [
+        960,
+        540,
+        32
+      ],
+      "non_wmma_overhang_threads_per_row": 0,
+      "numthreads": [
+        64,
+        1,
+        1
+      ],
+      "operator_32_1": true,
+      "output": [
+        1920,
+        1080,
+        16
+      ],
+      "predicted_next_row_alias_pixels": 0,
+      "preset": "performance",
+      "requires_bounds_guard_or_corrected_dispatch": false,
+      "resolution_tier": "2160",
+      "sha256": "22ead7ba883d3b7889011e2807e41eec33fc39c5339031d1fedbfb25120d7f3d",
+      "source": "third_party/fidelityfx-fsr4-source/Kits/FidelityFX/upscalers/fsr4/internal/shaders/fsr4_model_v07_i8_performance/passes_2160.hlsl",
+      "source_only": true
+    },
+    {
+      "audit_status": "parsed",
+      "input": [
+        1920,
+        1080,
+        32
+      ],
+      "non_wmma_overhang_threads_per_row": 0,
+      "numthreads": [
+        64,
+        1,
+        1
+      ],
+      "operator_32_1": true,
+      "output": [
+        3840,
+        2160,
+        16
+      ],
+      "predicted_next_row_alias_pixels": 0,
+      "preset": "performance",
+      "requires_bounds_guard_or_corrected_dispatch": false,
+      "resolution_tier": "4320",
+      "sha256": "93843f1718f81838280409e6d62abb8fe33fad9281f1e01369fd4b6264bcc679",
+      "source": "third_party/fidelityfx-fsr4-source/Kits/FidelityFX/upscalers/fsr4/internal/shaders/fsr4_model_v07_i8_performance/passes_4320.hlsl",
+      "source_only": true
+    },
+    {
+      "audit_status": "parsed",
+      "input": [
+        480,
+        270,
+        32
+      ],
+      "non_wmma_overhang_threads_per_row": 32,
+      "numthreads": [
+        64,
+        1,
+        1
+      ],
+      "operator_32_1": true,
+      "output": [
+        960,
+        540,
+        16
+      ],
+      "predicted_next_row_alias_pixels": 64,
+      "preset": "drs",
+      "requires_bounds_guard_or_corrected_dispatch": true,
+      "resolution_tier": "1080",
+      "sha256": "50402115616cfeb027a0e6322da4b405ccc79444e8b5d978b2c7ad13aa01595f",
+      "source": "third_party/fidelityfx-fsr4-source/Kits/FidelityFX/upscalers/fsr4/internal/shaders/fsr4_model_v07_i8_drs/passes_1080.hlsl",
+      "source_only": true
+    },
+    {
+      "audit_status": "parsed",
+      "input": [
+        960,
+        540,
+        32
+      ],
+      "non_wmma_overhang_threads_per_row": 0,
+      "numthreads": [
+        64,
+        1,
+        1
+      ],
+      "operator_32_1": true,
+      "output": [
+        1920,
+        1080,
+        16
+      ],
+      "predicted_next_row_alias_pixels": 0,
+      "preset": "drs",
+      "requires_bounds_guard_or_corrected_dispatch": false,
+      "resolution_tier": "2160",
+      "sha256": "cfbbd2693dbc870bca10133a0828cc468a197491f8cb716a33e6a58a7b2552d9",
+      "source": "third_party/fidelityfx-fsr4-source/Kits/FidelityFX/upscalers/fsr4/internal/shaders/fsr4_model_v07_i8_drs/passes_2160.hlsl",
+      "source_only": true
+    },
+    {
+      "audit_status": "parsed",
+      "input": [
+        1920,
+        1080,
+        32
+      ],
+      "non_wmma_overhang_threads_per_row": 0,
+      "numthreads": [
+        64,
+        1,
+        1
+      ],
+      "operator_32_1": true,
+      "output": [
+        3840,
+        2160,
+        16
+      ],
+      "predicted_next_row_alias_pixels": 0,
+      "preset": "drs",
+      "requires_bounds_guard_or_corrected_dispatch": false,
+      "resolution_tier": "4320",
+      "sha256": "02fec399a0b3aa4522f57570ee1b6e93da367558a6df80e6cc344b308ff7d855",
+      "source": "third_party/fidelityfx-fsr4-source/Kits/FidelityFX/upscalers/fsr4/internal/shaders/fsr4_model_v07_i8_drs/passes_4320.hlsl",
+      "source_only": true
+    },
+    {
+      "audit_status": "parsed",
+      "input": [
+        480,
+        270,
+        32
+      ],
+      "non_wmma_overhang_threads_per_row": 32,
+      "numthreads": [
+        64,
+        1,
+        1
+      ],
+      "operator_32_1": true,
+      "output": [
+        960,
+        540,
+        16
+      ],
+      "predicted_next_row_alias_pixels": 64,
+      "preset": "ultraperf",
+      "requires_bounds_guard_or_corrected_dispatch": true,
+      "resolution_tier": "1080",
+      "sha256": "a40663460a93c2a5e17346968c63ee7ca64e1cc3e771636e110ae9e0040dc56d",
+      "source": "third_party/fidelityfx-fsr4-source/Kits/FidelityFX/upscalers/fsr4/internal/shaders/fsr4_model_v07_i8_ultraperf/passes_1080.hlsl",
+      "source_only": true
+    },
+    {
+      "audit_status": "parsed",
+      "input": [
+        960,
+        540,
+        32
+      ],
+      "non_wmma_overhang_threads_per_row": 0,
+      "numthreads": [
+        64,
+        1,
+        1
+      ],
+      "operator_32_1": true,
+      "output": [
+        1920,
+        1080,
+        16
+      ],
+      "predicted_next_row_alias_pixels": 0,
+      "preset": "ultraperf",
+      "requires_bounds_guard_or_corrected_dispatch": false,
+      "resolution_tier": "2160",
+      "sha256": "dc1e4e3ab1ba164cb44d5b3d7e38f994353eee69484cfdebf49e834571c6581f",
+      "source": "third_party/fidelityfx-fsr4-source/Kits/FidelityFX/upscalers/fsr4/internal/shaders/fsr4_model_v07_i8_ultraperf/passes_2160.hlsl",
+      "source_only": true
+    },
+    {
+      "audit_status": "parsed",
+      "input": [
+        1920,
+        1080,
+        32
+      ],
+      "non_wmma_overhang_threads_per_row": 0,
+      "numthreads": [
+        64,
+        1,
+        1
+      ],
+      "operator_32_1": true,
+      "output": [
+        3840,
+        2160,
+        16
+      ],
+      "predicted_next_row_alias_pixels": 0,
+      "preset": "ultraperf",
+      "requires_bounds_guard_or_corrected_dispatch": false,
+      "resolution_tier": "4320",
+      "sha256": "c088ba7bcb7bc4d3006eacec3bc09578b054051d9cfcf974d6f2e7ab10469544",
+      "source": "third_party/fidelityfx-fsr4-source/Kits/FidelityFX/upscalers/fsr4/internal/shaders/fsr4_model_v07_i8_ultraperf/passes_4320.hlsl",
+      "source_only": true
+    }
+  ],
+  "caveat": "Source geometry only; compiler, model variant and actual device dispatch must be verified.",
+  "possible_overdispatch_hazard_cases": [
+    "native/1080",
+    "quality/1080",
+    "balanced/1080",
+    "performance/1080",
+    "drs/1080",
+    "ultraperf/1080"
+  ],
+  "provider_dispatch_rule": "ceil(second-encoder-width/64) groups X; second-encoder-height groups Y",
+  "schema": "f4n10.i8-pass11-coverage-audit.v1",
+  "unparsed_cases": []
+}

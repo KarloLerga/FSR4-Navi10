@@ -17,8 +17,10 @@ class ShaderManifestDiffTest(unittest.TestCase):
                 'diagnostic_modes': {'scalar_dot4': True, 'pass11_bounds_guard': guarded},
                 'pass11_operator_include': {'path': path, 'sha256': overlay_hash if guarded else operator_hash},
                 'capture_overlay_hashes_sha256': {'pass11_fnb_bounds_guard': overlay_hash} if guarded else {},
-                'outputs': [{'file': PASS11, 'sha256': 'b' if changed else 'a'},
-                            {'file': 'fsr4_model_v07_i8_native_1080_10_permutations.h', 'sha256': 'other'}]}
+                'outputs': [{'file': PASS11, 'sha256': 'selector-guard' if changed else 'selector-base'},
+                            {'file': 'fsr4_model_v07_i8_native_1080_10_permutations.h', 'sha256': 'other'},
+                            {'file': 'fsr4_model_v07_i8_native_1080_11_1234567890abcdef1234567890abcdef.h',
+                             'sha256': 'guard-payload' if changed else 'base-payload', 'size_bytes': 128}]}
 
     def test_compiled_pass11_must_change(self):
         self.assertTrue(check_manifests(self.make(), self.make(True, True))['pass11_compiled_artifact_changed'])
@@ -29,6 +31,37 @@ class ShaderManifestDiffTest(unittest.TestCase):
         changed['source_hashes_sha256']['model'] = 'bad'
         with self.assertRaises(ValueError):
             check_manifests(self.make(), changed)
+
+    def test_selector_reordering_does_not_masquerade_as_payload_change(self):
+        baseline = self.make()
+        guarded = self.make(True, False)
+        name = 'fsr4_model_v07_i8_native_0_permutations.h'
+        baseline['outputs'].append({'file': name, 'sha256': 'selector-order-a'})
+        guarded['outputs'].append({'file': name, 'sha256': 'selector-order-b'})
+        for suffix, digest in [('11111111111111111111111111111111', 'payload-a'),
+                               ('22222222222222222222222222222222', 'payload-b')]:
+            output = {'file': f'fsr4_model_v07_i8_native_0_{suffix}.h',
+                      'sha256': digest, 'size_bytes': 64}
+            baseline['outputs'].append(output.copy())
+            guarded['outputs'].append(output.copy())
+        result = check_manifests(baseline, guarded)
+        self.assertFalse(result['pass11_compiled_artifact_changed'])
+        self.assertEqual(result['changed_shader_payloads'], [])
+        self.assertEqual(result['selector_header_hash_changed_with_same_payload_set'], [name])
+
+    def test_non_pass11_payload_change_is_reported_separately(self):
+        baseline = self.make()
+        guarded = self.make(True, True)
+        selector = 'fsr4_model_v07_i8_native_0_permutations.h'
+        baseline['outputs'].append({'file': selector, 'sha256': 'selector-base'})
+        guarded['outputs'].append({'file': selector, 'sha256': 'selector-guard'})
+        name = 'fsr4_model_v07_i8_native_0_33333333333333333333333333333333.h'
+        baseline['outputs'].append({'file': name, 'sha256': 'payload-a', 'size_bytes': 64})
+        guarded['outputs'].append({'file': name, 'sha256': 'payload-b', 'size_bytes': 64})
+        result = check_manifests(baseline, guarded)
+        self.assertTrue(result['pass11_compiled_artifact_changed'])
+        self.assertEqual(result['changed_shader_payloads'], [
+            'fsr4_model_v07_i8_native_0_permutations.h', PASS11])
 
     def test_guarded_operator_dependency_must_be_overlay(self):
         changed = self.make(True, True)

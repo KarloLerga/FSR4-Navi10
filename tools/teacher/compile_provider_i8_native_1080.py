@@ -344,6 +344,12 @@ def compile_provider_set(
             raise FileNotFoundError(f"pinned FSR4 provider source is missing: {path}")
 
     output_dir.mkdir(parents=True, exist_ok=True)
+    # FidelityFX_SC names per-permutation headers from shader content. Remove
+    # stale generated headers/dependencies so a changed permutation cannot
+    # leave an obsolete blob in the manifest or C++ include search.
+    for stale in output_dir.iterdir():
+        if stale.is_file() and stale.suffix.lower() in {".h", ".d"}:
+            stale.unlink()
     capture_overlay_dir, capture_overlays = create_capture_shader_overlays(
         fsr4_root, output_dir, scalar_dot4=scalar_dot4, stable_post_math=stable_post_math
     )

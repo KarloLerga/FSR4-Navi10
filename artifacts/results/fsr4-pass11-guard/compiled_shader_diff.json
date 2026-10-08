@@ -1,0 +1,32 @@
+{
+  "schema": "f4n10.pass11-shader-manifest-diff.v1",
+  "pass11_header": "fsr4_model_v07_i8_native_1080_11_permutations.h",
+  "pass11_compiled_artifact_changed": true,
+  "baseline_resolved_upstream_operator": true,
+  "guard_resolved_overlay_operator": true,
+  "upstream_operator_hash": "72595BE6739DDA4000F3EBD7A0548474871DFEC51C3F70B46E6E51724579CE8D",
+  "guard_operator_hash": "3720BAC4CBE7D608870C83A8661403AE6D97DF0688B431AC7187A26B9BDEBD48",
+  "changed_shader_payloads": [
+    "fsr4_model_v07_i8_native_1080_11_permutations.h"
+  ],
+  "selector_header_hash_changed": [
+    "fsr4_model_v07_i8_native_0_permutations.h",
+    "fsr4_model_v07_i8_native_1080_11_permutations.h",
+    "fsr4_model_v07_i8_native_13_permutations.h",
+    "rcas_permutations.h"
+  ],
+  "selector_header_hash_changed_with_same_payload_set": [
+    "fsr4_model_v07_i8_native_0_permutations.h",
+    "fsr4_model_v07_i8_native_13_permutations.h",
+    "rcas_permutations.h"
+  ],
+  "unchanged_shader_payload_count": 30,
+  "content_addressed_blob_headers_added": [
+    "fsr4_model_v07_i8_native_1080_11_04d677d3499db8807a950c572a3a1ad7.h"
+  ],
+  "content_addressed_blob_headers_removed": [
+    "fsr4_model_v07_i8_native_1080_11_6c83bfdbb6b2f454411618b3661515d8.h"
+  ],
+  "source_hashes_equal": true,
+  "warning": "A changed Pass 11 payload and resolved overlay prove compilation selection, not numeric correctness or quality."
+}

@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from pathlib import Path
 
 PASS11 = 'fsr4_model_v07_i8_native_1080_11_permutations.h'
@@ -39,22 +40,52 @@ def check_manifests(original: dict, guarded: dict) -> dict:
     if (not overlay_hash or guarded_include.get('sha256') != overlay_hash or
             not guarded_path.lower().endswith(operator_suffix.lower())):
         raise ValueError('Guarded Pass 11 did not resolve the build-local FNB overlay')
-    left = {x['file']: x['sha256'] for x in original.get('outputs', [])}
-    right = {x['file']: x['sha256'] for x in guarded.get('outputs', [])}
-    if set(left) != set(right) or PASS11 not in left:
-        raise ValueError('Missing or differing shader files between builds')
-    changed = sorted(name for name in left if left[name] != right[name])
+    left_outputs = {x['file']: x for x in original.get('outputs', [])}
+    right_outputs = {x['file']: x for x in guarded.get('outputs', [])}
+    left = {name: output['sha256'] for name, output in left_outputs.items()}
+    right = {name: output['sha256'] for name, output in right_outputs.items()}
+    # FidelityFX_SC may reorder a selector's include list and permutation
+    # table without changing the content-addressed shader blob set. Compare
+    # the blobs by digest/size and report selector-header hashes separately.
+    stable_left = {name: digest for name, digest in left.items() if name.endswith('_permutations.h')}
+    stable_right = {name: digest for name, digest in right.items() if name.endswith('_permutations.h')}
+    if set(stable_left) != set(stable_right) or PASS11 not in stable_left:
+        raise ValueError('Missing or differing stable shader selector headers between builds')
+    def payloads(selector: str, outputs: dict) -> list[tuple[str, int | None]]:
+        stem = selector[:-len('_permutations.h')]
+        prefix = stem + '_'
+        blobs = []
+        for name, output in outputs.items():
+            suffix = name[len(prefix):-2] if name.startswith(prefix) and name.endswith('.h') else ''
+            if re.fullmatch(r'[0-9a-fA-F]{32}', suffix):
+                blobs.append((output['sha256'], output.get('size_bytes')))
+        return sorted(blobs)
+
+    changed_payloads = sorted(name for name in stable_left
+                              if payloads(name, left_outputs) != payloads(name, right_outputs))
+    selector_hash_changed = sorted(name for name in stable_left
+                                   if stable_left[name] != stable_right[name])
+    selector_hash_changed_same_payloads = sorted(
+        name for name in selector_hash_changed
+        if payloads(name, left_outputs) == payloads(name, right_outputs))
+    is_blob = lambda name: bool(re.search(r'_[0-9a-fA-F]{32}\.h$', name))
+    added_blob_headers = sorted(name for name in set(right) - set(left) if is_blob(name))
+    removed_blob_headers = sorted(name for name in set(left) - set(right) if is_blob(name))
     return {'schema': 'f4n10.pass11-shader-manifest-diff.v1',
             'pass11_header': PASS11,
-            'pass11_compiled_artifact_changed': PASS11 in changed,
+            'pass11_compiled_artifact_changed': PASS11 in changed_payloads,
             'baseline_resolved_upstream_operator': True,
             'guard_resolved_overlay_operator': True,
             'upstream_operator_hash': source_operator_hash,
             'guard_operator_hash': guarded_include['sha256'],
-            'changed_shader_headers': changed,
-            'unchanged_shader_header_count': len(left) - len(changed),
+            'changed_shader_payloads': changed_payloads,
+            'selector_header_hash_changed': selector_hash_changed,
+            'selector_header_hash_changed_with_same_payload_set': selector_hash_changed_same_payloads,
+            'unchanged_shader_payload_count': len(stable_left) - len(changed_payloads),
+            'content_addressed_blob_headers_added': added_blob_headers,
+            'content_addressed_blob_headers_removed': removed_blob_headers,
             'source_hashes_equal': True,
-            'warning': 'Different generated headers are necessary but not sufficient to prove the intended guard is present in DXIL.'}
+            'warning': 'A changed Pass 11 payload and resolved overlay prove compilation selection, not numeric correctness or quality.'}
 
 
 def main() -> int:

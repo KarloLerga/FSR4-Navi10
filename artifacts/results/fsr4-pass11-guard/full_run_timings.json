@@ -1,0 +1,125 @@
+{
+  "adapter": "AMD Radeon RX 5700 XT",
+  "driver_version": "32.0.21045.1000",
+  "schema": "f4n10.pass11-full-run-timings.v1",
+  "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+  "timings": [
+    {
+      "runs": [
+        {
+          "repeat": 1,
+          "seed": "zero",
+          "steady_state_mean_us": 19080
+        },
+        {
+          "repeat": 2,
+          "seed": "zero",
+          "steady_state_mean_us": 18749.9
+        },
+        {
+          "repeat": 3,
+          "seed": "zero",
+          "steady_state_mean_us": 18409.1
+        },
+        {
+          "repeat": 1,
+          "seed": "a5",
+          "steady_state_mean_us": 20062.2
+        },
+        {
+          "repeat": 2,
+          "seed": "a5",
+          "steady_state_mean_us": 19127.5
+        },
+        {
+          "repeat": 3,
+          "seed": "a5",
+          "steady_state_mean_us": 19263
+        }
+      ],
+      "scope": "D3D12 provider dispatch only; excludes upload/readback/CPU/packaging",
+      "steady_state_mean_us_max": 20062.2,
+      "steady_state_mean_us_median": 19103.75,
+      "steady_state_mean_us_min": 18409.1,
+      "variant": "baseline_scalar"
+    },
+    {
+      "runs": [
+        {
+          "repeat": 1,
+          "seed": "zero",
+          "steady_state_mean_us": 18609.7
+        },
+        {
+          "repeat": 2,
+          "seed": "zero",
+          "steady_state_mean_us": 18564.3
+        },
+        {
+          "repeat": 3,
+          "seed": "zero",
+          "steady_state_mean_us": 18344
+        },
+        {
+          "repeat": 1,
+          "seed": "a5",
+          "steady_state_mean_us": 18949.5
+        },
+        {
+          "repeat": 2,
+          "seed": "a5",
+          "steady_state_mean_us": 19631.2
+        },
+        {
+          "repeat": 3,
+          "seed": "a5",
+          "steady_state_mean_us": 18363.5
+        }
+      ],
+      "scope": "D3D12 provider dispatch only; excludes upload/readback/CPU/packaging",
+      "steady_state_mean_us_max": 19631.2,
+      "steady_state_mean_us_median": 18587.0,
+      "steady_state_mean_us_min": 18344.0,
+      "variant": "guard_scalar"
+    },
+    {
+      "runs": [
+        {
+          "repeat": 1,
+          "seed": "zero",
+          "steady_state_mean_us": 7858.07
+        },
+        {
+          "repeat": 2,
+          "seed": "zero",
+          "steady_state_mean_us": 7749.3
+        },
+        {
+          "repeat": 3,
+          "seed": "zero",
+          "steady_state_mean_us": 7720.92
+        },
+        {
+          "repeat": 1,
+          "seed": "a5",
+          "steady_state_mean_us": 7706.83
+        },
+        {
+          "repeat": 2,
+          "seed": "a5",
+          "steady_state_mean_us": 7787.34
+        },
+        {
+          "repeat": 3,
+          "seed": "a5",
+          "steady_state_mean_us": 7860.23
+        }
+      ],
+      "scope": "D3D12 provider dispatch only; excludes upload/readback/CPU/packaging",
+      "steady_state_mean_us_max": 7860.23,
+      "steady_state_mean_us_median": 7768.32,
+      "steady_state_mean_us_min": 7706.83,
+      "variant": "guard_intrinsic"
+    }
+  ]
+}
