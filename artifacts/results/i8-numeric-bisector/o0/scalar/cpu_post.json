@@ -1,0 +1,188 @@
+{
+  "captures": [
+    {
+      "capture": "C:\\src\\FSR4-Navi10\\build\\i8run\\guarded-o0\\audit-guard_scalar\\captures_a\\frame_0.f4cap",
+      "exact_half_match_fraction": 0.3151948302469136,
+      "exposure_value": 1.0,
+      "frame_index": 0,
+      "jitter_current": [
+        0.0,
+        -0.1666666716337204
+      ],
+      "max_absolute_error": 0.00048828125,
+      "mean_absolute_error": 0.00019266860908828676,
+      "nonfinite_replayed_model_pixels": 0,
+      "numerically_valid": true,
+      "output_size": [
+        1920,
+        1080
+      ],
+      "passed": true,
+      "profile": "pinned_fsr4_post_common_linear_rcas_off",
+      "provider_source_commit": "01446e6a74888bf349652fcf2cbf5f642d30c2bf",
+      "raw_exp_formula": true,
+      "raw_parameter_max_by_channel": [
+        1.1171875,
+        0.7451171875,
+        1.0234375,
+        -1.900390625
+      ],
+      "raw_parameter_min_by_channel": [
+        -0.6826171875,
+        -1.6171875,
+        -1.318359375,
+        -8.3203125
+      ],
+      "reference_finite": true,
+      "reference_zero_fraction": 0.0,
+      "render_size": [
+        1920,
+        1080
+      ],
+      "replay_finite": true,
+      "replay_zero_fraction": 0.0,
+      "rgb_within_tolerance": true,
+      "rms_error": 0.000268085888819769,
+      "scale": [
+        1.0,
+        1.0
+      ],
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "sequence_id": "procedural-mixed-17",
+      "shader_hashes": {
+        "provider_shader_manifest": "fcca094ff8450dd4a42fdf36db0b2d18c81e0dfb49f588e0b6b3840f2e0d2033"
+      },
+      "stable_equivalent_transforms": false,
+      "within_1e_3_fraction": 1.0
+    },
+    {
+      "capture": "C:\\src\\FSR4-Navi10\\build\\i8run\\guarded-o0\\audit-guard_scalar\\captures_a\\frame_4.f4cap",
+      "exact_half_match_fraction": 0.507637924382716,
+      "exposure_value": 1.25,
+      "frame_index": 4,
+      "jitter_current": [
+        0.125,
+        0.2777777910232544
+      ],
+      "max_absolute_error": 0.0009765625,
+      "mean_absolute_error": 0.000159744406118989,
+      "nonfinite_replayed_model_pixels": 0,
+      "numerically_valid": true,
+      "output_size": [
+        1920,
+        1080
+      ],
+      "passed": true,
+      "profile": "pinned_fsr4_post_common_linear_rcas_off",
+      "provider_source_commit": "01446e6a74888bf349652fcf2cbf5f642d30c2bf",
+      "raw_exp_formula": true,
+      "raw_parameter_max_by_channel": [
+        1.0771484375,
+        0.71484375,
+        0.94384765625,
+        -1.4326171875
+      ],
+      "raw_parameter_min_by_channel": [
+        -0.6669921875,
+        -1.5234375,
+        -1.2265625,
+        -8.3828125
+      ],
+      "reference_finite": true,
+      "reference_zero_fraction": 0.0,
+      "render_size": [
+        1920,
+        1080
+      ],
+      "replay_finite": true,
+      "replay_zero_fraction": 0.0,
+      "rgb_within_tolerance": true,
+      "rms_error": 0.0002752660948317498,
+      "scale": [
+        1.0,
+        1.0
+      ],
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "sequence_id": "procedural-mixed-17",
+      "shader_hashes": {
+        "provider_shader_manifest": "fcca094ff8450dd4a42fdf36db0b2d18c81e0dfb49f588e0b6b3840f2e0d2033"
+      },
+      "stable_equivalent_transforms": false,
+      "within_1e_3_fraction": 1.0
+    },
+    {
+      "capture": "C:\\src\\FSR4-Navi10\\build\\i8run\\guarded-o0\\audit-guard_scalar\\captures_a\\frame_7.f4cap",
+      "exact_half_match_fraction": 0.500031667952675,
+      "exposure_value": 1.0,
+      "frame_index": 7,
+      "jitter_current": [
+        -0.4375,
+        0.3888888955116272
+      ],
+      "max_absolute_error": 0.0009765625,
+      "mean_absolute_error": 0.00013966938422527164,
+      "nonfinite_replayed_model_pixels": 0,
+      "numerically_valid": true,
+      "output_size": [
+        1920,
+        1080
+      ],
+      "passed": true,
+      "profile": "pinned_fsr4_post_common_linear_rcas_off",
+      "provider_source_commit": "01446e6a74888bf349652fcf2cbf5f642d30c2bf",
+      "raw_exp_formula": true,
+      "raw_parameter_max_by_channel": [
+        0.90625,
+        1.845703125,
+        2.1640625,
+        7.89453125
+      ],
+      "raw_parameter_min_by_channel": [
+        -0.74072265625,
+        -1.78515625,
+        -2.025390625,
+        -11.90625
+      ],
+      "reference_finite": true,
+      "reference_zero_fraction": 0.0,
+      "render_size": [
+        1920,
+        1080
+      ],
+      "replay_finite": true,
+      "replay_zero_fraction": 0.0,
+      "rgb_within_tolerance": true,
+      "rms_error": 0.00022681677364744246,
+      "scale": [
+        1.0,
+        1.0
+      ],
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "sequence_id": "procedural-mixed-17",
+      "shader_hashes": {
+        "provider_shader_manifest": "fcca094ff8450dd4a42fdf36db0b2d18c81e0dfb49f588e0b6b3840f2e0d2033"
+      },
+      "stable_equivalent_transforms": false,
+      "within_1e_3_fraction": 1.0
+    }
+  ],
+  "configuration_assumptions": {
+    "auto_exposure_enabled": false,
+    "color_space": "linear",
+    "exposure_value": "input exposure texture / preExposure; zero input exposure maps to 1",
+    "rcas_enabled": false
+  },
+  "schema": "f4n10.fsr4-post-replay-oracle.v1",
+  "source": "pinned FSR4 post_common.hlsli::apply_model_filter; literal float32 equations",
+  "source_file": "third_party/fidelityfx-fsr4-source/Kits/FidelityFX/upscalers/fsr4/include/gpu/fsr4/post_common.hlsli",
+  "source_file_sha256": "6840d62c269ed240c4c48bf98167e4a5d36a3305b666ffbd90cbd643f76f4dba",
+  "validation": {
+    "all_captures_passed": true,
+    "all_intermediates_numerically_valid": true,
+    "capture_packages_validated": true,
+    "capture_set_consistent": true,
+    "per_channel_absolute_tolerance": 0.001,
+    "post_rgb_replay_matches": true,
+    "quality_claimed": false
+  }
+}

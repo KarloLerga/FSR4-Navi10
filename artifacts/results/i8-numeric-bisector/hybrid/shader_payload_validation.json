@@ -1,0 +1,11 @@
+{
+  "schema": "f4n10.i8-hybrid-artifact-verification.v1",
+  "pass_index": 1,
+  "source_commit": "01446e6a74888bf349652fcf2cbf5f642d30c2bf",
+  "changed_compiled_payload_selectors": [
+    "fsr4_model_v07_i8_native_1080_1_permutations.h"
+  ],
+  "expected_changed_selector": "fsr4_model_v07_i8_native_1080_1_permutations.h",
+  "verified_isolated_pass_change": true,
+  "unchanged_selector_count": 30
+}

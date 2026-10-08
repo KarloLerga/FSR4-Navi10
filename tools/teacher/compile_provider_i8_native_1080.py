@@ -13,6 +13,7 @@ import tempfile
 from pathlib import Path
 
 from fnb_bounds_overlay import OVERLAY_NAME, OPERATOR_REL, create_overlay as create_fnb_bounds_overlay
+from i8_arithmetic_pass_overlay import parse_pass_set, build_selected_wrapper
 
 
 MODEL = "fsr4_model_v07_i8_native"
@@ -320,7 +321,8 @@ def generate_initializer_sources(model_dir: Path, output_dir: Path) -> list[Path
 
 def compile_provider_set(
     repo_root: Path, output_dir: Path, *, scalar_dot4: bool = False,
-    stable_post_math: bool = False, pass11_bounds_guard: bool = False
+    stable_post_math: bool = False, pass11_bounds_guard: bool = False,
+    scalar_pass_set: str = ""
 ) -> dict[str, object]:
     sdk_root = repo_root / "third_party" / "fidelityfx-fsr4-source" / "Kits" / "FidelityFX"
     fsr4_root = sdk_root / "upscalers" / "fsr4"
@@ -343,7 +345,17 @@ def compile_provider_set(
         if not path.is_file():
             raise FileNotFoundError(f"pinned FSR4 provider source is missing: {path}")
 
+    selected_scalar_passes = parse_pass_set(scalar_pass_set)
+    if scalar_dot4 and selected_scalar_passes:
+        raise ValueError("global scalar DOT4 and selected scalar passes must not be combined")
     output_dir.mkdir(parents=True, exist_ok=True)
+    # Clear generated local overrides before each full recompilation. A prior
+    # guard-ON build must never influence a later guard-OFF compiler run.
+    old_overlay = output_dir / "capture_shader_overrides"
+    if old_overlay.exists():
+        if not old_overlay.is_dir() or old_overlay.is_symlink():
+            raise ValueError("unexpected build-local override path")
+        shutil.rmtree(old_overlay)
     # FidelityFX_SC names per-permutation headers from shader content. Remove
     # stale generated headers/dependencies so a changed permutation cannot
     # leave an obsolete blob in the manifest or C++ include search.
@@ -373,6 +385,18 @@ def compile_provider_set(
         model_shader_includes = (
             ((capture_overlay_dir,) if pass11_bounds_guard else ())
             + (model_dir, fsr4_root / "dx12", sdk_root / "api" / "internal" / "dx12")
+        )
+    selected_source = None
+    selected_includes = model_shader_includes
+    if selected_scalar_passes:
+        selected_source = build_selected_wrapper(
+            capture_overlay_dir, SCALAR_DOT4_HLSL, source_files["model"].name)
+        capture_overlays["selected_scalar_model_wrapper"] = selected_source
+        # The local Pass11 model shadow is in capture_overlay_dir; the
+        # unmodified upstream model is resolved from model_dir otherwise.
+        selected_includes = (
+            capture_overlay_dir, model_dir, fsr4_root / "dx12",
+            sdk_root / "api" / "internal" / "dx12",
         )
     include_dirs = (
         sdk_root / "api" / "internal" / "gpu",
@@ -417,13 +441,14 @@ def compile_provider_set(
     )
 
     for pass_index in range(1, 13):
+        selected = pass_index in selected_scalar_passes
         compile_one(
             f"{MODEL}_{TIER}_{pass_index}",
-            model_source,
+            selected_source if selected else model_source,
             f"fsr4_model_v07_i8_pass{pass_index}",
             (f"-DMLSR_PASS_{pass_index}=1",),
             f"n10p{pass_index}",
-            model_shader_includes,
+            selected_includes if selected else model_shader_includes,
         )
 
     for pass_index in range(13):
@@ -532,7 +557,14 @@ def compile_provider_set(
             "scalar_dot4": scalar_dot4,
             "stable_post_math": stable_post_math,
             "pass11_bounds_guard": pass11_bounds_guard,
-            "scalar_dot4_semantics": "signed i8x4 lane products accumulated into int32" if scalar_dot4 else "HLSL dot4add_i8packed intrinsic",
+            "scalar_dot4_pass_set": list(selected_scalar_passes),
+            "scalar_dot4_semantics": (
+                "signed i8x4 lane products accumulated into int32"
+                if scalar_dot4 else
+                f"signed i8x4 lane products for passes {','.join(map(str, selected_scalar_passes))}; "
+                "HLSL dot4add_i8packed intrinsic for remaining passes"
+                if selected_scalar_passes else "HLSL dot4add_i8packed intrinsic"
+            ),
         },
         "shader_counts": {
             "pre_permutations": 384,
@@ -582,12 +614,15 @@ def main() -> int:
                         help="use overflow-stable tanh/sigmoid forms in FSR4 POST")
     parser.add_argument("--pass11-bounds-guard", action="store_true",
                         help="use a build-local bounds guard for the I8 <32,1> FNB operator")
+    parser.add_argument("--scalar-pass-set", default="",
+                        help="comma-separated 1..12 pass indices for isolated scalar DOT4")
     args = parser.parse_args()
     try:
         manifest = compile_provider_set(
             args.repo_root.resolve(), args.output.resolve(),
             scalar_dot4=args.scalar_dot4, stable_post_math=args.stable_post_math,
             pass11_bounds_guard=args.pass11_bounds_guard,
+            scalar_pass_set=args.scalar_pass_set,
         )
     except (OSError, KeyError, json.JSONDecodeError, subprocess.CalledProcessError, RuntimeError) as error:
         print(f"compile_provider_i8_native_1080: {error}", file=sys.stderr)

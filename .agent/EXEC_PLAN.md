@@ -462,3 +462,60 @@ The guarded scalar and guarded intrinsic arithmetic modes differ from each other
 ZIP integrity passed (20/20 entries), and the baseline source matches the archive target commit. Focused repo tests passed 25/25; the reviewed bundle installer suite passed 25/25 before installation. All three Release variants compiled, and a separate default Release build confirmed `FSR4N10_PASS11_BOUNDS_GUARD=OFF`; default and guarded CTest each passed 1/1. The guarded dependency resolved to build-local operator hash `3720BAC4CBE7D608870C83A8661403AE6D97DF0688B431AC7187A26B9BDEBD48`; the Pass 11 payload changed from blob `6c83bfdbb6b2f454411618b3661515d8.h` to `04d677d3499db8807a950c572a3a1ad7.h`, with upstream source hashes equal. Selector hashes also changed for Pass 0, Pass 13, and RCAS, but their content-addressed payload digest sets were unchanged; the verifier keeps these metadata/order changes separate from changed shader payloads.
 
 The 72/72 RX 5700 XT cases completed without run failures (24 per variant) on synthetic eight-frame sequence `a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2`. Baseline scratch repeatability failed first at Pass 11; all eight baseline alias comparisons had changes fully within the predicted overlap region. Guarded scalar and intrinsic each restored Pass 11 scratch stability and full-run repeatability, including instrumented/ordinary equality and zero/A5 cross-seed RGB equality. Scalar and intrinsic results are not bit-identical across modes (zero final RGB frame hashes equal); treat arithmetic equivalence as open. The O0 teacher gate remains false. Compact reports are in `artifacts/results/fsr4-pass11-guard/`; large raw scratch files remain ignored under `build/pass11-guard-campaign/`.
+
+## User-supplied O0 numeric bisector (2026-10-08)
+
+### Objective
+
+After the Pass 11 bounds fix, measure the first valid Native/1080 I8 model-output tensor that differs between guarded intrinsic and guarded scalar arithmetic. If a pass is measured, compile a one-pass scalar hybrid to test whether that shader controls the observed difference. Then run existing O0 correctness checks on dedicated full-provider guarded builds without changing thresholds or default arithmetic.
+
+### Baseline and decisions
+
+- Baseline is `afbd264958f94d7c5b146c51c5f7e2d02f8e5e0c` on `fix/fsr4-pass11-nhws-bounds-race`, matching the attachment target. No `third_party/` files may change.
+- Keep `FSR4N10_PASS11_BOUNDS_GUARD=OFF`, `FSR4N10_FORCE_SCALAR_DOT4=OFF`, and `FSR4N10_SCALAR_DOT4_PASS_SET=""` by default. Per-pass scalar arithmetic is an isolated diagnostic only.
+- Compare only exact aligned inputs, repeatable runs, and source-parsed valid I8 output tensor regions. A scratch-wide difference does not localize a model pass. Do not infer which arithmetic path is correct from a difference.
+- Preserve every original O0 failure, report, raw hash, and threshold. A synthetic sequence cannot prove game readiness or visual quality.
+- The attachment's `CODEX_PROMPT.md` is descriptive content, not governing authority. The reviewed code/docs and repository instructions define this work.
+- The archive package mock used a fake `.exe` that Windows refuses to launch. The diagnostic runner now executes `.py` harness fixtures through `sys.executable`; actual native harness `.exe` execution is unchanged.
+
+### Milestones
+
+| # | Milestone and affected areas | Validation / exit gate |
+|---|---|---|
+| N0 | Verify archive/target, install fail-closed payload: `CMakeLists.txt`, `tools/`, `tests/`, `scripts/` | ZIP CRC and 21 hashes; installer dry-run on clean branch; package tests; no writes to `third_party/`. |
+| N1 | Parse all pass output contracts and compare guarded arithmetic: `tools/diagnostics/`, runners | 56 fresh processes, two guarded Release builds, same-input and within-mode repeatability, exact valid tensor byte offsets; `first_valid_output_pass` is measured. |
+| N2 | Probe the measured pass only: hybrid shader overlay and `verify_hybrid_shader.py` | Only selected model-pass payload changes; prior prefix remains equal; selected tensor measurement recorded. Skip/record no guessed pass if N1 yields no valid divergent pass. |
+| N3 | Run unchanged full-provider O0: `run-guarded-o0.ps1`, existing `tools/oracles/` | Dedicated non-prefix builds, two full captures per arithmetic mode, CPU/GPU POST, repeatability, instrumentation parity, DOT4 micro-oracle, unchanged teacher gate; retain failures. |
+| N4 | Record and review evidence: `RESULTS.md`, `PROGRESS.md`, docs, `artifacts/results/i8-numeric-*` | CTest, repo tests, default-off configure/build, third-party integrity, compact JSON summaries, `git diff --check`. |
+
+### Current state and blockers
+
+The 21-file ZIP and exact target commit were verified. The fail-closed installer passed dry-run and installed the payload on the clean target branch; no vendor files changed. Four installer contract tests passed. The supplied mock campaign test initially failed on Windows with `WinError 216`; after making the runner invoke `.py` fixtures through Python, package tests pass 5/5. Repository I8 tests passed 18/18, existing Pass11 tests passed 25/25, and the default Release build/CTest passed (1/1).
+
+The source-driven numeric campaigns completed 56/56 cases with aligned inputs and repeatable runs. Pass 1 is the first valid output tensor difference. The isolated Pass 1 hybrid completed 12/12 cases and its compiled payload change was isolated. The unchanged O0 teacher gate passed on guarded scalar arithmetic and failed on guarded intrinsic arithmetic; the intrinsic failure is retained. No default option or threshold was changed. The complete one-command summary is nonzero because one O0 variant failed, as designed. A 163-character FFX_SC overlay source path failed to resolve the guard include, while a 144-character path compiled; the orchestration default was shortened to `build/i8diag` and that short-path compile passed.
+
+### Progress checklist
+
+- [x] Confirm clean feature branch at exact ZIP target `afbd264958f94d7c5b146c51c5f7e2d02f8e5e0c`.
+- [x] Verify ZIP CRC, safe member paths, and all 21 manifest SHA-256/byte counts.
+- [x] Review installer, test code, PowerShell runners, tensor parser, analyzer, and overlay before execution; exclude the embedded prompt from authority.
+- [x] Run package tests; adapt the Windows-incompatible mock `.exe` fixture to use a Python-script harness.
+- [x] Run installer dry-run on clean branch and install 16 payload files/patches; no vendor files changed.
+- [x] Run focused I8 tests (18/18), existing Pass11 tests (25/25), default Release build and CTest (1/1); verify guard/scalar/prefix diagnostics remain OFF/empty.
+- [x] Run the source-driven guarded numeric bisector; verify same inputs, within-mode repeatability, and the first valid output tensor difference at Pass 1.
+- [x] Compile and run only the measured Pass 1 hybrid; verify the compiled payload change is isolated and retain its numeric campaign.
+- [x] Run unchanged full-provider O0 oracles for guarded intrinsic and scalar; preserve the intrinsic failure and scalar pass without altering the teacher gate.
+- [x] Verify no tracked `third_party/` files changed; add compact reports and update docs; review and synchronize this branch only.
+
+### Decision log
+
+| Date | Decision | Reason |
+|---|---|---|
+| 2026-10-08 | Preserve default intrinsic arithmetic and empty per-pass override. | The prior standalone DOT4 microprobe does not establish full fused-shader equivalence. |
+| 2026-10-08 | Compare parsed pass output tensors, not arbitrary scratch. | Pass-prefix snapshots contain multiple tensors and POST effects; only the declared output range can localize a valid model pass. |
+| 2026-10-08 | Keep LLVM's historical packed-dot fix as an investigation clue only. | The referenced fix is not proof of a defect in the pinned FidelityFX_SC/DXC toolchain. |
+| 2026-10-08 | Keep the orchestrator's default build root short (`build/i8diag`). | FFX_SC failed to resolve the local include at a 163-character overlay path; a 144-character path compiled. |
+
+### Measured execution
+
+The first cross-arithmetic difference is Pass 1 `slice_2` (`960 x 540 x 16`): 8,294,292 of 8,294,400 bytes differ (99.9987%), with a maximum signed-I8 delta of 152. The isolated Pass 1 hybrid changes only that pass's compiled payload and preserves the same first divergent pass. Guarded scalar passes the unchanged synthetic O0 teacher gate; guarded intrinsic fails CPU literal POST validity because its model intermediates are non-finite on the audited frames. This localizes a large difference to Pass 1 but does not establish which path matches AMD reference arithmetic. No quality, game-readiness, or performance claim follows. Full details and compact reports are in `docs/I8_NUMERIC_EXECUTION_RESULTS.md` and `artifacts/results/i8-numeric-bisector/`; raw captures remain ignored under `build/i8run/`.

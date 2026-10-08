@@ -110,3 +110,12 @@ The standalone harness lists adapters, runs a generic FP16 arithmetic probe, val
 - The two guarded arithmetic modes are not bit-identical to each other: pass-10 scratch differs and all eight final RGB hashes differ. Each mode is internally stable; cross-mode numerical equivalence and quality remain unproven. The existing O0 gate remains closed.
 - Compact campaign, shader, alias, timing, and coverage reports are in `artifacts/results/fsr4-pass11-guard/`; raw 20,880,256-byte scratch captures remain ignored in `build/pass11-guard-campaign/`. See `docs/PASS11_BOUNDS_ROOTCAUSE.md` and the updated `docs/RACE_BISECTOR.md` for interpretation.
 - Implementation and evidence commits `f7877b4`, `b18395a`, and `2c1ef16` are pushed to private branch `fix/fsr4-pass11-nhws-bounds-race`; the branch is not merged to `main` because O0 remains closed.
+
+### Guarded I8 numeric bisector (2026-10-08)
+
+- Installed the verified 21-file package on its target commit and preserved its defaults: Pass 11 guard OFF, global scalar DOT4 OFF, and the per-pass scalar set empty. A Windows mock `.exe` fixture was adapted to invoke its Python script through `sys.executable`; package tests pass 5/5.
+- The 56-case guarded numeric bisector passed with aligned inputs and repeatable outputs. The first valid tensor difference is Pass 1 `slice_2`: 8,294,292 of 8,294,400 bytes differ between intrinsic and scalar. A Pass 1 hybrid changed only the selected shader payload and passed its 12-case campaign.
+- Unchanged O0 checks pass on the guarded scalar build, including the existing synthetic teacher gate. They fail on the guarded intrinsic build because CPU POST replay has non-finite model intermediates on frames 0, 4, and 7, even though capture, repeatability, GPU POST, reference instrumentation parity, and native-DOT4 micro-conformance pass.
+- This localizes a large arithmetic-path difference to Pass 1, but does not prove which compiled path matches AMD reference arithmetic. The scalar O0 result is synthetic evidence only; no visual-quality, game-readiness, or performance claim is made. Normal-build defaults remain unchanged.
+- FFX_SC failed to resolve the local guard include with a 163-character model-shadow path and passed at 144 characters. The one-command orchestrator default now uses `build/i8diag`; the short-path compile passed.
+- Machine-readable evidence is in `artifacts/results/i8-numeric-bisector/`; raw captures remain ignored under `build/i8run/`. See `docs/I8_NUMERIC_EXECUTION_RESULTS.md`.

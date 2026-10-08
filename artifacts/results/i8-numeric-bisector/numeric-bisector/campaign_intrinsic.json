@@ -1,0 +1,2197 @@
+{
+  "schema": "f4n10.i8-numeric-campaign.v1",
+  "variant": "guard_intrinsic",
+  "source_commit": "01446e6a74888bf349652fcf2cbf5f642d30c2bf",
+  "build_manifest": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\build-guard_intrinsic\\teacher\\provider_i8_native_1080\\manifest.json",
+  "build_manifest_sha256": "da41b524586557b47257f7c65a67b7a7eff0d4d735e708eb6bbe6005c5c6d09a",
+  "diagnostic_modes": {
+    "pass11_bounds_guard": true,
+    "scalar_dot4": false,
+    "scalar_dot4_pass_set": [],
+    "scalar_dot4_semantics": "HLSL dot4add_i8packed intrinsic",
+    "stable_post_math": false
+  },
+  "harness": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\build-guard_intrinsic\\fsr4n10_harness.exe",
+  "harness_sha256": "0757a52da82c334d641bca37c9db2b3f229d4dd95e8ee85b09feee90d8ec9dc1",
+  "sequence": "C:\\src\\FSR4-Navi10\\build\\release\\delta-control-smoke.f4seq",
+  "sequence_file_sha256": "41864abbd46180126b1b945a84428a9f55bd44d7cfb3b337cdd02f64841bf2b3",
+  "stages": [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12",
+    "full"
+  ],
+  "seeds": [
+    "zero"
+  ],
+  "trace_frame": 0,
+  "repeats": 2,
+  "cases": [
+    {
+      "seed": "zero",
+      "pass_name": "pass_00",
+      "pass": 0,
+      "repeat": 1,
+      "exit_code": 0,
+      "error": null,
+      "adapter": "AMD Radeon RX 5700 XT",
+      "driver_version": "0x00200000523503e8",
+      "build_commit": "afbd264958f94d7c5b146c51c5f7e2d02f8e5e0c",
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ],
+      "frame_hashes": [
+        {
+          "frame_index": 0,
+          "instrumented": "fecad294bbc26a0db34432d87eadabbbe0d5439a79fdf1dfed3d934fcf1b64b0",
+          "ordinary": "fecad294bbc26a0db34432d87eadabbbe0d5439a79fdf1dfed3d934fcf1b64b0"
+        },
+        {
+          "frame_index": 1,
+          "instrumented": "e66c134a38187ac8040652c9557fd5a5128f49c86e960cbe88daf87613506b4b",
+          "ordinary": "e66c134a38187ac8040652c9557fd5a5128f49c86e960cbe88daf87613506b4b"
+        },
+        {
+          "frame_index": 2,
+          "instrumented": "2399f7af91449496053d98b6be871fb00bbef82924e0073ff3fe841b2ad76e21",
+          "ordinary": "2399f7af91449496053d98b6be871fb00bbef82924e0073ff3fe841b2ad76e21"
+        },
+        {
+          "frame_index": 3,
+          "instrumented": "51605184eaeac58727c90670bc2bfeeed0ee9a8c95ee36cda1f650d4d7f56ef7",
+          "ordinary": "51605184eaeac58727c90670bc2bfeeed0ee9a8c95ee36cda1f650d4d7f56ef7"
+        },
+        {
+          "frame_index": 4,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 5,
+          "instrumented": "8c3612f40881fcb7e79cfbdaa3f566dfe291aeed1ee8ad8f8ef5661437a42f31",
+          "ordinary": "8c3612f40881fcb7e79cfbdaa3f566dfe291aeed1ee8ad8f8ef5661437a42f31"
+        },
+        {
+          "frame_index": 6,
+          "instrumented": "7f1c5fea0298ef9f825c89e12fcd743a049b10c38303c7987173181ee3131e85",
+          "ordinary": "7f1c5fea0298ef9f825c89e12fcd743a049b10c38303c7987173181ee3131e85"
+        },
+        {
+          "frame_index": 7,
+          "instrumented": "cdd2d27810da841df41b884828bc359d8f12f68c5b037f50ab86f10b9d120cae",
+          "ordinary": "cdd2d27810da841df41b884828bc359d8f12f68c5b037f50ab86f10b9d120cae"
+        }
+      ],
+      "scratch": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_00\\run_1\\frame_0_pass_0_instrumented.bin",
+          "size": 20880256,
+          "sha256": "4296c8210b12075e68ac4549e3008dee69b7d2b02ddea3f6293b9608cbbd8e0a"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_00\\run_1\\frame_0_pass_0_ordinary.bin",
+          "size": 20880256,
+          "sha256": "4296c8210b12075e68ac4549e3008dee69b7d2b02ddea3f6293b9608cbbd8e0a"
+        }
+      },
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_00\\run_1\\sequence.json"
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_00",
+      "pass": 0,
+      "repeat": 2,
+      "exit_code": 0,
+      "error": null,
+      "adapter": "AMD Radeon RX 5700 XT",
+      "driver_version": "0x00200000523503e8",
+      "build_commit": "afbd264958f94d7c5b146c51c5f7e2d02f8e5e0c",
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ],
+      "frame_hashes": [
+        {
+          "frame_index": 0,
+          "instrumented": "fecad294bbc26a0db34432d87eadabbbe0d5439a79fdf1dfed3d934fcf1b64b0",
+          "ordinary": "fecad294bbc26a0db34432d87eadabbbe0d5439a79fdf1dfed3d934fcf1b64b0"
+        },
+        {
+          "frame_index": 1,
+          "instrumented": "e66c134a38187ac8040652c9557fd5a5128f49c86e960cbe88daf87613506b4b",
+          "ordinary": "e66c134a38187ac8040652c9557fd5a5128f49c86e960cbe88daf87613506b4b"
+        },
+        {
+          "frame_index": 2,
+          "instrumented": "2399f7af91449496053d98b6be871fb00bbef82924e0073ff3fe841b2ad76e21",
+          "ordinary": "2399f7af91449496053d98b6be871fb00bbef82924e0073ff3fe841b2ad76e21"
+        },
+        {
+          "frame_index": 3,
+          "instrumented": "51605184eaeac58727c90670bc2bfeeed0ee9a8c95ee36cda1f650d4d7f56ef7",
+          "ordinary": "51605184eaeac58727c90670bc2bfeeed0ee9a8c95ee36cda1f650d4d7f56ef7"
+        },
+        {
+          "frame_index": 4,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 5,
+          "instrumented": "8c3612f40881fcb7e79cfbdaa3f566dfe291aeed1ee8ad8f8ef5661437a42f31",
+          "ordinary": "8c3612f40881fcb7e79cfbdaa3f566dfe291aeed1ee8ad8f8ef5661437a42f31"
+        },
+        {
+          "frame_index": 6,
+          "instrumented": "7f1c5fea0298ef9f825c89e12fcd743a049b10c38303c7987173181ee3131e85",
+          "ordinary": "7f1c5fea0298ef9f825c89e12fcd743a049b10c38303c7987173181ee3131e85"
+        },
+        {
+          "frame_index": 7,
+          "instrumented": "cdd2d27810da841df41b884828bc359d8f12f68c5b037f50ab86f10b9d120cae",
+          "ordinary": "cdd2d27810da841df41b884828bc359d8f12f68c5b037f50ab86f10b9d120cae"
+        }
+      ],
+      "scratch": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_00\\run_2\\frame_0_pass_0_instrumented.bin",
+          "size": 20880256,
+          "sha256": "4296c8210b12075e68ac4549e3008dee69b7d2b02ddea3f6293b9608cbbd8e0a"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_00\\run_2\\frame_0_pass_0_ordinary.bin",
+          "size": 20880256,
+          "sha256": "4296c8210b12075e68ac4549e3008dee69b7d2b02ddea3f6293b9608cbbd8e0a"
+        }
+      },
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_00\\run_2\\sequence.json"
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_01",
+      "pass": 1,
+      "repeat": 1,
+      "exit_code": 0,
+      "error": null,
+      "adapter": "AMD Radeon RX 5700 XT",
+      "driver_version": "0x00200000523503e8",
+      "build_commit": "afbd264958f94d7c5b146c51c5f7e2d02f8e5e0c",
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ],
+      "frame_hashes": [
+        {
+          "frame_index": 0,
+          "instrumented": "fecad294bbc26a0db34432d87eadabbbe0d5439a79fdf1dfed3d934fcf1b64b0",
+          "ordinary": "fecad294bbc26a0db34432d87eadabbbe0d5439a79fdf1dfed3d934fcf1b64b0"
+        },
+        {
+          "frame_index": 1,
+          "instrumented": "e66c134a38187ac8040652c9557fd5a5128f49c86e960cbe88daf87613506b4b",
+          "ordinary": "e66c134a38187ac8040652c9557fd5a5128f49c86e960cbe88daf87613506b4b"
+        },
+        {
+          "frame_index": 2,
+          "instrumented": "2399f7af91449496053d98b6be871fb00bbef82924e0073ff3fe841b2ad76e21",
+          "ordinary": "2399f7af91449496053d98b6be871fb00bbef82924e0073ff3fe841b2ad76e21"
+        },
+        {
+          "frame_index": 3,
+          "instrumented": "51605184eaeac58727c90670bc2bfeeed0ee9a8c95ee36cda1f650d4d7f56ef7",
+          "ordinary": "51605184eaeac58727c90670bc2bfeeed0ee9a8c95ee36cda1f650d4d7f56ef7"
+        },
+        {
+          "frame_index": 4,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 5,
+          "instrumented": "8c3612f40881fcb7e79cfbdaa3f566dfe291aeed1ee8ad8f8ef5661437a42f31",
+          "ordinary": "8c3612f40881fcb7e79cfbdaa3f566dfe291aeed1ee8ad8f8ef5661437a42f31"
+        },
+        {
+          "frame_index": 6,
+          "instrumented": "7f1c5fea0298ef9f825c89e12fcd743a049b10c38303c7987173181ee3131e85",
+          "ordinary": "7f1c5fea0298ef9f825c89e12fcd743a049b10c38303c7987173181ee3131e85"
+        },
+        {
+          "frame_index": 7,
+          "instrumented": "cdd2d27810da841df41b884828bc359d8f12f68c5b037f50ab86f10b9d120cae",
+          "ordinary": "cdd2d27810da841df41b884828bc359d8f12f68c5b037f50ab86f10b9d120cae"
+        }
+      ],
+      "scratch": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_01\\run_1\\frame_0_pass_1_instrumented.bin",
+          "size": 20880256,
+          "sha256": "8bf0515feccb159e4558b594bf71f19f0b30f55d73ae357d03d308976d180b91"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_01\\run_1\\frame_0_pass_1_ordinary.bin",
+          "size": 20880256,
+          "sha256": "8bf0515feccb159e4558b594bf71f19f0b30f55d73ae357d03d308976d180b91"
+        }
+      },
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_01\\run_1\\sequence.json"
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_01",
+      "pass": 1,
+      "repeat": 2,
+      "exit_code": 0,
+      "error": null,
+      "adapter": "AMD Radeon RX 5700 XT",
+      "driver_version": "0x00200000523503e8",
+      "build_commit": "afbd264958f94d7c5b146c51c5f7e2d02f8e5e0c",
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ],
+      "frame_hashes": [
+        {
+          "frame_index": 0,
+          "instrumented": "fecad294bbc26a0db34432d87eadabbbe0d5439a79fdf1dfed3d934fcf1b64b0",
+          "ordinary": "fecad294bbc26a0db34432d87eadabbbe0d5439a79fdf1dfed3d934fcf1b64b0"
+        },
+        {
+          "frame_index": 1,
+          "instrumented": "e66c134a38187ac8040652c9557fd5a5128f49c86e960cbe88daf87613506b4b",
+          "ordinary": "e66c134a38187ac8040652c9557fd5a5128f49c86e960cbe88daf87613506b4b"
+        },
+        {
+          "frame_index": 2,
+          "instrumented": "2399f7af91449496053d98b6be871fb00bbef82924e0073ff3fe841b2ad76e21",
+          "ordinary": "2399f7af91449496053d98b6be871fb00bbef82924e0073ff3fe841b2ad76e21"
+        },
+        {
+          "frame_index": 3,
+          "instrumented": "51605184eaeac58727c90670bc2bfeeed0ee9a8c95ee36cda1f650d4d7f56ef7",
+          "ordinary": "51605184eaeac58727c90670bc2bfeeed0ee9a8c95ee36cda1f650d4d7f56ef7"
+        },
+        {
+          "frame_index": 4,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 5,
+          "instrumented": "8c3612f40881fcb7e79cfbdaa3f566dfe291aeed1ee8ad8f8ef5661437a42f31",
+          "ordinary": "8c3612f40881fcb7e79cfbdaa3f566dfe291aeed1ee8ad8f8ef5661437a42f31"
+        },
+        {
+          "frame_index": 6,
+          "instrumented": "7f1c5fea0298ef9f825c89e12fcd743a049b10c38303c7987173181ee3131e85",
+          "ordinary": "7f1c5fea0298ef9f825c89e12fcd743a049b10c38303c7987173181ee3131e85"
+        },
+        {
+          "frame_index": 7,
+          "instrumented": "cdd2d27810da841df41b884828bc359d8f12f68c5b037f50ab86f10b9d120cae",
+          "ordinary": "cdd2d27810da841df41b884828bc359d8f12f68c5b037f50ab86f10b9d120cae"
+        }
+      ],
+      "scratch": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_01\\run_2\\frame_0_pass_1_instrumented.bin",
+          "size": 20880256,
+          "sha256": "8bf0515feccb159e4558b594bf71f19f0b30f55d73ae357d03d308976d180b91"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_01\\run_2\\frame_0_pass_1_ordinary.bin",
+          "size": 20880256,
+          "sha256": "8bf0515feccb159e4558b594bf71f19f0b30f55d73ae357d03d308976d180b91"
+        }
+      },
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_01\\run_2\\sequence.json"
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_02",
+      "pass": 2,
+      "repeat": 1,
+      "exit_code": 0,
+      "error": null,
+      "adapter": "AMD Radeon RX 5700 XT",
+      "driver_version": "0x00200000523503e8",
+      "build_commit": "afbd264958f94d7c5b146c51c5f7e2d02f8e5e0c",
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ],
+      "frame_hashes": [
+        {
+          "frame_index": 0,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 1,
+          "instrumented": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee",
+          "ordinary": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee"
+        },
+        {
+          "frame_index": 2,
+          "instrumented": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961",
+          "ordinary": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961"
+        },
+        {
+          "frame_index": 3,
+          "instrumented": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c",
+          "ordinary": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c"
+        },
+        {
+          "frame_index": 4,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 5,
+          "instrumented": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63",
+          "ordinary": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63"
+        },
+        {
+          "frame_index": 6,
+          "instrumented": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf",
+          "ordinary": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf"
+        },
+        {
+          "frame_index": 7,
+          "instrumented": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564",
+          "ordinary": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564"
+        }
+      ],
+      "scratch": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_02\\run_1\\frame_0_pass_2_instrumented.bin",
+          "size": 20880256,
+          "sha256": "80011faf3795aee6650670fa019c56ba8083d14f3eb034584434953b95933ee0"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_02\\run_1\\frame_0_pass_2_ordinary.bin",
+          "size": 20880256,
+          "sha256": "80011faf3795aee6650670fa019c56ba8083d14f3eb034584434953b95933ee0"
+        }
+      },
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_02\\run_1\\sequence.json"
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_02",
+      "pass": 2,
+      "repeat": 2,
+      "exit_code": 0,
+      "error": null,
+      "adapter": "AMD Radeon RX 5700 XT",
+      "driver_version": "0x00200000523503e8",
+      "build_commit": "afbd264958f94d7c5b146c51c5f7e2d02f8e5e0c",
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ],
+      "frame_hashes": [
+        {
+          "frame_index": 0,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 1,
+          "instrumented": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee",
+          "ordinary": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee"
+        },
+        {
+          "frame_index": 2,
+          "instrumented": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961",
+          "ordinary": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961"
+        },
+        {
+          "frame_index": 3,
+          "instrumented": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c",
+          "ordinary": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c"
+        },
+        {
+          "frame_index": 4,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 5,
+          "instrumented": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63",
+          "ordinary": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63"
+        },
+        {
+          "frame_index": 6,
+          "instrumented": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf",
+          "ordinary": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf"
+        },
+        {
+          "frame_index": 7,
+          "instrumented": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564",
+          "ordinary": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564"
+        }
+      ],
+      "scratch": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_02\\run_2\\frame_0_pass_2_instrumented.bin",
+          "size": 20880256,
+          "sha256": "80011faf3795aee6650670fa019c56ba8083d14f3eb034584434953b95933ee0"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_02\\run_2\\frame_0_pass_2_ordinary.bin",
+          "size": 20880256,
+          "sha256": "80011faf3795aee6650670fa019c56ba8083d14f3eb034584434953b95933ee0"
+        }
+      },
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_02\\run_2\\sequence.json"
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_03",
+      "pass": 3,
+      "repeat": 1,
+      "exit_code": 0,
+      "error": null,
+      "adapter": "AMD Radeon RX 5700 XT",
+      "driver_version": "0x00200000523503e8",
+      "build_commit": "afbd264958f94d7c5b146c51c5f7e2d02f8e5e0c",
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ],
+      "frame_hashes": [
+        {
+          "frame_index": 0,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 1,
+          "instrumented": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee",
+          "ordinary": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee"
+        },
+        {
+          "frame_index": 2,
+          "instrumented": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961",
+          "ordinary": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961"
+        },
+        {
+          "frame_index": 3,
+          "instrumented": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c",
+          "ordinary": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c"
+        },
+        {
+          "frame_index": 4,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 5,
+          "instrumented": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63",
+          "ordinary": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63"
+        },
+        {
+          "frame_index": 6,
+          "instrumented": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf",
+          "ordinary": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf"
+        },
+        {
+          "frame_index": 7,
+          "instrumented": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564",
+          "ordinary": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564"
+        }
+      ],
+      "scratch": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_03\\run_1\\frame_0_pass_3_instrumented.bin",
+          "size": 20880256,
+          "sha256": "f67ccdf4daf8b775a8eb7add01c0d50ef8ca959c0e3b5ebfe3b1987f0ddf1c19"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_03\\run_1\\frame_0_pass_3_ordinary.bin",
+          "size": 20880256,
+          "sha256": "f67ccdf4daf8b775a8eb7add01c0d50ef8ca959c0e3b5ebfe3b1987f0ddf1c19"
+        }
+      },
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_03\\run_1\\sequence.json"
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_03",
+      "pass": 3,
+      "repeat": 2,
+      "exit_code": 0,
+      "error": null,
+      "adapter": "AMD Radeon RX 5700 XT",
+      "driver_version": "0x00200000523503e8",
+      "build_commit": "afbd264958f94d7c5b146c51c5f7e2d02f8e5e0c",
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ],
+      "frame_hashes": [
+        {
+          "frame_index": 0,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 1,
+          "instrumented": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee",
+          "ordinary": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee"
+        },
+        {
+          "frame_index": 2,
+          "instrumented": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961",
+          "ordinary": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961"
+        },
+        {
+          "frame_index": 3,
+          "instrumented": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c",
+          "ordinary": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c"
+        },
+        {
+          "frame_index": 4,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 5,
+          "instrumented": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63",
+          "ordinary": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63"
+        },
+        {
+          "frame_index": 6,
+          "instrumented": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf",
+          "ordinary": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf"
+        },
+        {
+          "frame_index": 7,
+          "instrumented": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564",
+          "ordinary": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564"
+        }
+      ],
+      "scratch": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_03\\run_2\\frame_0_pass_3_instrumented.bin",
+          "size": 20880256,
+          "sha256": "f67ccdf4daf8b775a8eb7add01c0d50ef8ca959c0e3b5ebfe3b1987f0ddf1c19"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_03\\run_2\\frame_0_pass_3_ordinary.bin",
+          "size": 20880256,
+          "sha256": "f67ccdf4daf8b775a8eb7add01c0d50ef8ca959c0e3b5ebfe3b1987f0ddf1c19"
+        }
+      },
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_03\\run_2\\sequence.json"
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_04",
+      "pass": 4,
+      "repeat": 1,
+      "exit_code": 0,
+      "error": null,
+      "adapter": "AMD Radeon RX 5700 XT",
+      "driver_version": "0x00200000523503e8",
+      "build_commit": "afbd264958f94d7c5b146c51c5f7e2d02f8e5e0c",
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ],
+      "frame_hashes": [
+        {
+          "frame_index": 0,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 1,
+          "instrumented": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee",
+          "ordinary": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee"
+        },
+        {
+          "frame_index": 2,
+          "instrumented": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961",
+          "ordinary": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961"
+        },
+        {
+          "frame_index": 3,
+          "instrumented": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c",
+          "ordinary": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c"
+        },
+        {
+          "frame_index": 4,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 5,
+          "instrumented": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63",
+          "ordinary": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63"
+        },
+        {
+          "frame_index": 6,
+          "instrumented": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf",
+          "ordinary": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf"
+        },
+        {
+          "frame_index": 7,
+          "instrumented": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564",
+          "ordinary": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564"
+        }
+      ],
+      "scratch": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_04\\run_1\\frame_0_pass_4_instrumented.bin",
+          "size": 20880256,
+          "sha256": "f67ccdf4daf8b775a8eb7add01c0d50ef8ca959c0e3b5ebfe3b1987f0ddf1c19"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_04\\run_1\\frame_0_pass_4_ordinary.bin",
+          "size": 20880256,
+          "sha256": "f67ccdf4daf8b775a8eb7add01c0d50ef8ca959c0e3b5ebfe3b1987f0ddf1c19"
+        }
+      },
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_04\\run_1\\sequence.json"
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_04",
+      "pass": 4,
+      "repeat": 2,
+      "exit_code": 0,
+      "error": null,
+      "adapter": "AMD Radeon RX 5700 XT",
+      "driver_version": "0x00200000523503e8",
+      "build_commit": "afbd264958f94d7c5b146c51c5f7e2d02f8e5e0c",
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ],
+      "frame_hashes": [
+        {
+          "frame_index": 0,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 1,
+          "instrumented": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee",
+          "ordinary": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee"
+        },
+        {
+          "frame_index": 2,
+          "instrumented": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961",
+          "ordinary": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961"
+        },
+        {
+          "frame_index": 3,
+          "instrumented": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c",
+          "ordinary": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c"
+        },
+        {
+          "frame_index": 4,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 5,
+          "instrumented": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63",
+          "ordinary": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63"
+        },
+        {
+          "frame_index": 6,
+          "instrumented": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf",
+          "ordinary": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf"
+        },
+        {
+          "frame_index": 7,
+          "instrumented": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564",
+          "ordinary": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564"
+        }
+      ],
+      "scratch": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_04\\run_2\\frame_0_pass_4_instrumented.bin",
+          "size": 20880256,
+          "sha256": "f67ccdf4daf8b775a8eb7add01c0d50ef8ca959c0e3b5ebfe3b1987f0ddf1c19"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_04\\run_2\\frame_0_pass_4_ordinary.bin",
+          "size": 20880256,
+          "sha256": "f67ccdf4daf8b775a8eb7add01c0d50ef8ca959c0e3b5ebfe3b1987f0ddf1c19"
+        }
+      },
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_04\\run_2\\sequence.json"
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_05",
+      "pass": 5,
+      "repeat": 1,
+      "exit_code": 0,
+      "error": null,
+      "adapter": "AMD Radeon RX 5700 XT",
+      "driver_version": "0x00200000523503e8",
+      "build_commit": "afbd264958f94d7c5b146c51c5f7e2d02f8e5e0c",
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ],
+      "frame_hashes": [
+        {
+          "frame_index": 0,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 1,
+          "instrumented": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee",
+          "ordinary": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee"
+        },
+        {
+          "frame_index": 2,
+          "instrumented": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961",
+          "ordinary": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961"
+        },
+        {
+          "frame_index": 3,
+          "instrumented": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c",
+          "ordinary": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c"
+        },
+        {
+          "frame_index": 4,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 5,
+          "instrumented": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63",
+          "ordinary": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63"
+        },
+        {
+          "frame_index": 6,
+          "instrumented": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf",
+          "ordinary": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf"
+        },
+        {
+          "frame_index": 7,
+          "instrumented": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564",
+          "ordinary": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564"
+        }
+      ],
+      "scratch": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_05\\run_1\\frame_0_pass_5_instrumented.bin",
+          "size": 20880256,
+          "sha256": "f67ccdf4daf8b775a8eb7add01c0d50ef8ca959c0e3b5ebfe3b1987f0ddf1c19"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_05\\run_1\\frame_0_pass_5_ordinary.bin",
+          "size": 20880256,
+          "sha256": "f67ccdf4daf8b775a8eb7add01c0d50ef8ca959c0e3b5ebfe3b1987f0ddf1c19"
+        }
+      },
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_05\\run_1\\sequence.json"
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_05",
+      "pass": 5,
+      "repeat": 2,
+      "exit_code": 0,
+      "error": null,
+      "adapter": "AMD Radeon RX 5700 XT",
+      "driver_version": "0x00200000523503e8",
+      "build_commit": "afbd264958f94d7c5b146c51c5f7e2d02f8e5e0c",
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ],
+      "frame_hashes": [
+        {
+          "frame_index": 0,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 1,
+          "instrumented": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee",
+          "ordinary": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee"
+        },
+        {
+          "frame_index": 2,
+          "instrumented": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961",
+          "ordinary": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961"
+        },
+        {
+          "frame_index": 3,
+          "instrumented": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c",
+          "ordinary": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c"
+        },
+        {
+          "frame_index": 4,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 5,
+          "instrumented": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63",
+          "ordinary": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63"
+        },
+        {
+          "frame_index": 6,
+          "instrumented": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf",
+          "ordinary": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf"
+        },
+        {
+          "frame_index": 7,
+          "instrumented": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564",
+          "ordinary": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564"
+        }
+      ],
+      "scratch": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_05\\run_2\\frame_0_pass_5_instrumented.bin",
+          "size": 20880256,
+          "sha256": "f67ccdf4daf8b775a8eb7add01c0d50ef8ca959c0e3b5ebfe3b1987f0ddf1c19"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_05\\run_2\\frame_0_pass_5_ordinary.bin",
+          "size": 20880256,
+          "sha256": "f67ccdf4daf8b775a8eb7add01c0d50ef8ca959c0e3b5ebfe3b1987f0ddf1c19"
+        }
+      },
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_05\\run_2\\sequence.json"
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_06",
+      "pass": 6,
+      "repeat": 1,
+      "exit_code": 0,
+      "error": null,
+      "adapter": "AMD Radeon RX 5700 XT",
+      "driver_version": "0x00200000523503e8",
+      "build_commit": "afbd264958f94d7c5b146c51c5f7e2d02f8e5e0c",
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ],
+      "frame_hashes": [
+        {
+          "frame_index": 0,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 1,
+          "instrumented": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee",
+          "ordinary": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee"
+        },
+        {
+          "frame_index": 2,
+          "instrumented": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961",
+          "ordinary": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961"
+        },
+        {
+          "frame_index": 3,
+          "instrumented": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c",
+          "ordinary": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c"
+        },
+        {
+          "frame_index": 4,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 5,
+          "instrumented": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63",
+          "ordinary": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63"
+        },
+        {
+          "frame_index": 6,
+          "instrumented": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf",
+          "ordinary": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf"
+        },
+        {
+          "frame_index": 7,
+          "instrumented": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564",
+          "ordinary": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564"
+        }
+      ],
+      "scratch": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_06\\run_1\\frame_0_pass_6_instrumented.bin",
+          "size": 20880256,
+          "sha256": "acc4cedc82bb701696a0563dc1f0d731f09a4e8aaae58e8d9bada62294188016"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_06\\run_1\\frame_0_pass_6_ordinary.bin",
+          "size": 20880256,
+          "sha256": "acc4cedc82bb701696a0563dc1f0d731f09a4e8aaae58e8d9bada62294188016"
+        }
+      },
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_06\\run_1\\sequence.json"
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_06",
+      "pass": 6,
+      "repeat": 2,
+      "exit_code": 0,
+      "error": null,
+      "adapter": "AMD Radeon RX 5700 XT",
+      "driver_version": "0x00200000523503e8",
+      "build_commit": "afbd264958f94d7c5b146c51c5f7e2d02f8e5e0c",
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ],
+      "frame_hashes": [
+        {
+          "frame_index": 0,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 1,
+          "instrumented": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee",
+          "ordinary": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee"
+        },
+        {
+          "frame_index": 2,
+          "instrumented": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961",
+          "ordinary": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961"
+        },
+        {
+          "frame_index": 3,
+          "instrumented": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c",
+          "ordinary": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c"
+        },
+        {
+          "frame_index": 4,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 5,
+          "instrumented": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63",
+          "ordinary": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63"
+        },
+        {
+          "frame_index": 6,
+          "instrumented": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf",
+          "ordinary": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf"
+        },
+        {
+          "frame_index": 7,
+          "instrumented": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564",
+          "ordinary": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564"
+        }
+      ],
+      "scratch": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_06\\run_2\\frame_0_pass_6_instrumented.bin",
+          "size": 20880256,
+          "sha256": "acc4cedc82bb701696a0563dc1f0d731f09a4e8aaae58e8d9bada62294188016"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_06\\run_2\\frame_0_pass_6_ordinary.bin",
+          "size": 20880256,
+          "sha256": "acc4cedc82bb701696a0563dc1f0d731f09a4e8aaae58e8d9bada62294188016"
+        }
+      },
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_06\\run_2\\sequence.json"
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_07",
+      "pass": 7,
+      "repeat": 1,
+      "exit_code": 0,
+      "error": null,
+      "adapter": "AMD Radeon RX 5700 XT",
+      "driver_version": "0x00200000523503e8",
+      "build_commit": "afbd264958f94d7c5b146c51c5f7e2d02f8e5e0c",
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ],
+      "frame_hashes": [
+        {
+          "frame_index": 0,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 1,
+          "instrumented": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee",
+          "ordinary": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee"
+        },
+        {
+          "frame_index": 2,
+          "instrumented": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961",
+          "ordinary": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961"
+        },
+        {
+          "frame_index": 3,
+          "instrumented": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c",
+          "ordinary": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c"
+        },
+        {
+          "frame_index": 4,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 5,
+          "instrumented": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63",
+          "ordinary": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63"
+        },
+        {
+          "frame_index": 6,
+          "instrumented": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf",
+          "ordinary": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf"
+        },
+        {
+          "frame_index": 7,
+          "instrumented": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564",
+          "ordinary": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564"
+        }
+      ],
+      "scratch": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_07\\run_1\\frame_0_pass_7_instrumented.bin",
+          "size": 20880256,
+          "sha256": "b993bc48f0ea4e5a59a79770fe4f6061278aa77bc5455a62d58e32721f29b4da"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_07\\run_1\\frame_0_pass_7_ordinary.bin",
+          "size": 20880256,
+          "sha256": "b993bc48f0ea4e5a59a79770fe4f6061278aa77bc5455a62d58e32721f29b4da"
+        }
+      },
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_07\\run_1\\sequence.json"
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_07",
+      "pass": 7,
+      "repeat": 2,
+      "exit_code": 0,
+      "error": null,
+      "adapter": "AMD Radeon RX 5700 XT",
+      "driver_version": "0x00200000523503e8",
+      "build_commit": "afbd264958f94d7c5b146c51c5f7e2d02f8e5e0c",
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ],
+      "frame_hashes": [
+        {
+          "frame_index": 0,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 1,
+          "instrumented": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee",
+          "ordinary": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee"
+        },
+        {
+          "frame_index": 2,
+          "instrumented": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961",
+          "ordinary": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961"
+        },
+        {
+          "frame_index": 3,
+          "instrumented": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c",
+          "ordinary": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c"
+        },
+        {
+          "frame_index": 4,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 5,
+          "instrumented": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63",
+          "ordinary": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63"
+        },
+        {
+          "frame_index": 6,
+          "instrumented": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf",
+          "ordinary": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf"
+        },
+        {
+          "frame_index": 7,
+          "instrumented": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564",
+          "ordinary": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564"
+        }
+      ],
+      "scratch": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_07\\run_2\\frame_0_pass_7_instrumented.bin",
+          "size": 20880256,
+          "sha256": "b993bc48f0ea4e5a59a79770fe4f6061278aa77bc5455a62d58e32721f29b4da"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_07\\run_2\\frame_0_pass_7_ordinary.bin",
+          "size": 20880256,
+          "sha256": "b993bc48f0ea4e5a59a79770fe4f6061278aa77bc5455a62d58e32721f29b4da"
+        }
+      },
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_07\\run_2\\sequence.json"
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_08",
+      "pass": 8,
+      "repeat": 1,
+      "exit_code": 0,
+      "error": null,
+      "adapter": "AMD Radeon RX 5700 XT",
+      "driver_version": "0x00200000523503e8",
+      "build_commit": "afbd264958f94d7c5b146c51c5f7e2d02f8e5e0c",
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ],
+      "frame_hashes": [
+        {
+          "frame_index": 0,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 1,
+          "instrumented": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee",
+          "ordinary": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee"
+        },
+        {
+          "frame_index": 2,
+          "instrumented": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961",
+          "ordinary": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961"
+        },
+        {
+          "frame_index": 3,
+          "instrumented": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c",
+          "ordinary": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c"
+        },
+        {
+          "frame_index": 4,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 5,
+          "instrumented": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63",
+          "ordinary": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63"
+        },
+        {
+          "frame_index": 6,
+          "instrumented": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf",
+          "ordinary": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf"
+        },
+        {
+          "frame_index": 7,
+          "instrumented": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564",
+          "ordinary": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564"
+        }
+      ],
+      "scratch": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_08\\run_1\\frame_0_pass_8_instrumented.bin",
+          "size": 20880256,
+          "sha256": "a9e2499efbf3d0f6a6edffc893ddb20cd318b64b032200799f6ed2859f3a99ec"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_08\\run_1\\frame_0_pass_8_ordinary.bin",
+          "size": 20880256,
+          "sha256": "a9e2499efbf3d0f6a6edffc893ddb20cd318b64b032200799f6ed2859f3a99ec"
+        }
+      },
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_08\\run_1\\sequence.json"
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_08",
+      "pass": 8,
+      "repeat": 2,
+      "exit_code": 0,
+      "error": null,
+      "adapter": "AMD Radeon RX 5700 XT",
+      "driver_version": "0x00200000523503e8",
+      "build_commit": "afbd264958f94d7c5b146c51c5f7e2d02f8e5e0c",
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ],
+      "frame_hashes": [
+        {
+          "frame_index": 0,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 1,
+          "instrumented": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee",
+          "ordinary": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee"
+        },
+        {
+          "frame_index": 2,
+          "instrumented": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961",
+          "ordinary": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961"
+        },
+        {
+          "frame_index": 3,
+          "instrumented": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c",
+          "ordinary": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c"
+        },
+        {
+          "frame_index": 4,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 5,
+          "instrumented": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63",
+          "ordinary": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63"
+        },
+        {
+          "frame_index": 6,
+          "instrumented": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf",
+          "ordinary": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf"
+        },
+        {
+          "frame_index": 7,
+          "instrumented": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564",
+          "ordinary": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564"
+        }
+      ],
+      "scratch": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_08\\run_2\\frame_0_pass_8_instrumented.bin",
+          "size": 20880256,
+          "sha256": "a9e2499efbf3d0f6a6edffc893ddb20cd318b64b032200799f6ed2859f3a99ec"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_08\\run_2\\frame_0_pass_8_ordinary.bin",
+          "size": 20880256,
+          "sha256": "a9e2499efbf3d0f6a6edffc893ddb20cd318b64b032200799f6ed2859f3a99ec"
+        }
+      },
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_08\\run_2\\sequence.json"
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_09",
+      "pass": 9,
+      "repeat": 1,
+      "exit_code": 0,
+      "error": null,
+      "adapter": "AMD Radeon RX 5700 XT",
+      "driver_version": "0x00200000523503e8",
+      "build_commit": "afbd264958f94d7c5b146c51c5f7e2d02f8e5e0c",
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ],
+      "frame_hashes": [
+        {
+          "frame_index": 0,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 1,
+          "instrumented": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee",
+          "ordinary": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee"
+        },
+        {
+          "frame_index": 2,
+          "instrumented": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961",
+          "ordinary": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961"
+        },
+        {
+          "frame_index": 3,
+          "instrumented": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c",
+          "ordinary": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c"
+        },
+        {
+          "frame_index": 4,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 5,
+          "instrumented": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63",
+          "ordinary": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63"
+        },
+        {
+          "frame_index": 6,
+          "instrumented": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf",
+          "ordinary": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf"
+        },
+        {
+          "frame_index": 7,
+          "instrumented": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564",
+          "ordinary": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564"
+        }
+      ],
+      "scratch": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_09\\run_1\\frame_0_pass_9_instrumented.bin",
+          "size": 20880256,
+          "sha256": "3e5c8e5c5070b0419ea8729958106e52935199d7ad8dc7388f3c39b36449824d"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_09\\run_1\\frame_0_pass_9_ordinary.bin",
+          "size": 20880256,
+          "sha256": "3e5c8e5c5070b0419ea8729958106e52935199d7ad8dc7388f3c39b36449824d"
+        }
+      },
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_09\\run_1\\sequence.json"
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_09",
+      "pass": 9,
+      "repeat": 2,
+      "exit_code": 0,
+      "error": null,
+      "adapter": "AMD Radeon RX 5700 XT",
+      "driver_version": "0x00200000523503e8",
+      "build_commit": "afbd264958f94d7c5b146c51c5f7e2d02f8e5e0c",
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ],
+      "frame_hashes": [
+        {
+          "frame_index": 0,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 1,
+          "instrumented": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee",
+          "ordinary": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee"
+        },
+        {
+          "frame_index": 2,
+          "instrumented": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961",
+          "ordinary": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961"
+        },
+        {
+          "frame_index": 3,
+          "instrumented": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c",
+          "ordinary": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c"
+        },
+        {
+          "frame_index": 4,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 5,
+          "instrumented": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63",
+          "ordinary": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63"
+        },
+        {
+          "frame_index": 6,
+          "instrumented": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf",
+          "ordinary": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf"
+        },
+        {
+          "frame_index": 7,
+          "instrumented": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564",
+          "ordinary": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564"
+        }
+      ],
+      "scratch": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_09\\run_2\\frame_0_pass_9_instrumented.bin",
+          "size": 20880256,
+          "sha256": "3e5c8e5c5070b0419ea8729958106e52935199d7ad8dc7388f3c39b36449824d"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_09\\run_2\\frame_0_pass_9_ordinary.bin",
+          "size": 20880256,
+          "sha256": "3e5c8e5c5070b0419ea8729958106e52935199d7ad8dc7388f3c39b36449824d"
+        }
+      },
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_09\\run_2\\sequence.json"
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_10",
+      "pass": 10,
+      "repeat": 1,
+      "exit_code": 0,
+      "error": null,
+      "adapter": "AMD Radeon RX 5700 XT",
+      "driver_version": "0x00200000523503e8",
+      "build_commit": "afbd264958f94d7c5b146c51c5f7e2d02f8e5e0c",
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ],
+      "frame_hashes": [
+        {
+          "frame_index": 0,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 1,
+          "instrumented": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee",
+          "ordinary": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee"
+        },
+        {
+          "frame_index": 2,
+          "instrumented": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961",
+          "ordinary": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961"
+        },
+        {
+          "frame_index": 3,
+          "instrumented": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c",
+          "ordinary": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c"
+        },
+        {
+          "frame_index": 4,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 5,
+          "instrumented": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63",
+          "ordinary": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63"
+        },
+        {
+          "frame_index": 6,
+          "instrumented": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf",
+          "ordinary": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf"
+        },
+        {
+          "frame_index": 7,
+          "instrumented": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564",
+          "ordinary": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564"
+        }
+      ],
+      "scratch": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_10\\run_1\\frame_0_pass_10_instrumented.bin",
+          "size": 20880256,
+          "sha256": "3e5c8e5c5070b0419ea8729958106e52935199d7ad8dc7388f3c39b36449824d"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_10\\run_1\\frame_0_pass_10_ordinary.bin",
+          "size": 20880256,
+          "sha256": "3e5c8e5c5070b0419ea8729958106e52935199d7ad8dc7388f3c39b36449824d"
+        }
+      },
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_10\\run_1\\sequence.json"
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_10",
+      "pass": 10,
+      "repeat": 2,
+      "exit_code": 0,
+      "error": null,
+      "adapter": "AMD Radeon RX 5700 XT",
+      "driver_version": "0x00200000523503e8",
+      "build_commit": "afbd264958f94d7c5b146c51c5f7e2d02f8e5e0c",
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ],
+      "frame_hashes": [
+        {
+          "frame_index": 0,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 1,
+          "instrumented": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee",
+          "ordinary": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee"
+        },
+        {
+          "frame_index": 2,
+          "instrumented": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961",
+          "ordinary": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961"
+        },
+        {
+          "frame_index": 3,
+          "instrumented": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c",
+          "ordinary": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c"
+        },
+        {
+          "frame_index": 4,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 5,
+          "instrumented": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63",
+          "ordinary": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63"
+        },
+        {
+          "frame_index": 6,
+          "instrumented": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf",
+          "ordinary": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf"
+        },
+        {
+          "frame_index": 7,
+          "instrumented": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564",
+          "ordinary": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564"
+        }
+      ],
+      "scratch": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_10\\run_2\\frame_0_pass_10_instrumented.bin",
+          "size": 20880256,
+          "sha256": "3e5c8e5c5070b0419ea8729958106e52935199d7ad8dc7388f3c39b36449824d"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_10\\run_2\\frame_0_pass_10_ordinary.bin",
+          "size": 20880256,
+          "sha256": "3e5c8e5c5070b0419ea8729958106e52935199d7ad8dc7388f3c39b36449824d"
+        }
+      },
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_10\\run_2\\sequence.json"
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_11",
+      "pass": 11,
+      "repeat": 1,
+      "exit_code": 0,
+      "error": null,
+      "adapter": "AMD Radeon RX 5700 XT",
+      "driver_version": "0x00200000523503e8",
+      "build_commit": "afbd264958f94d7c5b146c51c5f7e2d02f8e5e0c",
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ],
+      "frame_hashes": [
+        {
+          "frame_index": 0,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 1,
+          "instrumented": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee",
+          "ordinary": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee"
+        },
+        {
+          "frame_index": 2,
+          "instrumented": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961",
+          "ordinary": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961"
+        },
+        {
+          "frame_index": 3,
+          "instrumented": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c",
+          "ordinary": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c"
+        },
+        {
+          "frame_index": 4,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 5,
+          "instrumented": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63",
+          "ordinary": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63"
+        },
+        {
+          "frame_index": 6,
+          "instrumented": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf",
+          "ordinary": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf"
+        },
+        {
+          "frame_index": 7,
+          "instrumented": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564",
+          "ordinary": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564"
+        }
+      ],
+      "scratch": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_11\\run_1\\frame_0_pass_11_instrumented.bin",
+          "size": 20880256,
+          "sha256": "84846d8c03fc066074c7d75989fb61dbcad8920f81b867f5ac0a37b48ecb0294"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_11\\run_1\\frame_0_pass_11_ordinary.bin",
+          "size": 20880256,
+          "sha256": "84846d8c03fc066074c7d75989fb61dbcad8920f81b867f5ac0a37b48ecb0294"
+        }
+      },
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_11\\run_1\\sequence.json"
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_11",
+      "pass": 11,
+      "repeat": 2,
+      "exit_code": 0,
+      "error": null,
+      "adapter": "AMD Radeon RX 5700 XT",
+      "driver_version": "0x00200000523503e8",
+      "build_commit": "afbd264958f94d7c5b146c51c5f7e2d02f8e5e0c",
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ],
+      "frame_hashes": [
+        {
+          "frame_index": 0,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 1,
+          "instrumented": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee",
+          "ordinary": "0ad8ea23cd646dd49410bf15c6dc56f845f100e31cef4e029061b22bdfb9c6ee"
+        },
+        {
+          "frame_index": 2,
+          "instrumented": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961",
+          "ordinary": "9498dc86f0e0f77af87c545098cb3eb0551f983fc96d9f0ab5c4205bfd142961"
+        },
+        {
+          "frame_index": 3,
+          "instrumented": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c",
+          "ordinary": "ea6673c452c968db664137b3fce6dffc22be1ac7d0631b80890ba9cf3f93097c"
+        },
+        {
+          "frame_index": 4,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 5,
+          "instrumented": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63",
+          "ordinary": "4125ba9c18a78f697aaad39f07a93ea4f05805e6da07ea9e5b7532e0e43efa63"
+        },
+        {
+          "frame_index": 6,
+          "instrumented": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf",
+          "ordinary": "6d56403a24d25480c580244890b3c815a4f8be9fd60567abcc418c9eda9ac3cf"
+        },
+        {
+          "frame_index": 7,
+          "instrumented": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564",
+          "ordinary": "4a1248aa74b80a03ad6830fc9d05cae695a7979ab7d6a77a332fbcf49a4c6564"
+        }
+      ],
+      "scratch": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_11\\run_2\\frame_0_pass_11_instrumented.bin",
+          "size": 20880256,
+          "sha256": "84846d8c03fc066074c7d75989fb61dbcad8920f81b867f5ac0a37b48ecb0294"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_11\\run_2\\frame_0_pass_11_ordinary.bin",
+          "size": 20880256,
+          "sha256": "84846d8c03fc066074c7d75989fb61dbcad8920f81b867f5ac0a37b48ecb0294"
+        }
+      },
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_11\\run_2\\sequence.json"
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_12",
+      "pass": 12,
+      "repeat": 1,
+      "exit_code": 0,
+      "error": null,
+      "adapter": "AMD Radeon RX 5700 XT",
+      "driver_version": "0x00200000523503e8",
+      "build_commit": "afbd264958f94d7c5b146c51c5f7e2d02f8e5e0c",
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ],
+      "frame_hashes": [
+        {
+          "frame_index": 0,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 1,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 2,
+          "instrumented": "8322e59244510ef268970d7896f05cee9ea682f633aca83583413590925ac095",
+          "ordinary": "8322e59244510ef268970d7896f05cee9ea682f633aca83583413590925ac095"
+        },
+        {
+          "frame_index": 3,
+          "instrumented": "1df133ead9e9bc1ee456952ad8d6e0e655dc61dcfdb92f85e73c26fc684f7be3",
+          "ordinary": "1df133ead9e9bc1ee456952ad8d6e0e655dc61dcfdb92f85e73c26fc684f7be3"
+        },
+        {
+          "frame_index": 4,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 5,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 6,
+          "instrumented": "f17fffbcd3264f887ce7202529e4d1b3cfb6c1d8e781bea287074411fa1a5b64",
+          "ordinary": "f17fffbcd3264f887ce7202529e4d1b3cfb6c1d8e781bea287074411fa1a5b64"
+        },
+        {
+          "frame_index": 7,
+          "instrumented": "1c19b03024c9e85fd2b126ea690ab9449a97f559943f3ab9acf208aa5a2bf3e1",
+          "ordinary": "1c19b03024c9e85fd2b126ea690ab9449a97f559943f3ab9acf208aa5a2bf3e1"
+        }
+      ],
+      "scratch": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_12\\run_1\\frame_0_pass_12_instrumented.bin",
+          "size": 20880256,
+          "sha256": "84846d8c03fc066074c7d75989fb61dbcad8920f81b867f5ac0a37b48ecb0294"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_12\\run_1\\frame_0_pass_12_ordinary.bin",
+          "size": 20880256,
+          "sha256": "84846d8c03fc066074c7d75989fb61dbcad8920f81b867f5ac0a37b48ecb0294"
+        }
+      },
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_12\\run_1\\sequence.json"
+    },
+    {
+      "seed": "zero",
+      "pass_name": "pass_12",
+      "pass": 12,
+      "repeat": 2,
+      "exit_code": 0,
+      "error": null,
+      "adapter": "AMD Radeon RX 5700 XT",
+      "driver_version": "0x00200000523503e8",
+      "build_commit": "afbd264958f94d7c5b146c51c5f7e2d02f8e5e0c",
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ],
+      "frame_hashes": [
+        {
+          "frame_index": 0,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 1,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 2,
+          "instrumented": "8322e59244510ef268970d7896f05cee9ea682f633aca83583413590925ac095",
+          "ordinary": "8322e59244510ef268970d7896f05cee9ea682f633aca83583413590925ac095"
+        },
+        {
+          "frame_index": 3,
+          "instrumented": "1df133ead9e9bc1ee456952ad8d6e0e655dc61dcfdb92f85e73c26fc684f7be3",
+          "ordinary": "1df133ead9e9bc1ee456952ad8d6e0e655dc61dcfdb92f85e73c26fc684f7be3"
+        },
+        {
+          "frame_index": 4,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 5,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 6,
+          "instrumented": "f17fffbcd3264f887ce7202529e4d1b3cfb6c1d8e781bea287074411fa1a5b64",
+          "ordinary": "f17fffbcd3264f887ce7202529e4d1b3cfb6c1d8e781bea287074411fa1a5b64"
+        },
+        {
+          "frame_index": 7,
+          "instrumented": "1c19b03024c9e85fd2b126ea690ab9449a97f559943f3ab9acf208aa5a2bf3e1",
+          "ordinary": "1c19b03024c9e85fd2b126ea690ab9449a97f559943f3ab9acf208aa5a2bf3e1"
+        }
+      ],
+      "scratch": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_12\\run_2\\frame_0_pass_12_instrumented.bin",
+          "size": 20880256,
+          "sha256": "84846d8c03fc066074c7d75989fb61dbcad8920f81b867f5ac0a37b48ecb0294"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_12\\run_2\\frame_0_pass_12_ordinary.bin",
+          "size": 20880256,
+          "sha256": "84846d8c03fc066074c7d75989fb61dbcad8920f81b867f5ac0a37b48ecb0294"
+        }
+      },
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\pass_12\\run_2\\sequence.json"
+    },
+    {
+      "seed": "zero",
+      "pass_name": "full",
+      "pass": null,
+      "repeat": 1,
+      "exit_code": 0,
+      "error": null,
+      "adapter": "AMD Radeon RX 5700 XT",
+      "driver_version": "0x00200000523503e8",
+      "build_commit": "afbd264958f94d7c5b146c51c5f7e2d02f8e5e0c",
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ],
+      "frame_hashes": [
+        {
+          "frame_index": 0,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 1,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 2,
+          "instrumented": "8322e59244510ef268970d7896f05cee9ea682f633aca83583413590925ac095",
+          "ordinary": "8322e59244510ef268970d7896f05cee9ea682f633aca83583413590925ac095"
+        },
+        {
+          "frame_index": 3,
+          "instrumented": "1df133ead9e9bc1ee456952ad8d6e0e655dc61dcfdb92f85e73c26fc684f7be3",
+          "ordinary": "1df133ead9e9bc1ee456952ad8d6e0e655dc61dcfdb92f85e73c26fc684f7be3"
+        },
+        {
+          "frame_index": 4,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 5,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 6,
+          "instrumented": "f17fffbcd3264f887ce7202529e4d1b3cfb6c1d8e781bea287074411fa1a5b64",
+          "ordinary": "f17fffbcd3264f887ce7202529e4d1b3cfb6c1d8e781bea287074411fa1a5b64"
+        },
+        {
+          "frame_index": 7,
+          "instrumented": "1c19b03024c9e85fd2b126ea690ab9449a97f559943f3ab9acf208aa5a2bf3e1",
+          "ordinary": "1c19b03024c9e85fd2b126ea690ab9449a97f559943f3ab9acf208aa5a2bf3e1"
+        }
+      ],
+      "scratch": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\full\\run_1\\frame_0_pass_full_instrumented.bin",
+          "size": 20880256,
+          "sha256": "84846d8c03fc066074c7d75989fb61dbcad8920f81b867f5ac0a37b48ecb0294"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\full\\run_1\\frame_0_pass_full_ordinary.bin",
+          "size": 20880256,
+          "sha256": "84846d8c03fc066074c7d75989fb61dbcad8920f81b867f5ac0a37b48ecb0294"
+        }
+      },
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\full\\run_1\\sequence.json"
+    },
+    {
+      "seed": "zero",
+      "pass_name": "full",
+      "pass": null,
+      "repeat": 2,
+      "exit_code": 0,
+      "error": null,
+      "adapter": "AMD Radeon RX 5700 XT",
+      "driver_version": "0x00200000523503e8",
+      "build_commit": "afbd264958f94d7c5b146c51c5f7e2d02f8e5e0c",
+      "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+      "input_hashes": [
+        "dd43834da5ab314c530ed08dd76a1e6c8c2194cb814ed077ca3b5f4dc22fc073",
+        "96265e367c1891036ee99c76e6df33965504247d611d165ec309a58f2118c25d",
+        "6aa4579ffdfe01a454c90acc254c4c8b801b48602124c228aed4c50226a254a6",
+        "2899f5130df84e8757b4ce3af6e84f4c1493f3100319266aaaf18b3194c33d76",
+        "80f53595e2a1022ddee279c27d4f1f0293b6cdc953ac76a8167bf634c4b712d7",
+        "09382be44b838fe5722a0984a9db67b7921fd92975c987670bff1c0e7ea1a94a",
+        "62bbfc956f3e8178c082ef110a23f2c2460a6e5a7cb88d2f64e793b16eb13c8d",
+        "f4ff2e6609dfcfaf2d03af29c7c05b7150ea7b0d00ae7db579ba981383cc01f3"
+      ],
+      "frame_hashes": [
+        {
+          "frame_index": 0,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 1,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 2,
+          "instrumented": "8322e59244510ef268970d7896f05cee9ea682f633aca83583413590925ac095",
+          "ordinary": "8322e59244510ef268970d7896f05cee9ea682f633aca83583413590925ac095"
+        },
+        {
+          "frame_index": 3,
+          "instrumented": "1df133ead9e9bc1ee456952ad8d6e0e655dc61dcfdb92f85e73c26fc684f7be3",
+          "ordinary": "1df133ead9e9bc1ee456952ad8d6e0e655dc61dcfdb92f85e73c26fc684f7be3"
+        },
+        {
+          "frame_index": 4,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 5,
+          "instrumented": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa",
+          "ordinary": "0c3b31bf3c9f4adec11e2b736e84b254cf3c5b4a89b9bc96f72987c48d27c7fa"
+        },
+        {
+          "frame_index": 6,
+          "instrumented": "f17fffbcd3264f887ce7202529e4d1b3cfb6c1d8e781bea287074411fa1a5b64",
+          "ordinary": "f17fffbcd3264f887ce7202529e4d1b3cfb6c1d8e781bea287074411fa1a5b64"
+        },
+        {
+          "frame_index": 7,
+          "instrumented": "1c19b03024c9e85fd2b126ea690ab9449a97f559943f3ab9acf208aa5a2bf3e1",
+          "ordinary": "1c19b03024c9e85fd2b126ea690ab9449a97f559943f3ab9acf208aa5a2bf3e1"
+        }
+      ],
+      "scratch": {
+        "instrumented": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\full\\run_2\\frame_0_pass_full_instrumented.bin",
+          "size": 20880256,
+          "sha256": "84846d8c03fc066074c7d75989fb61dbcad8920f81b867f5ac0a37b48ecb0294"
+        },
+        "ordinary": {
+          "path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\full\\run_2\\frame_0_pass_full_ordinary.bin",
+          "size": 20880256,
+          "sha256": "84846d8c03fc066074c7d75989fb61dbcad8920f81b867f5ac0a37b48ecb0294"
+        }
+      },
+      "report_path": "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\results-guard_intrinsic\\seed_zero\\full\\run_2\\sequence.json"
+    }
+  ]
+}

@@ -339,3 +339,49 @@ Machine-readable evidence is in
 `artifacts/results/fsr4-pass11-guard/`; raw scratch captures remain ignored in
 `build/pass11-guard-campaign/`. Source geometry, exact collision, command,
 and interpretation details are in `docs/PASS11_BOUNDS_ROOTCAUSE.md`.
+
+## Guarded I8 numeric bisector (2026-10-08)
+
+Executed the supplied numeric-bisector package on the RX 5700 XT after the
+Pass 11 bounds fix. Both guarded intrinsic and guarded global-scalar builds
+completed 28/28 cases without process failures. All comparisons used the same
+eight-frame procedural 1920x1080 sequence and aligned input hashes; each
+arithmetic mode was repeatable across two runs.
+
+The first different source-declared model output is Pass 1, `slice_2`
+(`960 x 540 x 16`, 8,294,400 bytes). Intrinsic and scalar differed in
+8,294,292 bytes (99.9987%). At `(x=0, y=0, channel=0)`, their signed-I8
+values were 127 and 25. Maximum absolute signed-I8 delta was 152; mean
+absolute delta was 125.8808 I8 units, or 3.4681 after the captured tensor
+scale. This is a large first-pass discrepancy, not a rounding-sized
+difference.
+
+The measured Pass 1 one-pass hybrid changed only the Pass 1 compiled model
+payload; 30 other shader selectors remained unchanged. The intrinsic and
+hybrid campaigns each completed 6/6 cases. Their first valid output
+difference is also at Pass 1. This confirms that the selected shader controls
+the observed output change, but it does not establish which arithmetic path
+matches AMD reference execution.
+
+The existing O0 checks pass for the guarded scalar build and fail for the
+guarded intrinsic build:
+
+| Guarded provider | Required O0 steps | Existing teacher gate | CPU POST replay |
+|---|---:|---:|---|
+| Intrinsic DOT4 | Failed | Closed | Non-finite model intermediates on 2,073,600/2,073,600 pixels at frames 0 and 4, and 2,073,544/2,073,600 at frame 7 |
+| Scalar signed-I8 DOT4 | Passed | Passed | Zero non-finite pixels; max errors 0.0004883, 0.0009766, and 0.0009766 at frames 0, 4, and 7 |
+
+Capture, repeatability, GPU POST, reference instrumentation parity, and the
+256-vector native-DOT4 conformance check passed in both variants. The scalar
+teacher gate pass applies to this synthetic sequence; it does not establish
+game quality, and the conformance microprobe does not prove the full intrinsic
+shader correct. No default arithmetic or guard option changed. No performance
+comparison is claimed.
+
+The full run used sequence SHA-256
+`a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2` on
+the RX 5700 XT (reported driver `0x00200000523503e8`), with pinned source
+commit `01446e6a74888bf349652fcf2cbf5f642d30c2bf`. Compact campaign and O0
+reports are in `artifacts/results/i8-numeric-bisector/`; raw captures remain
+ignored under `build/i8run/`. Interpretation and reproduction steps are in
+`docs/I8_NUMERIC_EXECUTION_RESULTS.md`.

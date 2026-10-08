@@ -1,0 +1,25 @@
+{
+    "Schema":  "f4n10.i8-complete-investigation.v1",
+    "Repository":  "C:\\src\\FSR4-Navi10",
+    "Sequence":  "C:\\src\\FSR4-Navi10\\build\\release\\delta-control-smoke.f4seq",
+    "NumericAnalysis":  "C:\\src\\FSR4-Navi10\\build\\i8run\\numeric-bisector\\analysis.json",
+    "FirstMeasuredDifferentPass":  1,
+    "AllPhasesPassed":  false,
+    "ProductionOrGameQualityProven":  false,
+    "Phases":  [
+                   {
+                       "Phase":  "numeric-bisector",
+                       "Passed":  true
+                   },
+                   {
+                       "Phase":  "one-pass-hybrid",
+                       "Pass":  1,
+                       "Passed":  true
+                   },
+                   {
+                       "Phase":  "original-o0-oracles",
+                       "Error":  "O0 gate remains closed in 1 variants. Inspect both audit summaries.",
+                       "Passed":  false
+                   }
+               ]
+}
