@@ -627,7 +627,7 @@ Investigate the observed 256-aligned Pass1 raw-INT32 intrinsic/scalar difference
 - [x] Run package tests (13/13), full Python tests (132/132), default-off Release build, and CTest (1/1).
 - [x] Execute the 256-mask inference and all candidate `dot0 -> acc0_0 -> final` gates on the RX 5700 XT; retain passing and failing reports.
 - [x] Run the unchanged O0 gate for all three Pass1-exact candidates; preserve the failure evidence.
-- [ ] Finish report/artifact review, `git diff --check`, verify defaults/vendor hashes, then commit and push this private branch without merging.
+- [x] Finish report/artifact review, `git diff --check`, verify defaults/vendor hashes, and commit/push this private branch without merging.
 
 ### Blockers
 
@@ -664,3 +664,6 @@ campaigns are in `artifacts/results/pass1-intrinsic-recovery/`; raw captures
 remain ignored in `build/p1fix/`. Package tests passed 13/13, the full Python
 suite 132/132, and the default Release CTest 1/1. The default CMake cache
 still has the experimental mode empty and production diagnostics OFF.
+The diagnostic implementation and evidence are committed as `3b28252` and
+pushed to private branch `fix/fsr4-pass11-nhws-bounds-race`; the branch remains
+unmerged.
