@@ -1,0 +1,13 @@
+{
+  "schema": "f4n10.scalar-teacher-gate.v1",
+  "teacher_eligible": false,
+  "cpu_post_ok": false,
+  "gpu_post_ok": true,
+  "instrumentation_ok": true,
+  "sequence_alignment_ok": true,
+  "aligned_frame_count": 8,
+  "fsr3_basis_audit_ok": true,
+  "run_to_run_repeatability_ok": true,
+  "native_dot4_matches_scalar": true,
+  "next_action": "Keep O1-O13 locked. Fix: corrected CPU POST replay."
+}

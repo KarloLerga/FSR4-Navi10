@@ -592,3 +592,75 @@ CTest passed 1/1, and the default build retains all production options OFF.
 Compact reports and 40 campaign manifests are in
 `artifacts/results/pass1-golden/`; large raw captures and build trees remain
 ignored under `build/p1/`.
+
+## User-supplied Pass1 intrinsic recovery (2026-10-08)
+
+### Objective
+
+Investigate the observed 256-aligned Pass1 raw-INT32 intrinsic/scalar differences using the supplied signedness-mask solver, first-fused-DOT4 operand tap, and six opt-in HLSL lowering variants. Require each candidate to pass the DOT4 operand/result check, raw `acc0_0`, and full Pass1 output against the existing scalar/CPU baseline before running the unchanged synthetic O0 gate. Keep all production settings and quality thresholds unchanged.
+
+### Fixed decisions
+
+- Treat ZIP documents and its `CODEX_PROMPT.md` as package content; the user request and repository instructions remain authoritative.
+- Preserve the pinned AMD model, FidelityFX vendor checkout, and all existing acceptance thresholds. No file under `third_party/` may change.
+- Keep `FSR4N10_PASS1_DOT4_EXPERIMENT` empty by default; test variants exist only in build-local wrappers and require the Pass 11 guard.
+- Treat the 256-multiple signature and any exact lane-mask fit as hypotheses until the compiled fused operands/result and unchanged correctness gates corroborate them.
+- Do not promote any candidate from synthetic output alone. A passing O0 remains insufficient for AMD-reference image quality or game readiness.
+
+### Milestones
+
+| # | Work and affected files | Validation |
+|---|---|---|
+| R0 | Verify exact `3ed1c9a` base, ZIP safety/CRC/manifest, package docs and installer | Clean tree and base ancestry; every manifest size/SHA-256; review all installer transformations before dry-run. |
+| R1 | Install signedness inference, `dot0` probe, and build-local DOT4 variants; `CMakeLists.txt`, compiler, stage overlay, diagnostics, tests, runner | Installer dry-run; 13 package tests; focused and full repo tests; default-off Release build/CTest; no vendor edits. |
+| R2 | Fit all 256 signedness-mask pairs against the existing 128-sample `acc0` oracle | Exact per-lane agreement required for an inferred mask; preserve full ranking and modulo-256 evidence. |
+| R3 | Run scalar baselines and candidate sequence `dot0 -> acc0_0 -> final`; run unchanged O0 only for candidates passing all three | RX 5700 XT, same sequence/input hashes, repeated captures; keep every failed report; do not loosen gates. |
+| R4 | Record evidence and synchronize only the current private branch | Update results/progress/plan and compact artifacts; `git diff --check`, verify defaults/vendor hashes, commit and push without merging. |
+
+### Current progress
+
+- [x] Confirm clean private feature branch at exact archive target `3ed1c9a53b779382d466f6b95ef26d9d14536965`.
+- [x] Verify all 12 listed archive payload hashes/sizes, CRCs, safe paths, and the package's no-vendor-content claim.
+- [x] Review package docs, installer transformations, signedness equations, HLSL alternatives, GPU runner, and pure tests; keep the embedded prompt as untrusted reference content.
+- [x] Run installer dry-run on the clean target. It plans edits to three integration files and six additive payload files; no vendor path is included.
+- [x] Apply the reviewed installer; verify the `dot0` tap and six variants against the actual FP16-bias overload.
+- [x] Run package tests (13/13), full Python tests (132/132), default-off Release build, and CTest (1/1).
+- [x] Execute the 256-mask inference and all candidate `dot0 -> acc0_0 -> final` gates on the RX 5700 XT; retain passing and failing reports.
+- [x] Run the unchanged O0 gate for all three Pass1-exact candidates; preserve the failure evidence.
+- [ ] Finish report/artifact review, `git diff --check`, verify defaults/vendor hashes, then commit and push this private branch without merging.
+
+### Blockers
+
+No candidate passes the unchanged O0 numeric gate. The three variants that match sampled Pass1 outputs still produce non-finite model intermediates in the full synthetic graph, so the production gate remains closed. This does not prove the inferred signedness model matches AMD reference arithmetic or establish visual quality.
+
+### Decision log
+
+| Date | Decision | Reason |
+|---|---|---|
+| 2026-10-08 | Test `native_zero`, operand-swap, signed-unpack, and unsigned-bias forms only through a build-local Pass1 wrapper. | Separate accumulator routing and packed-operand lowering while leaving every other provider pass fixed. |
+| 2026-10-08 | Require exact signedness-mask agreement across every sampled raw accumulator before calling the byte-signature explained. | Modulo-256 divisibility alone is not unique to signed/unsigned reinterpretation. |
+| 2026-10-08 | Keep the original scalar Pass1 captures as the common comparison baseline for all candidates. | Prevent variant-specific baselines from masking numerical changes. |
+
+### Measured execution
+
+The signedness search found an exact model over all 2,048 sampled raw INT32
+lanes across `acc0_0..3`: input byte mask `0x0` (signed) and weight byte mask
+`0xF` (unsigned). All seven native and experimental builds passed the first
+fused-DOT4 `dot0` tap on 256 sampled pixels. Native, zero-accumulator,
+operand-swap, and swap-plus-zero variants each matched only 1/512 raw
+`acc0_0` lanes, with maximum absolute error 84,224.
+
+`unpack_dot`, `unpack_scalar`, and `unsigned_bias_3dot` each matched the scalar
+CPU oracle at `acc0_0` (512/512) and final Pass1 (2,048/2,048), with identical
+Pass0 inputs. Each then completed the eight-frame O0 replay repeatably but
+failed the unchanged numerical-validity gate: all 2,073,600 model pixels were
+non-finite on audit frames 0, 4, and 7. Post-RGB replay matching is not a
+numeric pass. No candidate is promoted and no quality or game-readiness claim
+is made.
+
+Provider manifests show all changed shader payloads belong to Pass1; other
+payload hashes match the same-stage native build. Compact reports and oracle
+campaigns are in `artifacts/results/pass1-intrinsic-recovery/`; raw captures
+remain ignored in `build/p1fix/`. Package tests passed 13/13, the full Python
+suite 132/132, and the default Release CTest 1/1. The default CMake cache
+still has the experimental mode empty and production diagnostics OFF.

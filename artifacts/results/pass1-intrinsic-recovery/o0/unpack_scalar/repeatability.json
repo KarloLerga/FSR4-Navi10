@@ -1,0 +1,39 @@
+{
+  "schema": "f4n10.fsr4-sequence-repeatability.v1",
+  "first_report_build_commit": "3ed1c9a53b779382d466f6b95ef26d9d14536965",
+  "repeat_report_build_commit": "3ed1c9a53b779382d466f6b95ef26d9d14536965",
+  "sequence_hash": "a06357453979901689f4f9c8ff2400a1efe5b9547e017a7fa4cf5219ba157ec2",
+  "adapter": "AMD Radeon RX 5700 XT",
+  "driver_version": "0x00200000523503e8",
+  "same_provenance": true,
+  "same_inputs": true,
+  "frames_compared": 8,
+  "instrumented_outputs_repeatable": true,
+  "ordinary_outputs_repeatable": true,
+  "instrumented_changed_frames": [],
+  "ordinary_changed_frames": [],
+  "captured_audit_arrays_repeatable": true,
+  "capture_array_audit": {
+    "audit_frames": [
+      0,
+      4,
+      7
+    ],
+    "all_array_hashes_repeatable": true,
+    "frames": [
+      {
+        "frame_index": 0,
+        "changed_arrays": []
+      },
+      {
+        "frame_index": 4,
+        "changed_arrays": []
+      },
+      {
+        "frame_index": 7,
+        "changed_arrays": []
+      }
+    ]
+  },
+  "repeatable": true
+}

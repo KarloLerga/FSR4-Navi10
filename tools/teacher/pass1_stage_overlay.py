@@ -23,7 +23,7 @@ SENTINEL = 'FSR4N10_PASS1_STAGE_PROBE_V1'
 
 
 def valid_stage(value: str) -> bool:
-    if value in {'q0','q1lo','q1hi'}:
+    if value in {'q0','q1lo','q1hi','dot0'}:
         return True
     m=re.fullmatch(r'acc([012])_([0-7])',value)
     if not m:
@@ -35,6 +35,22 @@ def valid_stage(value: str) -> bool:
 def _injection(stage: str) -> tuple[str,str]:
     if not valid_stage(stage):
         raise ValueError(f'invalid Pass1 diagnostic stage {stage}')
+    if stage == 'dot0':
+        # Stop at the first actually evaluated signed DOT4 in Pass1 ConvNextBlock.
+        # Record input word, weight word, initial accumulator, and computed result.
+        # The FP16-bias overload has a zero-initialized acc0. Output is NOT RGB.
+        anchor='const uint4 weightsDwords = weights0.storage.Load4(weightsOffset);'
+        snippet=f'''if (f == 0 && c == 0)
+                            {{
+                                const uint probeA = uint(vs[inputIndex]);
+                                const uint probeB = weightsDwords.x;
+                                const int probeAcc = accumulator[f];
+                                const int probeResult = dot4add_i8packed(vs[inputIndex], weightsDwords.x, probeAcc);
+                                output.storage.Store4(output.OffsetOf(poBase),
+                                    uint4(probeA, probeB, asuint(probeAcc), asuint(probeResult)));
+                                return;
+                            }}'''
+        return anchor, snippet
     if stage == 'q0':
         anchor='            // Second Convolution + Relu'
         values='uint4(conv_result[0], conv_result[1], conv_result[2], conv_result[3])'
@@ -90,7 +106,7 @@ def guarded_operator(source: str,stage: str) -> str:
     anchor,insertion=_injection(stage)
     if part.count(anchor)!=1:
         raise ValueError(f'probe location changed for {stage}; count={part.count(anchor)}')
-    part=part.replace(anchor,insertion+anchor,1)
+    part=part.replace(anchor,anchor+'\n                            '+insertion if stage == 'dot0' else insertion+anchor,1)
     return source[:start]+part+source[stop:]
 
 

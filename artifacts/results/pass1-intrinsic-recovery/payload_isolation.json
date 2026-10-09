@@ -1,0 +1,139 @@
+{
+  "schema": "f4n10.pass1-intrinsic-recovery-payload-isolation.v1",
+  "baseline": "native-dot0 build nd",
+  "comparison": "content hashes in provider manifests; selector metadata counted separately",
+  "variants": [
+    {
+      "variant": "native_zero",
+      "outputs_per_build": 254,
+      "shared_output_files": 253,
+      "changed_selector_files": 4,
+      "changed_payload_files": [
+        "fsr4_model_v07_i8_native_1080_1_3db0a39e3a99b955bdb5ca4cd0fba956.h",
+        "fsr4_model_v07_i8_native_1080_1_d8e71dd81b3a790820cc7fe0d17ae546.h"
+      ],
+      "all_changed_payloads_are_pass1": true,
+      "unchanged_nonpass1_payload_count": 221,
+      "non_pass1_payload_differences": [],
+      "diagnostic_modes": {
+        "pass11_bounds_guard": true,
+        "pass1_dot4_experiment": "native_zero",
+        "pass1_probe_stage": "dot0",
+        "scalar_dot4": false,
+        "scalar_dot4_pass_set": [],
+        "scalar_dot4_semantics": "HLSL dot4add_i8packed intrinsic",
+        "stable_post_math": false
+      }
+    },
+    {
+      "variant": "native_swap",
+      "outputs_per_build": 254,
+      "shared_output_files": 253,
+      "changed_selector_files": 5,
+      "changed_payload_files": [
+        "fsr4_model_v07_i8_native_1080_1_2fac275f9293a45b77517d08ac1ebd5a.h",
+        "fsr4_model_v07_i8_native_1080_1_d8e71dd81b3a790820cc7fe0d17ae546.h"
+      ],
+      "all_changed_payloads_are_pass1": true,
+      "unchanged_nonpass1_payload_count": 221,
+      "non_pass1_payload_differences": [],
+      "diagnostic_modes": {
+        "pass11_bounds_guard": true,
+        "pass1_dot4_experiment": "native_swap",
+        "pass1_probe_stage": "dot0",
+        "scalar_dot4": false,
+        "scalar_dot4_pass_set": [],
+        "scalar_dot4_semantics": "HLSL dot4add_i8packed intrinsic",
+        "stable_post_math": false
+      }
+    },
+    {
+      "variant": "native_swap_zero",
+      "outputs_per_build": 254,
+      "shared_output_files": 253,
+      "changed_selector_files": 5,
+      "changed_payload_files": [
+        "fsr4_model_v07_i8_native_1080_1_2fac275f9293a45b77517d08ac1ebd5a.h",
+        "fsr4_model_v07_i8_native_1080_1_d8e71dd81b3a790820cc7fe0d17ae546.h"
+      ],
+      "all_changed_payloads_are_pass1": true,
+      "unchanged_nonpass1_payload_count": 221,
+      "non_pass1_payload_differences": [],
+      "diagnostic_modes": {
+        "pass11_bounds_guard": true,
+        "pass1_dot4_experiment": "native_swap_zero",
+        "pass1_probe_stage": "dot0",
+        "scalar_dot4": false,
+        "scalar_dot4_pass_set": [],
+        "scalar_dot4_semantics": "HLSL dot4add_i8packed intrinsic",
+        "stable_post_math": false
+      }
+    },
+    {
+      "variant": "unpack_dot",
+      "outputs_per_build": 254,
+      "shared_output_files": 253,
+      "changed_selector_files": 3,
+      "changed_payload_files": [
+        "fsr4_model_v07_i8_native_1080_1_12016ce93949de3190610e352404b232.h",
+        "fsr4_model_v07_i8_native_1080_1_d8e71dd81b3a790820cc7fe0d17ae546.h"
+      ],
+      "all_changed_payloads_are_pass1": true,
+      "unchanged_nonpass1_payload_count": 221,
+      "non_pass1_payload_differences": [],
+      "diagnostic_modes": {
+        "pass11_bounds_guard": true,
+        "pass1_dot4_experiment": "unpack_dot",
+        "pass1_probe_stage": "dot0",
+        "scalar_dot4": false,
+        "scalar_dot4_pass_set": [],
+        "scalar_dot4_semantics": "HLSL dot4add_i8packed intrinsic",
+        "stable_post_math": false
+      }
+    },
+    {
+      "variant": "unpack_scalar",
+      "outputs_per_build": 254,
+      "shared_output_files": 253,
+      "changed_selector_files": 3,
+      "changed_payload_files": [
+        "fsr4_model_v07_i8_native_1080_1_5c8161d03e4df7fe6087c5afe935d764.h",
+        "fsr4_model_v07_i8_native_1080_1_d8e71dd81b3a790820cc7fe0d17ae546.h"
+      ],
+      "all_changed_payloads_are_pass1": true,
+      "unchanged_nonpass1_payload_count": 221,
+      "non_pass1_payload_differences": [],
+      "diagnostic_modes": {
+        "pass11_bounds_guard": true,
+        "pass1_dot4_experiment": "unpack_scalar",
+        "pass1_probe_stage": "dot0",
+        "scalar_dot4": false,
+        "scalar_dot4_pass_set": [],
+        "scalar_dot4_semantics": "HLSL dot4add_i8packed intrinsic",
+        "stable_post_math": false
+      }
+    },
+    {
+      "variant": "unsigned_bias_3dot",
+      "outputs_per_build": 254,
+      "shared_output_files": 253,
+      "changed_selector_files": 5,
+      "changed_payload_files": [
+        "fsr4_model_v07_i8_native_1080_1_c82f3d248ee029680a7ab9ebe3dff8ea.h",
+        "fsr4_model_v07_i8_native_1080_1_d8e71dd81b3a790820cc7fe0d17ae546.h"
+      ],
+      "all_changed_payloads_are_pass1": true,
+      "unchanged_nonpass1_payload_count": 221,
+      "non_pass1_payload_differences": [],
+      "diagnostic_modes": {
+        "pass11_bounds_guard": true,
+        "pass1_dot4_experiment": "unsigned_bias_3dot",
+        "pass1_probe_stage": "dot0",
+        "scalar_dot4": false,
+        "scalar_dot4_pass_set": [],
+        "scalar_dot4_semantics": "HLSL dot4add_i8packed intrinsic",
+        "stable_post_math": false
+      }
+    }
+  ]
+}

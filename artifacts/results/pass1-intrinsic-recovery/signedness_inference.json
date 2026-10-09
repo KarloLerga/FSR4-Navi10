@@ -1,0 +1,143 @@
+{
+  "schema": "f4n10.pass1-signedness-inference.v1",
+  "source_sha256": "e9a217349527a584cea67c6277fa092524aa638e8017e808e7a89e172e462157",
+  "samples": 128,
+  "channels": 16,
+  "acc0_mismatch_count": 2045,
+  "all_observed_acc0_errors_multiples_of_256": true,
+  "observed_error_mod_256_histogram": {
+    "0": 2048
+  },
+  "winning_model": {
+    "input_unsigned_lane_mask": 0,
+    "weight_unsigned_lane_mask": 15,
+    "exact_lanes": 2048,
+    "total_lanes": 2048,
+    "max_abs_error": 0,
+    "mean_abs_error": 0.0
+  },
+  "exact_signedness_model_found": true,
+  "top_models": [
+    {
+      "input_unsigned_lane_mask": 0,
+      "weight_unsigned_lane_mask": 15,
+      "exact_lanes": 2048,
+      "total_lanes": 2048,
+      "max_abs_error": 0,
+      "mean_abs_error": 0.0
+    },
+    {
+      "input_unsigned_lane_mask": 0,
+      "weight_unsigned_lane_mask": 11,
+      "exact_lanes": 17,
+      "total_lanes": 2048,
+      "max_abs_error": 25856,
+      "mean_abs_error": 9839.125
+    },
+    {
+      "input_unsigned_lane_mask": 0,
+      "weight_unsigned_lane_mask": 7,
+      "exact_lanes": 11,
+      "total_lanes": 2048,
+      "max_abs_error": 45312,
+      "mean_abs_error": 12798.5
+    },
+    {
+      "input_unsigned_lane_mask": 4,
+      "weight_unsigned_lane_mask": 3,
+      "exact_lanes": 10,
+      "total_lanes": 2048,
+      "max_abs_error": 64512,
+      "mean_abs_error": 18328.875
+    },
+    {
+      "input_unsigned_lane_mask": 1,
+      "weight_unsigned_lane_mask": 14,
+      "exact_lanes": 10,
+      "total_lanes": 2048,
+      "max_abs_error": 91648,
+      "mean_abs_error": 33217.75
+    },
+    {
+      "input_unsigned_lane_mask": 0,
+      "weight_unsigned_lane_mask": 3,
+      "exact_lanes": 8,
+      "total_lanes": 2048,
+      "max_abs_error": 62976,
+      "mean_abs_error": 17228.875
+    },
+    {
+      "input_unsigned_lane_mask": 0,
+      "weight_unsigned_lane_mask": 10,
+      "exact_lanes": 8,
+      "total_lanes": 2048,
+      "max_abs_error": 65792,
+      "mean_abs_error": 23037.75
+    },
+    {
+      "input_unsigned_lane_mask": 13,
+      "weight_unsigned_lane_mask": 2,
+      "exact_lanes": 8,
+      "total_lanes": 2048,
+      "max_abs_error": 117248,
+      "mean_abs_error": 39896.875
+    },
+    {
+      "input_unsigned_lane_mask": 9,
+      "weight_unsigned_lane_mask": 0,
+      "exact_lanes": 8,
+      "total_lanes": 2048,
+      "max_abs_error": 133120,
+      "mean_abs_error": 46159.5
+    },
+    {
+      "input_unsigned_lane_mask": 0,
+      "weight_unsigned_lane_mask": 14,
+      "exact_lanes": 7,
+      "total_lanes": 2048,
+      "max_abs_error": 61696,
+      "mean_abs_error": 26828.375
+    },
+    {
+      "input_unsigned_lane_mask": 6,
+      "weight_unsigned_lane_mask": 1,
+      "exact_lanes": 7,
+      "total_lanes": 2048,
+      "max_abs_error": 106752,
+      "mean_abs_error": 30718.875
+    },
+    {
+      "input_unsigned_lane_mask": 2,
+      "weight_unsigned_lane_mask": 8,
+      "exact_lanes": 7,
+      "total_lanes": 2048,
+      "max_abs_error": 98304,
+      "mean_abs_error": 32425.25
+    },
+    {
+      "input_unsigned_lane_mask": 12,
+      "weight_unsigned_lane_mask": 2,
+      "exact_lanes": 7,
+      "total_lanes": 2048,
+      "max_abs_error": 113920,
+      "mean_abs_error": 32562.5
+    },
+    {
+      "input_unsigned_lane_mask": 14,
+      "weight_unsigned_lane_mask": 0,
+      "exact_lanes": 7,
+      "total_lanes": 2048,
+      "max_abs_error": 128000,
+      "mean_abs_error": 38961.25
+    },
+    {
+      "input_unsigned_lane_mask": 11,
+      "weight_unsigned_lane_mask": 0,
+      "exact_lanes": 7,
+      "total_lanes": 2048,
+      "max_abs_error": 122880,
+      "mean_abs_error": 45428.875
+    }
+  ],
+  "interpretation": "Identified a global four-byte-lane sign mask consistent with all sampled output. Still verify actual FFX_SC/DXIL operands and AMD reference before production."
+}

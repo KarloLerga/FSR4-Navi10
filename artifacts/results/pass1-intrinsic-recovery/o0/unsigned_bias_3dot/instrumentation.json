@@ -1,0 +1,31 @@
+{
+  "schema": "f4n10.instrumented-reference-numeric.v1",
+  "capture_count": 3,
+  "numerically_close": true,
+  "frames": [
+    {
+      "frame_index": 0,
+      "exact_fraction": 1.0,
+      "within_1e_3_fraction": 1.0,
+      "max_absolute_error": 0.0,
+      "mean_absolute_error": 0.0,
+      "rms_error": 0.0
+    },
+    {
+      "frame_index": 4,
+      "exact_fraction": 1.0,
+      "within_1e_3_fraction": 1.0,
+      "max_absolute_error": 0.0,
+      "mean_absolute_error": 0.0,
+      "rms_error": 0.0
+    },
+    {
+      "frame_index": 7,
+      "exact_fraction": 1.0,
+      "within_1e_3_fraction": 1.0,
+      "max_absolute_error": 0.0,
+      "mean_absolute_error": 0.0,
+      "rms_error": 0.0
+    }
+  ]
+}

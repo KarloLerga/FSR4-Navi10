@@ -127,3 +127,10 @@ The standalone harness lists adapters, runs a generic FP16 arithmetic probe, val
 - Completed all 20 Pass1 stage probes and 160/160 fresh-process GPU cases on the RX 5700 XT with matched paired inputs. The scalar path matches the CPU INT32 oracle across every sampled stage; intrinsic first diverges in raw Pass0 `acc0_0`.
 - Standalone native/scalar/exact-compiler-macro DOT4 conformance passes 4096/4096. This does not validate the intrinsic inside the fused model shader; no arithmetic-path correctness, quality, or game-readiness conclusion is made.
 - Added compact oracle and campaign JSON to `artifacts/results/pass1-golden/`; large captures remain ignored in `build/p1/`. All diagnostic build switches retain their previous defaults.
+
+### Pass1 intrinsic recovery (2026-10-09)
+
+- Reviewed and integrated the signedness solver, fused `dot0` tap, and six build-local HLSL variants from the supplied archive. No files under `third_party/` changed.
+- The signedness mask predicts 2,048/2,048 sampled raw accumulator lanes as signed inputs with unsigned weights. All seven variants pass `dot0`; `unpack_dot`, `unpack_scalar`, and `unsigned_bias_3dot` also match `acc0_0` and final Pass1 exactly on the sampled data.
+- All three Pass1-exact candidates fail the existing synthetic O0 numeric gate because all 2,073,600 audited model pixels are non-finite at frames 0, 4, and 7. Their eight-frame outputs are repeatable; the production gate stays closed.
+- Package tests passed 13/13, the full Python suite 132/132, and default Release CTest 1/1. Production options remain OFF/empty. Compact measurements are in `artifacts/results/pass1-intrinsic-recovery/`; raw replay captures remain ignored in `build/p1fix/`.

@@ -1,0 +1,125 @@
+{
+  "schema": "f4n10.pass1-intrinsic-recovery-o0-findings.v1",
+  "candidates": [
+    {
+      "variant": "unpack_dot",
+      "required_steps_all_passed": false,
+      "repeatability_passed": true,
+      "frames_compared": 8,
+      "adapter": "AMD Radeon RX 5700 XT",
+      "driver_version": "0x00200000523503e8",
+      "cpu_post": {
+        "all_captures_passed": false,
+        "all_intermediates_numerically_valid": false,
+        "capture_packages_validated": true,
+        "capture_set_consistent": true,
+        "per_channel_absolute_tolerance": 0.001,
+        "post_rgb_replay_matches": true,
+        "quality_claimed": false
+      },
+      "audited_frames": [
+        {
+          "frame_index": 0,
+          "passed": false,
+          "rgb_match": true,
+          "numerically_valid": false,
+          "nonfinite_model_pixels": 2073600
+        },
+        {
+          "frame_index": 4,
+          "passed": false,
+          "rgb_match": true,
+          "numerically_valid": false,
+          "nonfinite_model_pixels": 2073600
+        },
+        {
+          "frame_index": 7,
+          "passed": false,
+          "rgb_match": true,
+          "numerically_valid": false,
+          "nonfinite_model_pixels": 2073600
+        }
+      ]
+    },
+    {
+      "variant": "unpack_scalar",
+      "required_steps_all_passed": false,
+      "repeatability_passed": true,
+      "frames_compared": 8,
+      "adapter": "AMD Radeon RX 5700 XT",
+      "driver_version": "0x00200000523503e8",
+      "cpu_post": {
+        "all_captures_passed": false,
+        "all_intermediates_numerically_valid": false,
+        "capture_packages_validated": true,
+        "capture_set_consistent": true,
+        "per_channel_absolute_tolerance": 0.001,
+        "post_rgb_replay_matches": true,
+        "quality_claimed": false
+      },
+      "audited_frames": [
+        {
+          "frame_index": 0,
+          "passed": false,
+          "rgb_match": true,
+          "numerically_valid": false,
+          "nonfinite_model_pixels": 2073600
+        },
+        {
+          "frame_index": 4,
+          "passed": false,
+          "rgb_match": true,
+          "numerically_valid": false,
+          "nonfinite_model_pixels": 2073600
+        },
+        {
+          "frame_index": 7,
+          "passed": false,
+          "rgb_match": true,
+          "numerically_valid": false,
+          "nonfinite_model_pixels": 2073600
+        }
+      ]
+    },
+    {
+      "variant": "unsigned_bias_3dot",
+      "required_steps_all_passed": false,
+      "repeatability_passed": true,
+      "frames_compared": 8,
+      "adapter": "AMD Radeon RX 5700 XT",
+      "driver_version": "0x00200000523503e8",
+      "cpu_post": {
+        "all_captures_passed": false,
+        "all_intermediates_numerically_valid": false,
+        "capture_packages_validated": true,
+        "capture_set_consistent": true,
+        "per_channel_absolute_tolerance": 0.001,
+        "post_rgb_replay_matches": true,
+        "quality_claimed": false
+      },
+      "audited_frames": [
+        {
+          "frame_index": 0,
+          "passed": false,
+          "rgb_match": true,
+          "numerically_valid": false,
+          "nonfinite_model_pixels": 2073600
+        },
+        {
+          "frame_index": 4,
+          "passed": false,
+          "rgb_match": true,
+          "numerically_valid": false,
+          "nonfinite_model_pixels": 2073600
+        },
+        {
+          "frame_index": 7,
+          "passed": false,
+          "rgb_match": true,
+          "numerically_valid": false,
+          "nonfinite_model_pixels": 2073600
+        }
+      ]
+    }
+  ]
+}

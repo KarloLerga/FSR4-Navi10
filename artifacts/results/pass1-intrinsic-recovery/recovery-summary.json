@@ -1,0 +1,2387 @@
+{
+  "schema": "f4n10.pass1-native-lowering-campaign.v1",
+  "baseline_commit": "3ed1c9a53b779382d466f6b95ef26d9d14536965",
+  "repository": "C:\\src\\FSR4-Navi10",
+  "sequence": "C:\\src\\FSR4-Navi10\\build\\release\\delta-control-smoke.f4seq",
+  "sequence_sha256": "41864abbd46180126b1b945a84428a9f55bd44d7cfb3b337cdd02f64841bf2b3",
+  "variants": {
+    "scalar:dot0": {
+      "campaign": "C:\\src\\FSR4-Navi10\\build\\p1fix\\csd\\campaign.json",
+      "steps": [
+        {
+          "name": "cfgsd",
+          "command": [
+            "cmake",
+            "-S",
+            "C:\\src\\FSR4-Navi10",
+            "-B",
+            "C:\\src\\FSR4-Navi10\\build\\p1fix\\sd",
+            "-G",
+            "Ninja",
+            "-DPython3_EXECUTABLE:FILEPATH=C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+            "-DCMAKE_BUILD_TYPE=Release",
+            "-DFSR4N10_PASS11_BOUNDS_GUARD=ON",
+            "-DFSR4N10_FORCE_GLOBAL_UAV_BARRIER=OFF",
+            "-DFSR4N10_ENABLE_PASS_PREFIX_DIAGNOSTIC=ON",
+            "-DFSR4N10_STABLE_POST_MATH=OFF",
+            "-DFSR4N10_FORCE_SCALAR_DOT4=ON",
+            "-DFSR4N10_SCALAR_DOT4_PASS_SET=",
+            "-DFSR4N10_PASS1_DOT4_EXPERIMENT=",
+            "-DFSR4N10_PASS1_PROBE_STAGE=dot0"
+          ],
+          "passed": true,
+          "exit_code": 0,
+          "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgsd.stdout.txt",
+          "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgsd.stderr.txt"
+        },
+        {
+          "name": "bldsd",
+          "command": [
+            "cmake",
+            "--build",
+            "C:\\src\\FSR4-Navi10\\build\\p1fix\\sd",
+            "--config",
+            "Release",
+            "--target",
+            "fsr4n10_harness"
+          ],
+          "passed": true,
+          "exit_code": 0,
+          "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldsd.stdout.txt",
+          "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldsd.stderr.txt"
+        },
+        {
+          "name": "campsd",
+          "command": [
+            "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+            "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\run_i8_numeric_bisector.py",
+            "--harness",
+            "C:\\src\\FSR4-Navi10\\build\\p1fix\\sd\\fsr4n10_harness.exe",
+            "--sequence",
+            "C:\\src\\FSR4-Navi10\\build\\release\\delta-control-smoke.f4seq",
+            "--output",
+            "C:\\src\\FSR4-Navi10\\build\\p1fix\\csd",
+            "--variant",
+            "scalar-dot0",
+            "--arithmetic",
+            "scalar",
+            "--stages",
+            "0",
+            "1",
+            "--seeds",
+            "zero",
+            "--repeats",
+            "2",
+            "--trace-frame",
+            "0"
+          ],
+          "passed": true,
+          "exit_code": 0,
+          "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campsd.stdout.txt",
+          "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campsd.stderr.txt"
+        }
+      ],
+      "passed": true
+    },
+    "scalar:acc0_0": {
+      "campaign": "C:\\src\\FSR4-Navi10\\build\\p1fix\\csa\\campaign.json",
+      "steps": [
+        {
+          "name": "cfgsa",
+          "command": [
+            "cmake",
+            "-S",
+            "C:\\src\\FSR4-Navi10",
+            "-B",
+            "C:\\src\\FSR4-Navi10\\build\\p1fix\\sa",
+            "-G",
+            "Ninja",
+            "-DPython3_EXECUTABLE:FILEPATH=C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+            "-DCMAKE_BUILD_TYPE=Release",
+            "-DFSR4N10_PASS11_BOUNDS_GUARD=ON",
+            "-DFSR4N10_FORCE_GLOBAL_UAV_BARRIER=OFF",
+            "-DFSR4N10_ENABLE_PASS_PREFIX_DIAGNOSTIC=ON",
+            "-DFSR4N10_STABLE_POST_MATH=OFF",
+            "-DFSR4N10_FORCE_SCALAR_DOT4=ON",
+            "-DFSR4N10_SCALAR_DOT4_PASS_SET=",
+            "-DFSR4N10_PASS1_DOT4_EXPERIMENT=",
+            "-DFSR4N10_PASS1_PROBE_STAGE=acc0_0"
+          ],
+          "passed": true,
+          "exit_code": 0,
+          "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgsa.stdout.txt",
+          "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgsa.stderr.txt"
+        },
+        {
+          "name": "bldsa",
+          "command": [
+            "cmake",
+            "--build",
+            "C:\\src\\FSR4-Navi10\\build\\p1fix\\sa",
+            "--config",
+            "Release",
+            "--target",
+            "fsr4n10_harness"
+          ],
+          "passed": true,
+          "exit_code": 0,
+          "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldsa.stdout.txt",
+          "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldsa.stderr.txt"
+        },
+        {
+          "name": "campsa",
+          "command": [
+            "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+            "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\run_i8_numeric_bisector.py",
+            "--harness",
+            "C:\\src\\FSR4-Navi10\\build\\p1fix\\sa\\fsr4n10_harness.exe",
+            "--sequence",
+            "C:\\src\\FSR4-Navi10\\build\\release\\delta-control-smoke.f4seq",
+            "--output",
+            "C:\\src\\FSR4-Navi10\\build\\p1fix\\csa",
+            "--variant",
+            "scalar-acc0_0",
+            "--arithmetic",
+            "scalar",
+            "--stages",
+            "0",
+            "1",
+            "--seeds",
+            "zero",
+            "--repeats",
+            "2",
+            "--trace-frame",
+            "0"
+          ],
+          "passed": true,
+          "exit_code": 0,
+          "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campsa.stdout.txt",
+          "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campsa.stderr.txt"
+        }
+      ],
+      "passed": true
+    },
+    "scalar:final": {
+      "campaign": "C:\\src\\FSR4-Navi10\\build\\p1fix\\csf\\campaign.json",
+      "steps": [
+        {
+          "name": "cfgsf",
+          "command": [
+            "cmake",
+            "-S",
+            "C:\\src\\FSR4-Navi10",
+            "-B",
+            "C:\\src\\FSR4-Navi10\\build\\p1fix\\sf",
+            "-G",
+            "Ninja",
+            "-DPython3_EXECUTABLE:FILEPATH=C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+            "-DCMAKE_BUILD_TYPE=Release",
+            "-DFSR4N10_PASS11_BOUNDS_GUARD=ON",
+            "-DFSR4N10_FORCE_GLOBAL_UAV_BARRIER=OFF",
+            "-DFSR4N10_ENABLE_PASS_PREFIX_DIAGNOSTIC=ON",
+            "-DFSR4N10_STABLE_POST_MATH=OFF",
+            "-DFSR4N10_FORCE_SCALAR_DOT4=ON",
+            "-DFSR4N10_SCALAR_DOT4_PASS_SET=",
+            "-DFSR4N10_PASS1_DOT4_EXPERIMENT=",
+            "-DFSR4N10_PASS1_PROBE_STAGE="
+          ],
+          "passed": true,
+          "exit_code": 0,
+          "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgsf.stdout.txt",
+          "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgsf.stderr.txt"
+        },
+        {
+          "name": "bldsf",
+          "command": [
+            "cmake",
+            "--build",
+            "C:\\src\\FSR4-Navi10\\build\\p1fix\\sf",
+            "--config",
+            "Release",
+            "--target",
+            "fsr4n10_harness"
+          ],
+          "passed": true,
+          "exit_code": 0,
+          "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldsf.stdout.txt",
+          "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldsf.stderr.txt"
+        },
+        {
+          "name": "campsf",
+          "command": [
+            "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+            "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\run_i8_numeric_bisector.py",
+            "--harness",
+            "C:\\src\\FSR4-Navi10\\build\\p1fix\\sf\\fsr4n10_harness.exe",
+            "--sequence",
+            "C:\\src\\FSR4-Navi10\\build\\release\\delta-control-smoke.f4seq",
+            "--output",
+            "C:\\src\\FSR4-Navi10\\build\\p1fix\\csf",
+            "--variant",
+            "scalar-final",
+            "--arithmetic",
+            "scalar",
+            "--stages",
+            "0",
+            "1",
+            "--seeds",
+            "zero",
+            "--repeats",
+            "2",
+            "--trace-frame",
+            "0"
+          ],
+          "passed": true,
+          "exit_code": 0,
+          "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campsf.stdout.txt",
+          "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campsf.stderr.txt"
+        }
+      ],
+      "passed": true
+    },
+    "native": {
+      "variant": "native",
+      "stages": {
+        "dot0": {
+          "passed": true,
+          "oracle": "C:\\src\\FSR4-Navi10\\build\\p1fix\\native_dot0_oracle.json",
+          "compared": 256,
+          "steps": [
+            {
+              "name": "cfgnd",
+              "command": [
+                "cmake",
+                "-S",
+                "C:\\src\\FSR4-Navi10",
+                "-B",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\nd",
+                "-G",
+                "Ninja",
+                "-DPython3_EXECUTABLE:FILEPATH=C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DFSR4N10_PASS11_BOUNDS_GUARD=ON",
+                "-DFSR4N10_FORCE_GLOBAL_UAV_BARRIER=OFF",
+                "-DFSR4N10_ENABLE_PASS_PREFIX_DIAGNOSTIC=ON",
+                "-DFSR4N10_STABLE_POST_MATH=OFF",
+                "-DFSR4N10_FORCE_SCALAR_DOT4=OFF",
+                "-DFSR4N10_SCALAR_DOT4_PASS_SET=",
+                "-DFSR4N10_PASS1_DOT4_EXPERIMENT=",
+                "-DFSR4N10_PASS1_PROBE_STAGE=dot0"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgnd.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgnd.stderr.txt"
+            },
+            {
+              "name": "bldnd",
+              "command": [
+                "cmake",
+                "--build",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\nd",
+                "--config",
+                "Release",
+                "--target",
+                "fsr4n10_harness"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldnd.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldnd.stderr.txt"
+            },
+            {
+              "name": "campnd",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\run_i8_numeric_bisector.py",
+                "--harness",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\nd\\fsr4n10_harness.exe",
+                "--sequence",
+                "C:\\src\\FSR4-Navi10\\build\\release\\delta-control-smoke.f4seq",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\cnd",
+                "--variant",
+                "native-dot0",
+                "--arithmetic",
+                "intrinsic",
+                "--stages",
+                "0",
+                "1",
+                "--seeds",
+                "zero",
+                "--repeats",
+                "2",
+                "--trace-frame",
+                "0"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campnd.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campnd.stderr.txt"
+            },
+            {
+              "name": "cmpnd",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\compare_pass1_dot0.py",
+                "--scalar-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\csd\\campaign.json",
+                "--candidate-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\cnd\\campaign.json",
+                "--source",
+                "C:\\src\\FSR4-Navi10\\third_party\\fidelityfx-fsr4-source\\Kits\\FidelityFX\\upscalers\\fsr4\\internal\\shaders\\fsr4_model_v07_i8_native\\passes_1080.hlsl",
+                "--samples",
+                "128",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\native_dot0_oracle.json"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmpnd.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmpnd.stderr.txt"
+            }
+          ]
+        },
+        "acc0_0": {
+          "passed": false,
+          "oracle": "C:\\src\\FSR4-Navi10\\build\\p1fix\\native_acc0_0_oracle.json",
+          "compared": 128,
+          "steps": [
+            {
+              "name": "cfgna",
+              "command": [
+                "cmake",
+                "-S",
+                "C:\\src\\FSR4-Navi10",
+                "-B",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\na",
+                "-G",
+                "Ninja",
+                "-DPython3_EXECUTABLE:FILEPATH=C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DFSR4N10_PASS11_BOUNDS_GUARD=ON",
+                "-DFSR4N10_FORCE_GLOBAL_UAV_BARRIER=OFF",
+                "-DFSR4N10_ENABLE_PASS_PREFIX_DIAGNOSTIC=ON",
+                "-DFSR4N10_STABLE_POST_MATH=OFF",
+                "-DFSR4N10_FORCE_SCALAR_DOT4=OFF",
+                "-DFSR4N10_SCALAR_DOT4_PASS_SET=",
+                "-DFSR4N10_PASS1_DOT4_EXPERIMENT=",
+                "-DFSR4N10_PASS1_PROBE_STAGE=acc0_0"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgna.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgna.stderr.txt"
+            },
+            {
+              "name": "bldna",
+              "command": [
+                "cmake",
+                "--build",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\na",
+                "--config",
+                "Release",
+                "--target",
+                "fsr4n10_harness"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldna.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldna.stderr.txt"
+            },
+            {
+              "name": "campna",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\run_i8_numeric_bisector.py",
+                "--harness",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\na\\fsr4n10_harness.exe",
+                "--sequence",
+                "C:\\src\\FSR4-Navi10\\build\\release\\delta-control-smoke.f4seq",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\cna",
+                "--variant",
+                "native-acc0_0",
+                "--arithmetic",
+                "intrinsic",
+                "--stages",
+                "0",
+                "1",
+                "--seeds",
+                "zero",
+                "--repeats",
+                "2",
+                "--trace-frame",
+                "0"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campna.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campna.stderr.txt"
+            },
+            {
+              "name": "cmpna",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\pass1_golden.py",
+                "--source",
+                "C:\\src\\FSR4-Navi10\\third_party\\fidelityfx-fsr4-source\\Kits\\FidelityFX\\upscalers\\fsr4\\internal\\shaders\\fsr4_model_v07_i8_native\\passes_1080.hlsl",
+                "--scalar-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\csa\\campaign.json",
+                "--intrinsic-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\cna\\campaign.json",
+                "--stage",
+                "acc0_0",
+                "--samples",
+                "128",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\native_acc0_0_oracle.json"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmpna.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmpna.stderr.txt"
+            }
+          ]
+        }
+      },
+      "o0": null,
+      "eligible_for_full_o0": false
+    },
+    "native_zero": {
+      "variant": "native_zero",
+      "stages": {
+        "dot0": {
+          "passed": true,
+          "oracle": "C:\\src\\FSR4-Navi10\\build\\p1fix\\native_zero_dot0_oracle.json",
+          "compared": 256,
+          "steps": [
+            {
+              "name": "cfgzd",
+              "command": [
+                "cmake",
+                "-S",
+                "C:\\src\\FSR4-Navi10",
+                "-B",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\zd",
+                "-G",
+                "Ninja",
+                "-DPython3_EXECUTABLE:FILEPATH=C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DFSR4N10_PASS11_BOUNDS_GUARD=ON",
+                "-DFSR4N10_FORCE_GLOBAL_UAV_BARRIER=OFF",
+                "-DFSR4N10_ENABLE_PASS_PREFIX_DIAGNOSTIC=ON",
+                "-DFSR4N10_STABLE_POST_MATH=OFF",
+                "-DFSR4N10_FORCE_SCALAR_DOT4=OFF",
+                "-DFSR4N10_SCALAR_DOT4_PASS_SET=",
+                "-DFSR4N10_PASS1_DOT4_EXPERIMENT=native_zero",
+                "-DFSR4N10_PASS1_PROBE_STAGE=dot0"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgzd.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgzd.stderr.txt"
+            },
+            {
+              "name": "bldzd",
+              "command": [
+                "cmake",
+                "--build",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\zd",
+                "--config",
+                "Release",
+                "--target",
+                "fsr4n10_harness"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldzd.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldzd.stderr.txt"
+            },
+            {
+              "name": "campzd",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\run_i8_numeric_bisector.py",
+                "--harness",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\zd\\fsr4n10_harness.exe",
+                "--sequence",
+                "C:\\src\\FSR4-Navi10\\build\\release\\delta-control-smoke.f4seq",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\czd",
+                "--variant",
+                "native_zero-dot0",
+                "--arithmetic",
+                "intrinsic",
+                "--stages",
+                "0",
+                "1",
+                "--seeds",
+                "zero",
+                "--repeats",
+                "2",
+                "--trace-frame",
+                "0"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campzd.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campzd.stderr.txt"
+            },
+            {
+              "name": "cmpzd",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\compare_pass1_dot0.py",
+                "--scalar-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\csd\\campaign.json",
+                "--candidate-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\czd\\campaign.json",
+                "--source",
+                "C:\\src\\FSR4-Navi10\\third_party\\fidelityfx-fsr4-source\\Kits\\FidelityFX\\upscalers\\fsr4\\internal\\shaders\\fsr4_model_v07_i8_native\\passes_1080.hlsl",
+                "--samples",
+                "128",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\native_zero_dot0_oracle.json"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmpzd.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmpzd.stderr.txt"
+            }
+          ]
+        },
+        "acc0_0": {
+          "passed": false,
+          "oracle": "C:\\src\\FSR4-Navi10\\build\\p1fix\\native_zero_acc0_0_oracle.json",
+          "compared": 128,
+          "steps": [
+            {
+              "name": "cfgza",
+              "command": [
+                "cmake",
+                "-S",
+                "C:\\src\\FSR4-Navi10",
+                "-B",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\za",
+                "-G",
+                "Ninja",
+                "-DPython3_EXECUTABLE:FILEPATH=C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DFSR4N10_PASS11_BOUNDS_GUARD=ON",
+                "-DFSR4N10_FORCE_GLOBAL_UAV_BARRIER=OFF",
+                "-DFSR4N10_ENABLE_PASS_PREFIX_DIAGNOSTIC=ON",
+                "-DFSR4N10_STABLE_POST_MATH=OFF",
+                "-DFSR4N10_FORCE_SCALAR_DOT4=OFF",
+                "-DFSR4N10_SCALAR_DOT4_PASS_SET=",
+                "-DFSR4N10_PASS1_DOT4_EXPERIMENT=native_zero",
+                "-DFSR4N10_PASS1_PROBE_STAGE=acc0_0"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgza.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgza.stderr.txt"
+            },
+            {
+              "name": "bldza",
+              "command": [
+                "cmake",
+                "--build",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\za",
+                "--config",
+                "Release",
+                "--target",
+                "fsr4n10_harness"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldza.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldza.stderr.txt"
+            },
+            {
+              "name": "campza",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\run_i8_numeric_bisector.py",
+                "--harness",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\za\\fsr4n10_harness.exe",
+                "--sequence",
+                "C:\\src\\FSR4-Navi10\\build\\release\\delta-control-smoke.f4seq",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\cza",
+                "--variant",
+                "native_zero-acc0_0",
+                "--arithmetic",
+                "intrinsic",
+                "--stages",
+                "0",
+                "1",
+                "--seeds",
+                "zero",
+                "--repeats",
+                "2",
+                "--trace-frame",
+                "0"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campza.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campza.stderr.txt"
+            },
+            {
+              "name": "cmpza",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\pass1_golden.py",
+                "--source",
+                "C:\\src\\FSR4-Navi10\\third_party\\fidelityfx-fsr4-source\\Kits\\FidelityFX\\upscalers\\fsr4\\internal\\shaders\\fsr4_model_v07_i8_native\\passes_1080.hlsl",
+                "--scalar-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\csa\\campaign.json",
+                "--intrinsic-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\cza\\campaign.json",
+                "--stage",
+                "acc0_0",
+                "--samples",
+                "128",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\native_zero_acc0_0_oracle.json"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmpza.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmpza.stderr.txt"
+            }
+          ]
+        }
+      },
+      "o0": null,
+      "eligible_for_full_o0": false
+    },
+    "native_swap": {
+      "variant": "native_swap",
+      "stages": {
+        "dot0": {
+          "passed": true,
+          "oracle": "C:\\src\\FSR4-Navi10\\build\\p1fix\\native_swap_dot0_oracle.json",
+          "compared": 256,
+          "steps": [
+            {
+              "name": "cfgwd",
+              "command": [
+                "cmake",
+                "-S",
+                "C:\\src\\FSR4-Navi10",
+                "-B",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\wd",
+                "-G",
+                "Ninja",
+                "-DPython3_EXECUTABLE:FILEPATH=C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DFSR4N10_PASS11_BOUNDS_GUARD=ON",
+                "-DFSR4N10_FORCE_GLOBAL_UAV_BARRIER=OFF",
+                "-DFSR4N10_ENABLE_PASS_PREFIX_DIAGNOSTIC=ON",
+                "-DFSR4N10_STABLE_POST_MATH=OFF",
+                "-DFSR4N10_FORCE_SCALAR_DOT4=OFF",
+                "-DFSR4N10_SCALAR_DOT4_PASS_SET=",
+                "-DFSR4N10_PASS1_DOT4_EXPERIMENT=native_swap",
+                "-DFSR4N10_PASS1_PROBE_STAGE=dot0"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgwd.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgwd.stderr.txt"
+            },
+            {
+              "name": "bldwd",
+              "command": [
+                "cmake",
+                "--build",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\wd",
+                "--config",
+                "Release",
+                "--target",
+                "fsr4n10_harness"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldwd.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldwd.stderr.txt"
+            },
+            {
+              "name": "campwd",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\run_i8_numeric_bisector.py",
+                "--harness",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\wd\\fsr4n10_harness.exe",
+                "--sequence",
+                "C:\\src\\FSR4-Navi10\\build\\release\\delta-control-smoke.f4seq",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\cwd",
+                "--variant",
+                "native_swap-dot0",
+                "--arithmetic",
+                "intrinsic",
+                "--stages",
+                "0",
+                "1",
+                "--seeds",
+                "zero",
+                "--repeats",
+                "2",
+                "--trace-frame",
+                "0"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campwd.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campwd.stderr.txt"
+            },
+            {
+              "name": "cmpwd",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\compare_pass1_dot0.py",
+                "--scalar-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\csd\\campaign.json",
+                "--candidate-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\cwd\\campaign.json",
+                "--source",
+                "C:\\src\\FSR4-Navi10\\third_party\\fidelityfx-fsr4-source\\Kits\\FidelityFX\\upscalers\\fsr4\\internal\\shaders\\fsr4_model_v07_i8_native\\passes_1080.hlsl",
+                "--samples",
+                "128",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\native_swap_dot0_oracle.json"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmpwd.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmpwd.stderr.txt"
+            }
+          ]
+        },
+        "acc0_0": {
+          "passed": false,
+          "oracle": "C:\\src\\FSR4-Navi10\\build\\p1fix\\native_swap_acc0_0_oracle.json",
+          "compared": 128,
+          "steps": [
+            {
+              "name": "cfgwa",
+              "command": [
+                "cmake",
+                "-S",
+                "C:\\src\\FSR4-Navi10",
+                "-B",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\wa",
+                "-G",
+                "Ninja",
+                "-DPython3_EXECUTABLE:FILEPATH=C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DFSR4N10_PASS11_BOUNDS_GUARD=ON",
+                "-DFSR4N10_FORCE_GLOBAL_UAV_BARRIER=OFF",
+                "-DFSR4N10_ENABLE_PASS_PREFIX_DIAGNOSTIC=ON",
+                "-DFSR4N10_STABLE_POST_MATH=OFF",
+                "-DFSR4N10_FORCE_SCALAR_DOT4=OFF",
+                "-DFSR4N10_SCALAR_DOT4_PASS_SET=",
+                "-DFSR4N10_PASS1_DOT4_EXPERIMENT=native_swap",
+                "-DFSR4N10_PASS1_PROBE_STAGE=acc0_0"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgwa.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgwa.stderr.txt"
+            },
+            {
+              "name": "bldwa",
+              "command": [
+                "cmake",
+                "--build",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\wa",
+                "--config",
+                "Release",
+                "--target",
+                "fsr4n10_harness"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldwa.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldwa.stderr.txt"
+            },
+            {
+              "name": "campwa",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\run_i8_numeric_bisector.py",
+                "--harness",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\wa\\fsr4n10_harness.exe",
+                "--sequence",
+                "C:\\src\\FSR4-Navi10\\build\\release\\delta-control-smoke.f4seq",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\cwa",
+                "--variant",
+                "native_swap-acc0_0",
+                "--arithmetic",
+                "intrinsic",
+                "--stages",
+                "0",
+                "1",
+                "--seeds",
+                "zero",
+                "--repeats",
+                "2",
+                "--trace-frame",
+                "0"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campwa.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campwa.stderr.txt"
+            },
+            {
+              "name": "cmpwa",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\pass1_golden.py",
+                "--source",
+                "C:\\src\\FSR4-Navi10\\third_party\\fidelityfx-fsr4-source\\Kits\\FidelityFX\\upscalers\\fsr4\\internal\\shaders\\fsr4_model_v07_i8_native\\passes_1080.hlsl",
+                "--scalar-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\csa\\campaign.json",
+                "--intrinsic-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\cwa\\campaign.json",
+                "--stage",
+                "acc0_0",
+                "--samples",
+                "128",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\native_swap_acc0_0_oracle.json"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmpwa.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmpwa.stderr.txt"
+            }
+          ]
+        }
+      },
+      "o0": null,
+      "eligible_for_full_o0": false
+    },
+    "native_swap_zero": {
+      "variant": "native_swap_zero",
+      "stages": {
+        "dot0": {
+          "passed": true,
+          "oracle": "C:\\src\\FSR4-Navi10\\build\\p1fix\\native_swap_zero_dot0_oracle.json",
+          "compared": 256,
+          "steps": [
+            {
+              "name": "cfgxd",
+              "command": [
+                "cmake",
+                "-S",
+                "C:\\src\\FSR4-Navi10",
+                "-B",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\xd",
+                "-G",
+                "Ninja",
+                "-DPython3_EXECUTABLE:FILEPATH=C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DFSR4N10_PASS11_BOUNDS_GUARD=ON",
+                "-DFSR4N10_FORCE_GLOBAL_UAV_BARRIER=OFF",
+                "-DFSR4N10_ENABLE_PASS_PREFIX_DIAGNOSTIC=ON",
+                "-DFSR4N10_STABLE_POST_MATH=OFF",
+                "-DFSR4N10_FORCE_SCALAR_DOT4=OFF",
+                "-DFSR4N10_SCALAR_DOT4_PASS_SET=",
+                "-DFSR4N10_PASS1_DOT4_EXPERIMENT=native_swap_zero",
+                "-DFSR4N10_PASS1_PROBE_STAGE=dot0"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgxd.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgxd.stderr.txt"
+            },
+            {
+              "name": "bldxd",
+              "command": [
+                "cmake",
+                "--build",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\xd",
+                "--config",
+                "Release",
+                "--target",
+                "fsr4n10_harness"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldxd.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldxd.stderr.txt"
+            },
+            {
+              "name": "campxd",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\run_i8_numeric_bisector.py",
+                "--harness",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\xd\\fsr4n10_harness.exe",
+                "--sequence",
+                "C:\\src\\FSR4-Navi10\\build\\release\\delta-control-smoke.f4seq",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\cxd",
+                "--variant",
+                "native_swap_zero-dot0",
+                "--arithmetic",
+                "intrinsic",
+                "--stages",
+                "0",
+                "1",
+                "--seeds",
+                "zero",
+                "--repeats",
+                "2",
+                "--trace-frame",
+                "0"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campxd.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campxd.stderr.txt"
+            },
+            {
+              "name": "cmpxd",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\compare_pass1_dot0.py",
+                "--scalar-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\csd\\campaign.json",
+                "--candidate-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\cxd\\campaign.json",
+                "--source",
+                "C:\\src\\FSR4-Navi10\\third_party\\fidelityfx-fsr4-source\\Kits\\FidelityFX\\upscalers\\fsr4\\internal\\shaders\\fsr4_model_v07_i8_native\\passes_1080.hlsl",
+                "--samples",
+                "128",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\native_swap_zero_dot0_oracle.json"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmpxd.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmpxd.stderr.txt"
+            }
+          ]
+        },
+        "acc0_0": {
+          "passed": false,
+          "oracle": "C:\\src\\FSR4-Navi10\\build\\p1fix\\native_swap_zero_acc0_0_oracle.json",
+          "compared": 128,
+          "steps": [
+            {
+              "name": "cfgxa",
+              "command": [
+                "cmake",
+                "-S",
+                "C:\\src\\FSR4-Navi10",
+                "-B",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\xa",
+                "-G",
+                "Ninja",
+                "-DPython3_EXECUTABLE:FILEPATH=C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DFSR4N10_PASS11_BOUNDS_GUARD=ON",
+                "-DFSR4N10_FORCE_GLOBAL_UAV_BARRIER=OFF",
+                "-DFSR4N10_ENABLE_PASS_PREFIX_DIAGNOSTIC=ON",
+                "-DFSR4N10_STABLE_POST_MATH=OFF",
+                "-DFSR4N10_FORCE_SCALAR_DOT4=OFF",
+                "-DFSR4N10_SCALAR_DOT4_PASS_SET=",
+                "-DFSR4N10_PASS1_DOT4_EXPERIMENT=native_swap_zero",
+                "-DFSR4N10_PASS1_PROBE_STAGE=acc0_0"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgxa.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgxa.stderr.txt"
+            },
+            {
+              "name": "bldxa",
+              "command": [
+                "cmake",
+                "--build",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\xa",
+                "--config",
+                "Release",
+                "--target",
+                "fsr4n10_harness"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldxa.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldxa.stderr.txt"
+            },
+            {
+              "name": "campxa",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\run_i8_numeric_bisector.py",
+                "--harness",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\xa\\fsr4n10_harness.exe",
+                "--sequence",
+                "C:\\src\\FSR4-Navi10\\build\\release\\delta-control-smoke.f4seq",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\cxa",
+                "--variant",
+                "native_swap_zero-acc0_0",
+                "--arithmetic",
+                "intrinsic",
+                "--stages",
+                "0",
+                "1",
+                "--seeds",
+                "zero",
+                "--repeats",
+                "2",
+                "--trace-frame",
+                "0"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campxa.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campxa.stderr.txt"
+            },
+            {
+              "name": "cmpxa",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\pass1_golden.py",
+                "--source",
+                "C:\\src\\FSR4-Navi10\\third_party\\fidelityfx-fsr4-source\\Kits\\FidelityFX\\upscalers\\fsr4\\internal\\shaders\\fsr4_model_v07_i8_native\\passes_1080.hlsl",
+                "--scalar-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\csa\\campaign.json",
+                "--intrinsic-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\cxa\\campaign.json",
+                "--stage",
+                "acc0_0",
+                "--samples",
+                "128",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\native_swap_zero_acc0_0_oracle.json"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmpxa.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmpxa.stderr.txt"
+            }
+          ]
+        }
+      },
+      "o0": null,
+      "eligible_for_full_o0": false
+    },
+    "unpack_dot": {
+      "variant": "unpack_dot",
+      "stages": {
+        "dot0": {
+          "passed": true,
+          "oracle": "C:\\src\\FSR4-Navi10\\build\\p1fix\\unpack_dot_dot0_oracle.json",
+          "compared": 256,
+          "steps": [
+            {
+              "name": "cfgud",
+              "command": [
+                "cmake",
+                "-S",
+                "C:\\src\\FSR4-Navi10",
+                "-B",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\ud",
+                "-G",
+                "Ninja",
+                "-DPython3_EXECUTABLE:FILEPATH=C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DFSR4N10_PASS11_BOUNDS_GUARD=ON",
+                "-DFSR4N10_FORCE_GLOBAL_UAV_BARRIER=OFF",
+                "-DFSR4N10_ENABLE_PASS_PREFIX_DIAGNOSTIC=ON",
+                "-DFSR4N10_STABLE_POST_MATH=OFF",
+                "-DFSR4N10_FORCE_SCALAR_DOT4=OFF",
+                "-DFSR4N10_SCALAR_DOT4_PASS_SET=",
+                "-DFSR4N10_PASS1_DOT4_EXPERIMENT=unpack_dot",
+                "-DFSR4N10_PASS1_PROBE_STAGE=dot0"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgud.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgud.stderr.txt"
+            },
+            {
+              "name": "bldud",
+              "command": [
+                "cmake",
+                "--build",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\ud",
+                "--config",
+                "Release",
+                "--target",
+                "fsr4n10_harness"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldud.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldud.stderr.txt"
+            },
+            {
+              "name": "campud",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\run_i8_numeric_bisector.py",
+                "--harness",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\ud\\fsr4n10_harness.exe",
+                "--sequence",
+                "C:\\src\\FSR4-Navi10\\build\\release\\delta-control-smoke.f4seq",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\cud",
+                "--variant",
+                "unpack_dot-dot0",
+                "--arithmetic",
+                "intrinsic",
+                "--stages",
+                "0",
+                "1",
+                "--seeds",
+                "zero",
+                "--repeats",
+                "2",
+                "--trace-frame",
+                "0"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campud.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campud.stderr.txt"
+            },
+            {
+              "name": "cmpud",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\compare_pass1_dot0.py",
+                "--scalar-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\csd\\campaign.json",
+                "--candidate-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\cud\\campaign.json",
+                "--source",
+                "C:\\src\\FSR4-Navi10\\third_party\\fidelityfx-fsr4-source\\Kits\\FidelityFX\\upscalers\\fsr4\\internal\\shaders\\fsr4_model_v07_i8_native\\passes_1080.hlsl",
+                "--samples",
+                "128",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\unpack_dot_dot0_oracle.json"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmpud.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmpud.stderr.txt"
+            }
+          ]
+        },
+        "acc0_0": {
+          "passed": true,
+          "oracle": "C:\\src\\FSR4-Navi10\\build\\p1fix\\unpack_dot_acc0_0_oracle.json",
+          "compared": 128,
+          "steps": [
+            {
+              "name": "cfgua",
+              "command": [
+                "cmake",
+                "-S",
+                "C:\\src\\FSR4-Navi10",
+                "-B",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\ua",
+                "-G",
+                "Ninja",
+                "-DPython3_EXECUTABLE:FILEPATH=C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DFSR4N10_PASS11_BOUNDS_GUARD=ON",
+                "-DFSR4N10_FORCE_GLOBAL_UAV_BARRIER=OFF",
+                "-DFSR4N10_ENABLE_PASS_PREFIX_DIAGNOSTIC=ON",
+                "-DFSR4N10_STABLE_POST_MATH=OFF",
+                "-DFSR4N10_FORCE_SCALAR_DOT4=OFF",
+                "-DFSR4N10_SCALAR_DOT4_PASS_SET=",
+                "-DFSR4N10_PASS1_DOT4_EXPERIMENT=unpack_dot",
+                "-DFSR4N10_PASS1_PROBE_STAGE=acc0_0"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgua.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgua.stderr.txt"
+            },
+            {
+              "name": "bldua",
+              "command": [
+                "cmake",
+                "--build",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\ua",
+                "--config",
+                "Release",
+                "--target",
+                "fsr4n10_harness"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldua.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldua.stderr.txt"
+            },
+            {
+              "name": "campua",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\run_i8_numeric_bisector.py",
+                "--harness",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\ua\\fsr4n10_harness.exe",
+                "--sequence",
+                "C:\\src\\FSR4-Navi10\\build\\release\\delta-control-smoke.f4seq",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\cua",
+                "--variant",
+                "unpack_dot-acc0_0",
+                "--arithmetic",
+                "intrinsic",
+                "--stages",
+                "0",
+                "1",
+                "--seeds",
+                "zero",
+                "--repeats",
+                "2",
+                "--trace-frame",
+                "0"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campua.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campua.stderr.txt"
+            },
+            {
+              "name": "cmpua",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\pass1_golden.py",
+                "--source",
+                "C:\\src\\FSR4-Navi10\\third_party\\fidelityfx-fsr4-source\\Kits\\FidelityFX\\upscalers\\fsr4\\internal\\shaders\\fsr4_model_v07_i8_native\\passes_1080.hlsl",
+                "--scalar-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\csa\\campaign.json",
+                "--intrinsic-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\cua\\campaign.json",
+                "--stage",
+                "acc0_0",
+                "--samples",
+                "128",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\unpack_dot_acc0_0_oracle.json"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmpua.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmpua.stderr.txt"
+            }
+          ]
+        },
+        "final": {
+          "passed": true,
+          "oracle": "C:\\src\\FSR4-Navi10\\build\\p1fix\\unpack_dot_final_oracle.json",
+          "compared": 128,
+          "steps": [
+            {
+              "name": "cfguf",
+              "command": [
+                "cmake",
+                "-S",
+                "C:\\src\\FSR4-Navi10",
+                "-B",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\uf",
+                "-G",
+                "Ninja",
+                "-DPython3_EXECUTABLE:FILEPATH=C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DFSR4N10_PASS11_BOUNDS_GUARD=ON",
+                "-DFSR4N10_FORCE_GLOBAL_UAV_BARRIER=OFF",
+                "-DFSR4N10_ENABLE_PASS_PREFIX_DIAGNOSTIC=ON",
+                "-DFSR4N10_STABLE_POST_MATH=OFF",
+                "-DFSR4N10_FORCE_SCALAR_DOT4=OFF",
+                "-DFSR4N10_SCALAR_DOT4_PASS_SET=",
+                "-DFSR4N10_PASS1_DOT4_EXPERIMENT=unpack_dot",
+                "-DFSR4N10_PASS1_PROBE_STAGE="
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfguf.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfguf.stderr.txt"
+            },
+            {
+              "name": "blduf",
+              "command": [
+                "cmake",
+                "--build",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\uf",
+                "--config",
+                "Release",
+                "--target",
+                "fsr4n10_harness"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\blduf.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\blduf.stderr.txt"
+            },
+            {
+              "name": "campuf",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\run_i8_numeric_bisector.py",
+                "--harness",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\uf\\fsr4n10_harness.exe",
+                "--sequence",
+                "C:\\src\\FSR4-Navi10\\build\\release\\delta-control-smoke.f4seq",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\cuf",
+                "--variant",
+                "unpack_dot-final",
+                "--arithmetic",
+                "intrinsic",
+                "--stages",
+                "0",
+                "1",
+                "--seeds",
+                "zero",
+                "--repeats",
+                "2",
+                "--trace-frame",
+                "0"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campuf.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campuf.stderr.txt"
+            },
+            {
+              "name": "cmpuf",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\pass1_golden.py",
+                "--source",
+                "C:\\src\\FSR4-Navi10\\third_party\\fidelityfx-fsr4-source\\Kits\\FidelityFX\\upscalers\\fsr4\\internal\\shaders\\fsr4_model_v07_i8_native\\passes_1080.hlsl",
+                "--scalar-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\csf\\campaign.json",
+                "--intrinsic-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\cuf\\campaign.json",
+                "--stage",
+                "final",
+                "--samples",
+                "128",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\unpack_dot_final_oracle.json"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmpuf.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmpuf.stderr.txt"
+            }
+          ]
+        }
+      },
+      "o0": {
+        "passed": false,
+        "summary": "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unpack_dot\\summary.json",
+        "steps": [
+          {
+            "name": "cfgup",
+            "command": [
+              "cmake",
+              "-S",
+              "C:\\src\\FSR4-Navi10",
+              "-B",
+              "C:\\src\\FSR4-Navi10\\build\\p1fix\\up",
+              "-G",
+              "Ninja",
+              "-DPython3_EXECUTABLE:FILEPATH=C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+              "-DCMAKE_BUILD_TYPE=Release",
+              "-DFSR4N10_PASS11_BOUNDS_GUARD=ON",
+              "-DFSR4N10_FORCE_GLOBAL_UAV_BARRIER=OFF",
+              "-DFSR4N10_ENABLE_PASS_PREFIX_DIAGNOSTIC=OFF",
+              "-DFSR4N10_STABLE_POST_MATH=OFF",
+              "-DFSR4N10_FORCE_SCALAR_DOT4=OFF",
+              "-DFSR4N10_SCALAR_DOT4_PASS_SET=",
+              "-DFSR4N10_PASS1_DOT4_EXPERIMENT=unpack_dot",
+              "-DFSR4N10_PASS1_PROBE_STAGE="
+            ],
+            "passed": true,
+            "exit_code": 0,
+            "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgup.stdout.txt",
+            "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgup.stderr.txt"
+          },
+          {
+            "name": "bldup",
+            "command": [
+              "cmake",
+              "--build",
+              "C:\\src\\FSR4-Navi10\\build\\p1fix\\up",
+              "--config",
+              "Release",
+              "--target",
+              "fsr4n10_harness"
+            ],
+            "passed": true,
+            "exit_code": 0,
+            "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldup.stdout.txt",
+            "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldup.stderr.txt"
+          },
+          {
+            "name": "o0u",
+            "command": [
+              "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+              "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\run_guarded_o0.py",
+              "--repo",
+              "C:\\src\\FSR4-Navi10",
+              "--harness",
+              "C:\\src\\FSR4-Navi10\\build\\p1fix\\up\\fsr4n10_harness.exe",
+              "--sequence",
+              "C:\\src\\FSR4-Navi10\\build\\release\\delta-control-smoke.f4seq",
+              "--output",
+              "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unpack_dot",
+              "--arithmetic",
+              "intrinsic"
+            ],
+            "passed": false,
+            "exit_code": 3,
+            "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\o0u.stdout.txt",
+            "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\o0u.stderr.txt"
+          }
+        ]
+      },
+      "eligible_for_full_o0": true
+    },
+    "unpack_scalar": {
+      "variant": "unpack_scalar",
+      "stages": {
+        "dot0": {
+          "passed": true,
+          "oracle": "C:\\src\\FSR4-Navi10\\build\\p1fix\\unpack_scalar_dot0_oracle.json",
+          "compared": 256,
+          "steps": [
+            {
+              "name": "cfged",
+              "command": [
+                "cmake",
+                "-S",
+                "C:\\src\\FSR4-Navi10",
+                "-B",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\ed",
+                "-G",
+                "Ninja",
+                "-DPython3_EXECUTABLE:FILEPATH=C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DFSR4N10_PASS11_BOUNDS_GUARD=ON",
+                "-DFSR4N10_FORCE_GLOBAL_UAV_BARRIER=OFF",
+                "-DFSR4N10_ENABLE_PASS_PREFIX_DIAGNOSTIC=ON",
+                "-DFSR4N10_STABLE_POST_MATH=OFF",
+                "-DFSR4N10_FORCE_SCALAR_DOT4=OFF",
+                "-DFSR4N10_SCALAR_DOT4_PASS_SET=",
+                "-DFSR4N10_PASS1_DOT4_EXPERIMENT=unpack_scalar",
+                "-DFSR4N10_PASS1_PROBE_STAGE=dot0"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfged.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfged.stderr.txt"
+            },
+            {
+              "name": "blded",
+              "command": [
+                "cmake",
+                "--build",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\ed",
+                "--config",
+                "Release",
+                "--target",
+                "fsr4n10_harness"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\blded.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\blded.stderr.txt"
+            },
+            {
+              "name": "camped",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\run_i8_numeric_bisector.py",
+                "--harness",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\ed\\fsr4n10_harness.exe",
+                "--sequence",
+                "C:\\src\\FSR4-Navi10\\build\\release\\delta-control-smoke.f4seq",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\ced",
+                "--variant",
+                "unpack_scalar-dot0",
+                "--arithmetic",
+                "intrinsic",
+                "--stages",
+                "0",
+                "1",
+                "--seeds",
+                "zero",
+                "--repeats",
+                "2",
+                "--trace-frame",
+                "0"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\camped.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\camped.stderr.txt"
+            },
+            {
+              "name": "cmped",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\compare_pass1_dot0.py",
+                "--scalar-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\csd\\campaign.json",
+                "--candidate-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\ced\\campaign.json",
+                "--source",
+                "C:\\src\\FSR4-Navi10\\third_party\\fidelityfx-fsr4-source\\Kits\\FidelityFX\\upscalers\\fsr4\\internal\\shaders\\fsr4_model_v07_i8_native\\passes_1080.hlsl",
+                "--samples",
+                "128",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\unpack_scalar_dot0_oracle.json"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmped.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmped.stderr.txt"
+            }
+          ]
+        },
+        "acc0_0": {
+          "passed": true,
+          "oracle": "C:\\src\\FSR4-Navi10\\build\\p1fix\\unpack_scalar_acc0_0_oracle.json",
+          "compared": 128,
+          "steps": [
+            {
+              "name": "cfgea",
+              "command": [
+                "cmake",
+                "-S",
+                "C:\\src\\FSR4-Navi10",
+                "-B",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\ea",
+                "-G",
+                "Ninja",
+                "-DPython3_EXECUTABLE:FILEPATH=C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DFSR4N10_PASS11_BOUNDS_GUARD=ON",
+                "-DFSR4N10_FORCE_GLOBAL_UAV_BARRIER=OFF",
+                "-DFSR4N10_ENABLE_PASS_PREFIX_DIAGNOSTIC=ON",
+                "-DFSR4N10_STABLE_POST_MATH=OFF",
+                "-DFSR4N10_FORCE_SCALAR_DOT4=OFF",
+                "-DFSR4N10_SCALAR_DOT4_PASS_SET=",
+                "-DFSR4N10_PASS1_DOT4_EXPERIMENT=unpack_scalar",
+                "-DFSR4N10_PASS1_PROBE_STAGE=acc0_0"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgea.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgea.stderr.txt"
+            },
+            {
+              "name": "bldea",
+              "command": [
+                "cmake",
+                "--build",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\ea",
+                "--config",
+                "Release",
+                "--target",
+                "fsr4n10_harness"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldea.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldea.stderr.txt"
+            },
+            {
+              "name": "campea",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\run_i8_numeric_bisector.py",
+                "--harness",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\ea\\fsr4n10_harness.exe",
+                "--sequence",
+                "C:\\src\\FSR4-Navi10\\build\\release\\delta-control-smoke.f4seq",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\cea",
+                "--variant",
+                "unpack_scalar-acc0_0",
+                "--arithmetic",
+                "intrinsic",
+                "--stages",
+                "0",
+                "1",
+                "--seeds",
+                "zero",
+                "--repeats",
+                "2",
+                "--trace-frame",
+                "0"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campea.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campea.stderr.txt"
+            },
+            {
+              "name": "cmpea",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\pass1_golden.py",
+                "--source",
+                "C:\\src\\FSR4-Navi10\\third_party\\fidelityfx-fsr4-source\\Kits\\FidelityFX\\upscalers\\fsr4\\internal\\shaders\\fsr4_model_v07_i8_native\\passes_1080.hlsl",
+                "--scalar-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\csa\\campaign.json",
+                "--intrinsic-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\cea\\campaign.json",
+                "--stage",
+                "acc0_0",
+                "--samples",
+                "128",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\unpack_scalar_acc0_0_oracle.json"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmpea.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmpea.stderr.txt"
+            }
+          ]
+        },
+        "final": {
+          "passed": true,
+          "oracle": "C:\\src\\FSR4-Navi10\\build\\p1fix\\unpack_scalar_final_oracle.json",
+          "compared": 128,
+          "steps": [
+            {
+              "name": "cfgef",
+              "command": [
+                "cmake",
+                "-S",
+                "C:\\src\\FSR4-Navi10",
+                "-B",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\ef",
+                "-G",
+                "Ninja",
+                "-DPython3_EXECUTABLE:FILEPATH=C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DFSR4N10_PASS11_BOUNDS_GUARD=ON",
+                "-DFSR4N10_FORCE_GLOBAL_UAV_BARRIER=OFF",
+                "-DFSR4N10_ENABLE_PASS_PREFIX_DIAGNOSTIC=ON",
+                "-DFSR4N10_STABLE_POST_MATH=OFF",
+                "-DFSR4N10_FORCE_SCALAR_DOT4=OFF",
+                "-DFSR4N10_SCALAR_DOT4_PASS_SET=",
+                "-DFSR4N10_PASS1_DOT4_EXPERIMENT=unpack_scalar",
+                "-DFSR4N10_PASS1_PROBE_STAGE="
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgef.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgef.stderr.txt"
+            },
+            {
+              "name": "bldef",
+              "command": [
+                "cmake",
+                "--build",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\ef",
+                "--config",
+                "Release",
+                "--target",
+                "fsr4n10_harness"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldef.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldef.stderr.txt"
+            },
+            {
+              "name": "campef",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\run_i8_numeric_bisector.py",
+                "--harness",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\ef\\fsr4n10_harness.exe",
+                "--sequence",
+                "C:\\src\\FSR4-Navi10\\build\\release\\delta-control-smoke.f4seq",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\cef",
+                "--variant",
+                "unpack_scalar-final",
+                "--arithmetic",
+                "intrinsic",
+                "--stages",
+                "0",
+                "1",
+                "--seeds",
+                "zero",
+                "--repeats",
+                "2",
+                "--trace-frame",
+                "0"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campef.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campef.stderr.txt"
+            },
+            {
+              "name": "cmpef",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\pass1_golden.py",
+                "--source",
+                "C:\\src\\FSR4-Navi10\\third_party\\fidelityfx-fsr4-source\\Kits\\FidelityFX\\upscalers\\fsr4\\internal\\shaders\\fsr4_model_v07_i8_native\\passes_1080.hlsl",
+                "--scalar-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\csf\\campaign.json",
+                "--intrinsic-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\cef\\campaign.json",
+                "--stage",
+                "final",
+                "--samples",
+                "128",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\unpack_scalar_final_oracle.json"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmpef.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmpef.stderr.txt"
+            }
+          ]
+        }
+      },
+      "o0": {
+        "passed": false,
+        "summary": "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unpack_scalar\\summary.json",
+        "steps": [
+          {
+            "name": "cfgep",
+            "command": [
+              "cmake",
+              "-S",
+              "C:\\src\\FSR4-Navi10",
+              "-B",
+              "C:\\src\\FSR4-Navi10\\build\\p1fix\\ep",
+              "-G",
+              "Ninja",
+              "-DPython3_EXECUTABLE:FILEPATH=C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+              "-DCMAKE_BUILD_TYPE=Release",
+              "-DFSR4N10_PASS11_BOUNDS_GUARD=ON",
+              "-DFSR4N10_FORCE_GLOBAL_UAV_BARRIER=OFF",
+              "-DFSR4N10_ENABLE_PASS_PREFIX_DIAGNOSTIC=OFF",
+              "-DFSR4N10_STABLE_POST_MATH=OFF",
+              "-DFSR4N10_FORCE_SCALAR_DOT4=OFF",
+              "-DFSR4N10_SCALAR_DOT4_PASS_SET=",
+              "-DFSR4N10_PASS1_DOT4_EXPERIMENT=unpack_scalar",
+              "-DFSR4N10_PASS1_PROBE_STAGE="
+            ],
+            "passed": true,
+            "exit_code": 0,
+            "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgep.stdout.txt",
+            "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgep.stderr.txt"
+          },
+          {
+            "name": "bldep",
+            "command": [
+              "cmake",
+              "--build",
+              "C:\\src\\FSR4-Navi10\\build\\p1fix\\ep",
+              "--config",
+              "Release",
+              "--target",
+              "fsr4n10_harness"
+            ],
+            "passed": true,
+            "exit_code": 0,
+            "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldep.stdout.txt",
+            "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldep.stderr.txt"
+          },
+          {
+            "name": "o0e",
+            "command": [
+              "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+              "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\run_guarded_o0.py",
+              "--repo",
+              "C:\\src\\FSR4-Navi10",
+              "--harness",
+              "C:\\src\\FSR4-Navi10\\build\\p1fix\\ep\\fsr4n10_harness.exe",
+              "--sequence",
+              "C:\\src\\FSR4-Navi10\\build\\release\\delta-control-smoke.f4seq",
+              "--output",
+              "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unpack_scalar",
+              "--arithmetic",
+              "intrinsic"
+            ],
+            "passed": false,
+            "exit_code": 3,
+            "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\o0e.stdout.txt",
+            "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\o0e.stderr.txt"
+          }
+        ]
+      },
+      "eligible_for_full_o0": true
+    },
+    "unsigned_bias_3dot": {
+      "variant": "unsigned_bias_3dot",
+      "stages": {
+        "dot0": {
+          "passed": true,
+          "oracle": "C:\\src\\FSR4-Navi10\\build\\p1fix\\unsigned_bias_3dot_dot0_oracle.json",
+          "compared": 256,
+          "steps": [
+            {
+              "name": "cfgbd",
+              "command": [
+                "cmake",
+                "-S",
+                "C:\\src\\FSR4-Navi10",
+                "-B",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\bd",
+                "-G",
+                "Ninja",
+                "-DPython3_EXECUTABLE:FILEPATH=C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DFSR4N10_PASS11_BOUNDS_GUARD=ON",
+                "-DFSR4N10_FORCE_GLOBAL_UAV_BARRIER=OFF",
+                "-DFSR4N10_ENABLE_PASS_PREFIX_DIAGNOSTIC=ON",
+                "-DFSR4N10_STABLE_POST_MATH=OFF",
+                "-DFSR4N10_FORCE_SCALAR_DOT4=OFF",
+                "-DFSR4N10_SCALAR_DOT4_PASS_SET=",
+                "-DFSR4N10_PASS1_DOT4_EXPERIMENT=unsigned_bias_3dot",
+                "-DFSR4N10_PASS1_PROBE_STAGE=dot0"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgbd.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgbd.stderr.txt"
+            },
+            {
+              "name": "bldbd",
+              "command": [
+                "cmake",
+                "--build",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\bd",
+                "--config",
+                "Release",
+                "--target",
+                "fsr4n10_harness"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldbd.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldbd.stderr.txt"
+            },
+            {
+              "name": "campbd",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\run_i8_numeric_bisector.py",
+                "--harness",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\bd\\fsr4n10_harness.exe",
+                "--sequence",
+                "C:\\src\\FSR4-Navi10\\build\\release\\delta-control-smoke.f4seq",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\cbd",
+                "--variant",
+                "unsigned_bias_3dot-dot0",
+                "--arithmetic",
+                "intrinsic",
+                "--stages",
+                "0",
+                "1",
+                "--seeds",
+                "zero",
+                "--repeats",
+                "2",
+                "--trace-frame",
+                "0"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campbd.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campbd.stderr.txt"
+            },
+            {
+              "name": "cmpbd",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\compare_pass1_dot0.py",
+                "--scalar-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\csd\\campaign.json",
+                "--candidate-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\cbd\\campaign.json",
+                "--source",
+                "C:\\src\\FSR4-Navi10\\third_party\\fidelityfx-fsr4-source\\Kits\\FidelityFX\\upscalers\\fsr4\\internal\\shaders\\fsr4_model_v07_i8_native\\passes_1080.hlsl",
+                "--samples",
+                "128",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\unsigned_bias_3dot_dot0_oracle.json"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmpbd.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmpbd.stderr.txt"
+            }
+          ]
+        },
+        "acc0_0": {
+          "passed": true,
+          "oracle": "C:\\src\\FSR4-Navi10\\build\\p1fix\\unsigned_bias_3dot_acc0_0_oracle.json",
+          "compared": 128,
+          "steps": [
+            {
+              "name": "cfgba",
+              "command": [
+                "cmake",
+                "-S",
+                "C:\\src\\FSR4-Navi10",
+                "-B",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\ba",
+                "-G",
+                "Ninja",
+                "-DPython3_EXECUTABLE:FILEPATH=C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DFSR4N10_PASS11_BOUNDS_GUARD=ON",
+                "-DFSR4N10_FORCE_GLOBAL_UAV_BARRIER=OFF",
+                "-DFSR4N10_ENABLE_PASS_PREFIX_DIAGNOSTIC=ON",
+                "-DFSR4N10_STABLE_POST_MATH=OFF",
+                "-DFSR4N10_FORCE_SCALAR_DOT4=OFF",
+                "-DFSR4N10_SCALAR_DOT4_PASS_SET=",
+                "-DFSR4N10_PASS1_DOT4_EXPERIMENT=unsigned_bias_3dot",
+                "-DFSR4N10_PASS1_PROBE_STAGE=acc0_0"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgba.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgba.stderr.txt"
+            },
+            {
+              "name": "bldba",
+              "command": [
+                "cmake",
+                "--build",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\ba",
+                "--config",
+                "Release",
+                "--target",
+                "fsr4n10_harness"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldba.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldba.stderr.txt"
+            },
+            {
+              "name": "campba",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\run_i8_numeric_bisector.py",
+                "--harness",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\ba\\fsr4n10_harness.exe",
+                "--sequence",
+                "C:\\src\\FSR4-Navi10\\build\\release\\delta-control-smoke.f4seq",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\cba",
+                "--variant",
+                "unsigned_bias_3dot-acc0_0",
+                "--arithmetic",
+                "intrinsic",
+                "--stages",
+                "0",
+                "1",
+                "--seeds",
+                "zero",
+                "--repeats",
+                "2",
+                "--trace-frame",
+                "0"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campba.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campba.stderr.txt"
+            },
+            {
+              "name": "cmpba",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\pass1_golden.py",
+                "--source",
+                "C:\\src\\FSR4-Navi10\\third_party\\fidelityfx-fsr4-source\\Kits\\FidelityFX\\upscalers\\fsr4\\internal\\shaders\\fsr4_model_v07_i8_native\\passes_1080.hlsl",
+                "--scalar-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\csa\\campaign.json",
+                "--intrinsic-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\cba\\campaign.json",
+                "--stage",
+                "acc0_0",
+                "--samples",
+                "128",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\unsigned_bias_3dot_acc0_0_oracle.json"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmpba.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmpba.stderr.txt"
+            }
+          ]
+        },
+        "final": {
+          "passed": true,
+          "oracle": "C:\\src\\FSR4-Navi10\\build\\p1fix\\unsigned_bias_3dot_final_oracle.json",
+          "compared": 128,
+          "steps": [
+            {
+              "name": "cfgbf",
+              "command": [
+                "cmake",
+                "-S",
+                "C:\\src\\FSR4-Navi10",
+                "-B",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\bf",
+                "-G",
+                "Ninja",
+                "-DPython3_EXECUTABLE:FILEPATH=C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DFSR4N10_PASS11_BOUNDS_GUARD=ON",
+                "-DFSR4N10_FORCE_GLOBAL_UAV_BARRIER=OFF",
+                "-DFSR4N10_ENABLE_PASS_PREFIX_DIAGNOSTIC=ON",
+                "-DFSR4N10_STABLE_POST_MATH=OFF",
+                "-DFSR4N10_FORCE_SCALAR_DOT4=OFF",
+                "-DFSR4N10_SCALAR_DOT4_PASS_SET=",
+                "-DFSR4N10_PASS1_DOT4_EXPERIMENT=unsigned_bias_3dot",
+                "-DFSR4N10_PASS1_PROBE_STAGE="
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgbf.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgbf.stderr.txt"
+            },
+            {
+              "name": "bldbf",
+              "command": [
+                "cmake",
+                "--build",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\bf",
+                "--config",
+                "Release",
+                "--target",
+                "fsr4n10_harness"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldbf.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldbf.stderr.txt"
+            },
+            {
+              "name": "campbf",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\run_i8_numeric_bisector.py",
+                "--harness",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\bf\\fsr4n10_harness.exe",
+                "--sequence",
+                "C:\\src\\FSR4-Navi10\\build\\release\\delta-control-smoke.f4seq",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\cbf",
+                "--variant",
+                "unsigned_bias_3dot-final",
+                "--arithmetic",
+                "intrinsic",
+                "--stages",
+                "0",
+                "1",
+                "--seeds",
+                "zero",
+                "--repeats",
+                "2",
+                "--trace-frame",
+                "0"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campbf.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\campbf.stderr.txt"
+            },
+            {
+              "name": "cmpbf",
+              "command": [
+                "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\pass1_golden.py",
+                "--source",
+                "C:\\src\\FSR4-Navi10\\third_party\\fidelityfx-fsr4-source\\Kits\\FidelityFX\\upscalers\\fsr4\\internal\\shaders\\fsr4_model_v07_i8_native\\passes_1080.hlsl",
+                "--scalar-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\csf\\campaign.json",
+                "--intrinsic-campaign",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\cbf\\campaign.json",
+                "--stage",
+                "final",
+                "--samples",
+                "128",
+                "--output",
+                "C:\\src\\FSR4-Navi10\\build\\p1fix\\unsigned_bias_3dot_final_oracle.json"
+              ],
+              "passed": true,
+              "exit_code": 0,
+              "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmpbf.stdout.txt",
+              "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cmpbf.stderr.txt"
+            }
+          ]
+        }
+      },
+      "o0": {
+        "passed": false,
+        "summary": "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\summary.json",
+        "steps": [
+          {
+            "name": "cfgbp",
+            "command": [
+              "cmake",
+              "-S",
+              "C:\\src\\FSR4-Navi10",
+              "-B",
+              "C:\\src\\FSR4-Navi10\\build\\p1fix\\bp",
+              "-G",
+              "Ninja",
+              "-DPython3_EXECUTABLE:FILEPATH=C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+              "-DCMAKE_BUILD_TYPE=Release",
+              "-DFSR4N10_PASS11_BOUNDS_GUARD=ON",
+              "-DFSR4N10_FORCE_GLOBAL_UAV_BARRIER=OFF",
+              "-DFSR4N10_ENABLE_PASS_PREFIX_DIAGNOSTIC=OFF",
+              "-DFSR4N10_STABLE_POST_MATH=OFF",
+              "-DFSR4N10_FORCE_SCALAR_DOT4=OFF",
+              "-DFSR4N10_SCALAR_DOT4_PASS_SET=",
+              "-DFSR4N10_PASS1_DOT4_EXPERIMENT=unsigned_bias_3dot",
+              "-DFSR4N10_PASS1_PROBE_STAGE="
+            ],
+            "passed": true,
+            "exit_code": 0,
+            "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgbp.stdout.txt",
+            "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\cfgbp.stderr.txt"
+          },
+          {
+            "name": "bldbp",
+            "command": [
+              "cmake",
+              "--build",
+              "C:\\src\\FSR4-Navi10\\build\\p1fix\\bp",
+              "--config",
+              "Release",
+              "--target",
+              "fsr4n10_harness"
+            ],
+            "passed": true,
+            "exit_code": 0,
+            "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldbp.stdout.txt",
+            "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\bldbp.stderr.txt"
+          },
+          {
+            "name": "o0b",
+            "command": [
+              "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+              "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\run_guarded_o0.py",
+              "--repo",
+              "C:\\src\\FSR4-Navi10",
+              "--harness",
+              "C:\\src\\FSR4-Navi10\\build\\p1fix\\bp\\fsr4n10_harness.exe",
+              "--sequence",
+              "C:\\src\\FSR4-Navi10\\build\\release\\delta-control-smoke.f4seq",
+              "--output",
+              "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot",
+              "--arithmetic",
+              "intrinsic"
+            ],
+            "passed": false,
+            "exit_code": 3,
+            "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\o0b.stdout.txt",
+            "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\o0b.stderr.txt"
+          }
+        ]
+      },
+      "eligible_for_full_o0": true
+    }
+  },
+  "production_approved": false,
+  "notes": [
+    "Resumed unsigned_bias_3dot final Pass1 gate after user pause; earlier checkpoints were reused.",
+    "Synthetic O0 is not proof of AMD reference, visual quality or game readiness.",
+    "ISA/disassembly and performance must be checked before any candidate can replace default DOT4."
+  ],
+  "signedness_inference": {
+    "execution": {
+      "name": "signedness",
+      "command": [
+        "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "C:\\src\\FSR4-Navi10\\tools\\diagnostics\\infer_pass1_signedness.py",
+        "--oracles",
+        "C:\\src\\FSR4-Navi10\\artifacts\\results\\pass1-golden",
+        "--source",
+        "C:\\src\\FSR4-Navi10\\third_party\\fidelityfx-fsr4-source\\Kits\\FidelityFX\\upscalers\\fsr4\\internal\\shaders\\fsr4_model_v07_i8_native\\passes_1080.hlsl",
+        "--samples",
+        "128",
+        "--output",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\signedness_inference.json"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\signedness.stdout.txt",
+      "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\logs\\signedness.stderr.txt"
+    },
+    "report": "C:\\src\\FSR4-Navi10\\build\\p1fix\\signedness_inference.json",
+    "result": {
+      "schema": "f4n10.pass1-signedness-inference.v1",
+      "source_sha256": "e9a217349527a584cea67c6277fa092524aa638e8017e808e7a89e172e462157",
+      "samples": 128,
+      "channels": 16,
+      "acc0_mismatch_count": 2045,
+      "all_observed_acc0_errors_multiples_of_256": true,
+      "observed_error_mod_256_histogram": {
+        "0": 2048
+      },
+      "winning_model": {
+        "input_unsigned_lane_mask": 0,
+        "weight_unsigned_lane_mask": 15,
+        "exact_lanes": 2048,
+        "total_lanes": 2048,
+        "max_abs_error": 0,
+        "mean_abs_error": 0.0
+      },
+      "exact_signedness_model_found": true,
+      "top_models": [
+        {
+          "input_unsigned_lane_mask": 0,
+          "weight_unsigned_lane_mask": 15,
+          "exact_lanes": 2048,
+          "total_lanes": 2048,
+          "max_abs_error": 0,
+          "mean_abs_error": 0.0
+        },
+        {
+          "input_unsigned_lane_mask": 0,
+          "weight_unsigned_lane_mask": 11,
+          "exact_lanes": 17,
+          "total_lanes": 2048,
+          "max_abs_error": 25856,
+          "mean_abs_error": 9839.125
+        },
+        {
+          "input_unsigned_lane_mask": 0,
+          "weight_unsigned_lane_mask": 7,
+          "exact_lanes": 11,
+          "total_lanes": 2048,
+          "max_abs_error": 45312,
+          "mean_abs_error": 12798.5
+        },
+        {
+          "input_unsigned_lane_mask": 4,
+          "weight_unsigned_lane_mask": 3,
+          "exact_lanes": 10,
+          "total_lanes": 2048,
+          "max_abs_error": 64512,
+          "mean_abs_error": 18328.875
+        },
+        {
+          "input_unsigned_lane_mask": 1,
+          "weight_unsigned_lane_mask": 14,
+          "exact_lanes": 10,
+          "total_lanes": 2048,
+          "max_abs_error": 91648,
+          "mean_abs_error": 33217.75
+        },
+        {
+          "input_unsigned_lane_mask": 0,
+          "weight_unsigned_lane_mask": 3,
+          "exact_lanes": 8,
+          "total_lanes": 2048,
+          "max_abs_error": 62976,
+          "mean_abs_error": 17228.875
+        },
+        {
+          "input_unsigned_lane_mask": 0,
+          "weight_unsigned_lane_mask": 10,
+          "exact_lanes": 8,
+          "total_lanes": 2048,
+          "max_abs_error": 65792,
+          "mean_abs_error": 23037.75
+        },
+        {
+          "input_unsigned_lane_mask": 13,
+          "weight_unsigned_lane_mask": 2,
+          "exact_lanes": 8,
+          "total_lanes": 2048,
+          "max_abs_error": 117248,
+          "mean_abs_error": 39896.875
+        },
+        {
+          "input_unsigned_lane_mask": 9,
+          "weight_unsigned_lane_mask": 0,
+          "exact_lanes": 8,
+          "total_lanes": 2048,
+          "max_abs_error": 133120,
+          "mean_abs_error": 46159.5
+        },
+        {
+          "input_unsigned_lane_mask": 0,
+          "weight_unsigned_lane_mask": 14,
+          "exact_lanes": 7,
+          "total_lanes": 2048,
+          "max_abs_error": 61696,
+          "mean_abs_error": 26828.375
+        },
+        {
+          "input_unsigned_lane_mask": 6,
+          "weight_unsigned_lane_mask": 1,
+          "exact_lanes": 7,
+          "total_lanes": 2048,
+          "max_abs_error": 106752,
+          "mean_abs_error": 30718.875
+        },
+        {
+          "input_unsigned_lane_mask": 2,
+          "weight_unsigned_lane_mask": 8,
+          "exact_lanes": 7,
+          "total_lanes": 2048,
+          "max_abs_error": 98304,
+          "mean_abs_error": 32425.25
+        },
+        {
+          "input_unsigned_lane_mask": 12,
+          "weight_unsigned_lane_mask": 2,
+          "exact_lanes": 7,
+          "total_lanes": 2048,
+          "max_abs_error": 113920,
+          "mean_abs_error": 32562.5
+        },
+        {
+          "input_unsigned_lane_mask": 14,
+          "weight_unsigned_lane_mask": 0,
+          "exact_lanes": 7,
+          "total_lanes": 2048,
+          "max_abs_error": 128000,
+          "mean_abs_error": 38961.25
+        },
+        {
+          "input_unsigned_lane_mask": 11,
+          "weight_unsigned_lane_mask": 0,
+          "exact_lanes": 7,
+          "total_lanes": 2048,
+          "max_abs_error": 122880,
+          "mean_abs_error": 45428.875
+        }
+      ],
+      "interpretation": "Identified a global four-byte-lane sign mask consistent with all sampled output. Still verify actual FFX_SC/DXIL operands and AMD reference before production."
+    }
+  }
+}

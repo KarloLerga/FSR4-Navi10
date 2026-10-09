@@ -1,0 +1,236 @@
+{
+  "schema": "f4n10.guarded-o0-execution.v1",
+  "arithmetic": "intrinsic",
+  "provider_manifest": "C:\\src\\FSR4-Navi10\\build\\p1fix\\bp\\teacher\\provider_i8_native_1080\\manifest.json",
+  "provider_modes": {
+    "pass11_bounds_guard": true,
+    "pass1_dot4_experiment": "unsigned_bias_3dot",
+    "pass1_probe_stage": "",
+    "scalar_dot4": false,
+    "scalar_dot4_pass_set": [],
+    "scalar_dot4_semantics": "HLSL dot4add_i8packed intrinsic",
+    "stable_post_math": false
+  },
+  "steps": [
+    {
+      "name": "sequence_a",
+      "command": [
+        "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "C:\\src\\FSR4-Navi10\\tools\\sequence\\run_fsr4_teacher.py",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\bp\\fsr4n10_harness.exe",
+        "C:\\src\\FSR4-Navi10\\build\\release\\delta-control-smoke.f4seq",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\full_a.json",
+        "--capture-root",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\captures_a"
+      ],
+      "exit_code": 0,
+      "passed": true,
+      "required": true,
+      "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\logs\\sequence_a.stdout.txt",
+      "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\logs\\sequence_a.stderr.txt"
+    },
+    {
+      "name": "sequence_b",
+      "command": [
+        "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "C:\\src\\FSR4-Navi10\\tools\\sequence\\run_fsr4_teacher.py",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\bp\\fsr4n10_harness.exe",
+        "C:\\src\\FSR4-Navi10\\build\\release\\delta-control-smoke.f4seq",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\full_b.json",
+        "--capture-root",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\captures_b"
+      ],
+      "exit_code": 0,
+      "passed": true,
+      "required": true,
+      "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\logs\\sequence_b.stdout.txt",
+      "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\logs\\sequence_b.stderr.txt"
+    },
+    {
+      "name": "sequence_repeatability",
+      "command": [
+        "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "C:\\src\\FSR4-Navi10\\tools\\oracles\\compare_fsr4_sequence_repeatability.py",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\full_a.json",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\full_b.json",
+        "--first-capture-root",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\captures_a",
+        "--repeat-capture-root",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\captures_b",
+        "--output",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\repeatability.json"
+      ],
+      "exit_code": 0,
+      "passed": true,
+      "required": true,
+      "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\logs\\sequence_repeatability.stdout.txt",
+      "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\logs\\sequence_repeatability.stderr.txt"
+    },
+    {
+      "name": "cpu_literal_post",
+      "command": [
+        "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "C:\\src\\FSR4-Navi10\\tools\\oracles\\replay_fsr4_post.py",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\captures_a\\frame_0.f4cap",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\captures_a\\frame_4.f4cap",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\captures_a\\frame_7.f4cap",
+        "--output",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\cpu_post.json"
+      ],
+      "exit_code": 2,
+      "passed": false,
+      "required": true,
+      "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\logs\\cpu_literal_post.stdout.txt",
+      "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\logs\\cpu_literal_post.stderr.txt"
+    },
+    {
+      "name": "reference_parity",
+      "command": [
+        "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "C:\\src\\FSR4-Navi10\\tools\\oracles\\compare_fsr4_capture_reference.py",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\captures_a\\frame_0.f4cap",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\captures_a\\frame_4.f4cap",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\captures_a\\frame_7.f4cap",
+        "--output",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\instrumentation.json"
+      ],
+      "exit_code": 0,
+      "passed": true,
+      "required": true,
+      "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\logs\\reference_parity.stdout.txt",
+      "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\logs\\reference_parity.stderr.txt"
+    },
+    {
+      "name": "postcase_frame_0",
+      "command": [
+        "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "C:\\src\\FSR4-Navi10\\tools\\oracles\\export_fsr4_post_case.py",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\captures_a\\frame_0.f4cap",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\frame_0.f4postcase"
+      ],
+      "exit_code": 0,
+      "passed": true,
+      "required": true,
+      "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\logs\\postcase_frame_0.stdout.txt",
+      "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\logs\\postcase_frame_0.stderr.txt"
+    },
+    {
+      "name": "gpu_post_frame_0",
+      "command": [
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\bp\\fsr4n10_harness.exe",
+        "--run-fsr4-post-gpu-oracle",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\frame_0.f4postcase",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\gpu_post_frame_0.json"
+      ],
+      "exit_code": 0,
+      "passed": true,
+      "required": true,
+      "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\logs\\gpu_post_frame_0.stdout.txt",
+      "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\logs\\gpu_post_frame_0.stderr.txt"
+    },
+    {
+      "name": "postcase_frame_4",
+      "command": [
+        "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "C:\\src\\FSR4-Navi10\\tools\\oracles\\export_fsr4_post_case.py",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\captures_a\\frame_4.f4cap",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\frame_4.f4postcase"
+      ],
+      "exit_code": 0,
+      "passed": true,
+      "required": true,
+      "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\logs\\postcase_frame_4.stdout.txt",
+      "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\logs\\postcase_frame_4.stderr.txt"
+    },
+    {
+      "name": "gpu_post_frame_4",
+      "command": [
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\bp\\fsr4n10_harness.exe",
+        "--run-fsr4-post-gpu-oracle",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\frame_4.f4postcase",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\gpu_post_frame_4.json"
+      ],
+      "exit_code": 0,
+      "passed": true,
+      "required": true,
+      "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\logs\\gpu_post_frame_4.stdout.txt",
+      "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\logs\\gpu_post_frame_4.stderr.txt"
+    },
+    {
+      "name": "postcase_frame_7",
+      "command": [
+        "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "C:\\src\\FSR4-Navi10\\tools\\oracles\\export_fsr4_post_case.py",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\captures_a\\frame_7.f4cap",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\frame_7.f4postcase"
+      ],
+      "exit_code": 0,
+      "passed": true,
+      "required": true,
+      "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\logs\\postcase_frame_7.stdout.txt",
+      "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\logs\\postcase_frame_7.stderr.txt"
+    },
+    {
+      "name": "gpu_post_frame_7",
+      "command": [
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\bp\\fsr4n10_harness.exe",
+        "--run-fsr4-post-gpu-oracle",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\frame_7.f4postcase",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\gpu_post_frame_7.json"
+      ],
+      "exit_code": 0,
+      "passed": true,
+      "required": true,
+      "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\logs\\gpu_post_frame_7.stdout.txt",
+      "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\logs\\gpu_post_frame_7.stderr.txt"
+    },
+    {
+      "name": "dot4_conformance",
+      "command": [
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\bp\\fsr4n10_harness.exe",
+        "--run-dot4-conformance",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\dot4.json"
+      ],
+      "exit_code": 0,
+      "passed": true,
+      "required": true,
+      "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\logs\\dot4_conformance.stdout.txt",
+      "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\logs\\dot4_conformance.stderr.txt"
+    },
+    {
+      "name": "unchanged_o0_teacher_gate",
+      "command": [
+        "C:\\Users\\karlo\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "C:\\src\\FSR4-Navi10\\tools\\oracles\\evaluate_scalar_teacher_gate.py",
+        "--cpu",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\cpu_post.json",
+        "--gpu",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\gpu_post_frame_0.json",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\gpu_post_frame_4.json",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\gpu_post_frame_7.json",
+        "--instrumentation",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\instrumentation.json",
+        "--dot4",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\dot4.json",
+        "--sequence-report",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\full_a.json",
+        "--fsr3-report",
+        "C:\\src\\FSR4-Navi10\\artifacts\\results\\fsr3_rootcause_basis_sequence.json",
+        "--basis-audit",
+        "C:\\src\\FSR4-Navi10\\artifacts\\results\\fsr3_delta_basis_capture_audit.json",
+        "--repeatability",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\repeatability.json",
+        "--output",
+        "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\teacher_gate.json"
+      ],
+      "exit_code": 2,
+      "passed": false,
+      "required": true,
+      "stdout": "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\logs\\unchanged_o0_teacher_gate.stdout.txt",
+      "stderr": "C:\\src\\FSR4-Navi10\\build\\p1fix\\o0_unsigned_bias_3dot\\logs\\unchanged_o0_teacher_gate.stderr.txt"
+    }
+  ],
+  "existing_teacher_gate_passed": false,
+  "required_steps_all_passed": false,
+  "note": "Synthetic-only evidence is never sufficient for game readiness or visual quality."
+}

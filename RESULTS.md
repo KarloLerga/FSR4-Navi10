@@ -429,3 +429,31 @@ diagnostics remain OFF by default, and `FSR4N10_SCALAR_DOT4_PASS_SET` remains
 empty. Compact oracle reports and all 40 campaign manifests are in
 `artifacts/results/pass1-golden/`. Large captures and per-stage builds remain
 ignored in `build/p1/`. The current production gate remains closed.
+
+## Pass1 intrinsic recovery (2026-10-09)
+
+The signedness search fit all 2,048 sampled raw INT32 values across
+`acc0_0..3` exactly with signed input bytes and unsigned weight bytes. All
+seven native and experimental variants passed the first fused-DOT4 (`dot0`)
+tap on 256 sampled pixels. Four
+variants (`native`, `native_zero`, `native_swap`, and `native_swap_zero`) then
+matched only 1/512 `acc0_0` lanes, with maximum absolute error 84,224.
+
+Three build-local variants (`unpack_dot`, `unpack_scalar`, and
+`unsigned_bias_3dot`) matched the scalar/CPU oracle at `acc0_0` (512/512) and
+the final Pass1 tensor (2,048/2,048); each used identical Pass0 inputs. This
+confirms a sampled Pass1 arithmetic recovery, not a complete model fix. All
+three passed the eight-frame repeatability check but failed the existing O0
+numeric gate: the CPU POST audit found 2,073,600/2,073,600 model pixels
+non-finite on each audited frame (0, 4, and 7). The production gate remains
+closed, and no image-quality or game-readiness result follows.
+
+Provider manifest comparisons confirm the experimental shader payload changes
+are confined to Pass1; non-Pass1 payload hashes match the native `dot0`
+build. Selector metadata also changes. The experiments use build-local
+overlays, and all production toggles remain at their default OFF/empty values.
+The Release CTest passed 1/1 and the full Python suite passed 132/132 before
+the GPU matrix. Detailed interpretation is in
+`docs/PASS1_INTRINSIC_RECOVERY_RESULTS.md`; compact reports are in
+`artifacts/results/pass1-intrinsic-recovery/`. Multi-gigabyte captures and
+builds remain ignored under `build/p1fix/`.

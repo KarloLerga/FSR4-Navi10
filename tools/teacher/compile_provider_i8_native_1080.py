@@ -15,6 +15,7 @@ from pathlib import Path
 from fnb_bounds_overlay import OVERLAY_NAME, OPERATOR_REL, create_overlay as create_fnb_bounds_overlay
 from i8_arithmetic_pass_overlay import parse_pass_set, build_selected_wrapper
 from pass1_stage_overlay import create_overlay as create_pass1_stage_overlay, valid_stage as valid_pass1_stage
+from pass1_dot4_variants import VARIANTS as PASS1_DOT4_VARIANTS, make_wrapper as make_pass1_dot4_wrapper
 
 
 MODEL = "fsr4_model_v07_i8_native"
@@ -323,7 +324,8 @@ def generate_initializer_sources(model_dir: Path, output_dir: Path) -> list[Path
 def compile_provider_set(
     repo_root: Path, output_dir: Path, *, scalar_dot4: bool = False,
     stable_post_math: bool = False, pass11_bounds_guard: bool = False,
-    scalar_pass_set: str = "", pass1_probe_stage: str = ""
+    scalar_pass_set: str = "", pass1_probe_stage: str = "",
+    pass1_dot4_experiment: str = ""
 ) -> dict[str, object]:
     sdk_root = repo_root / "third_party" / "fidelityfx-fsr4-source" / "Kits" / "FidelityFX"
     fsr4_root = sdk_root / "upscalers" / "fsr4"
@@ -347,6 +349,13 @@ def compile_provider_set(
             raise FileNotFoundError(f"pinned FSR4 provider source is missing: {path}")
 
     selected_scalar_passes = parse_pass_set(scalar_pass_set)
+    if pass1_dot4_experiment:
+        if pass1_dot4_experiment not in PASS1_DOT4_VARIANTS:
+            raise ValueError(f"Unsupported Pass1 DOT4 experiment: {pass1_dot4_experiment}")
+        if scalar_dot4 or 1 in selected_scalar_passes:
+            raise ValueError("Pass1 DOT4 experiment conflicts with scalar Pass1 override")
+        if not pass11_bounds_guard:
+            raise ValueError("Pass1 DOT4 experiment requires Pass11 guard")
     if scalar_dot4 and selected_scalar_passes:
         raise ValueError("global scalar DOT4 and selected scalar passes must not be combined")
     if pass1_probe_stage:
@@ -410,6 +419,15 @@ def compile_provider_set(
             capture_overlay_dir, model_dir, fsr4_root / "dx12",
             sdk_root / "api" / "internal" / "dx12",
         )
+    pass1_experiment_source = None
+    pass1_experiment_includes = None
+    if pass1_dot4_experiment:
+        pass1_experiment_source = make_pass1_dot4_wrapper(capture_overlay_dir, pass1_dot4_experiment)
+        capture_overlays["pass1_dot4_experiment"] = pass1_experiment_source
+        pass1_experiment_includes = (
+            capture_overlay_dir, model_dir, fsr4_root / "dx12",
+            sdk_root / "api" / "internal" / "dx12",
+        )
     include_dirs = (
         sdk_root / "api" / "internal" / "gpu",
         sdk_root / "api" / "internal" / "dx12",
@@ -454,13 +472,14 @@ def compile_provider_set(
 
     for pass_index in range(1, 13):
         selected = pass_index in selected_scalar_passes
+        experiment = pass_index == 1 and pass1_experiment_source is not None
         compile_one(
             f"{MODEL}_{TIER}_{pass_index}",
-            selected_source if selected else model_source,
+            pass1_experiment_source if experiment else (selected_source if selected else model_source),
             f"fsr4_model_v07_i8_pass{pass_index}",
             (f"-DMLSR_PASS_{pass_index}=1",),
             f"n10p{pass_index}",
-            selected_includes if selected else model_shader_includes,
+            pass1_experiment_includes if experiment else (selected_includes if selected else model_shader_includes),
         )
 
     for pass_index in range(13):
@@ -571,6 +590,7 @@ def compile_provider_set(
             "pass11_bounds_guard": pass11_bounds_guard,
             "scalar_dot4_pass_set": list(selected_scalar_passes),
             "pass1_probe_stage": pass1_probe_stage,
+            "pass1_dot4_experiment": pass1_dot4_experiment,
             "scalar_dot4_semantics": (
                 "signed i8x4 lane products accumulated into int32"
                 if scalar_dot4 else
@@ -631,6 +651,8 @@ def main() -> int:
                         help="comma-separated 1..12 pass indices for isolated scalar DOT4")
     parser.add_argument("--pass1-probe-stage", default="",
                         help="debug Pass1 internal stage; requires --pass11-bounds-guard")
+    parser.add_argument("--pass1-dot4-experiment", default="",
+                        help="isolated Pass1 DOT4 compiler-lowering experiment")
     args = parser.parse_args()
     try:
         manifest = compile_provider_set(
@@ -639,6 +661,7 @@ def main() -> int:
             pass11_bounds_guard=args.pass11_bounds_guard,
             scalar_pass_set=args.scalar_pass_set,
             pass1_probe_stage=args.pass1_probe_stage,
+            pass1_dot4_experiment=args.pass1_dot4_experiment,
         )
     except (OSError, KeyError, json.JSONDecodeError, subprocess.CalledProcessError, RuntimeError) as error:
         print(f"compile_provider_i8_native_1080: {error}", file=sys.stderr)

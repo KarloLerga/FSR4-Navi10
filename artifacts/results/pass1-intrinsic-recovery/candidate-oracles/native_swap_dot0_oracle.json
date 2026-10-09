@@ -1,0 +1,20 @@
+{
+  "schema": "f4n10.pass1-dot0-oracle.v1",
+  "source_sha256": "e9a217349527a584cea67c6277fa092524aa638e8017e808e7a89e172e462157",
+  "sequence_file_sha256": "41864abbd46180126b1b945a84428a9f55bd44d7cfb3b337cdd02f64841bf2b3",
+  "checked_pixels": 256,
+  "candidate_mode": "native_swap",
+  "comparisons": {
+    "scalar": {
+      "operand_mismatch": 0,
+      "result_mismatch": 0
+    },
+    "candidate": {
+      "operand_mismatch": 0,
+      "result_mismatch": 0
+    }
+  },
+  "candidate_matched": true,
+  "examples": [],
+  "note": "A matching first DOT4 cannot prove the full fused Pass1 is correct."
+}
